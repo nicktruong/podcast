@@ -10,6 +10,7 @@ module.exports = {
     "plugin:import/recommended",
     "plugin:import/typescript",
     "plugin:css-import-order/recommended",
+    "prettier",
   ],
   overrides: [
     {
