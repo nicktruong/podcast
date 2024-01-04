@@ -30,24 +30,7 @@ module.exports = {
   },
   plugins: ["@stylistic", "@typescript-eslint", "react"],
   rules: {
-    "padding-line-between-statements": [
-      "error",
-      {
-        blankLine: "always",
-        prev: "block-like",
-        next: "*",
-      },
-      {
-        blankLine: "always",
-        prev: "*",
-        next: "block-like",
-      },
-      {
-        blankLine: "always",
-        prev: "*",
-        next: "return",
-      },
-    ],
+    "arrow-parens": ["error", "always"],
     curly: "error",
     "import/order": [
       "error",
@@ -67,6 +50,24 @@ module.exports = {
     ],
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
+    "padding-line-between-statements": [
+      "error",
+      {
+        blankLine: "always",
+        prev: "block-like",
+        next: "*",
+      },
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "block-like",
+      },
+      {
+        blankLine: "always",
+        prev: "*",
+        next: "return",
+      },
+    ],
     quotes: ["error", "double"],
     semi: ["error", "always"],
     "sort-imports": [
