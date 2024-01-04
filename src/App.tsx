@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+
+import { useTranslation } from 'react-i18next';
+
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+  const { t } = useTranslation();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -16,7 +21,9 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          <Suspense fallback="loading">
+            <h1>{t('learnReact')}</h1>
+          </Suspense>
         </a>
       </header>
     </div>
