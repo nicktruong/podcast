@@ -1,8 +1,9 @@
 import React, { Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { ErrorBoundary } from "@sentry/react";
+import { CssBaseline, ThemeProvider, Typography } from "@mui/material";
 
-import logo from "./logo.svg";
+import theme from "./theme";
 
 import "./App.css";
 
@@ -11,24 +12,14 @@ function App() {
 
   return (
     <ErrorBoundary fallback={<p>An error has occurred</p>}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Suspense fallback="loading">
-              <h1>{t("learnReact")}</h1>
-            </Suspense>
-          </a>
-        </header>
-      </div>
+      <ThemeProvider theme={theme}>
+        <Typography variant="h1">
+          <Suspense fallback="loading">
+            <h1>{t("learnReact")}</h1>
+          </Suspense>
+        </Typography>
+        <CssBaseline />
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }

@@ -70,6 +70,7 @@ module.exports = {
       },
     ],
     quotes: ["error", "double"],
+    "react/react-in-jsx-scope": "off",
     semi: ["error", "always"],
     "sort-imports": [
       "error",
