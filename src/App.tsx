@@ -1,9 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { Suspense } from "react";
+import { useTranslation } from "react-i18next";
 
-import { useTranslation } from 'react-i18next';
+import logo from "./logo.svg";
 
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
 
 function App() {
   const { t } = useTranslation();
@@ -22,7 +22,7 @@ function App() {
           rel="noopener noreferrer"
         >
           <Suspense fallback="loading">
-            <h1>{t('learnReact')}</h1>
+            <h1>{t("learnReact")}</h1>
           </Suspense>
         </a>
       </header>
