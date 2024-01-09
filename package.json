@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.1.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.3",
@@ -15,14 +16,15 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-i18next": "^14.0.0",
+    "react-router-dom": "^6.21.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --coverage --watchAll=false",
-    "test:interactive": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test --coverage --watchAll=false",
+    "test:interactive": "craco test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "lint:check": "npx eslint src/**/*.{ts,tsx}",
