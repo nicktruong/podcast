@@ -2,6 +2,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import {
   Box,
+  CircularProgress,
   FormControlLabel,
   FormHelperText,
   MenuItem,
@@ -13,9 +14,9 @@ import {
 
 import StyledInput from "@/components/input/Input";
 import { months } from "@/common/constants/months";
+import { IUserRegister } from "@/common/interfaces";
 import { genders } from "@/common/constants/genders";
 import StyledButton from "@/components/button/Button";
-import { IUserRegister } from "@/common/interfaces/register.interface";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
 import { Steps } from "../interface";
@@ -24,6 +25,7 @@ import StepInfo from "../components/StepInfo";
 
 interface Props {
   activeStep: Steps;
+  isSubmitting?: boolean;
   handlePrevStep: () => void;
   control: Control<IUserRegister>;
   validateDate: () => Promise<void>;
@@ -33,6 +35,7 @@ interface Props {
 export default function UserInfoForm({
   errors,
   control,
+  isSubmitting,
   activeStep,
   validateDate,
   handlePrevStep,
@@ -297,7 +300,21 @@ export default function UserInfoForm({
             </FormHelperText>
           )}
 
-          <StyledButton type="submit">Finish</StyledButton>
+          <StyledButton
+            type="submit"
+            endIcon={
+              isSubmitting && (
+                <CircularProgress
+                  size="20px"
+                  sx={(theme) => ({
+                    color: theme.palette.primary.contrastText,
+                  })}
+                />
+              )
+            }
+          >
+            <span>Finish</span>
+          </StyledButton>
         </Box>
       </Box>
     </>

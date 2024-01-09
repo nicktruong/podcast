@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 
 import { auth } from "./init";
 import { createUserDoc } from "./create-user-doc";

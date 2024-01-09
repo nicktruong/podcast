@@ -2,7 +2,7 @@ import Joi from "joi";
 
 import { genders } from "@/common/constants/genders";
 import { daysInMonth } from "@/common/utils/date-helpers";
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 
 const schema = Joi.object<IUserRegister>({
   email: Joi.string()

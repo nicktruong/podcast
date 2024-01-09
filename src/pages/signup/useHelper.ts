@@ -5,7 +5,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { signup } from "@/firebase";
 import routes from "@/common/constants/routes";
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 
 import schema from "./schema";
 import { Steps } from "./interface";
@@ -18,7 +18,7 @@ const useHelper = () => {
     control,
     trigger,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IUserRegister>({
     defaultValues: {
       name: "",
@@ -70,6 +70,7 @@ const useHelper = () => {
     control,
     onSubmit,
     activeStep,
+    isSubmitting,
     validateDate,
     validateEmail,
     handleNextStep,

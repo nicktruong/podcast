@@ -14,6 +14,7 @@ export default function SignUp() {
     control,
     onSubmit,
     activeStep,
+    isSubmitting,
     validateDate,
     validateEmail,
     handlePrevStep,
@@ -93,6 +94,7 @@ export default function SignUp() {
             errors={errors}
             handlePrevStep={handlePrevStep}
             validateDate={validateDate}
+            isSubmitting={isSubmitting}
           />
         );
 

@@ -1,7 +1,7 @@
 import { hash, genSalt } from "bcryptjs";
 import { collection, addDoc } from "firebase/firestore";
 
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 
 import { db } from "./init";
 

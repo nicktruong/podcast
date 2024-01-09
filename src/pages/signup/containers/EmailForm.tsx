@@ -6,7 +6,7 @@ import routes from "@/common/constants/routes";
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
 import AuthButton from "@/components/auth-button/AuthButton";
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 
 interface Props {
   control: Control<IUserRegister>;
@@ -35,8 +35,6 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
       </Typography>
 
       <Box>
-        {/* <HorizontalLinearStepper /> */}
-
         <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
           Email address
         </Typography>

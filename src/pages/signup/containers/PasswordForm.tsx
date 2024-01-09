@@ -3,7 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
-import { IUserRegister } from "@/common/interfaces/register.interface";
+import { IUserRegister } from "@/common/interfaces";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
 import { Steps } from "../interface";
