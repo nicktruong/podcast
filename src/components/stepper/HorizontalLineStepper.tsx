@@ -2,14 +2,12 @@ import Step from "@mui/material/Step";
 import Stepper from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
 
-import { Steps } from "../../pages/signup/interface";
-
 import QontoConnector from "./QontoConnector";
 import QontoStepIcon from "./QontoStepIcon";
 
 interface HorizontalLinearStepperProps {
   steps: string[];
-  activeStep: Steps;
+  activeStep: number;
 }
 
 function HorizontalLinearStepper({

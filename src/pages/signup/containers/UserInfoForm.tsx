@@ -1,4 +1,5 @@
 import ErrorIcon from "@mui/icons-material/Error";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 import {
   Box,
   FormControlLabel,
@@ -9,25 +10,24 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import StyledInput from "@/components/input/Input";
-import StyledButton from "@/components/button/Button";
 import { months } from "@/common/constants/months";
 import { genders } from "@/common/constants/genders";
+import StyledButton from "@/components/button/Button";
+import { IUserRegister } from "@/common/interfaces/register.interface";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
 import { Steps } from "../interface";
-import { IRegisterForm } from "../schema";
-import StepInfo from "../components/StepInfo";
 import { steps } from "../constants";
+import StepInfo from "../components/StepInfo";
 
 interface Props {
   activeStep: Steps;
   handlePrevStep: () => void;
-  control: Control<IRegisterForm>;
+  control: Control<IUserRegister>;
   validateDate: () => Promise<void>;
-  errors: FieldErrors<IRegisterForm>;
+  errors: FieldErrors<IUserRegister>;
 }
 
 export default function UserInfoForm({
@@ -179,7 +179,11 @@ export default function UserInfoForm({
                       id="year"
                       variant="outlined"
                       error={!!errors.year}
-                      sx={{ marginTop: "8px", width: "3.8rem" }}
+                      sx={{
+                        marginTop: "8px",
+                        width: "4.2rem",
+                        textAlign: "center",
+                      }}
                       placeholder="yyyy"
                       onChange={async (event) => {
                         if (

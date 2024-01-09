@@ -1,19 +1,10 @@
 import Joi from "joi";
 
-import { daysInMonth } from "@/common/utils/date-helpers";
 import { genders } from "@/common/constants/genders";
+import { daysInMonth } from "@/common/utils/date-helpers";
+import { IUserRegister } from "@/common/interfaces/register.interface";
 
-export interface IRegisterForm {
-  name: string;
-  date: string;
-  year: string;
-  email: string;
-  month: string;
-  gender: string;
-  password: string;
-}
-
-const schema = Joi.object<IRegisterForm>({
+const schema = Joi.object<IUserRegister>({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .max(320)

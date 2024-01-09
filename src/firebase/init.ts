@@ -1,9 +1,8 @@
-// Import the functions you need from the SDKs you need
+// SDKs and firebase products reference: https://firebase.google.com/docs/web/setup#available-libraries
+import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBhA4zIgiWNUeXYS1OL0feX7X9QheApjKM",
   authDomain: "podcast-185c3.firebaseapp.com",
@@ -15,3 +14,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase authentication
+export const auth = getAuth(app);
+
+// Initialize Firebase firestore
+export const db = getFirestore(app);

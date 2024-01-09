@@ -3,18 +3,18 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
+import { IUserRegister } from "@/common/interfaces/register.interface";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
 import { Steps } from "../interface";
-import { IRegisterForm } from "../schema";
-import StepInfo from "../components/StepInfo";
 import { steps } from "../constants";
+import StepInfo from "../components/StepInfo";
 
 interface Props {
   activeStep: Steps;
   handlePrevStep: () => void;
-  control: Control<IRegisterForm>;
-  errors: FieldErrors<IRegisterForm>;
+  control: Control<IUserRegister>;
+  errors: FieldErrors<IUserRegister>;
   nextStepHandler: () => Promise<void>;
 }
 

@@ -1,19 +1,25 @@
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { joiResolver } from "@hookform/resolvers/joi";
 
-import schema, { IRegisterForm } from "./schema";
+import { signup } from "@/firebase";
+import routes from "@/common/constants/routes";
+import { IUserRegister } from "@/common/interfaces/register.interface";
+
+import schema from "./schema";
 import { Steps } from "./interface";
 
 const useHelper = () => {
   const [activeStep, setActiveStep] = useState(Steps.Email);
+  const navigate = useNavigate();
 
   const {
     control,
     trigger,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegisterForm>({
+  } = useForm<IUserRegister>({
     defaultValues: {
       name: "",
       date: "",
@@ -28,8 +34,9 @@ const useHelper = () => {
     resolver: joiResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
+  const onSubmit = handleSubmit(async (data) => {
+    await signup(data);
+    navigate(routes.index, { replace: true });
   });
 
   const handleNextStep = () => {
