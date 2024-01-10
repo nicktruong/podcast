@@ -1,18 +1,25 @@
 import * as Sentry from "@sentry/react";
 
 Sentry.init({
-  dsn: "https://2d64afaa3566d4318821b093f59699e4@o4506502328483840.ingest.sentry.io/4506515549454336",
+  dsn: process.env.REACT_APP_SENTRY_DSN,
   integrations: [
     new Sentry.BrowserTracing({
       // TODO: Add deployed url to `tracePropagationTargets`
       tracePropagationTargets: ["localhost"],
     }),
     new Sentry.Replay({
-      maskAllText: false,
-      blockAllMedia: false,
+      maskAllText: process.env.REACT_APP_SENTRY_REPLAY_MASK_TEXT === "true",
+      blockAllMedia: process.env.REACT_APP_SENTRY_REPLAY_BLOCK_MEDIA === "true",
     }),
   ],
-  tracesSampleRate: 1.0,
-  replaysSessionSampleRate: 0.1,
-  replaysOnErrorSampleRate: 1.0,
+  tracesSampleRate: Number(
+    process.env.REACT_APP_SENTRY_TRACES_SAMPLE_RATE ?? 0
+  ),
+  replaysSessionSampleRate: Number(
+    process.env.REACT_APP_SENTRY_REPLAYS_SESSION_SAMPLE_RATE ?? 0
+  ),
+  replaysOnErrorSampleRate: Number(
+    process.env.REACT_APP_SENTRY_REPLAYS_ON_ERROR_SAMPLE_RATE ?? 0
+  ),
+  environment: process.env.NODE_ENV,
 });

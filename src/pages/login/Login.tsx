@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import {
   Alert,
   AlertTitle,
@@ -7,6 +6,7 @@ import {
   Divider,
   Typography,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import { AuthErrorCodes } from "firebase/auth";
 
