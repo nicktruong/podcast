@@ -15,6 +15,8 @@ import routes from "@/common/constants/routes";
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
 import AuthButton from "@/components/auth-button/AuthButton";
+import { loginRedirectWithGoogle } from "@/firebase/google-auth";
+import { loginRedirectWithFacebook } from "@/firebase/facebook-auth";
 
 import useHelper from "./useHelper";
 
@@ -152,8 +154,9 @@ export default function Login() {
                   />
                 }
                 sx={{ marginBottom: "8px" }}
+                onClick={loginRedirectWithGoogle}
               >
-                Sign up with Google
+                Sign in with Google
               </AuthButton>
               <AuthButton
                 startIcon={
@@ -167,8 +170,9 @@ export default function Login() {
                     }
                   />
                 }
+                onClick={loginRedirectWithFacebook}
               >
-                Sign up with Facebook
+                Sign in with Facebook
               </AuthButton>
             </Box>
 

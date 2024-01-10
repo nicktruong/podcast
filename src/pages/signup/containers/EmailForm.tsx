@@ -7,6 +7,8 @@ import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
 import AuthButton from "@/components/auth-button/AuthButton";
 import { IUserRegister } from "@/common/interfaces";
+import { loginRedirectWithGoogle } from "@/firebase/google-auth";
+import { loginRedirectWithFacebook } from "@/firebase/facebook-auth";
 
 interface Props {
   control: Control<IUserRegister>;
@@ -81,6 +83,7 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
                 className="absolute left-5 top-1/2 -translate-y-1/2"
               />
             }
+            onClick={loginRedirectWithGoogle}
             sx={{ marginBottom: "8px" }}
           >
             Sign up with Google
@@ -95,6 +98,7 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
                 className="absolute left-5 top-1/2 -translate-y-1/2"
               />
             }
+            onClick={loginRedirectWithFacebook}
           >
             Sign up with Facebook
           </AuthButton>
