@@ -11,6 +11,7 @@ module.exports = {
     "plugin:import/typescript",
     "plugin:css-import-order/recommended",
     "prettier",
+    "plugin:storybook/recommended"
   ],
   overrides: [
     {
@@ -50,6 +51,7 @@ module.exports = {
     ],
     indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
+    "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0 }],
     "padding-line-between-statements": [
       "error",
       {
@@ -69,6 +71,7 @@ module.exports = {
       },
     ],
     quotes: ["error", "double"],
+    "react/react-in-jsx-scope": "off",
     semi: ["error", "always"],
     "sort-imports": [
       "error",
