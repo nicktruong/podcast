@@ -2,12 +2,20 @@ import React, { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import routes from "@/common/constants/routes";
-import PreventLoggedInAccessGuard from "@/guards/PreventLoggedInAccessGuard";
+
+const PreventLoggedInAccessGuard = lazy(
+  () => import("@/guards/PreventLoggedInAccessGuard")
+);
+const PreventListenerAccessGuard = lazy(
+  () => import("@/guards/PreventListenerAccessGuard")
+);
 
 const Home = lazy(() => import("@/pages/home/Home"));
 const Login = lazy(() => import("@/pages/login/Login"));
 const SignUp = lazy(() => import("@/pages/signup/SignUp"));
+const PodLayout = lazy(() => import("@/layouts/PodLayout"));
 const RootLayout = lazy(() => import("@/layouts/RootLayout"));
+const PodDashboard = lazy(() => import("@/pages/pod-dashboard/PodDashboard"));
 
 const router = createBrowserRouter([
   {
@@ -20,6 +28,8 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+  // Auth
   {
     element: <PreventLoggedInAccessGuard />,
     children: [
@@ -30,6 +40,23 @@ const router = createBrowserRouter([
       {
         path: routes.signup,
         element: <SignUp />,
+      },
+    ],
+  },
+
+  // Podcaster
+  {
+    path: routes.pod,
+    element: <PodLayout />,
+    children: [
+      {
+        element: <PreventListenerAccessGuard />,
+        children: [
+          {
+            path: routes.podDashboard,
+            element: <PodDashboard />,
+          },
+        ],
       },
     ],
   },

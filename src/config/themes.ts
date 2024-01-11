@@ -2,7 +2,7 @@ import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
   interface ThemeOptions {
-    breakpoints: {
+    breakpoints?: {
       values: {
         xs: number;
         sm: number;
@@ -15,7 +15,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-export const darkTheme = createTheme({
+const BASE_THEME = {
   breakpoints: {
     values: {
       xs: 0,
@@ -41,6 +41,10 @@ export const darkTheme = createTheme({
       "sans-serif",
     ].join(","),
   },
+};
+
+export const darkTheme = createTheme({
+  ...BASE_THEME,
   palette: {
     mode: "dark",
     primary: {
@@ -56,6 +60,25 @@ export const darkTheme = createTheme({
     text: {
       primary: "#ffffff",
       secondary: "#a7a7a7",
+    },
+  },
+});
+
+export const podcasterDashboardTheme = createTheme({
+  ...BASE_THEME,
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#000000",
+      contrastText: "#ffffff",
+    },
+    background: {
+      default: "#ffffff",
+      paper: "#ffffff",
+    },
+    text: {
+      primary: "#000000",
+      secondary: "#6a6a6a",
     },
   },
 });
