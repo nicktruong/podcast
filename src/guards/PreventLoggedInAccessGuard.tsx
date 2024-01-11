@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 
-import { auth } from "@/firebase/init";
 import routes from "@/common/constants/routes";
+import { useAppSelector } from "@/hooks/storeHooks";
+import { selectUser } from "@/store/userSlice";
 
 export default function PreventLoggedInAccessGuard() {
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
 
-  useEffect(() => {
-    auth.onAuthStateChanged(function (user) {
-      if (user) {
-        navigate(routes.index, { replace: true });
-      } else {
-        setLoading(false);
-      }
-    });
-  });
-
-  if (loading) {
-    return <>Loading...</>;
+  if (user.uid) {
+    return <Navigate to={routes.index} replace />;
   }
 
   return <Outlet />;

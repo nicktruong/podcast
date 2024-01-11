@@ -1,12 +1,13 @@
 import { Suspense } from "react";
-import { ErrorBoundary } from "@sentry/react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import { ErrorBoundary } from "@sentry/react";
+import { RouterProvider } from "react-router-dom";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import { darkTheme } from "@/config/themes";
 import router from "@/config/router";
 import { store } from "@/store/store";
+import { darkTheme } from "@/config/themes";
+import AuthListener from "@/containers/auth-listener/AuthListener";
 
 import "./App.css";
 
@@ -16,7 +17,9 @@ function App() {
       <ThemeProvider theme={darkTheme}>
         <Suspense fallback={<p>Loading...</p>}>
           <Provider store={store}>
-            <RouterProvider router={router} />
+            <AuthListener>
+              <RouterProvider router={router} />
+            </AuthListener>
           </Provider>
         </Suspense>
         <CssBaseline />

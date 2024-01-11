@@ -3,3 +3,9 @@ export const genders = [
   { value: "female", label: "Female" },
   { value: "non-binary", label: "Non-binary" },
 ];
+
+export enum Genders {
+  male = "Male",
+  female = "Female",
+  "non-binary" = "Non-binary",
+}
