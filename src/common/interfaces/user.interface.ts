@@ -1,5 +1,5 @@
-import { Genders } from "../constants/genders";
 import { Roles } from "../constants/roles";
+import { Genders } from "../constants/genders";
 
 export interface UserFirebase {
   uid: string;
@@ -10,8 +10,8 @@ export interface UserFirebase {
 }
 
 export interface User {
-  roles: Roles[];
   dob: string; // ISOString
   name: string;
+  roles: Roles[];
   gender: Genders;
 }

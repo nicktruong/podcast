@@ -4,9 +4,9 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import routes from "@/common/constants/routes";
 import StyledInput from "@/components/input/Input";
-import StyledButton from "@/components/button/Button";
-import AuthButton from "@/components/auth-button/AuthButton";
 import { IUserRegister } from "@/common/interfaces";
+import NextButton from "@/components/button/NextButton";
+import AuthButton from "@/components/auth-button/AuthButton";
 import { loginRedirectWithGoogle } from "@/firebase/google-auth";
 import { loginRedirectWithFacebook } from "@/firebase/facebook-auth";
 
@@ -56,7 +56,9 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
             );
           }}
         />
-        <StyledButton onClick={nextStepHandler}>Next</StyledButton>
+        <NextButton sx={{ marginTop: "20px" }} onClick={nextStepHandler}>
+          Next
+        </NextButton>
       </Box>
 
       <Box sx={{ marginTop: 4 }}>

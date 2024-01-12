@@ -8,12 +8,12 @@ export const upgradeUserToPodcaster = async (
   userId: string,
   oldRoles: Roles[]
 ) => {
-  if (oldRoles.includes(Roles.podcaster)) {
+  if (oldRoles.includes(Roles.PODCASTER)) {
     return false;
   }
 
   await updateDoc(doc(db, "users", userId), {
-    roles: [...oldRoles, Roles.podcaster],
+    roles: [...oldRoles, Roles.PODCASTER],
   });
 
   return true;

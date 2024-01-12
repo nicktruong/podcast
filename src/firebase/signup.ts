@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
+import { Roles } from "@/common/constants/roles";
 import { IUserRegister } from "@/common/interfaces";
 
 import { auth } from "./init";
@@ -16,11 +17,20 @@ export const signup = async (user: IUserRegister) => {
       user.password
     );
 
-    await createUserDoc(user);
+    const { name, date, year, email, month, gender } = user;
+
+    await createUserDoc({
+      name,
+      email,
+      gender,
+      role: Roles.LISTENER,
+      uid: signedUpUser.uid,
+      dob: new Date(+year, +month, +date),
+    });
 
     await sendEmailVerification(signedUpUser);
   } catch (error) {
-    // TODO: handle error
+    // TODO: handle error && add toast
     console.error("Sign up fail: ", error);
   }
 };

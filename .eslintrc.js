@@ -31,6 +31,14 @@ module.exports = {
   },
   plugins: ["@stylistic", "@typescript-eslint", "react"],
   rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error", // or "error"
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
     "arrow-parens": ["error", "always"],
     curly: "error",
     "import/order": [

@@ -5,7 +5,7 @@ export const genders = [
 ];
 
 export enum Genders {
-  male = "Male",
-  female = "Female",
-  "non-binary" = "Non-binary",
+  MALE = "Male",
+  FEMALE = "Female",
+  NON_BINARY = "non-binary",
 }

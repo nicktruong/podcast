@@ -1,8 +1,8 @@
 import Joi from "joi";
 
-import { genders } from "@/common/constants/genders";
-import { daysInMonth } from "@/common/utils/date-helpers";
 import { IUserRegister } from "@/common/interfaces";
+import { Genders } from "@/common/constants/genders";
+import { daysInMonth } from "@/common/utils/date-helpers";
 
 const schema = Joi.object<IUserRegister>({
   email: Joi.string()
@@ -22,7 +22,7 @@ const schema = Joi.object<IUserRegister>({
       "string.pattern.base": "Password must pass the below criteria",
     }),
   name: Joi.string().required(),
-  gender: Joi.string().valid(...genders.map((gender) => gender.value)),
+  gender: Joi.string().valid(...Object.keys(Genders)),
   date: Joi.number()
     .custom((value, helper) => {
       value = +value;

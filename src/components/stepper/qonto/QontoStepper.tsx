@@ -1,19 +1,16 @@
 import Step from "@mui/material/Step";
-import Stepper from "@mui/material/Stepper";
+import Stepper, { StepperProps } from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
 
 import QontoConnector from "./QontoConnector";
 import QontoStepIcon from "./QontoStepIcon";
 
-interface HorizontalLinearStepperProps {
+interface Props extends StepperProps {
   steps: string[];
   activeStep: number;
 }
 
-function HorizontalLinearStepper({
-  steps,
-  activeStep,
-}: HorizontalLinearStepperProps) {
+function QontoStepper({ steps, activeStep, ...stepperProps }: Props) {
   return (
     <Stepper
       alternativeLabel
@@ -25,6 +22,7 @@ function HorizontalLinearStepper({
           marginRight: "-32px",
         },
       })}
+      {...stepperProps}
     >
       {steps.map((label) => (
         <Step key={label} sx={{ "&:first-of-type": { flex: 0 } }}>
@@ -45,4 +43,4 @@ function HorizontalLinearStepper({
   );
 }
 
-export default HorizontalLinearStepper;
+export default QontoStepper;

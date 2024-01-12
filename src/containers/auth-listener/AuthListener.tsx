@@ -1,15 +1,15 @@
 import { PropsWithChildren, useEffect } from "react";
 
-import { auth } from "@/firebase/init";
 import {
+  setLoading,
   getUserInfoAction,
   selectInitialUserDataLoading,
-  setLoading,
 } from "@/store/userSlice";
-import { checkUserExists } from "@/firebase/utils";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { createUserDoc } from "@/firebase/createUserDoc";
+import { auth } from "@/firebase/init";
 import { Roles } from "@/common/constants/roles";
+import { checkUserExists } from "@/firebase/utils";
+import { createUserDoc } from "@/firebase/create-user-doc";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 
 export default function AuthListener({ children }: PropsWithChildren) {
   const dispatch = useAppDispatch();
@@ -33,8 +33,8 @@ export default function AuthListener({ children }: PropsWithChildren) {
         await createUserDoc({
           uid: user.uid,
           email: user.email,
+          role: Roles.LISTENER,
           name: user.displayName,
-          role: Roles.listener,
         });
       }
 

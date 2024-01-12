@@ -2,12 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import StyledInput from "@/components/input/Input";
-import StyledButton from "@/components/button/Button";
 import { IUserRegister } from "@/common/interfaces";
-import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
+import NextButton from "@/components/button/NextButton";
+import QontoStepper from "@/components/stepper/qonto/QontoStepper";
 
-import { Steps } from "../interface";
 import { steps } from "../constants";
+import { Steps } from "../interface";
 import StepInfo from "../components/StepInfo";
 
 interface Props {
@@ -28,7 +28,7 @@ export default function PasswordForm({
   return (
     <>
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6">
-        <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
+        <QontoStepper activeStep={activeStep} steps={steps} />
       </Box>
 
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6 pb-10">
@@ -73,7 +73,9 @@ export default function PasswordForm({
             special character.
           </Typography>
 
-          <StyledButton onClick={nextStepHandler}>Next</StyledButton>
+          <NextButton sx={{ marginTop: "20px" }} onClick={nextStepHandler}>
+            Next
+          </NextButton>
         </Box>
       </Box>
     </>

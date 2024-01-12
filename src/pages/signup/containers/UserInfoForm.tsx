@@ -15,9 +15,9 @@ import {
 import StyledInput from "@/components/input/Input";
 import { months } from "@/common/constants/months";
 import { IUserRegister } from "@/common/interfaces";
-import { genders } from "@/common/constants/genders";
-import StyledButton from "@/components/button/Button";
-import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
+import { Genders } from "@/common/constants/genders";
+import NextButton from "@/components/button/NextButton";
+import QontoStepper from "@/components/stepper/qonto/QontoStepper";
 
 import { Steps } from "../interface";
 import { steps } from "../constants";
@@ -43,7 +43,7 @@ export default function UserInfoForm({
   return (
     <>
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6">
-        <HorizontalLinearStepper activeStep={activeStep} steps={steps} />
+        <QontoStepper activeStep={activeStep} steps={steps} />
       </Box>
 
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6 pb-10">
@@ -260,16 +260,16 @@ export default function UserInfoForm({
             render={({ field }) => {
               return (
                 <RadioGroup sx={{ flexDirection: "row" }} {...field}>
-                  {genders.map((gender) => (
+                  {Object.entries(Genders).map(([value, label]) => (
                     <FormControlLabel
                       sx={{
                         "& .MuiTypography-root": { fontSize: "14px" },
                         "& .MuiSvgIcon-root": { fontSize: "20px" },
                       }}
-                      key={gender.value}
+                      key={value}
+                      label={label}
+                      value={value}
                       control={<Radio />}
-                      label={gender.label}
-                      value={gender.value}
                     />
                   ))}
                 </RadioGroup>
@@ -300,8 +300,9 @@ export default function UserInfoForm({
             </FormHelperText>
           )}
 
-          <StyledButton
+          <NextButton
             type="submit"
+            sx={{ marginTop: "20px" }}
             endIcon={
               isSubmitting && (
                 <CircularProgress
@@ -314,7 +315,7 @@ export default function UserInfoForm({
             }
           >
             <span>Finish</span>
-          </StyledButton>
+          </NextButton>
         </Box>
       </Box>
     </>

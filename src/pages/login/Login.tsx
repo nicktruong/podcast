@@ -13,7 +13,7 @@ import { AuthErrorCodes } from "firebase/auth";
 import Logo from "@/components/logo/Logo";
 import routes from "@/common/constants/routes";
 import StyledInput from "@/components/input/Input";
-import StyledButton from "@/components/button/Button";
+import NextButton from "@/components/button/NextButton";
 import AuthButton from "@/components/auth-button/AuthButton";
 import { loginRedirectWithGoogle } from "@/firebase/google-auth";
 import { loginRedirectWithFacebook } from "@/firebase/facebook-auth";
@@ -26,7 +26,13 @@ export default function Login() {
 
   return (
     <Box>
-      <Box className="p-8 flex items-center gap-x-[2px] spacing text-xl max-w-screen-xl mx-auto">
+      <Box
+        sx={(theme) => ({
+          padding: "2rem",
+          maxWidth: theme.breakpoints.values.xl,
+          margin: "0 auto",
+        })}
+      >
         <Logo />
       </Box>
 
@@ -109,7 +115,8 @@ export default function Login() {
               />
             </Box>
 
-            <StyledButton
+            <NextButton
+              sx={{ marginTop: "20px" }}
               type="submit"
               startIcon={isSubmitting && <Box width="20px" />}
               endIcon={
@@ -124,7 +131,7 @@ export default function Login() {
               }
             >
               Log In
-            </StyledButton>
+            </NextButton>
           </form>
 
           <Box sx={{ marginTop: "32px" }}>

@@ -1,23 +1,35 @@
-import { hash, genSalt } from "bcryptjs";
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 
-import { IUserRegister } from "@/common/interfaces";
+import { CreateUserDoc } from "@/common/interfaces/createUserDoc.interface";
 
 import { db } from "./init";
+import { checkUserExists } from "./utils";
 
-export const createUserDoc = async (user: IUserRegister) => {
+export const createUserDoc = async (user: CreateUserDoc) => {
   try {
-    const { date, gender, month, name, password, year } = user;
+    const { gender, uid, name, dob, role } = user;
 
-    const salt = await genSalt(10);
-    const hashedPassword = await hash(password, salt);
+    if (uid) {
+      const userExists = await checkUserExists(uid);
 
-    await addDoc(collection(db, "users"), {
-      name,
-      gender,
-      password: hashedPassword,
-      dob: new Date(+year, +month, +date),
-    });
+      if (userExists) {
+        return;
+      }
+
+      await setDoc(doc(db, "users", uid), {
+        name,
+        roles: [role],
+        dob: dob ?? null,
+        gender: gender ?? null,
+      });
+    } else {
+      await addDoc(collection(db, "users"), {
+        name,
+        roles: [role],
+        dob: dob ?? null,
+        gender: gender ?? null,
+      });
+    }
   } catch (error) {
     console.error("Error creating user: ", error);
   }

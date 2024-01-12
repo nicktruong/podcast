@@ -7,7 +7,7 @@ import { useAppSelector } from "@/hooks/storeHooks";
 export default function PreventListenerAccessGuard() {
   const user = useAppSelector(selectUser);
 
-  if (!user.uid || !user.roles.includes(Roles.podcaster)) {
+  if (!user.uid || !user.roles.includes(Roles.PODCASTER)) {
     return <>404 Not Found</>;
   }
 

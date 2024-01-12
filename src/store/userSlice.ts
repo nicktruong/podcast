@@ -25,8 +25,8 @@ const initialState: UserState = {
     photoURL: "",
     displayName: "",
     emailVerified: false,
-    gender: Genders.female,
-    roles: [Roles.listener],
+    gender: Genders.FEMALE,
+    roles: [Roles.LISTENER],
   },
   initialLoading: true,
 };
@@ -98,7 +98,7 @@ export const userSlice = createSlice({
 
     builder.addCase(upgradeToPodcaster.fulfilled, (state, { payload }) => {
       if (payload) {
-        state.user.roles.push(Roles.podcaster);
+        state.user.roles.push(Roles.PODCASTER);
       }
     });
   },

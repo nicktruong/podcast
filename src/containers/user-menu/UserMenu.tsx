@@ -67,7 +67,7 @@ export default function UserMenu() {
             }}
           >
             <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-            {user.roles.includes(Roles.podcaster) ? (
+            {user.roles.includes(Roles.PODCASTER) ? (
               <MenuItem onClick={handleCloseMenu}>
                 <Link to={routes.podDashboard}>Go to Podcast Dashboard</Link>
               </MenuItem>

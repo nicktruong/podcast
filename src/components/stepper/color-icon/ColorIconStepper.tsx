@@ -1,9 +1,9 @@
 import Step from "@mui/material/Step";
-import Stepper, { StepperProps } from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
+import Stepper, { StepperProps } from "@mui/material/Stepper";
 
-import ColorIconConnector from "./ColorIconConnector";
 import ColorStepIcon from "./ColorStepIcon";
+import ColorIconConnector from "./ColorIconConnector";
 
 interface Props extends StepperProps {
   steps: string[];
