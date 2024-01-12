@@ -6,6 +6,7 @@ import { Genders } from "@/common/constants/genders";
 import { AsyncThunkConfig } from "@/hooks/storeHooks";
 import { UserFirebase, User } from "@/common/interfaces/user.interface";
 import { upgradeUserToPodcaster } from "@/firebase/upgradeUserToPodcaster";
+import { auth } from "@/firebase/init";
 
 import { RootState } from "./store";
 
@@ -70,6 +71,13 @@ export const upgradeToPodcaster = createAsyncThunk<
   return result;
 });
 
+export const signOut = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+  "user/signOut",
+  async () => {
+    await auth.signOut();
+  }
+);
+
 export const userSlice = createSlice({
   name: "user",
   initialState,
@@ -100,6 +108,10 @@ export const userSlice = createSlice({
       if (payload) {
         state.user.roles.push(Roles.PODCASTER);
       }
+    });
+
+    builder.addCase(signOut.fulfilled, (state) => {
+      state.user = initialState.user;
     });
   },
 });

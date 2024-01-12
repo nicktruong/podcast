@@ -19,6 +19,7 @@ export default function UserMenu() {
     user,
     open,
     anchorEl,
+    handleSignOut,
     handleCloseMenu,
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
@@ -76,7 +77,7 @@ export default function UserMenu() {
                 Upgrade to Podcaster
               </MenuItem>
             )}
-            <MenuItem onClick={handleCloseMenu}>Logout</MenuItem>
+            <MenuItem onClick={handleSignOut}>Logout</MenuItem>
           </Menu>
         </Box>
       </Toolbar>

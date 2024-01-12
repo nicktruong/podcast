@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { selectUser, upgradeToPodcaster } from "@/store/userSlice";
+import { selectUser, signOut, upgradeToPodcaster } from "@/store/userSlice";
 
 const useHelper = () => {
   const dispatch = useAppDispatch();
@@ -23,10 +23,16 @@ const useHelper = () => {
     dispatch(upgradeToPodcaster());
   };
 
+  const handleSignOut = () => {
+    handleCloseMenu();
+    dispatch(signOut());
+  };
+
   return {
     user,
     open,
     anchorEl,
+    handleSignOut,
     handleCloseMenu,
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
