@@ -1,16 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { auth } from "@/firebase/init";
 import { Roles } from "@/common/constants/roles";
 import { getUserInfo } from "@/firebase/getUserInfo";
 import { Genders } from "@/common/constants/genders";
 import { AsyncThunkConfig } from "@/hooks/storeHooks";
-import { UserFirebase, User } from "@/common/interfaces/user.interface";
 import { upgradeUserToPodcaster } from "@/firebase/upgradeUserToPodcaster";
-import { auth } from "@/firebase/init";
+import { UserFirebase, UserInfo } from "@/common/interfaces/user.interface";
 
 import { RootState } from "./store";
-
-type UserInfo = UserFirebase & User;
 
 export interface UserState {
   user: UserInfo;
@@ -71,12 +69,9 @@ export const upgradeToPodcaster = createAsyncThunk<
   return result;
 });
 
-export const signOut = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  "user/signOut",
-  async () => {
-    await auth.signOut();
-  }
-);
+export const signOut = createAsyncThunk("user/signOut", async () => {
+  await auth.signOut();
+});
 
 export const userSlice = createSlice({
   name: "user",
@@ -119,6 +114,7 @@ export const userSlice = createSlice({
 export const { setLoading, setUser } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
+export const selectUserId = (state: RootState) => state.user.user.uid;
 export const selectInitialUserDataLoading = (state: RootState) =>
   state.user.initialLoading;
 

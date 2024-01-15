@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import {
-  fetchUserPodSeries,
+  fetchCreatorPodSeries,
   selectPodSeriesMetadata,
 } from "@/store/podSeriesSlice";
 import { selectUser } from "@/store/userSlice";
@@ -18,7 +18,7 @@ export default function PodDashboard() {
 
   useEffect(() => {
     if (uid) {
-      dispatch(fetchUserPodSeries(uid));
+      dispatch(fetchCreatorPodSeries(uid));
     }
   }, [uid]);
 

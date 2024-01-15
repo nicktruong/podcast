@@ -1,4 +1,4 @@
-import { collection, addDoc, setDoc, doc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, Timestamp } from "firebase/firestore";
 
 import { CreateUserDoc } from "@/common/interfaces/createUserDoc.interface";
 
@@ -6,31 +6,32 @@ import { db } from "./init";
 import { checkUserExists } from "./utils";
 
 export const createUserDoc = async (user: CreateUserDoc) => {
-  try {
-    const { gender, uid, name, dob, role } = user;
+  const { gender, uid, name, dob, role } = user;
+  let timestampDob: Timestamp | undefined;
 
-    if (uid) {
-      const userExists = await checkUserExists(uid);
+  if (dob) {
+    timestampDob = Timestamp.fromDate(dob);
+  }
 
-      if (userExists) {
-        return;
-      }
+  if (uid) {
+    const userExists = await checkUserExists(uid);
 
-      await setDoc(doc(db, "users", uid), {
-        name,
-        roles: [role],
-        dob: dob ?? null,
-        gender: gender ?? null,
-      });
-    } else {
-      await addDoc(collection(db, "users"), {
-        name,
-        roles: [role],
-        dob: dob ?? null,
-        gender: gender ?? null,
-      });
+    if (userExists) {
+      return;
     }
-  } catch (error) {
-    console.error("Error creating user: ", error);
+
+    await setDoc(doc(db, "users", uid), {
+      name,
+      roles: [role],
+      dob: timestampDob ?? null,
+      gender: gender ?? null,
+    });
+  } else {
+    await addDoc(collection(db, "users"), {
+      name,
+      roles: [role],
+      dob: timestampDob ?? null,
+      gender: gender ?? null,
+    });
   }
 };

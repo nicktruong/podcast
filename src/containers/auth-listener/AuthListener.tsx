@@ -30,6 +30,7 @@ export default function AuthListener({ children }: PropsWithChildren) {
       const userExists = await checkUserExists(user.uid);
 
       if (!userExists && user.email && user.displayName) {
+        // TODO: Handle error
         await createUserDoc({
           uid: user.uid,
           email: user.email,

@@ -15,3 +15,5 @@ export interface User {
   roles: Roles[];
   gender: Genders;
 }
+
+export type UserInfo = UserFirebase & User;

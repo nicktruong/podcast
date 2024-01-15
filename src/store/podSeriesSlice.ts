@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createSelector,
+  createAsyncThunk,
+} from "@reduxjs/toolkit";
 
 import { getUserPodSeries } from "@/firebase/getUserPodSeries";
 
@@ -38,8 +42,8 @@ const initialState: PodSeriesState = {
   hasPodSeries: false,
 };
 
-export const fetchUserPodSeries = createAsyncThunk(
-  "podSeries/fetchByUserId",
+export const fetchCreatorPodSeries = createAsyncThunk(
+  "podSeries/fetchByCreatorId",
   async (creatorId: string) => {
     const podSeries = await getUserPodSeries(creatorId);
 
@@ -60,11 +64,11 @@ export const podSeriesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchUserPodSeries.pending, (state) => {
+    builder.addCase(fetchCreatorPodSeries.pending, (state) => {
       state.loading = true;
     });
 
-    builder.addCase(fetchUserPodSeries.fulfilled, (state, { payload }) => {
+    builder.addCase(fetchCreatorPodSeries.fulfilled, (state, { payload }) => {
       state.loading = false;
 
       const initialPodSeries = initialState.podSeries;
@@ -100,16 +104,21 @@ export const podSeriesSlice = createSlice({
       };
     });
 
-    builder.addCase(fetchUserPodSeries.rejected, (state) => {
+    builder.addCase(fetchCreatorPodSeries.rejected, (state) => {
       state.loading = false;
     });
   },
 });
 
-export const selectPodSeriesMetadata = (state: RootState) => ({
-  loading: state.podSeries.loading,
-  hasPodSeries: state.podSeries.hasPodSeries,
-});
+export const selectLoading = (state: RootState) => state.podSeries.loading;
+
+export const selectHasPodSeries = (state: RootState) => state.podSeries.loading;
+
+export const selectPodSeriesMetadata = createSelector(
+  [selectLoading, selectHasPodSeries],
+  (loading, hasPodSeries) => ({ loading, hasPodSeries })
+);
+
 export const selectPodSeries = (state: RootState) => state.podSeries.podSeries;
 
 export default podSeriesSlice.reducer;
