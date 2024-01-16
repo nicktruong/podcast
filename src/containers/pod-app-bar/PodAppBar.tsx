@@ -5,7 +5,11 @@ import { Box, IconButton, AppBar, Toolbar } from "@mui/material";
 import Logo from "@/components/logo/Logo";
 import StyledDrawer from "@/containers/drawer/StyledDrawer";
 
-export default function PodAppbar() {
+interface Props {
+  handleClickOpenEpisodeDialog: () => void;
+}
+
+export default function PodAppbar({ handleClickOpenEpisodeDialog }: Props) {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   const toggleDrawer =
@@ -47,7 +51,11 @@ export default function PodAppbar() {
         </Toolbar>
       </AppBar>
 
-      <StyledDrawer openDrawer={openDrawer} toggleDrawer={toggleDrawer} />
+      <StyledDrawer
+        openDrawer={openDrawer}
+        toggleDrawer={toggleDrawer}
+        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
+      />
     </>
   );
 }

@@ -3,11 +3,11 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { publishPod } from "@/firebase/publishPod";
 import { AsyncThunkConfig } from "@/hooks/storeHooks";
 import { Pod } from "@/common/interfaces/pod.interface";
+import { countEpisodes } from "@/firebase/countEpisodes";
 import { PodStatus } from "@/common/constants/pod-status";
 import { CreatorsPodcasts } from "@/common/interfaces/ICreatorsPodcasts";
 import { CreateEpisodeSteps } from "@/common/constants/create-episode-steps";
 import { getCreatorsPodsPagination } from "@/firebase/getCreatorsPodsPagination";
-import { countEpisodes } from "@/firebase/countEpisodes";
 import { getCurrentCreatorPodcastsPagination } from "@/firebase/getCurrentCreatorPodcastsPagination";
 
 import { RootState } from "./store";
@@ -79,7 +79,7 @@ export const countEpisodesAction = createAsyncThunk<
 });
 
 export const publishPodAction = createAsyncThunk<
-  CreatorsPodcasts,
+  { creatorsPodcasts: CreatorsPodcasts; pod: Pod },
   undefined,
   AsyncThunkConfig
 >("pod/publish", async (_, thunkApi) => {
@@ -91,7 +91,7 @@ export const publishPodAction = createAsyncThunk<
   const pod = selectPodInfo(thunkApi.getState());
   const creatorsPodcasts = await publishPod(pod, userId);
 
-  return creatorsPodcasts;
+  return { pod, creatorsPodcasts };
 });
 
 export const getCreatorsPodsPaginationAction = createAsyncThunk<
@@ -158,7 +158,9 @@ export const podSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(publishPodAction.fulfilled, (state, action) => {
-      state.creatorsPodcasts = [action.payload];
+      state.creatorsPodcasts = [action.payload.creatorsPodcasts];
+      state.pods.unshift(action.payload.pod);
+      state.episodesCount += 1;
       state.pod = initialState.pod;
       state.progressInPercent = 0;
       state.uploadStep = CreateEpisodeSteps.UPLOAD_AUDIO;

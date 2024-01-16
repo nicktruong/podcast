@@ -4,37 +4,21 @@ import { Typography } from "@mui/material";
 import { ColorIconStepper } from "@/components/stepper/color-icon";
 import RoundedButton from "@/components/rounded-button/RoundedButton";
 
-import { PodcasterCreateSeriesDialog } from "../PodcasterCreateSeriesDialog";
-import PodCreateEpisodeDialog from "../pod-create-episode-dialog/PodCreateEpisodeDialog";
-
 import useHelper from "./useHelper";
 
-export default function PodOnboarding() {
-  const {
-    cx,
-    classes,
-    hasPodSeries,
-    createdFirstEp,
-    openCreateSeriesDialog,
-    openCreateEpisodeDialog,
-    handleCloseSeriesDialog,
-    handleCloseEpisodeDialog,
-    handleClickOpenEpisodeDialog,
-    handleOpenCreateSeriesDialog,
-  } = useHelper();
+interface Props {
+  handleClickOpenEpisodeDialog: () => void;
+  handleOpenCreateSeriesDialog: () => void;
+}
+
+export default function PodOnboarding({
+  handleClickOpenEpisodeDialog,
+  handleOpenCreateSeriesDialog,
+}: Props) {
+  const { cx, classes, hasPodSeries, createdFirstEp } = useHelper();
 
   return (
     <Box className={classes.onboardingRoot}>
-      <PodCreateEpisodeDialog
-        open={openCreateEpisodeDialog}
-        handleClose={handleCloseEpisodeDialog}
-      />
-
-      <PodcasterCreateSeriesDialog
-        open={openCreateSeriesDialog}
-        handleClose={handleCloseSeriesDialog}
-      />
-
       <Box className={classes.welcomeBox}>
         <Typography className={classes.welcomeHeader}>
           Welcome to <span className="whitespace-nowrap">GO Podcast</span> for

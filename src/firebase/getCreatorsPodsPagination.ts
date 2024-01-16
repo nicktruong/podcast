@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   doc,
   limit,
@@ -20,7 +21,7 @@ import { db } from "./init";
 
 export const getCreatorsPodsPagination = async ({
   creatorId,
-  offset = new Date(2024, 0, 1),
+  offset = new Date(),
   pageSize = 5,
 }: {
   page?: number;
@@ -31,7 +32,7 @@ export const getCreatorsPodsPagination = async ({
   const q = query(
     collection(db, CREATORS_PODCASTS),
     where("creatorId", "==", doc(db, USERS, creatorId)),
-    orderBy("createdAt"),
+    orderBy("createdAt", "desc"),
     startAt(Timestamp.fromDate(offset)),
     limit(pageSize)
   );

@@ -10,16 +10,12 @@ import {
   PODCASTS,
   CREATORS_PODCASTS,
 } from "@/common/constants/firestoreCollectionNames";
-import { CreatorsPodcasts } from "@/common/interfaces";
 import { Pod } from "@/common/interfaces/pod.interface";
 import { PodStatus } from "@/common/constants/pod-status";
 
 import { db } from "./init";
 
-export const publishPod = async (
-  pod: Pod,
-  userId: string
-): Promise<CreatorsPodcasts> => {
+export const publishPod = async (pod: Pod, userId: string) => {
   // create pod document
   const docRef = await addDoc(collection(db, PODCASTS), {
     title: pod.title,

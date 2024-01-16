@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import {
   fetchSeriesImage,
@@ -22,26 +22,6 @@ const useHelper = () => {
 
   const { classes, cx } = useStyles();
 
-  const [openCreateEpisodeDialog, setOpenCreateEpisodeDialog] = useState(false);
-
-  const [openCreateSeriesDialog, setOpenCreateSeriesDialog] = useState(false);
-
-  const handleClickOpenEpisodeDialog = () => {
-    setOpenCreateEpisodeDialog(true);
-  };
-
-  const handleOpenCreateSeriesDialog = () => {
-    setOpenCreateSeriesDialog(true);
-  };
-
-  const handleCloseSeriesDialog = () => {
-    setOpenCreateSeriesDialog(false);
-  };
-
-  const handleCloseEpisodeDialog = () => {
-    setOpenCreateEpisodeDialog(false);
-  };
-
   useEffect(() => {
     if (!seriesImage) {
       dispatch(fetchSeriesImage());
@@ -53,12 +33,6 @@ const useHelper = () => {
     classes,
     hasPodSeries,
     createdFirstEp,
-    openCreateSeriesDialog,
-    openCreateEpisodeDialog,
-    handleCloseSeriesDialog,
-    handleCloseEpisodeDialog,
-    handleClickOpenEpisodeDialog,
-    handleOpenCreateSeriesDialog,
   };
 };
 
