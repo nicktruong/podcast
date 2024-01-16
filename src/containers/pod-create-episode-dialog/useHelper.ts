@@ -55,7 +55,7 @@ const useHelper = ({ handleClose }: Props) => {
 
   const onSubmit = handleSubmit((data) => {
     dispatch(
-      setPodUploadDetails({ ...data, published_date: new Date().toISOString() })
+      setPodUploadDetails({ ...data, publishedDate: new Date().toISOString() })
     );
     dispatch(setUploadStep(CreateEpisodeSteps.REVIEW_PUBLISH));
   });

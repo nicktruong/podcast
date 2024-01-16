@@ -11,5 +11,5 @@ export interface Pod {
   updatedAt: string; // in ISO format
   pathToFile: string;
   description: string;
-  published_date: string; // in ISO format
+  publishedDate: string; // in ISO format
 }

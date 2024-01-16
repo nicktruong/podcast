@@ -31,7 +31,7 @@ export const publishPod = async (
     updatedAt: serverTimestamp(),
     pathToFile: pod.pathToFile,
     description: pod.description,
-    published_date: Timestamp.fromDate(new Date(pod.published_date)),
+    publishedDate: Timestamp.fromDate(new Date(pod.publishedDate)),
   });
 
   const creatorsPodcasts = {

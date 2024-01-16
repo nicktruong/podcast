@@ -46,7 +46,7 @@ const initialState: PodSeriesState = {
 };
 
 export const fetchSeriesImage = createAsyncThunk<
-  Blob | undefined,
+  string | undefined,
   undefined,
   AsyncThunkConfig
 >("podSeries/fetchSeriesImage", async (_, thunkApi) => {
@@ -55,7 +55,7 @@ export const fetchSeriesImage = createAsyncThunk<
   if (coverUrl) {
     const blob = await downloadPhoto(coverUrl);
 
-    return blob;
+    return URL.createObjectURL(blob);
   }
 });
 
@@ -180,7 +180,7 @@ export const podSeriesSlice = createSlice({
 
     builder.addCase(fetchSeriesImage.fulfilled, (state, action) => {
       if (action.payload) {
-        state.image = URL.createObjectURL(action.payload);
+        state.image = action.payload;
       }
     });
 

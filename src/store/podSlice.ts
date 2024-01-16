@@ -7,6 +7,8 @@ import { PodStatus } from "@/common/constants/pod-status";
 import { CreatorsPodcasts } from "@/common/interfaces/ICreatorsPodcasts";
 import { CreateEpisodeSteps } from "@/common/constants/create-episode-steps";
 import { getCreatorsPodsPagination } from "@/firebase/getCreatorsPodsPagination";
+import { countEpisodes } from "@/firebase/countEpisodes";
+import { getCurrentCreatorPodcastsPagination } from "@/firebase/getCurrentCreatorPodcastsPagination";
 
 import { RootState } from "./store";
 import { selectUserId } from "./userSlice";
@@ -14,11 +16,12 @@ import { selectUserId } from "./userSlice";
 interface PodState {
   pod: Pod;
   pods: Pod[];
-  creatorsPodcasts: CreatorsPodcasts[];
   uploading: boolean;
   loadingPods: boolean;
+  episodesCount: number;
   progressInPercent: number;
   uploadStep: CreateEpisodeSteps;
+  creatorsPodcasts: CreatorsPodcasts[];
 }
 
 const initialState: PodState = {
@@ -32,16 +35,48 @@ const initialState: PodState = {
     updatedAt: "", // in ISO format
     pathToFile: "",
     description: "",
-    published_date: "", // in ISO format
+    publishedDate: "", // in ISO format
     status: PodStatus.DRAFT,
   },
   pods: [],
-  creatorsPodcasts: [],
+  episodesCount: 0,
   uploading: false,
   loadingPods: false,
+  creatorsPodcasts: [],
   progressInPercent: 0,
   uploadStep: CreateEpisodeSteps.UPLOAD_AUDIO,
 };
+
+export const getCurrentCreatorPodcastsPaginationAction = createAsyncThunk<
+  Pod[],
+  { offset?: Date; pageSize?: number },
+  AsyncThunkConfig
+>(
+  "pod/getCurrentCreatorPodcastsPagination",
+  async ({ offset, pageSize }, thunkApi) => {
+    const userId = selectUserId(thunkApi.getState());
+
+    const pods = await getCurrentCreatorPodcastsPagination({
+      creatorId: userId,
+      offset,
+      pageSize,
+    });
+
+    return pods;
+  }
+);
+
+export const countEpisodesAction = createAsyncThunk<
+  number,
+  undefined,
+  AsyncThunkConfig
+>("pod/countEpisodesAction", async (_, thunkApi) => {
+  const userId = selectUserId(thunkApi.getState());
+
+  const count = await countEpisodes(userId);
+
+  return count;
+});
 
 export const publishPodAction = createAsyncThunk<
   CreatorsPodcasts,
@@ -99,7 +134,7 @@ export const podSlice = createSlice({
       action: PayloadAction<{
         title: string;
         description: string;
-        published_date: string;
+        publishedDate: string;
         // status: PodStatus;
       }>
     ) => {
@@ -152,9 +187,33 @@ export const podSlice = createSlice({
         console.error(action.error);
       }
     );
+
+    builder.addCase(countEpisodesAction.fulfilled, (state, action) => {
+      state.episodesCount = action.payload;
+    });
+
+    builder.addCase(countEpisodesAction.rejected, (_, { error }) => {
+      console.error(error);
+    });
+
+    builder.addCase(
+      getCurrentCreatorPodcastsPaginationAction.fulfilled,
+      (state, action) => {
+        state.pods = action.payload;
+      }
+    );
+
+    builder.addCase(
+      getCurrentCreatorPodcastsPaginationAction.rejected,
+      (state, { error }) => {
+        console.error(error);
+      }
+    );
   },
 });
 
+export const selectEpisodesCount = (state: RootState) =>
+  state.pod.episodesCount;
 export const selectCreatorsPodcasts = (state: RootState) =>
   state.pod.creatorsPodcasts;
 export const selectPods = (state: RootState) => state.pod.pods;

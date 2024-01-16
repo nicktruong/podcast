@@ -9,16 +9,27 @@ import {
 } from "@/store/podSeriesSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import RoundedButton from "@/components/rounded-button/RoundedButton";
+import {
+  countEpisodesAction,
+  getCurrentCreatorPodcastsPaginationAction,
+  selectEpisodesCount,
+  selectPods,
+} from "@/store/podSlice";
 
 export default function PodDashboardOverview() {
   const dispatch = useAppDispatch();
+  const pods = useAppSelector(selectPods);
   const podSeries = useAppSelector(selectPodSeries);
   const seriesImage = useAppSelector(selectCoverImage);
+  const episodesCount = useAppSelector(selectEpisodesCount);
 
   useEffect(() => {
     if (!seriesImage) {
       dispatch(fetchSeriesImage());
     }
+
+    dispatch(countEpisodesAction());
+    dispatch(getCurrentCreatorPodcastsPaginationAction({ pageSize: 1 }));
   }, []);
 
   return (
@@ -83,7 +94,7 @@ export default function PodDashboardOverview() {
                 lineHeight: "32px",
               }}
             >
-              Meditation
+              {podSeries.title}
             </Typography>
 
             <Typography
@@ -94,7 +105,7 @@ export default function PodDashboardOverview() {
                 color: theme.palette.text.secondary,
               })}
             >
-              1 episode
+              {episodesCount} episode(s)
             </Typography>
           </Box>
 
@@ -155,7 +166,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                0
+                {podSeries.playCount}
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -189,7 +200,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                0
+                {podSeries.audienceSize}
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -213,7 +224,7 @@ export default function PodDashboardOverview() {
                   fontSize: "13px",
                 }}
               >
-                Spotify followeres
+                Followeres
               </Typography>
               <Typography
                 sx={{
@@ -257,6 +268,7 @@ export default function PodDashboardOverview() {
             sx={{
               display: "flex",
               marginTop: "8px",
+              minWidth: "307px",
               borderRadius: "4px",
               padding: "32px 24px",
               border: "1px solid #dedede",
@@ -278,7 +290,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                0
+                {pods[0]?.playCount}
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -289,7 +301,7 @@ export default function PodDashboardOverview() {
                   color: theme.palette.text.secondary,
                 })}
               >
-                Meditation - Overcoming the fear of speaking English
+                {pods[0]?.title}
               </Typography>
             </Box>
 
@@ -303,7 +315,7 @@ export default function PodDashboardOverview() {
               <img
                 alt=""
                 className="w-full h-full object-cover rounded"
-                src="https://i.scdn.co/image/ab6765630000ba8a18441b42e191493c12e85a3d"
+                src={seriesImage}
               />
             </Box>
           </Box>
