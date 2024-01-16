@@ -129,6 +129,10 @@ export const podSlice = createSlice({
       state.uploadStep = CreateEpisodeSteps.UPLOAD_AUDIO;
     });
 
+    builder.addCase(publishPodAction.rejected, (_, { error }) => {
+      console.error(error);
+    });
+
     builder.addCase(getCreatorsPodsPaginationAction.pending, (state) => {
       state.loadingPods = true;
     });

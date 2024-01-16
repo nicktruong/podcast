@@ -46,15 +46,17 @@ const initialState: PodSeriesState = {
 };
 
 export const fetchSeriesImage = createAsyncThunk<
-  Blob,
+  Blob | undefined,
   undefined,
   AsyncThunkConfig
 >("podSeries/fetchSeriesImage", async (_, thunkApi) => {
-  const blob = await downloadPhoto(
-    selectPodSeries(thunkApi.getState()).coverUrl
-  );
+  const coverUrl = selectPodSeries(thunkApi.getState()).coverUrl;
 
-  return blob;
+  if (coverUrl) {
+    const blob = await downloadPhoto(coverUrl);
+
+    return blob;
+  }
 });
 
 export const createPodcastSeriesAction = createAsyncThunk<
@@ -177,7 +179,9 @@ export const podSeriesSlice = createSlice({
     });
 
     builder.addCase(fetchSeriesImage.fulfilled, (state, action) => {
-      state.image = URL.createObjectURL(action.payload);
+      if (action.payload) {
+        state.image = URL.createObjectURL(action.payload);
+      }
     });
 
     builder.addCase(fetchSeriesImage.rejected, (_, { error }) => {

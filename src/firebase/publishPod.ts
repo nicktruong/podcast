@@ -47,7 +47,7 @@ export const publishPod = async (
   return {
     creatorId: creatorsPodcasts.creatorId.path,
     podcastId: creatorsPodcasts.podcastId.path,
-    createdAt: (creatorsPodcasts.createdAt as Timestamp).toDate().toISOString(),
-    updatedAt: (creatorsPodcasts.updatedAt as Timestamp).toDate().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   };
 };

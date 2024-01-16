@@ -9,12 +9,13 @@ import {
 } from "firebase/firestore";
 
 import { IGetPodSeries } from "@/common/interfaces/getPodSeries.interface";
+import { CREATORS_PODCAST_SERIES } from "@/common/constants/firestoreCollectionNames";
 
 import { db } from "./init";
 
 export const getUserPodSeries = async (creatorId: string) => {
   const q = query(
-    collection(db, "creatorsPodcastSeries"),
+    collection(db, CREATORS_PODCAST_SERIES),
     where("creatorId", "==", doc(db, "users", creatorId))
   );
 
