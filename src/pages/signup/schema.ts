@@ -39,7 +39,7 @@ const schema = Joi.object<IUserRegister>({
         return helper.error("dob.date.range");
       }
 
-      return true;
+      return value;
     })
     .messages({
       "dob.date": "Date must be a number",
@@ -58,7 +58,7 @@ const schema = Joi.object<IUserRegister>({
         return helper.error("dob.year.range");
       }
 
-      return true;
+      return value;
     })
     .messages({
       "dob.year": "Year must be a number",

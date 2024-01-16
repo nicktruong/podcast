@@ -1,74 +1,56 @@
-import {
-  FieldValue,
-  addDoc,
-  collection,
-  doc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { writeFile } from "fs/promises";
+
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 import { db } from "@/firebase/init";
+import { CATEGORIES } from "@/common/constants/firestoreCollectionNames";
 
-import categories from "./categories-seed.json";
+import categories from "./categories.json";
 
 const seedTimestamp = serverTimestamp();
 
-interface Category {
-  title: string;
-  description: string;
-  createdAt: FieldValue;
-  updatedAt: FieldValue;
-}
-
-const addCategory = (category: Category) => {
-  return addDoc(collection(db, "categories"), category);
+const createCategoryObj = (category: string) => {
+  return {
+    name: category,
+    createdAt: seedTimestamp,
+    updatedAt: seedTimestamp,
+  };
 };
 
-const addChildCategory = ({
-  parentId,
-  childId,
-}: {
-  parentId: string;
-  childId: string;
-}) => {
-  return addDoc(collection(db, "childCategories"), {
-    parentId: doc(db, "users", parentId),
-    childId: doc(db, "users", childId),
-  });
-};
+export const migrate = async () => {
+  console.log("Begin categories migration");
+  const categoryObjs = [];
 
-const migrate = async () => {
-  for (const key of Object.keys(categories)) {
-    const parentDocument = await addCategory({
-      title: key,
-      description: "",
-      createdAt: seedTimestamp,
-      updatedAt: seedTimestamp,
+  for (const [category, subcategories] of Object.entries(categories)) {
+    // Add the category itself as an object
+    categoryObjs.push(createCategoryObj(category));
+
+    // Add each subcategory as an object
+    subcategories.forEach((subcategory) => {
+      categoryObjs.push(createCategoryObj(subcategory));
     });
-
-    console.log(`Parent Category ${key} added`);
-
-    (categories as { [key: string]: string[] })[key].forEach(
-      async (category) => {
-        const childDocument = await addCategory({
-          title: category,
-          description: "",
-          createdAt: seedTimestamp,
-          updatedAt: seedTimestamp,
-        });
-        console.log(`Child Category ${category} added`);
-
-        await addChildCategory({
-          parentId: parentDocument.id,
-          childId: childDocument.id,
-        });
-
-        console.log(`Relationship between ${key} and ${category} added`);
-      }
-    );
   }
 
-  console.log("Done categories migration");
-  process.exit();
-};
+  const response = await Promise.all(
+    categoryObjs.map((category) => addDoc(collection(db, CATEGORIES), category))
+  );
 
-migrate();
+  console.log("Seeded categories");
+
+  const seededData = JSON.stringify(
+    categoryObjs.map((obj, index) => ({ id: response[index].id, ...obj })),
+    (key, value) => {
+      if (key === "createdAt" || key === "updatedAt") {
+        return undefined;
+      }
+
+      return value;
+    },
+    2
+  );
+
+  await writeFile("./src/seeds/categories/seededData.json", seededData);
+
+  console.log("Done categories migration");
+  console.log("==================================");
+};
