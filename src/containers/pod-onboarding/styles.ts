@@ -47,7 +47,7 @@ export const useStyles = tss.create(({ theme }) => ({
     maxWidth: "350px",
     display: "flex",
     flexDirection: "column",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
   },
 }));

@@ -1,13 +1,15 @@
 import { Box, Typography } from "@mui/material";
+import ImageIcon from "@mui/icons-material/Image";
 
 import { Pod, UserInfo } from "@/common/interfaces";
 
 interface Props {
   podInfo: Pod;
   user: UserInfo;
+  image?: string;
 }
 
-export default function ReviewPublish({ podInfo, user }: Props) {
+export default function ReviewPublish({ podInfo, user, image }: Props) {
   return (
     <Box>
       <Typography
@@ -26,13 +28,23 @@ export default function ReviewPublish({ podInfo, user }: Props) {
           alignItems: "center",
         }}
       >
-        <img
-          width="56px"
-          height="56px"
-          className="rounded"
-          alt="Podcast cover art"
-          src="https://s3-us-west-2.amazonaws.com/anchor-generated-image-bank/staging/podcast_uploaded_nologo/40224692/40224692-1704860591325-8737e31cf4558.jpg"
-        />
+        {image ? (
+          <img
+            width="56px"
+            height="56px"
+            className="rounded"
+            alt="Podcast cover art"
+            src={image}
+          />
+        ) : (
+          <ImageIcon
+            sx={{
+              width: "56px",
+              height: "56px",
+              borderRadius: "4px",
+            }}
+          />
+        )}
 
         <Box>
           <Typography

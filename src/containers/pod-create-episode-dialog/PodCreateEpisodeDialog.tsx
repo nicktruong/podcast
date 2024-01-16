@@ -20,6 +20,7 @@ export default function PodCreateEpisodeDialog({ open, handleClose }: Props) {
   const {
     step,
     user,
+    image,
     errors,
     control,
     podInfo,
@@ -43,7 +44,7 @@ export default function PodCreateEpisodeDialog({ open, handleClose }: Props) {
         );
 
       case CreateEpisodeSteps.REVIEW_PUBLISH:
-        return <ReviewPublish podInfo={podInfo} user={user} />;
+        return <ReviewPublish podInfo={podInfo} user={user} image={image} />;
 
       default:
         return <>404 Step not found!</>;

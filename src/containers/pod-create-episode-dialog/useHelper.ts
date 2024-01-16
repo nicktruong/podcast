@@ -17,7 +17,8 @@ import {
   setUploadStep,
 } from "@/store/podSlice";
 import { selectUser } from "@/store/userSlice";
-import { uploadMp3 } from "@/firebase/uploadMp3";
+import { uploadFile } from "@/firebase/uploadFile";
+import { selectCoverImage } from "@/store/podSeriesSlice";
 import { ICreateEpisodeDetails } from "@/common/interfaces";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { CreateEpisodeSteps } from "@/common/constants/create-episode-steps";
@@ -33,6 +34,7 @@ const useHelper = ({ handleClose }: Props) => {
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);
   const podInfo = useAppSelector(selectPodInfo);
+  const image = useAppSelector(selectCoverImage);
   const podUploading = useAppSelector(selectUploading);
   const podUploadingProgress = useAppSelector(selectProgress);
   const [uploadTask, setUploadTask] = useState<UploadTask>();
@@ -59,7 +61,7 @@ const useHelper = ({ handleClose }: Props) => {
   });
 
   const onFileUpload = (acceptedFiles: File[]) => {
-    const { uploadTask, fullPath } = uploadMp3(acceptedFiles[0]);
+    const { uploadTask, fullPath } = uploadFile("audios", acceptedFiles[0]);
     setUploadTask(uploadTask);
     dispatch(setPodPathToFile(fullPath));
     dispatch(setUploadStep(CreateEpisodeSteps.EDIT_DETAILS));
@@ -106,6 +108,7 @@ const useHelper = ({ handleClose }: Props) => {
   return {
     step,
     user,
+    image,
     errors,
     control,
     podInfo,

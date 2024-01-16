@@ -2,6 +2,10 @@ import { useEffect } from "react";
 import Box from "@mui/material/Box";
 
 import {
+  selectCreatorsPodcasts,
+  getCreatorsPodsPaginationAction,
+} from "@/store/podSlice";
+import {
   fetchCreatorPodSeries,
   selectPodSeriesMetadata,
 } from "@/store/podSeriesSlice";
@@ -15,10 +19,13 @@ export default function PodDashboard() {
   const dispatch = useAppDispatch();
   const { uid } = useAppSelector(selectUser);
   const { loading, hasPodSeries } = useAppSelector(selectPodSeriesMetadata);
+  const createdFirstEp =
+    useAppSelector(selectCreatorsPodcasts)[0] !== undefined;
 
   useEffect(() => {
     if (uid) {
       dispatch(fetchCreatorPodSeries(uid));
+      dispatch(getCreatorsPodsPaginationAction({ pageSize: 1 }));
     }
   }, [uid]);
 
@@ -28,8 +35,7 @@ export default function PodDashboard() {
 
   let content: JSX.Element;
 
-  // TODO: check for series and podcast
-  if (!hasPodSeries) {
+  if (!hasPodSeries || !createdFirstEp) {
     content = <PodOnboarding />;
   } else {
     content = <PodDashboardOverview />;

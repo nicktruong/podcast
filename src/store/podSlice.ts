@@ -44,7 +44,7 @@ const initialState: PodState = {
 };
 
 export const publishPodAction = createAsyncThunk<
-  void,
+  CreatorsPodcasts,
   undefined,
   AsyncThunkConfig
 >("pod/publish", async (_, thunkApi) => {
@@ -54,7 +54,9 @@ export const publishPodAction = createAsyncThunk<
 
   const userId = selectUserId(thunkApi.getState());
   const pod = selectPodInfo(thunkApi.getState());
-  await publishPod(pod, userId);
+  const creatorsPodcasts = await publishPod(pod, userId);
+
+  return creatorsPodcasts;
 });
 
 export const getCreatorsPodsPaginationAction = createAsyncThunk<
@@ -120,7 +122,8 @@ export const podSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(publishPodAction.fulfilled, (state) => {
+    builder.addCase(publishPodAction.fulfilled, (state, action) => {
+      state.creatorsPodcasts = [action.payload];
       state.pod = initialState.pod;
       state.progressInPercent = 0;
       state.uploadStep = CreateEpisodeSteps.UPLOAD_AUDIO;
@@ -142,7 +145,7 @@ export const podSlice = createSlice({
       getCreatorsPodsPaginationAction.rejected,
       (state, action) => {
         state.loadingPods = false;
-        console.log(action.error);
+        console.error(action.error);
       }
     );
   },

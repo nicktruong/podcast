@@ -35,5 +35,5 @@ export const getUserPodSeries = async (creatorId: string) => {
     ...snapshot.data(),
   }))[0]; // Initially, we just handle 1 podcast series
 
-  return podSeries;
+  return podSeries ?? {};
 };

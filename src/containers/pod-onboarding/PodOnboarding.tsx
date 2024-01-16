@@ -4,6 +4,7 @@ import { Typography } from "@mui/material";
 import { ColorIconStepper } from "@/components/stepper/color-icon";
 import RoundedButton from "@/components/rounded-button/RoundedButton";
 
+import { PodcasterCreateSeriesDialog } from "../PodcasterCreateSeriesDialog";
 import PodCreateEpisodeDialog from "../pod-create-episode-dialog/PodCreateEpisodeDialog";
 
 import useHelper from "./useHelper";
@@ -12,10 +13,14 @@ export default function PodOnboarding() {
   const {
     cx,
     classes,
+    hasPodSeries,
     createdFirstEp,
+    openCreateSeriesDialog,
     openCreateEpisodeDialog,
+    handleCloseSeriesDialog,
     handleCloseEpisodeDialog,
     handleClickOpenEpisodeDialog,
+    handleOpenCreateSeriesDialog,
   } = useHelper();
 
   return (
@@ -23,6 +28,11 @@ export default function PodOnboarding() {
       <PodCreateEpisodeDialog
         open={openCreateEpisodeDialog}
         handleClose={handleCloseEpisodeDialog}
+      />
+
+      <PodcasterCreateSeriesDialog
+        open={openCreateSeriesDialog}
+        handleClose={handleCloseSeriesDialog}
       />
 
       <Box className={classes.welcomeBox}>
@@ -74,16 +84,27 @@ export default function PodOnboarding() {
             </Box>
 
             <Box className={cx(classes.stepContent, "mt-[50px]")}>
-              <Typography fontWeight={700}>Set up your podcast</Typography>
+              {hasPodSeries ? (
+                <Typography>Your podcast is set up</Typography>
+              ) : (
+                <>
+                  <Typography fontWeight={700}>Set up your podcast</Typography>
 
-              <Typography fontSize={14} className="mt-1">
-                Choose a name and cover art for your podcast. Don&apos;t have it
-                all figured out yet? You can always change this later.
-              </Typography>
+                  <Typography fontSize={14} className="mt-1">
+                    Choose a name and cover art for your podcast. Don&apos;t
+                    have it all figured out yet? You can always change this
+                    later.
+                  </Typography>
 
-              <RoundedButton variant="outlined" className={classes.setupBtn}>
-                Go to setup
-              </RoundedButton>
+                  <RoundedButton
+                    variant="outlined"
+                    className={classes.setupBtn}
+                    onClick={handleOpenCreateSeriesDialog}
+                  >
+                    Go to setup
+                  </RoundedButton>
+                </>
+              )}
             </Box>
 
             <Box className={cx(classes.stepContent, "mt-[50px]")}>

@@ -1,12 +1,25 @@
+import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-import { useAppSelector } from "@/hooks/storeHooks";
-import { selectPodSeries } from "@/store/podSeriesSlice";
+import {
+  selectPodSeries,
+  fetchSeriesImage,
+  selectCoverImage,
+} from "@/store/podSeriesSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import RoundedButton from "@/components/rounded-button/RoundedButton";
 
 export default function PodDashboardOverview() {
+  const dispatch = useAppDispatch();
   const podSeries = useAppSelector(selectPodSeries);
+  const seriesImage = useAppSelector(selectCoverImage);
+
+  useEffect(() => {
+    if (!seriesImage) {
+      dispatch(fetchSeriesImage());
+    }
+  }, []);
 
   return (
     <Box
@@ -30,7 +43,7 @@ export default function PodDashboardOverview() {
           }}
         >
           <img
-            src={podSeries.coverUrl}
+            src={seriesImage}
             alt={`${podSeries.title} cover photo`}
             className="rounded md:w-[200px] md:h-[200px] w-[280px] h-[280px]"
           />

@@ -60,6 +60,7 @@ export const upgradeToPodcaster = createAsyncThunk<
   if (!user.emailVerified) {
     // TODO: add toast
     console.log("Please verify email before upgrading to podcaster");
+    window.location.reload();
 
     return false;
   }
