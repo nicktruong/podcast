@@ -43,6 +43,9 @@ export const useStyles = tss.create(({ theme }) => ({
     },
   },
   stepContent: {
+    "&:first-of-type": {
+      marginTop: "16px",
+    },
     minHeight: "65px",
     maxWidth: "350px",
     display: "flex",
