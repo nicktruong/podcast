@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   IconButton,
   Menu,
   MenuItem,
@@ -8,6 +9,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import routes from "@/common/constants/routes";
 import { Roles } from "@/common/constants/roles";
@@ -18,67 +20,120 @@ export default function UserMenu() {
   const {
     user,
     open,
+    classes,
     anchorEl,
+    smallScreen,
+    toggleSidebar,
     handleSignOut,
     handleCloseMenu,
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
   } = useHelper();
 
-  if (!user.uid) {
-    return null;
-  }
-
   return (
-    <AppBar
-      component="nav"
-      sx={{
-        width: "70%",
-        right: "8px",
-        top: "8px",
-        background: "transparent",
-      }}
-      elevation={0}
-    >
+    <AppBar elevation={0} component="nav" className={classes.appbarRoot}>
       <Toolbar>
-        <Box sx={{ marginLeft: "auto" }}>
-          <IconButton
-            id="user-menu-button"
-            aria-controls={open ? "user-menu" : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? "true" : undefined}
-            onClick={handleClickOpenMenu}
-          >
-            <PersonIcon />
-          </IconButton>
+        {!smallScreen && (
+          <Box>
+            <IconButton onClick={toggleSidebar}>
+              <MenuIcon className={classes.sidebarToggler} />
+            </IconButton>
+          </Box>
+        )}
 
-          <Menu
-            id="user-menu"
-            aria-labelledby="user-menu-button"
-            anchorEl={anchorEl}
-            open={open}
-            onClose={handleCloseMenu}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-          >
-            <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-            {user.roles.includes(Roles.PODCASTER) ? (
-              <MenuItem onClick={handleCloseMenu}>
-                <Link to={routes.podDashboard}>Go to Podcast Dashboard</Link>
-              </MenuItem>
+        <Box sx={{ marginLeft: "auto" }}>
+          {user.uid && (
+            <>
+              <IconButton
+                id="user-menu-button"
+                aria-controls={open ? "user-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleClickOpenMenu}
+              >
+                <PersonIcon />
+              </IconButton>
+
+              <Menu
+                className={classes.mobileMenu}
+                id="user-menu"
+                aria-labelledby="user-menu-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleCloseMenu}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "right",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+              >
+                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+                {user.roles.includes(Roles.PODCASTER) ? (
+                  <Link to={routes.podDashboard}>
+                    <MenuItem onClick={handleCloseMenu}>
+                      Go to Podcast Dashboard
+                    </MenuItem>
+                  </Link>
+                ) : (
+                  <MenuItem onClick={handleUpgradeToPodcasterRole}>
+                    Upgrade to Podcaster
+                  </MenuItem>
+                )}
+                <MenuItem onClick={handleSignOut}>Logout</MenuItem>
+              </Menu>
+            </>
+          )}
+          {!user.uid &&
+            (smallScreen ? (
+              <>
+                <IconButton
+                  id="user-menu-button"
+                  aria-controls={open ? "user-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleClickOpenMenu}
+                >
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  className={classes.mobileMenu}
+                  id="user-menu"
+                  aria-labelledby="user-menu-button"
+                  anchorEl={anchorEl}
+                  open={open}
+                  onClose={handleCloseMenu}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                >
+                  <Link to={routes.signup}>
+                    <MenuItem onClick={handleCloseMenu}>Sign up</MenuItem>
+                  </Link>
+                  <Link to={routes.login}>
+                    <MenuItem onClick={handleCloseMenu}>Log in</MenuItem>
+                  </Link>
+                </Menu>
+              </>
             ) : (
-              <MenuItem onClick={handleUpgradeToPodcasterRole}>
-                Upgrade to Podcaster
-              </MenuItem>
-            )}
-            <MenuItem onClick={handleSignOut}>Logout</MenuItem>
-          </Menu>
+              <Box>
+                <Link to={routes.signup}>
+                  <Button className={classes.signUpBtn}>Sign up</Button>
+                </Link>
+                <Link to={routes.login}>
+                  <Button className={classes.loginBtn} variant="contained">
+                    Log in
+                  </Button>
+                </Link>
+              </Box>
+            ))}
         </Box>
       </Toolbar>
     </AppBar>

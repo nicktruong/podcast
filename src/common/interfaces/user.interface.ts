@@ -10,6 +10,7 @@ export interface UserFirebase {
 }
 
 export interface User {
+  id: string;
   dob: string; // ISOString
   name: string;
   roles: Roles[];

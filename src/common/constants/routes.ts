@@ -2,6 +2,7 @@ const routes = {
   // listener routes
   index: "/",
   login: "/login",
+  search: "/search",
   signup: "/signup",
 
   // podcaster routes

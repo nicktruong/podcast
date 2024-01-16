@@ -2,10 +2,17 @@ import { useState } from "react";
 
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { selectUser, signOut, upgradeToPodcaster } from "@/store/userSlice";
+import { toggleExpand } from "@/store/sidebarSlice";
+import { isSmallScreen } from "@/common/utils/media-query";
+
+import { useStyles } from "./styles";
 
 const useHelper = () => {
+  const { classes } = useStyles();
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
+
+  const smallScreen = isSmallScreen();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -28,10 +35,17 @@ const useHelper = () => {
     dispatch(signOut());
   };
 
+  const toggleSidebar = () => {
+    dispatch(toggleExpand());
+  };
+
   return {
     user,
     open,
+    classes,
     anchorEl,
+    smallScreen,
+    toggleSidebar,
     handleSignOut,
     handleCloseMenu,
     handleClickOpenMenu,
