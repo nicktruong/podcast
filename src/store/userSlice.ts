@@ -126,5 +126,7 @@ export const selectUser = (state: RootState) => state.user.user;
 export const selectUserId = (state: RootState) => state.user.user.uid;
 export const selectInitialUserDataLoading = (state: RootState) =>
   state.user.initialLoading;
+export const selectUserCategoriesOfInterest = (state: RootState) =>
+  state.user.user.categoriesOfInterest;
 
 export default userSlice.reducer;

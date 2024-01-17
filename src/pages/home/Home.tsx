@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 import useHelper from "./useHelper";
 
 export default function Home() {
-  const { classes, trendingPodcasts } = useHelper();
+  const { classes, trendingPodcasts, seriesForYou, seriesToTry } = useHelper();
 
   return (
     <Box className={classes.homeRoot}>
@@ -15,6 +15,62 @@ export default function Home() {
 
           <Box className={classes.playlist}>
             {trendingPodcasts.map((podcast) => (
+              <Box key={podcast.id} className={classes.series}>
+                <Box>
+                  <img
+                    className={classes.seriesImg}
+                    src={podcast.coverUrl}
+                    alt={`${podcast.title} cover image`}
+                  />
+                </Box>
+                <Box className={classes.seriesInfo}>
+                  <Typography className={classes.seriesTitle}>
+                    {podcast.title}
+                  </Typography>
+                  <Typography className={classes.seriesAuthor}>
+                    By {podcast.author?.name}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        <Box className={classes.section} component="section">
+          <Typography className={classes.homeTitle} component="h2">
+            Series for you
+          </Typography>
+
+          <Box className={classes.playlist}>
+            {seriesForYou.map((podcast) => (
+              <Box key={podcast.id} className={classes.series}>
+                <Box>
+                  <img
+                    className={classes.seriesImg}
+                    src={podcast.coverUrl}
+                    alt={`${podcast.title} cover image`}
+                  />
+                </Box>
+                <Box className={classes.seriesInfo}>
+                  <Typography className={classes.seriesTitle}>
+                    {podcast.title}
+                  </Typography>
+                  <Typography className={classes.seriesAuthor}>
+                    By {podcast.author?.name}
+                  </Typography>
+                </Box>
+              </Box>
+            ))}
+          </Box>
+        </Box>
+
+        <Box className={classes.section} component="section">
+          <Typography className={classes.homeTitle} component="h2">
+            Series to try
+          </Typography>
+
+          <Box className={classes.playlist}>
+            {seriesToTry.map((podcast) => (
               <Box key={podcast.id} className={classes.series}>
                 <Box>
                   <img

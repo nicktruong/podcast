@@ -31,6 +31,7 @@ module.exports = {
   },
   plugins: ["@stylistic", "@typescript-eslint", "react"],
   rules: {
+    "@typescript-eslint/no-explicit-any": "warn",
     "@typescript-eslint/no-unused-vars": [
       "error", // or "error"
       {

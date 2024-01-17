@@ -2,8 +2,11 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { getTrendingPodcastSeriesPagination } from "@/firebase/getTrendingPodcastSeriesPagination";
 import { PodcastSeriesWithAuthor } from "@/common/interfaces/PodcastSeries";
+import { AsyncThunkConfig } from "@/hooks/storeHooks";
+import { getRandomPodcastSeriesPagination } from "@/firebase/getRandomPodcastSeriesPagination";
 
 import { RootState } from "./store";
+import { selectUserCategoriesOfInterest } from "./userSlice";
 
 interface UserPodcastSeriesState {
   seriesToTry: PodcastSeriesWithAuthor[];
@@ -31,6 +34,49 @@ export const getTrendingPodcastSeriesPaginationAction = createAsyncThunk(
   }
 );
 
+export const getSeriesForYou = createAsyncThunk<
+  PodcastSeriesWithAuthor[],
+  { period?: number; pageSize?: number },
+  AsyncThunkConfig
+>(
+  "userPodcastSeries/getSeriesForYou",
+  async ({ period, pageSize }, thunkApi) => {
+    const categories = selectUserCategoriesOfInterest(thunkApi.getState());
+    const trendingSeries = selectTrendingSeries(thunkApi.getState());
+
+    const seriesForYou = await getTrendingPodcastSeriesPagination({
+      period,
+      pageSize,
+      categories,
+      notInIds: trendingSeries.map((series) => series.id),
+    });
+
+    return seriesForYou;
+  }
+);
+
+export const getSeriesToTry = createAsyncThunk<
+  PodcastSeriesWithAuthor[],
+  { period?: number; pageSize?: number },
+  AsyncThunkConfig
+>(
+  "userPodcastSeries/getSeriesToTry",
+  async ({ period, pageSize }, thunkApi) => {
+    const trendingSeries = selectTrendingSeries(thunkApi.getState());
+    const seriesForYou = selectSeriesForYou(thunkApi.getState());
+
+    const seriesToTry = await getRandomPodcastSeriesPagination({
+      period,
+      pageSize,
+      notInIds: trendingSeries
+        .map((series) => series.id)
+        .concat(seriesForYou.map((series) => series.id)),
+    });
+
+    return seriesToTry;
+  }
+);
+
 export const userPodcastSeriesSlice = createSlice({
   name: "userPodcastSeries",
   initialState,
@@ -49,10 +95,32 @@ export const userPodcastSeriesSlice = createSlice({
           console.error(error);
         }
       );
+
+    builder
+      .addCase(getSeriesForYou.fulfilled, (state, { payload }) => {
+        state.seriesForYou = payload;
+      })
+      .addCase(getSeriesForYou.rejected, (_, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(getSeriesToTry.fulfilled, (state, { payload }) => {
+        state.seriesToTry = payload;
+      })
+      .addCase(getSeriesToTry.rejected, (state, { error }) => {
+        console.error(error);
+      });
   },
 });
 
 export const selectTrendingSeries = (state: RootState) =>
   state.userPodcasts.trendingSeries;
+
+export const selectSeriesForYou = (state: RootState) =>
+  state.userPodcasts.seriesForYou;
+
+export const selectSeriesToTry = (state: RootState) =>
+  state.userPodcasts.seriesToTry;
 
 export default userPodcastSeriesSlice.reducer;
