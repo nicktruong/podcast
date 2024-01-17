@@ -62,3 +62,5 @@ export const useStyles = tss.create(({ theme }) => ({
     },
   },
 }));
+
+export type Styles = ReturnType<typeof useStyles>["classes"];

@@ -4,6 +4,7 @@ const routes = {
   login: "/login",
   search: "/search",
   signup: "/signup",
+  playlist: "/playlist/:id",
 
   // podcaster routes
   pod: "/pod",

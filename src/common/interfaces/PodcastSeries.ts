@@ -1,3 +1,4 @@
+import { Pod } from "./pod.interface";
 import { User } from "./user.interface";
 
 export interface PodcastSeries {
@@ -15,4 +16,8 @@ export interface PodcastSeries {
 
 export interface PodcastSeriesWithAuthor extends PodcastSeries {
   author?: User;
+}
+
+export interface PodcastSeriesDetail extends PodcastSeriesWithAuthor {
+  podcasts: Pod[];
 }

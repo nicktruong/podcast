@@ -11,6 +11,7 @@ const PreventListenerAccessGuard = lazy(
 );
 
 const Home = lazy(() => import("@/pages/home/Home"));
+const Playlist = lazy(() => import("@/pages/Playlist"));
 const Login = lazy(() => import("@/pages/login/Login"));
 const SignUp = lazy(() => import("@/pages/signup/SignUp"));
 const PodLayout = lazy(() => import("@/layouts/PodLayout"));
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: routes.playlist,
+        element: <Playlist />,
       },
     ],
   },

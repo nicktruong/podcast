@@ -5,7 +5,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import {
   setLoading,
   getUserInfoAction,
-  selectInitialUserDataLoading,
+  // selectInitialUserDataLoading,
 } from "@/store/userSlice";
 import { auth } from "@/firebase/init";
 import { checkUserExists } from "@/firebase/utils";
@@ -22,7 +22,7 @@ import schema from "./schema";
 
 export default function AuthListener({ children }: PropsWithChildren) {
   const dispatch = useAppDispatch();
-  const initialLoading = useAppSelector(selectInitialUserDataLoading);
+  // const initialLoading = useAppSelector(selectInitialUserDataLoading);
   const [chooseInterests, setChooseInterests] = useState(false);
   const categories = useAppSelector(selectCategories);
   const [user, setUser] = useState<CreateUserDoc & UserFirebase>();
@@ -115,9 +115,9 @@ export default function AuthListener({ children }: PropsWithChildren) {
     });
   }, []);
 
-  if (initialLoading) {
-    return <>Loading...</>;
-  }
+  // if (initialLoading) {
+  //   return <>Loading...</>;
+  // }
 
   if (chooseInterests) {
     return (
