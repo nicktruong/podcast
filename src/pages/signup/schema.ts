@@ -64,6 +64,7 @@ const schema = Joi.object<IUserRegister>({
       "dob.year": "Year must be a number",
       "dob.year.range": "Please choose a valid year (after 1907)",
     }),
+  categoriesOfInterest: Joi.array().items(Joi.string()).min(3),
 });
 
 export default schema;

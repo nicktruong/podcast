@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
@@ -6,17 +6,24 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { signup } from "@/firebase";
 import routes from "@/common/constants/routes";
 import { IUserRegister } from "@/common/interfaces";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { fetchCategories, selectCategories } from "@/store/categorySlice";
 
 import schema from "./schema";
 import { Steps } from "./interface";
 
 const useHelper = () => {
-  const [activeStep, setActiveStep] = useState(Steps.Email);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const categories = useAppSelector(selectCategories);
+  const [activeStep, setActiveStep] = useState(Steps.Email);
 
   const {
+    watch,
     control,
     trigger,
+    setValue,
+    getValues,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<IUserRegister>({
@@ -28,6 +35,7 @@ const useHelper = () => {
       email: "",
       gender: "",
       password: "",
+      categoriesOfInterest: [],
     },
     mode: "onChange",
     reValidateMode: "onChange",
@@ -38,10 +46,6 @@ const useHelper = () => {
     await signup(data);
     navigate(routes.index, { replace: true });
   });
-
-  const handleNextStep = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
 
   const handlePrevStep = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -65,16 +69,71 @@ const useHelper = () => {
     return trigger(["name", "date", "month", "year", "gender"]);
   };
 
+  const nextStepHandler = async () => {
+    switch (activeStep) {
+      case Steps.Email: {
+        const isValidEmail = await validateEmail();
+
+        if (!isValidEmail) {
+          return;
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        break;
+      }
+
+      case Steps.Password: {
+        const isValidPassword = await validatePassword();
+
+        if (!isValidPassword) {
+          return;
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        break;
+      }
+
+      case Steps.UserInfo: {
+        const isValidUserInfo = await validateUserInformation();
+
+        if (!isValidUserInfo) {
+          return;
+        }
+
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        break;
+      }
+
+      case Steps.Categories: {
+        onSubmit();
+        break;
+      }
+
+      default: {
+        break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
+
   return {
+    watch,
     errors,
+    trigger,
     control,
+    setValue,
     onSubmit,
+    getValues,
+    categories,
     activeStep,
     isSubmitting,
     validateDate,
     validateEmail,
-    handleNextStep,
     handlePrevStep,
+    nextStepHandler,
     validatePassword,
     validateUserInformation,
   };

@@ -1,5 +1,5 @@
 export interface CreatePodcastSeries {
   title: string;
-  categoryId: string;
+  category: string;
   description: string;
 }

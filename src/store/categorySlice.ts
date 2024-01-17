@@ -7,11 +7,11 @@ import { RootState } from "./store";
 
 export interface CategoryState {
   loading: boolean;
-  categories: Category[];
+  categories: Category;
 }
 
 const initialState: CategoryState = {
-  categories: [],
+  categories: { categories: [] },
   loading: false,
 };
 

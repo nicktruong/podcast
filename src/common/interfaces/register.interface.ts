@@ -6,4 +6,5 @@ export interface IUserRegister {
   month: string;
   gender: string;
   password: string;
+  categoriesOfInterest: string[];
 }

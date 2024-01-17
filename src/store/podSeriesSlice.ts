@@ -31,7 +31,7 @@ const initialState: PodSeriesState = {
     id: "",
     title: "",
     coverUrl: "",
-    categoryId: "",
+    category: "",
     description: "",
     rating: 0,
     playCount: 0,
@@ -89,12 +89,12 @@ export const fetchCreatorPodSeries = createAsyncThunk(
   async (creatorId: string) => {
     const podSeries = await getUserPodSeries(creatorId);
 
-    const { categoryId, createdAt, updatedAt } = podSeries;
+    const { category, createdAt, updatedAt } = podSeries;
 
     return {
       ...podSeries,
       // As redux doesn't allow non-serializable data in the state
-      categoryId: categoryId?.path,
+      category,
       createdAt: createdAt?.toDate().toISOString(),
       updatedAt: updatedAt?.toDate().toISOString(),
     };
@@ -135,7 +135,7 @@ export const podSeriesSlice = createSlice({
         playCount = initialPodSeries.playCount,
         createdAt = initialPodSeries.createdAt,
         updatedAt = initialPodSeries.updatedAt,
-        categoryId = initialPodSeries.categoryId,
+        category = initialPodSeries.category,
         description = initialPodSeries.description,
         audienceSize = initialPodSeries.audienceSize,
       } = payload;
@@ -152,7 +152,7 @@ export const podSeriesSlice = createSlice({
         playCount,
         createdAt,
         updatedAt,
-        categoryId,
+        category,
         description,
         audienceSize,
       };

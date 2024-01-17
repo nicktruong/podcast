@@ -37,7 +37,7 @@ const useHelper = ({ handleClose }: Props) => {
   } = useForm<CreatePodcastSeries>({
     defaultValues: {
       title: "",
-      categoryId: "",
+      category: "",
       description: "",
     },
     mode: "onChange",
@@ -54,7 +54,7 @@ const useHelper = ({ handleClose }: Props) => {
   });
 
   const validatePodcastSeriesInfo = async () => {
-    return trigger(["title", "description", "categoryId"]);
+    return trigger(["title", "description", "category"]);
   };
 
   const handleImageSubmit: ChangeEventHandler<HTMLInputElement> = (e) => {

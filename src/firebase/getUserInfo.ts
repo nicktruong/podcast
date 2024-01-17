@@ -14,7 +14,7 @@ export const getUserInfo = async (uid: string) => {
 
   const user = docSnap.data();
 
-  user.dob = (user.dob as Timestamp).toDate().toISOString();
+  user.dob = (user.dob as Timestamp)?.toDate()?.toISOString();
 
   return user as User;
 };

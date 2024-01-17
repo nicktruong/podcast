@@ -27,6 +27,7 @@ const initialState: UserState = {
     emailVerified: false,
     gender: Genders.FEMALE,
     roles: [Roles.LISTENER],
+    categoriesOfInterest: [],
   },
   initialLoading: true,
 };
@@ -90,16 +91,22 @@ export const userSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(getUserInfoAction.fulfilled, (state, { payload }) => {
-      if (state.user && payload) {
-        state.user = {
-          ...state.user,
-          ...payload,
-        };
-      }
+    builder
+      .addCase(getUserInfoAction.fulfilled, (state, { payload }) => {
+        if (state.user && payload) {
+          state.user = {
+            ...state.user,
+            ...payload,
+          };
+        }
 
-      state.initialLoading = false;
-    });
+        state.initialLoading = false;
+      })
+      .addCase(getUserInfoAction.rejected, (state, { error }) => {
+        state.initialLoading = false;
+
+        console.error(error);
+      });
 
     builder.addCase(upgradeToPodcaster.fulfilled, (state, { payload }) => {
       if (payload) {

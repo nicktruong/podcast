@@ -1,4 +1,4 @@
-import { DocumentReference, Timestamp } from "@firebase/firestore";
+import { Timestamp } from "@firebase/firestore";
 
 export interface IGetPodSeries {
   title: string;
@@ -9,5 +9,5 @@ export interface IGetPodSeries {
   audienceSize: number;
   createdAt: Timestamp;
   updatedAt: Timestamp;
-  categoryId: DocumentReference;
+  category: string;
 }

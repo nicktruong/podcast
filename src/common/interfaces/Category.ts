@@ -1,7 +1,3 @@
 export interface Category {
-  id: string;
-  title: string;
-  createdAt: string;
-  updatedAt: string;
-  description: string;
+  categories: { name: string; imageUrl: string; color: string }[];
 }

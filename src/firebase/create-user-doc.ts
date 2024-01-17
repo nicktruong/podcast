@@ -6,7 +6,7 @@ import { db } from "./init";
 import { checkUserExists } from "./utils";
 
 export const createUserDoc = async (user: CreateUserDoc) => {
-  const { gender, uid, name, dob, role } = user;
+  const { gender, uid, name, dob, role, categoriesOfInterest } = user;
   let timestampDob: Timestamp | undefined;
 
   if (dob) {
@@ -25,6 +25,7 @@ export const createUserDoc = async (user: CreateUserDoc) => {
       roles: [role],
       dob: timestampDob ?? null,
       gender: gender ?? null,
+      categoriesOfInterest,
     });
   } else {
     await addDoc(collection(db, "users"), {
@@ -32,6 +33,7 @@ export const createUserDoc = async (user: CreateUserDoc) => {
       roles: [role],
       dob: timestampDob ?? null,
       gender: gender ?? null,
+      categoriesOfInterest,
     });
   }
 };

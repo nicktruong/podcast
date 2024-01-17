@@ -13,7 +13,7 @@ import { Category } from "@/common/interfaces/Category";
 import { CreatePodcastSeries } from "@/common/interfaces/CreatePodcastSeries";
 
 interface Props {
-  categories: Category[];
+  categories: Category;
   classes: Record<string, string>;
   control: Control<CreatePodcastSeries>;
   errors: FieldErrors<CreatePodcastSeries>;
@@ -110,13 +110,13 @@ export default function EditSeriesDetails({
           Podcast category
         </Typography>
         <Controller
-          name="categoryId"
+          name="category"
           control={control}
           render={({ field }) => {
             return (
               <Select
                 displayEmpty
-                id="categoryId"
+                id="category"
                 variant="outlined"
                 className={classes.selectRoot}
                 {...field}
@@ -124,9 +124,9 @@ export default function EditSeriesDetails({
                 <MenuItem value="" disabled>
                   Choose one option
                 </MenuItem>
-                {categories.map((category) => (
-                  <MenuItem key={category.id} value={category.id}>
-                    {category.title}
+                {categories.categories.map((category) => (
+                  <MenuItem key={category.name} value={category.name}>
+                    {category.name}
                   </MenuItem>
                 ))}
               </Select>

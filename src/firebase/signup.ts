@@ -17,7 +17,8 @@ export const signup = async (user: IUserRegister) => {
       user.password
     );
 
-    const { name, date, year, email, month, gender } = user;
+    const { name, date, year, email, month, gender, categoriesOfInterest } =
+      user;
 
     await createUserDoc({
       name,
@@ -26,6 +27,7 @@ export const signup = async (user: IUserRegister) => {
       role: Roles.LISTENER,
       uid: signedUpUser.uid,
       dob: new Date(+year, +month, +date),
+      categoriesOfInterest,
     });
 
     await sendEmailVerification(signedUpUser);

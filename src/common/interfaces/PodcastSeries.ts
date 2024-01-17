@@ -8,7 +8,7 @@ export interface PodcastSeries {
   playCount: number;
   createdAt: string;
   updatedAt: string;
-  categoryId: string;
+  category: string;
   description: string;
   audienceSize: number;
 }

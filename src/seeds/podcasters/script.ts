@@ -19,7 +19,7 @@ import { Roles } from "@/common/constants/roles";
 import { Genders } from "@/common/constants/genders";
 import { PodStatus } from "@/common/constants/pod-status";
 
-import categories from "../categories/seededData.json";
+import categories from "../categories/categories.json";
 
 import podcastSeries from "./podcast-series.json";
 import podcasts from "./podcasts.json";
@@ -39,14 +39,13 @@ const createRandomPodcastSeriesObj = (
   index: number,
   { rating, playCount }: { rating: number; playCount: number }
 ) => {
-  const categoryIds = categories.map((category) => category.id);
-  const randomCategoryId = faker.helpers.arrayElement(categoryIds);
+  const randomCategoryId = faker.helpers.arrayElement(categories).name;
 
   return {
     coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
     title: podcastSeries[index].title,
     description: podcastSeries[index].description,
-    categoryId: randomCategoryId,
+    category: randomCategoryId,
     rating,
     playCount,
     audienceSize: faker.number.int({ max: 70_000 }),

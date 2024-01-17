@@ -12,12 +12,8 @@ export const getCategories = async () => {
   const categories = querySnapshot.docs.map((doc) => {
     const data = doc.data();
 
-    data.id = doc.id;
-    data.createdAt = data.createdAt.toDate().toISOString();
-    data.updatedAt = data.updatedAt.toDate().toISOString();
-
     return data;
   }) as Category[];
 
-  return categories;
+  return categories[0];
 };

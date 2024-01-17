@@ -7,4 +7,5 @@ export interface CreateUserDoc {
   name: string;
   email: string;
   gender?: string;
+  categoriesOfInterest: string[];
 }

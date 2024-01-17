@@ -7,62 +7,22 @@ import useHelper from "./useHelper";
 import EmailForm from "./containers/EmailForm";
 import PasswordForm from "./containers/PasswordForm";
 import UserInfoForm from "./containers/UserInfoForm";
+import CategoriesForm from "./containers/CategoriesForm";
 
 export default function SignUp() {
   const {
+    watch,
     errors,
     control,
+    setValue,
     onSubmit,
+    categories,
     activeStep,
     isSubmitting,
     validateDate,
-    validateEmail,
     handlePrevStep,
-    handleNextStep,
-    validatePassword,
-    validateUserInformation,
+    nextStepHandler,
   } = useHelper();
-
-  const nextStepHandler = async () => {
-    switch (activeStep) {
-      case Steps.Email: {
-        const isValidEmail = await validateEmail();
-
-        if (!isValidEmail) {
-          return;
-        }
-
-        handleNextStep();
-        break;
-      }
-
-      case Steps.Password: {
-        const isValidPassword = await validatePassword();
-
-        if (!isValidPassword) {
-          return;
-        }
-
-        handleNextStep();
-        break;
-      }
-
-      case Steps.UserInfo: {
-        const isValidUserInfo = await validateUserInformation();
-
-        if (!isValidUserInfo) {
-          return;
-        }
-
-        handleNextStep();
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
-  };
 
   const renderStep = (step: Steps) => {
     switch (step) {
@@ -94,7 +54,20 @@ export default function SignUp() {
             errors={errors}
             handlePrevStep={handlePrevStep}
             validateDate={validateDate}
+            nextStepHandler={nextStepHandler}
+          />
+        );
+
+      case Steps.Categories:
+        return (
+          <CategoriesForm
+            activeStep={activeStep}
+            handlePrevStep={handlePrevStep}
+            setValue={setValue}
+            categories={categories}
+            watch={watch}
             isSubmitting={isSubmitting}
+            errors={errors}
           />
         );
 

@@ -30,6 +30,7 @@ interface Props {
   control: Control<IUserRegister>;
   validateDate: () => Promise<void>;
   errors: FieldErrors<IUserRegister>;
+  nextStepHandler: () => Promise<void>;
 }
 
 export default function UserInfoForm({
@@ -39,6 +40,7 @@ export default function UserInfoForm({
   activeStep,
   validateDate,
   handlePrevStep,
+  nextStepHandler,
 }: Props) {
   return (
     <>
@@ -301,7 +303,7 @@ export default function UserInfoForm({
           )}
 
           <NextButton
-            type="submit"
+            onClick={nextStepHandler}
             sx={{ marginTop: "20px" }}
             endIcon={
               isSubmitting && (
@@ -314,7 +316,7 @@ export default function UserInfoForm({
               )
             }
           >
-            <span>Finish</span>
+            <span>Next</span>
           </NextButton>
         </Box>
       </Box>

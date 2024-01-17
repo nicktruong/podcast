@@ -26,7 +26,7 @@ export const createPodcastSeries = async (
     coverUrl: data.coverUrl,
     title: data.title,
     description: data.description,
-    categoryId: data.categoryId,
+    category: data.category,
     rating: data.rating,
     playCount: data.playCount,
     audienceSize: data.audienceSize,
