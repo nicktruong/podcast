@@ -47,7 +47,6 @@ export const useStyles = tss.create(({ theme }) => ({
     color: theme.palette.text.secondary,
   },
   episode: {
-    cursor: "pointer",
     borderTop: "1px solid #2a2a2a",
     marginTop: "16px",
     borderRadius: "4px",

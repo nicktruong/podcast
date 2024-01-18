@@ -2,12 +2,12 @@ import { useLocation } from "react-router-dom";
 
 import routes from "@/common/constants/routes";
 import { useAppSelector } from "@/hooks/storeHooks";
-import { selectSidebarExpandState } from "@/store/sidebarSlice";
+import { selectUIState } from "@/store/ui/uiSlice";
 
 import { useStyles } from "./styles";
 
 const useHelper = () => {
-  const sidebarExpand = useAppSelector(selectSidebarExpandState);
+  const { sidebarExpand } = useAppSelector(selectUIState);
 
   const { cx, classes } = useStyles();
 

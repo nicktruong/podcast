@@ -1,34 +1,44 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
+import { selectUIState } from "@/store/ui/";
 import { SideBar } from "@/components/SideBar";
-import UserMenu from "@/containers/user-menu/UserMenu";
+import AudioPlayer from "@/containers/AudioPlayer";
 import { useAppSelector } from "@/hooks/storeHooks";
-import { selectSidebarExpandState } from "@/store/sidebarSlice";
+import UserMenu from "@/containers/user-menu/UserMenu";
 import { isSmallScreen } from "@/common/utils/media-query";
 
 export default function RootLayout() {
-  const sidebarExpand = useAppSelector(selectSidebarExpandState);
   const smallScreen = isSmallScreen();
+  const { isAudioPlayerOpen, sidebarExpand } = useAppSelector(selectUIState);
 
   return (
-    <Box padding="8px" height="calc(100vh - 72px)" display="flex" gap="8px">
-      {!smallScreen && (
-        <Box width={sidebarExpand ? "358px" : "53px"}>
-          <SideBar />
-        </Box>
-      )}
+    <Box overflow="hidden">
       <Box
-        width="100%"
-        height="100%"
-        overflow="auto"
+        gap="8px"
+        padding="8px"
         display="flex"
-        position="relative"
-        flexDirection="column"
+        height={`calc(100vh - ${isAudioPlayerOpen ? 80 : 0}px)`}
       >
-        <UserMenu />
-        <Outlet />
+        {!smallScreen && (
+          <Box width={sidebarExpand ? "358px" : "53px"}>
+            <SideBar />
+          </Box>
+        )}
+        <Box
+          width="100%"
+          height="100%"
+          display="flex"
+          overflow="auto"
+          position="relative"
+          flexDirection="column"
+        >
+          <UserMenu />
+          <Outlet />
+        </Box>
       </Box>
+
+      {isAudioPlayerOpen && <AudioPlayer />}
     </Box>
   );
 }

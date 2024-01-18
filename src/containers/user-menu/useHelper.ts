@@ -1,9 +1,9 @@
 import { useState } from "react";
 
+import { toggleExpand } from "@/store/ui/uiSlice";
+import { isSmallScreen } from "@/common/utils/media-query";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import { selectUser, signOut, upgradeToPodcaster } from "@/store/userSlice";
-import { toggleExpand } from "@/store/sidebarSlice";
-import { isSmallScreen } from "@/common/utils/media-query";
 
 import { useStyles } from "./styles";
 

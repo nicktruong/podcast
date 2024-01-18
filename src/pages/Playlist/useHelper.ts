@@ -1,23 +1,39 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 import {
+  selectSeriesDetail,
   getSeriesDetailAction,
   selectLoadingSeriesDetail,
-  selectSeriesDetail,
 } from "@/store/userPodcastSeriesSlice";
+import {
+  playAudio,
+  pauseAudio,
+  selectAudioState,
+  downloadAndPlayAudio,
+} from "@/store/audio";
+import { openAudioPlayer } from "@/store/ui";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
 
 import { useStyles } from "./styles";
 
 const useHelper = () => {
-  const dispatch = useAppDispatch();
-  const { cx, classes } = useStyles();
   const { id } = useParams();
-  const seriesTitleRef = useRef<HTMLSpanElement>(null);
-  const seriesTitleContainerRef = useRef<HTMLDivElement>(null);
+
+  const { classes } = useStyles();
+
+  const dispatch = useAppDispatch();
+
   const [titleFontSize, setTitleFontSize] = useState("97px");
 
+  const seriesTitleRef = useRef<HTMLSpanElement>(null);
+  const seriesTitleContainerRef = useRef<HTMLDivElement>(null);
+
+  const {
+    playing: audioIsPlaying,
+    downloaded: downloadedAudio,
+    episodeId: playingEpisodeId,
+  } = useAppSelector(selectAudioState);
   const seriesDetail = useAppSelector(selectSeriesDetail);
   const loadingDetail = useAppSelector(selectLoadingSeriesDetail);
 
@@ -28,36 +44,61 @@ const useHelper = () => {
   }, [id]);
 
   useEffect(() => {
+    // resize the podcast title to fit (not overflow) the parent element
     const resizeToFit = () => {
-      if (seriesTitleRef.current && seriesTitleContainerRef.current) {
-        const fontSize = window.getComputedStyle(
-          seriesTitleRef.current
-        ).fontSize;
+      if (!seriesTitleRef.current || !seriesTitleContainerRef.current) {
+        return;
+      }
 
-        const reducedFontSize = parseFloat(fontSize) - 1 + "px";
-        seriesTitleRef.current.style.fontSize = reducedFontSize;
-        setTitleFontSize(reducedFontSize);
+      const fontSize = window.getComputedStyle(seriesTitleRef.current).fontSize;
 
-        if (
-          seriesTitleRef.current.clientHeight >=
-          seriesTitleContainerRef.current.clientHeight
-        ) {
-          resizeToFit();
-        }
+      const reducedFontSize = parseFloat(fontSize) - 1 + "px";
+      // line below is needed to calculate immediate clientHeight
+      seriesTitleRef.current.style.fontSize = reducedFontSize;
+      setTitleFontSize(reducedFontSize);
+
+      if (
+        seriesTitleRef.current.clientHeight >=
+        seriesTitleContainerRef.current.clientHeight
+      ) {
+        resizeToFit();
       }
     };
 
     resizeToFit();
   }, [seriesTitleRef.current, seriesTitleContainerRef.current]);
 
+  const handleDownloadAndPlayAudio = ({
+    episodeId,
+    pathToFile,
+  }: {
+    episodeId: string;
+    pathToFile: string;
+  }) => {
+    if (!downloadedAudio) {
+      dispatch(downloadAndPlayAudio({ episodeId, pathToFile }));
+    } else {
+      dispatch(playAudio());
+    }
+
+    dispatch(openAudioPlayer());
+  };
+
+  const handlePauseAudio = () => {
+    dispatch(pauseAudio());
+  };
+
   return {
-    cx,
-    titleFontSize,
-    seriesTitleRef,
-    seriesTitleContainerRef,
     classes,
     seriesDetail,
     loadingDetail,
+    titleFontSize,
+    audioIsPlaying,
+    seriesTitleRef,
+    playingEpisodeId,
+    seriesTitleContainerRef,
+    handlePauseAudio,
+    handleDownloadAndPlayAudio,
   };
 };
 
