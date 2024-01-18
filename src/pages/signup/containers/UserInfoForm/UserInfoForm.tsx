@@ -1,4 +1,3 @@
-import ErrorIcon from "@mui/icons-material/Error";
 import {
   Box,
   FormControlLabel,
@@ -9,34 +8,26 @@ import {
   Select,
   Typography,
 } from "@mui/material";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
+import ErrorIcon from "@mui/icons-material/Error";
 
 import StyledInput from "@/components/input/Input";
+import { genders, months } from "@/common/constants";
 import StyledButton from "@/components/button/Button";
-import { months } from "@/common/constants/months";
-import { genders } from "@/common/constants/genders";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
-import { Steps } from "../interface";
-import { IRegisterForm } from "../schema";
-import StepInfo from "../components/StepInfo";
-import { steps } from "../constants";
+import { steps } from "../../constants";
+import StepInfo from "../../components/StepInfo/StepInfo";
 
-interface Props {
-  activeStep: Steps;
-  handlePrevStep: () => void;
-  control: Control<IRegisterForm>;
-  validateDate: () => Promise<void>;
-  errors: FieldErrors<IRegisterForm>;
-}
+import { UserInfoFormProps } from "./interfaces";
 
-export default function UserInfoForm({
+const UserInfoForm = ({
   errors,
   control,
   activeStep,
   validateDate,
   handlePrevStep,
-}: Props) {
+}: UserInfoFormProps) => {
   return (
     <>
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6">
@@ -298,4 +289,6 @@ export default function UserInfoForm({
       </Box>
     </>
   );
-}
+};
+
+export default UserInfoForm;

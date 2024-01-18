@@ -1,30 +1,22 @@
 import { Box, Typography } from "@mui/material";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
 import HorizontalLinearStepper from "@/components/stepper/HorizontalLineStepper";
 
-import { Steps } from "../interface";
-import { IRegisterForm } from "../schema";
-import StepInfo from "../components/StepInfo";
-import { steps } from "../constants";
+import { steps } from "../../constants";
+import StepInfo from "../../components/StepInfo";
 
-interface Props {
-  activeStep: Steps;
-  handlePrevStep: () => void;
-  control: Control<IRegisterForm>;
-  errors: FieldErrors<IRegisterForm>;
-  nextStepHandler: () => Promise<void>;
-}
+import { PasswordFormProps } from "./interfaces";
 
-export default function PasswordForm({
+const PasswordForm = ({
   errors,
   control,
   activeStep,
   handlePrevStep,
   nextStepHandler,
-}: Props) {
+}: PasswordFormProps) => {
   return (
     <>
       <Box className="max-w-[26rem] mx-auto sm:-translate-x-6">
@@ -78,4 +70,6 @@ export default function PasswordForm({
       </Box>
     </>
   );
-}
+};
+
+export default PasswordForm;

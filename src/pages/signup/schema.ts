@@ -1,7 +1,7 @@
 import Joi from "joi";
 
-import { daysInMonth } from "@/common/utils/date-helpers";
-import { genders } from "@/common/constants/genders";
+import { genders } from "@/common/constants";
+import { getNumberOfDaysInMonth } from "@/common/utils/dateHelpers";
 
 export interface IRegisterForm {
   name: string;
@@ -44,7 +44,7 @@ const schema = Joi.object<IRegisterForm>({
         return helper.error("dob.date");
       }
 
-      if (value <= 0 || value > daysInMonth(month, year)) {
+      if (value <= 0 || value > getNumberOfDaysInMonth(month, year)) {
         return helper.error("dob.date.range");
       }
 

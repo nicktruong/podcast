@@ -2,13 +2,13 @@ import { Box } from "@mui/material";
 
 import Logo from "@/components/logo/Logo";
 
-import { Steps } from "./interface";
+import { Steps } from "./constants";
 import useHelper from "./useHelper";
 import EmailForm from "./containers/EmailForm";
 import PasswordForm from "./containers/PasswordForm";
 import UserInfoForm from "./containers/UserInfoForm";
 
-export default function SignUp() {
+const SignUp = () => {
   const {
     errors,
     control,
@@ -112,4 +112,6 @@ export default function SignUp() {
       </Box>
     </Box>
   );
-}
+};
+
+export default SignUp;

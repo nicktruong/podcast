@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { useState } from "react";
 
+import { Steps } from "./constants";
 import schema, { IRegisterForm } from "./schema";
-import { Steps } from "./interface";
 
 const useHelper = () => {
   const [activeStep, setActiveStep] = useState(Steps.Email);

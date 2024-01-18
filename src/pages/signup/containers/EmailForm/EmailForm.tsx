@@ -1,21 +1,15 @@
-import { Box, Divider, Typography } from "@mui/material";
-import { Control, Controller, FieldErrors } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { Controller } from "react-hook-form";
+import { Box, Divider, Typography } from "@mui/material";
 
+import { routes } from "@/common/constants";
 import StyledInput from "@/components/input/Input";
 import StyledButton from "@/components/button/Button";
 import AuthButton from "@/components/auth-button/AuthButton";
-import routes from "@/common/constants/routes";
 
-import { IRegisterForm } from "../schema";
+import { EmailFormProps } from "./interfaces";
 
-interface Props {
-  control: Control<IRegisterForm>;
-  errors: FieldErrors<IRegisterForm>;
-  nextStepHandler: () => Promise<void>;
-}
-
-export default function EmailForm({ control, errors, nextStepHandler }: Props) {
+const EmailForm = ({ errors, control, nextStepHandler }: EmailFormProps) => {
   return (
     <Box className="max-w-80 mx-auto pb-10">
       <Typography
@@ -122,4 +116,6 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
       </Box>
     </Box>
   );
-}
+};
+
+export default EmailForm;

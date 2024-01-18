@@ -1,15 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 
-import { Steps } from "../interface";
+import { StepInfoProps } from "./interfaces";
 
-interface Props {
-  handlePrevStep: () => void;
-  activeStep: Steps;
-  steps: string[];
-}
-
-export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
+const StepInfo = ({ steps, activeStep, handlePrevStep }: StepInfoProps) => {
   return (
     <Box sx={{ display: "flex" }} className="mt-2">
       <Box
@@ -45,4 +39,6 @@ export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
       </Box>
     </Box>
   );
-}
+};
+
+export default StepInfo;

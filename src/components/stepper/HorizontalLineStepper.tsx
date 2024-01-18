@@ -2,7 +2,7 @@ import Step from "@mui/material/Step";
 import Stepper from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
 
-import { Steps } from "../../pages/signup/interface";
+import { Steps } from "../../pages/signup/constants";
 
 import QontoConnector from "./QontoConnector";
 import QontoStepIcon from "./QontoStepIcon";
