@@ -1,36 +1,27 @@
-import { faker } from "@faker-js/faker";
 import {
-  Timestamp,
-  addDoc,
-  collection,
   doc,
+  addDoc,
+  Timestamp,
+  collection,
   serverTimestamp,
 } from "firebase/firestore";
+import { faker } from "@faker-js/faker";
 
-import {
-  USERS,
-  PODCAST_SERIES,
-  PODCASTS,
-  CREATORS_PODCAST_SERIES,
-  CREATORS_PODCASTS,
-} from "@/common/constants/firestoreCollectionNames";
-import { db } from "@/firebase/init";
-import { Roles } from "@/common/constants/roles";
-import { Genders } from "@/common/constants/genders";
-import { PodStatus } from "@/common/constants/pod-status";
+import { db } from "@/firebase";
+import { Roles, Genders, Collections, PodcastStatus } from "@/common/enums";
 
 import categories from "../categories/categories.json";
 
-import podcastSeries from "./podcast-series.json";
 import podcasts from "./podcasts.json";
+import podcastSeries from "./podcast-series.json";
 
 const seedTimestamp = serverTimestamp();
 
 const createRandomPodcastersObj = () => {
   return {
     name: faker.person.fullName(),
-    dob: Timestamp.fromDate(faker.date.birthdate()),
     roles: [Roles.LISTENER, Roles.PODCASTER],
+    dob: Timestamp.fromDate(faker.date.birthdate()),
     gender: faker.helpers.arrayElement(Object.values(Genders)),
   };
 };
@@ -47,28 +38,28 @@ const createRandomPodcastSeriesObj = (
     playCount: number;
   }
 ) => {
-  const randomCategoryId = faker.helpers.arrayElement(categories).name;
+  const randomCategoryId = faker.helpers.arrayElement(categories.slice(5)).name;
 
   return {
-    coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
-    title: podcastSeries[index].title,
-    description: podcastSeries[index].description,
-    category: randomCategoryId,
     rating,
     rateCount,
     playCount,
-    audienceSize: faker.number.int({ max: 70_000 }),
     createdAt: seedTimestamp,
     updatedAt: seedTimestamp,
+    category: randomCategoryId,
+    title: podcastSeries[index].title,
+    description: podcastSeries[index].description,
+    audienceSize: faker.number.int({ max: 70_000 }),
+    coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
   };
 };
 
 const populateCreatorsPodcastSeries = (userId: string, seriesId: string) => {
   return {
-    creatorId: doc(db, USERS, userId),
-    seriesId: doc(db, PODCAST_SERIES, seriesId),
     createdAt: seedTimestamp,
     updatedAt: seedTimestamp,
+    creatorId: doc(db, Collections.USERS, userId),
+    seriesId: doc(db, Collections.PODCAST_SERIES, seriesId),
   };
 };
 
@@ -86,26 +77,26 @@ const createRandomPodcastObj = (
   }
 ) => {
   return {
-    title: podcasts[index].title,
     rating,
     seriesId, // change when user first create series
     rateCount,
     playCount,
-    status: PodStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     createdAt: seedTimestamp,
     updatedAt: seedTimestamp,
+    title: podcasts[index].title,
+    publishedDate: seedTimestamp,
+    status: PodcastStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     pathToFile: "audios/seed-audio.mp3",
     description: podcasts[index].description,
-    publishedDate: seedTimestamp,
   };
 };
 
 const populateCreatorsPodcasts = (userId: string, podcastId: string) => {
   return {
-    creatorId: doc(db, USERS, userId),
-    podcastId: doc(db, PODCASTS, podcastId),
     createdAt: seedTimestamp,
     updatedAt: seedTimestamp,
+    creatorId: doc(db, Collections.USERS, userId),
+    podcastId: doc(db, Collections.PODCASTS, podcastId),
   };
 };
 
@@ -113,13 +104,16 @@ export const migrate = async () => {
   console.log("Begin podcasters migration");
 
   for (let i = 0; i < podcastSeries.length; i++) {
-    const rating = faker.number.float({ max: 5, precision: 0.1 });
     const playCount = faker.number.int({ max: 100_000 });
     const rateCount = faker.number.int({ max: playCount });
+    const rating = faker.number.float({ max: 5, precision: 0.1 });
 
     // create podcasters
     const podcaster = createRandomPodcastersObj();
-    const podcasterRef = await addDoc(collection(db, USERS), podcaster);
+    const podcasterRef = await addDoc(
+      collection(db, Collections.USERS),
+      podcaster
+    );
     console.log("Seeded pocaster");
 
     // create podcastSeries
@@ -129,7 +123,7 @@ export const migrate = async () => {
       playCount,
     });
     const podcastSeriesRef = await addDoc(
-      collection(db, PODCAST_SERIES),
+      collection(db, Collections.PODCAST_SERIES),
       podcastSeries
     );
     console.log("Seeded pocaster series");
@@ -140,7 +134,7 @@ export const migrate = async () => {
       podcastSeriesRef.id
     );
     await addDoc(
-      collection(db, CREATORS_PODCAST_SERIES),
+      collection(db, Collections.CREATORS_PODCAST_SERIES),
       creatorsPodcastSeries
     );
     console.log("Seeded creators podcastseries");
@@ -151,7 +145,10 @@ export const migrate = async () => {
       podcastSeriesRef.id,
       { rating, rateCount, playCount }
     );
-    const podcastRef = await addDoc(collection(db, PODCASTS), podcast);
+    const podcastRef = await addDoc(
+      collection(db, Collections.PODCASTS),
+      podcast
+    );
     console.log("Seeded podcast");
 
     // create creatorsPodcasts
@@ -159,7 +156,10 @@ export const migrate = async () => {
       podcasterRef.id,
       podcastRef.id
     );
-    await addDoc(collection(db, CREATORS_PODCASTS), creatorsPodcasts);
+    await addDoc(
+      collection(db, Collections.CREATORS_PODCASTS),
+      creatorsPodcasts
+    );
     console.log("Seeded creatorsPodcasts");
     console.log("=====================================");
   }

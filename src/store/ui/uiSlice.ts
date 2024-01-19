@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { RootState } from "../store";
+import type { RootState } from "@/store";
+import type { UIState } from "./interfaces";
 
-const initialState = {
+const initialState: UIState = {
   sidebarExpand: true,
   isAudioPlayerOpen: false,
 };

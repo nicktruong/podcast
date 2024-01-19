@@ -10,7 +10,7 @@ import {
   setPassedTimeInSeconds,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 

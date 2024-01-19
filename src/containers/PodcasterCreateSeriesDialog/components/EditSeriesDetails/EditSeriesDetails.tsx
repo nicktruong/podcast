@@ -8,15 +8,15 @@ import {
 import ErrorIcon from "@mui/icons-material/Error";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 
-import StyledInput from "@/components/input/Input";
-import { Category } from "@/common/interfaces/Category";
-import { CreatePodcastSeries } from "@/common/interfaces/CreatePodcastSeries";
+import { StyledInput } from "@/components";
+
+import type { Category, SeriesCreationData } from "@/common/interfaces";
 
 interface Props {
   categories: Category;
   classes: Record<string, string>;
-  control: Control<CreatePodcastSeries>;
-  errors: FieldErrors<CreatePodcastSeries>;
+  control: Control<SeriesCreationData>;
+  errors: FieldErrors<SeriesCreationData>;
 }
 
 export default function EditSeriesDetails({

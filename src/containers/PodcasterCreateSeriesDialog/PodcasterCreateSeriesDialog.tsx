@@ -1,8 +1,8 @@
 import { Box, Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import RoundedButton from "@/components/rounded-button/RoundedButton";
-import { CreateSeriesSteps } from "@/common/constants/CreateSeriesSteps";
+import { RoundedButton } from "@/components";
+import { SeriesCreationSteps } from "@/common/enums";
 
 import useHelper from "./useHelper";
 import { ImageForm } from "./components/ImageForm";
@@ -31,7 +31,7 @@ export default function PodcasterCreateSeriesDialog({
 
   const renderStep = () => {
     switch (step) {
-      case CreateSeriesSteps.INPUT_SERIES_DETAILS:
+      case SeriesCreationSteps.INPUT_SERIES_DETAILS:
         return (
           <EditSeriesDetail
             errors={errors}
@@ -40,12 +40,12 @@ export default function PodcasterCreateSeriesDialog({
             categories={categories}
           />
         );
-      case CreateSeriesSteps.UPLOAD_SERIES_COVER_IMG:
-      case CreateSeriesSteps.CONFIRM_DETAILS_AND_CREATION:
+      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG:
+      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION:
         return (
           <ImageForm
             title={
-              step === CreateSeriesSteps.UPLOAD_SERIES_COVER_IMG
+              step === SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG
                 ? "Choose your cover art"
                 : "Review your photo"
             }
@@ -61,13 +61,13 @@ export default function PodcasterCreateSeriesDialog({
 
   const renderButtonText = () => {
     switch (step) {
-      case CreateSeriesSteps.INPUT_SERIES_DETAILS:
+      case SeriesCreationSteps.INPUT_SERIES_DETAILS:
         return "Continue";
 
-      case CreateSeriesSteps.UPLOAD_SERIES_COVER_IMG:
+      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG:
         return "Upload an image";
 
-      case CreateSeriesSteps.CONFIRM_DETAILS_AND_CREATION:
+      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION:
         return "Continue";
 
       default:

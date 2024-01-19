@@ -12,16 +12,12 @@ import {
   where,
 } from "firebase/firestore";
 
-import { PodcastSeries } from "@/common/interfaces/PodcastSeries";
-import {
-  CREATORS_PODCAST_SERIES,
-  PODCAST_SERIES,
-  USERS,
-} from "@/common/constants/firestoreCollectionNames";
-import { User } from "@/common/interfaces";
+import { Collections } from "@/common/enums";
 
 import { db } from "./init";
-import { downloadPhoto } from "./downloadPhoto";
+import { downloadPhotoFromStorage } from "./downloadPhotoFromStorage";
+
+import type { User, PodcastSeries } from "@/common/interfaces";
 
 export const getTrendingPodcastSeriesPagination = async ({
   period = 7,
@@ -47,7 +43,10 @@ export const getTrendingPodcastSeriesPagination = async ({
     queryConditions.push(where("category", "in", categories));
   }
 
-  const qSeries = query(collection(db, PODCAST_SERIES), ...queryConditions);
+  const qSeries = query(
+    collection(db, Collections.PODCAST_SERIES),
+    ...queryConditions
+  );
 
   const querySnapshot = await getDocs(qSeries);
 
@@ -67,7 +66,7 @@ export const getTrendingPodcastSeriesPagination = async ({
     );
     queryConditions.push(limit(pageSize - trendingPodcastSeries.length));
     const fillingSnapshot = await getDocs(
-      query(collection(db, PODCAST_SERIES), ...queryConditions)
+      query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
     );
 
     trendingPodcastSeries.concat(
@@ -85,14 +84,14 @@ export const getTrendingPodcastSeriesPagination = async ({
 
   const seriesIds = trendingPodcastSeries
     .filter(({ id }) => !notInIds.includes(id))
-    .map(({ id }) => doc(db, PODCAST_SERIES, id));
+    .map(({ id }) => doc(db, Collections.PODCAST_SERIES, id));
 
   if (!seriesIds.length) {
     return [];
   }
 
   const qCreatorsSeries = query(
-    collection(db, CREATORS_PODCAST_SERIES),
+    collection(db, Collections.CREATORS_PODCAST_SERIES),
     where("seriesId", "in", seriesIds)
   );
 
@@ -105,7 +104,7 @@ export const getTrendingPodcastSeriesPagination = async ({
   });
 
   const qCreators = query(
-    collection(db, USERS),
+    collection(db, Collections.USERS),
     where(
       documentId(),
       "in",
@@ -127,7 +126,7 @@ export const getTrendingPodcastSeriesPagination = async ({
   const images = await Promise.all(
     trendingPodcastSeries.map(async (series) => {
       if (!series.coverUrl.startsWith("https")) {
-        const blob = await downloadPhoto(series.coverUrl);
+        const blob = await downloadPhotoFromStorage(series.coverUrl);
 
         return URL.createObjectURL(blob);
       }
@@ -146,11 +145,14 @@ export const getTrendingPodcastSeriesPagination = async ({
       const creatorSeries = creatorsSeries.find((creatorSeries) => {
         return (
           creatorSeries.seriesId.path ===
-          doc(db, PODCAST_SERIES, series.id).path
+          doc(db, Collections.PODCAST_SERIES, series.id).path
         );
       });
 
-      return creatorSeries?.creatorId.path === doc(db, USERS, creator.id).path;
+      return (
+        creatorSeries?.creatorId.path ===
+        doc(db, Collections.USERS, creator.id).path
+      );
     }),
   }));
 };

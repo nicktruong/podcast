@@ -1,4 +1,4 @@
-import { PodcastSeriesDetail } from "@/common/interfaces/PodcastSeries";
+import type { PodcastSeriesDetail } from "@/common/interfaces";
 
 export interface DownloadAndPlayAudioReturnType {
   audioUrl: string;

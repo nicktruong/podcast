@@ -1,14 +1,14 @@
 import { addDoc, collection } from "firebase/firestore";
 
-import { db } from "@/firebase/init";
-import { CATEGORIES } from "@/common/constants/firestoreCollectionNames";
+import { db } from "@/firebase";
+import { Collections } from "@/common/enums";
 
 import categories from "./categories.json";
 
 export const migrate = async () => {
   console.log("Begin categories migration");
 
-  await addDoc(collection(db, CATEGORIES), { categories });
+  await addDoc(collection(db, Collections.CATEGORIES), { categories });
 
   console.log("Seeded categories");
 

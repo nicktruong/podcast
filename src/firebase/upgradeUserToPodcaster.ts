@@ -1,6 +1,6 @@
 import { doc, updateDoc } from "@firebase/firestore";
 
-import { Roles } from "@/common/constants/roles";
+import { Roles } from "@/common/enums";
 
 import { db } from "./init";
 

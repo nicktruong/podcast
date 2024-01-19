@@ -1,29 +1,29 @@
 import { Duration, intervalToDuration } from "date-fns";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { AsyncThunkConfig } from "@/hooks/storeHooks";
-import { downloadAudio } from "@/firebase/downloadAudio";
+import { AsyncThunkConfig } from "@/hooks/redux";
+import { downloadAudioFromStorage } from "@/firebase";
 
-import { RootState } from "../store";
-import { selectSeriesDetail } from "../userPodcastSeriesSlice";
+import { selectSeriesDetail } from "../listenerPodcastSeries/listenerPodcastSeriesSlice";
 
-import {
+import type {
   DownloadAndPlayAudioParameters,
   DownloadAndPlayAudioReturnType,
 } from "./interfaces";
+import type { RootState } from "@/store";
 
 interface AudioState {
   title: string;
   author: string;
-  playing: boolean;
   coverUrl: string;
   audioUrl: string;
   episodeId: string;
-  downloaded: boolean;
-  loadingAudio: boolean;
   audioDuration: Duration;
   durationRemain: Duration; // durationRemain = audioDuration - passedDuration
   passedDuration: Duration;
+  playing: boolean;
+  downloaded: boolean;
+  loadingAudio: boolean;
   durationInSeconds: number;
   passedTimeInSeconds: number;
 }
@@ -34,11 +34,11 @@ const initialState: AudioState = {
   coverUrl: "",
   audioUrl: "",
   episodeId: "",
-  playing: false,
-  downloaded: false,
   audioDuration: {},
   durationRemain: {},
   passedDuration: {},
+  playing: false,
+  downloaded: false,
   loadingAudio: false,
   durationInSeconds: 0,
   passedTimeInSeconds: 0,
@@ -51,7 +51,7 @@ export const downloadAndPlayAudio = createAsyncThunk<
 >(
   "userPodcastSeries/downloadAndPlayAudio",
   async ({ episodeId, pathToFile }, thunkApi) => {
-    const audioUrl = await downloadAudio(pathToFile);
+    const audioUrl = await downloadAudioFromStorage(pathToFile);
 
     const seriesDetail = selectSeriesDetail(thunkApi.getState());
 

@@ -1,5 +1,5 @@
-import { Pod } from "./pod.interface";
-import { User } from "./user.interface";
+import { Podcast } from "./Podcast";
+import { User } from "./User";
 
 export interface PodcastSeries {
   id: string;
@@ -20,5 +20,5 @@ export interface PodcastSeriesWithAuthor extends PodcastSeries {
 }
 
 export interface PodcastSeriesDetail extends PodcastSeriesWithAuthor {
-  podcasts: Pod[];
+  podcasts: Podcast[];
 }

@@ -3,13 +3,14 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { Roles } from "@/common/constants/roles";
-import { IUserRegister } from "@/common/interfaces";
+import { Roles } from "@/common/enums";
 
 import { auth } from "./init";
-import { createUserDoc } from "./create-user-doc";
+import { createUserDocument } from "./createUserDocument";
 
-export const signup = async (user: IUserRegister) => {
+import type { RegisterData } from "@/common/interfaces";
+
+export const signup = async (user: RegisterData) => {
   try {
     const { user: signedUpUser } = await createUserWithEmailAndPassword(
       auth,
@@ -20,7 +21,7 @@ export const signup = async (user: IUserRegister) => {
     const { name, date, year, email, month, gender, categoriesOfInterest } =
       user;
 
-    await createUserDoc({
+    await createUserDocument({
       name,
       email,
       gender,

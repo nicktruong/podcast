@@ -3,12 +3,11 @@ import { useEffect, useState } from "react";
 import {
   setNewRating,
   selectSeriesDetail,
-} from "@/store/userPodcastSeriesSlice";
-import { selectUserId } from "@/store/userSlice";
-import { getUserRate } from "@/firebase/getUserRate";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { ratePodcastOrSeries } from "@/firebase/ratePodcastOrSeries";
-import { PODCAST_SERIES } from "@/common/constants/firestoreCollectionNames";
+} from "@/store/listenerPodcastSeries";
+import { selectUserId } from "@/store/user";
+import { Collections } from "@/common/enums";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getUserRating, userRatePodcastOrSeries } from "@/firebase";
 
 import { useStyles } from "./styles";
 
@@ -25,9 +24,8 @@ export const usePrepare = () => {
 
   useEffect(() => {
     if (userId && id) {
-      getUserRate({ userId, podcastOrSeriesId: id }).then((rating) => {
+      getUserRating({ userId, podcastOrSeriesId: id }).then((rating) => {
         setRating(rating?.rating ?? 0);
-        console.log(rating);
       });
     }
   }, [userId, id]);
@@ -37,10 +35,10 @@ export const usePrepare = () => {
       return;
     }
 
-    const { newRateCount, newRating } = await ratePodcastOrSeries({
+    const { newRateCount, newRating } = await userRatePodcastOrSeries({
       userId,
       rating,
-      type: PODCAST_SERIES,
+      type: Collections.PODCAST_SERIES,
       podcastOrSeriesId: id,
     });
     dispatch(setNewRating({ newRateCount, newRating }));

@@ -1,1 +1,1 @@
-export { default as PodcasterCreateSeriesDialog } from "./PodcasterCreateSeriesDialog";
+export { default } from "./PodcasterCreateSeriesDialog";

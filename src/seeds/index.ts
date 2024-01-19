@@ -1,6 +1,6 @@
 import "dotenv/config";
-import { readdir } from "fs/promises";
 import { resolve } from "path";
+import { readdir } from "fs/promises";
 
 const base = "./src/seeds";
 

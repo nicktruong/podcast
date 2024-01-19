@@ -1,8 +1,8 @@
 import { Timestamp, doc, getDoc } from "firebase/firestore";
 
-import { User } from "@/common/interfaces/user.interface";
-
 import { db } from "./init";
+
+import type { User } from "@/common/interfaces";
 
 export const getUserInfo = async (uid: string) => {
   const ref = doc(db, "users", uid);

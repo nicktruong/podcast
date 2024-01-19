@@ -1,24 +1,22 @@
 import {
-  collection,
   doc,
-  getDoc,
-  getDocs,
   query,
   where,
+  getDoc,
+  getDocs,
+  collection,
 } from "firebase/firestore";
 
-import {
-  CREATORS_PODCAST_SERIES,
-  PODCAST_SERIES,
-} from "@/common/constants/firestoreCollectionNames";
-import { FirestoreCreatorsPodcasts, User } from "@/common/interfaces";
+import { Collections } from "@/common/enums";
 
 import { db } from "./init";
 
+import type { FirestoreCreatorsPodcasts, User } from "@/common/interfaces";
+
 export const getSeriesAuthor = async ({ seriesId }: { seriesId: string }) => {
   const q = query(
-    collection(db, CREATORS_PODCAST_SERIES),
-    where("seriesId", "==", doc(db, PODCAST_SERIES, seriesId))
+    collection(db, Collections.CREATORS_PODCAST_SERIES),
+    where("seriesId", "==", doc(db, Collections.PODCAST_SERIES, seriesId))
   );
   const docSnapshot = await getDocs(q);
   const creatorPodcast = docSnapshot.docs.map(

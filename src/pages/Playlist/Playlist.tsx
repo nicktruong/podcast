@@ -6,7 +6,7 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 
-import useHelper from "./useHelper";
+import usePrepare from "./usePrepare";
 import PodcastRating from "./components/PodcastRating";
 
 export default function Playlist() {
@@ -24,7 +24,7 @@ export default function Playlist() {
     handleCloseModal,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
-  } = useHelper();
+  } = usePrepare();
 
   if (loadingDetail) {
     return <>Loading...</>;

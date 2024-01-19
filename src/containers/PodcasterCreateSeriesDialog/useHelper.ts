@@ -1,21 +1,22 @@
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
-import { ChangeEventHandler, useEffect, useRef } from "react";
+import { ChangeEventHandler, useRef } from "react";
 
 import {
-  createPodcastSeriesAction,
-  selectCoverImage,
   selectStep,
+  selectCoverImage,
   setSeriesDetails,
   uploadSeriesCover,
-} from "@/store/podSeriesSlice";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
-import { CreateSeriesSteps } from "@/common/constants/CreateSeriesSteps";
-import { fetchCategories, selectCategories } from "@/store/categorySlice";
-import { CreatePodcastSeries } from "@/common/interfaces/CreatePodcastSeries";
+  createPodcastSeriesAction,
+} from "@/store/podcastSeries";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { selectCategories } from "@/store/category";
+import { SeriesCreationSteps } from "@/common/enums";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
+
+import type { SeriesCreationData } from "@/common/interfaces";
 
 interface Props {
   handleClose: () => void;
@@ -34,7 +35,7 @@ const useHelper = ({ handleClose }: Props) => {
     trigger,
     handleSubmit,
     formState: { errors },
-  } = useForm<CreatePodcastSeries>({
+  } = useForm<SeriesCreationData>({
     defaultValues: {
       title: "",
       category: "",
@@ -44,10 +45,6 @@ const useHelper = ({ handleClose }: Props) => {
     reValidateMode: "onChange",
     resolver: joiResolver(schema),
   });
-
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, []);
 
   const onSubmit = handleSubmit((data) => {
     dispatch(setSeriesDetails(data));
@@ -65,7 +62,7 @@ const useHelper = ({ handleClose }: Props) => {
 
   const handleNextStep = async () => {
     switch (step) {
-      case CreateSeriesSteps.INPUT_SERIES_DETAILS: {
+      case SeriesCreationSteps.INPUT_SERIES_DETAILS: {
         const isValidDetails = await validatePodcastSeriesInfo();
 
         if (isValidDetails) {
@@ -75,12 +72,12 @@ const useHelper = ({ handleClose }: Props) => {
         break;
       }
 
-      case CreateSeriesSteps.UPLOAD_SERIES_COVER_IMG: {
+      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG: {
         fileRef.current?.click();
         break;
       }
 
-      case CreateSeriesSteps.CONFIRM_DETAILS_AND_CREATION: {
+      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION: {
         dispatch(createPodcastSeriesAction());
         handleClose();
         break;
@@ -98,8 +95,8 @@ const useHelper = ({ handleClose }: Props) => {
     control,
     classes,
     fileRef,
-    onSubmit,
     categories,
+    onSubmit,
     handleNextStep,
     handleImageSubmit,
     validatePodcastSeriesInfo,

@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import { Box, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import routes from "@/common/constants/routes";
+import { routes } from "@/common/constants";
 
 import useHelper from "./useHelper";
 

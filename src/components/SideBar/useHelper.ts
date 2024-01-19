@@ -1,8 +1,8 @@
 import { useLocation } from "react-router-dom";
 
-import routes from "@/common/constants/routes";
-import { useAppSelector } from "@/hooks/storeHooks";
-import { selectUIState } from "@/store/ui/uiSlice";
+import { selectUIState } from "@/store/ui";
+import { routes } from "@/common/constants";
+import { useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 

@@ -13,16 +13,12 @@ import {
   where,
 } from "firebase/firestore";
 
-import { PodcastSeries } from "@/common/interfaces/PodcastSeries";
-import {
-  CREATORS_PODCAST_SERIES,
-  PODCAST_SERIES,
-  USERS,
-} from "@/common/constants/firestoreCollectionNames";
-import { User } from "@/common/interfaces";
+import { Collections } from "@/common/enums";
 
 import { db } from "./init";
-import { downloadPhoto } from "./downloadPhoto";
+import { downloadPhotoFromStorage } from "./downloadPhotoFromStorage";
+
+import type { User, PodcastSeries } from "@/common/interfaces";
 
 export const getRandomPodcastSeriesPagination = async ({
   period = 30,
@@ -51,7 +47,10 @@ export const getRandomPodcastSeriesPagination = async ({
     queryConditions.push(where("category", "in", categories));
   }
 
-  const qSeries = query(collection(db, PODCAST_SERIES), ...queryConditions);
+  const qSeries = query(
+    collection(db, Collections.PODCAST_SERIES),
+    ...queryConditions
+  );
 
   const querySnapshot = await getDocs(qSeries);
 
@@ -70,7 +69,7 @@ export const getRandomPodcastSeriesPagination = async ({
   }
 
   const reverseQuerySnapShot = await getDocs(
-    query(collection(db, PODCAST_SERIES), ...queryConditions)
+    query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
   );
 
   const reverseRandomPodcastSeries = reverseQuerySnapShot.docs
@@ -96,7 +95,7 @@ export const getRandomPodcastSeriesPagination = async ({
     queryConditions[1] = startAfter(randomPodcastSeries.at(-1)?.createdAt ?? 0);
     queryConditions.push(limit(pageSize - randomPodcastSeries.length));
     const fillingSnapshot = await getDocs(
-      query(collection(db, PODCAST_SERIES), ...queryConditions)
+      query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
     );
 
     randomPodcastSeries.concat(
@@ -113,11 +112,11 @@ export const getRandomPodcastSeriesPagination = async ({
   }
 
   const seriesIds = randomPodcastSeries.map(({ id }) =>
-    doc(db, PODCAST_SERIES, id)
+    doc(db, Collections.PODCAST_SERIES, id)
   );
 
   const qCreatorsSeries = query(
-    collection(db, CREATORS_PODCAST_SERIES),
+    collection(db, Collections.CREATORS_PODCAST_SERIES),
     where("seriesId", "in", seriesIds)
   );
 
@@ -130,7 +129,7 @@ export const getRandomPodcastSeriesPagination = async ({
   });
 
   const qCreators = query(
-    collection(db, USERS),
+    collection(db, Collections.USERS),
     where(
       documentId(),
       "in",
@@ -152,7 +151,7 @@ export const getRandomPodcastSeriesPagination = async ({
   const images = await Promise.all(
     randomPodcastSeries.map(async (series) => {
       if (!series.coverUrl.startsWith("https")) {
-        const blob = await downloadPhoto(series.coverUrl);
+        const blob = await downloadPhotoFromStorage(series.coverUrl);
 
         return URL.createObjectURL(blob);
       }
@@ -171,11 +170,14 @@ export const getRandomPodcastSeriesPagination = async ({
       const creatorSeries = creatorsSeries.find((creatorSeries) => {
         return (
           creatorSeries.seriesId.path ===
-          doc(db, PODCAST_SERIES, series.id).path
+          doc(db, Collections.PODCAST_SERIES, series.id).path
         );
       });
 
-      return creatorSeries?.creatorId.path === doc(db, USERS, creator.id).path;
+      return (
+        creatorSeries?.creatorId.path ===
+        doc(db, Collections.USERS, creator.id).path
+      );
     }),
   }));
 };

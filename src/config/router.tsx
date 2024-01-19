@@ -1,70 +1,89 @@
 import React, { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import routes from "@/common/constants/routes";
+import { routes } from "@/common/constants";
+import { AuthListener } from "@/containers";
+import EnsureInterestCategoriesSelectedGuard from "@/guards/EnsureInterestCategoriesSelectedGuard";
 
 const PreventLoggedInAccessGuard = lazy(
-  () => import("@/guards/PreventLoggedInAccessGuard")
+  () => import("@/guards/PreventLoggedInAccessGuard/PreventLoggedInAccessGuard")
 );
 const PreventListenerAccessGuard = lazy(
-  () => import("@/guards/PreventListenerAccessGuard")
+  () => import("@/guards/PreventListenerAccessGuard/PreventListenerAccessGuard")
 );
 
-const Home = lazy(() => import("@/pages/home/Home"));
-const Playlist = lazy(() => import("@/pages/Playlist"));
-const Login = lazy(() => import("@/pages/login/Login"));
-const SignUp = lazy(() => import("@/pages/signup/SignUp"));
-const PodLayout = lazy(() => import("@/layouts/PodLayout"));
 const RootLayout = lazy(() => import("@/layouts/RootLayout"));
-const PodDashboard = lazy(() => import("@/pages/pod-dashboard/PodDashboard"));
+const PodDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
+const PodLayout = lazy(() => import("@/layouts/PodcasterDashboardLayout"));
 
-const router = createBrowserRouter([
+const InterestCategoriesSelection = lazy(
+  () => import("@/pages/InterestCategoriesSelection")
+);
+const Home = lazy(() => import("@/pages/Home"));
+const Login = lazy(() => import("@/pages/Login"));
+const SignUp = lazy(() => import("@/pages/SignUp"));
+const Playlist = lazy(() => import("@/pages/Playlist"));
+
+export const router = createBrowserRouter([
   {
-    path: routes.index,
-    element: <RootLayout />,
+    element: <AuthListener />,
     children: [
       {
-        index: true,
-        element: <Home />,
-      },
-      {
-        path: routes.playlist,
-        element: <Playlist />,
-      },
-    ],
-  },
-
-  // Auth
-  {
-    element: <PreventLoggedInAccessGuard />,
-    children: [
-      {
-        path: routes.login,
-        element: <Login />,
-      },
-      {
-        path: routes.signup,
-        element: <SignUp />,
-      },
-    ],
-  },
-
-  // Podcaster
-  {
-    path: routes.pod,
-    element: <PodLayout />,
-    children: [
-      {
-        element: <PreventListenerAccessGuard />,
+        element: <EnsureInterestCategoriesSelectedGuard />,
         children: [
           {
-            path: routes.podDashboard,
-            element: <PodDashboard />,
+            path: routes.index,
+            element: <RootLayout />,
+            children: [
+              {
+                index: true,
+                element: <Home />,
+              },
+              {
+                path: routes.playlist,
+                element: <Playlist />,
+              },
+            ],
+          },
+        ],
+      },
+      // choosing categories
+      {
+        path: routes.categoriesSelection,
+        element: <InterestCategoriesSelection />,
+      },
+
+      // Auth
+      {
+        element: <PreventLoggedInAccessGuard />,
+        children: [
+          {
+            path: routes.login,
+            element: <Login />,
+          },
+          {
+            path: routes.signup,
+            element: <SignUp />,
+          },
+        ],
+      },
+
+      // Podcaster
+      {
+        path: routes.pod,
+        element: <PodLayout />,
+        children: [
+          {
+            element: <PreventListenerAccessGuard />,
+            children: [
+              {
+                path: routes.podDashboard,
+                element: <PodDashboard />,
+              },
+            ],
           },
         ],
       },
     ],
   },
 ]);
-
-export default router;

@@ -9,10 +9,11 @@ import {
   where,
 } from "firebase/firestore";
 
-import { PODCASTS } from "@/common/constants/firestoreCollectionNames";
-import { Pod } from "@/common/interfaces";
+import { Collections } from "@/common/enums";
 
 import { db } from "./init";
+
+import type { Podcast } from "@/common/interfaces";
 
 export const getEpisodesFromSeriesPagination = async ({
   seriesId,
@@ -24,7 +25,7 @@ export const getEpisodesFromSeriesPagination = async ({
   offset?: Date;
 }) => {
   const q = query(
-    collection(db, PODCASTS),
+    collection(db, Collections.PODCASTS),
     where("seriesId", "==", seriesId),
     orderBy("createdAt", "desc"),
     startAt(Timestamp.fromDate(offset)),
@@ -40,6 +41,6 @@ export const getEpisodesFromSeriesPagination = async ({
     data.publishedDate = data.publishedDate?.toDate().toISOString();
     data.id = doc.id;
 
-    return data as Pod;
+    return data as Podcast;
   });
 };
