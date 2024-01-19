@@ -5,36 +5,46 @@ import {
   getDoc,
   getDocs,
   collection,
-  DocumentData,
 } from "firebase/firestore";
 
-import { IGetPodSeries } from "@/common/interfaces/getPodSeries.interface";
-import { CREATORS_PODCAST_SERIES } from "@/common/constants/firestoreCollectionNames";
+import {
+  PODCAST_SERIES,
+  CREATORS_PODCAST_SERIES,
+} from "@/common/constants/firestoreCollectionNames";
+import { CreatorsPodcastSeries } from "@/common/interfaces/CreatorsPodcastSeries";
+import { PodcastSeries } from "@/common/interfaces/PodcastSeries";
 
 import { db } from "./init";
 
 export const getUserPodSeries = async (creatorId: string) => {
-  const q = query(
-    collection(db, CREATORS_PODCAST_SERIES),
-    where("creatorId", "==", doc(db, "users", creatorId))
+  const creatorsPodcastSeriesSnapshot = await getDocs(
+    query(
+      collection(db, CREATORS_PODCAST_SERIES),
+      where("creatorId", "==", doc(db, "users", creatorId))
+    )
   );
 
-  const querySnapshot = await getDocs(q);
+  const creatorsPodcastSeriesData = creatorsPodcastSeriesSnapshot.docs.map(
+    (doc) => {
+      const data = doc.data();
+      data.seriesId = data.seriesId.path;
+      data.creatorId = data.creatorId.path;
+      data.createdAt = data.createdAt.toDate().toISOSTring();
+      data.updatedAt = data.updatedAt.toDate().toISOSTring();
 
-  const podSeriesSnapshots = await Promise.all(
-    querySnapshot.docs.map(async (doc) => {
-      const seriesRef = doc.data().seriesId;
+      return data as CreatorsPodcastSeries;
+    }
+  );
 
-      return getDoc<IGetPodSeries, DocumentData>(seriesRef).then(
-        (snapshot) => ({ id: seriesRef.id as string, snapshot })
-      );
+  const podcastSeriesSnapshots = await Promise.all(
+    creatorsPodcastSeriesData.map((data) => {
+      return getDoc(doc(db, PODCAST_SERIES, data.seriesId));
     })
   );
 
-  const podSeries = podSeriesSnapshots.map(({ id, snapshot }) => ({
-    id,
-    ...snapshot.data(),
-  }))[0]; // Initially, we just handle 1 podcast series
+  const podcastSeries = podcastSeriesSnapshots.map((snapshot) => {
+    return { ...snapshot.data(), id: snapshot.id } as PodcastSeries;
+  });
 
-  return podSeries ?? {};
+  return podcastSeries[0];
 };

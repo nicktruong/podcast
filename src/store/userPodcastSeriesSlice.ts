@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { getTrendingPodcastSeriesPagination } from "@/firebase/getTrendingPodcastSeriesPagination";
 import {
@@ -35,6 +35,7 @@ const initialState: UserPodcastSeriesState = {
     audienceSize: 0,
     category: "",
     coverUrl: "",
+    rateCount: 0,
     createdAt: "",
     description: "",
     id: "",
@@ -149,7 +150,15 @@ export const getSeriesDetailAction = createAsyncThunk<
 export const userPodcastSeriesSlice = createSlice({
   name: "userPodcastSeries",
   initialState,
-  reducers: {},
+  reducers: {
+    setNewRating: (
+      state,
+      { payload }: PayloadAction<{ newRateCount: number; newRating: number }>
+    ) => {
+      state.seriesDetail.rating = payload.newRating;
+      state.seriesDetail.rateCount = payload.newRateCount;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(
@@ -196,6 +205,8 @@ export const userPodcastSeriesSlice = createSlice({
     });
   },
 });
+
+export const { setNewRating } = userPodcastSeriesSlice.actions;
 
 export const selectTrendingSeries = (state: RootState) =>
   state.userPodcasts.trendingSeries;

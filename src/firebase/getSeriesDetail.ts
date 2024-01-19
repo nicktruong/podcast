@@ -17,6 +17,7 @@ export const getSeriesDetail = async ({ seriesId }: { seriesId: string }) => {
     throw new Error("Not found");
   }
 
+  data.id = docSnapshot.id;
   data.createdAt = data.createdAt?.toDate().toISOString();
   data.updatedAt = data.updated?.toDate().toISOString();
 

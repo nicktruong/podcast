@@ -151,7 +151,7 @@ export default function Login() {
               <AuthButton
                 startIcon={
                   <img
-                    alt=""
+                    alt="Google Icon"
                     width={24}
                     height={24}
                     className="absolute left-5 top-1/2 -translate-y-1/2"
@@ -168,7 +168,7 @@ export default function Login() {
               <AuthButton
                 startIcon={
                   <img
-                    alt=""
+                    alt="Facebook Icon"
                     width={24}
                     height={24}
                     className="absolute left-5 top-1/2 -translate-y-1/2"

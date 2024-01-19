@@ -50,7 +50,7 @@ export default function AudioPlayer() {
       <Box className={classes.infoContainer}>
         {downloaded && (
           <img
-            alt={title}
+            alt={`${title} cover photo`}
             src={coverUrl}
             className={classes.audioPlayerImage}
           />

@@ -81,7 +81,7 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
                 src={process.env.PUBLIC_URL + "/assets/icons/google-icon.svg"}
                 width={24}
                 height={24}
-                alt=""
+                alt="Google Icon"
                 className="absolute left-5 top-1/2 -translate-y-1/2"
               />
             }
@@ -96,7 +96,7 @@ export default function EmailForm({ control, errors, nextStepHandler }: Props) {
                 src={process.env.PUBLIC_URL + "/assets/icons/facebook-icon.svg"}
                 width={24}
                 height={24}
-                alt=""
+                alt="Facebook Icon"
                 className="absolute left-5 top-1/2 -translate-y-1/2"
               />
             }

@@ -313,7 +313,7 @@ export default function PodDashboardOverview() {
               }}
             >
               <img
-                alt=""
+                alt={`${pods[0]?.title} cover photo`}
                 className="w-full h-full object-cover rounded"
                 src={seriesImage}
               />

@@ -5,11 +5,12 @@ export interface PodcastSeries {
   id: string;
   title: string;
   rating: number;
+  category: string;
   coverUrl: string; // ref or https
+  rateCount: number;
   playCount: number;
   createdAt: string;
   updatedAt: string;
-  category: string;
   description: string;
   audienceSize: number;
 }

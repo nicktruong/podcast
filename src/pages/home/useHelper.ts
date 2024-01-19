@@ -9,6 +9,7 @@ import {
   getSeriesToTry,
 } from "@/store/userPodcastSeriesSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { selectUserId } from "@/store/userSlice";
 
 import { useStyles } from "./styles";
 
@@ -17,17 +18,31 @@ const useHelper = () => {
 
   const dispatch = useAppDispatch();
 
-  const trendingPodcasts = useAppSelector(selectTrendingSeries);
-  const seriesForYou = useAppSelector(selectSeriesForYou);
+  const userId = useAppSelector(selectUserId);
   const seriesToTry = useAppSelector(selectSeriesToTry);
+  const seriesForYou = useAppSelector(selectSeriesForYou);
+  const trendingPodcasts = useAppSelector(selectTrendingSeries);
+
+  const sections = [
+    { title: "Trending podcasts", podcasts: trendingPodcasts },
+    { title: "Series for you", podcasts: seriesForYou },
+    { title: "Series to try", podcasts: seriesToTry },
+  ];
 
   useEffect(() => {
-    dispatch(getTrendingPodcastSeriesPaginationAction({ pageSize: 7 }))
-      .then(() => dispatch(getSeriesForYou({ pageSize: 7, period: 30 })))
-      .then(() => dispatch(getSeriesToTry({ pageSize: 7 })));
-  }, []);
+    const init = async () => {
+      await dispatch(getTrendingPodcastSeriesPaginationAction({ pageSize: 7 }));
 
-  return { classes, trendingPodcasts, seriesForYou, seriesToTry };
+      if (userId) {
+        await dispatch(getSeriesForYou({ pageSize: 7, period: 30 }));
+        await dispatch(getSeriesToTry({ pageSize: 7 }));
+      }
+    };
+
+    init();
+  }, [userId]);
+
+  return { classes, sections };
 };
 
 export default useHelper;

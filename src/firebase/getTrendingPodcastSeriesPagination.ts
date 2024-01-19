@@ -87,6 +87,10 @@ export const getTrendingPodcastSeriesPagination = async ({
     .filter(({ id }) => !notInIds.includes(id))
     .map(({ id }) => doc(db, PODCAST_SERIES, id));
 
+  if (!seriesIds.length) {
+    return [];
+  }
+
   const qCreatorsSeries = query(
     collection(db, CREATORS_PODCAST_SERIES),
     where("seriesId", "in", seriesIds)

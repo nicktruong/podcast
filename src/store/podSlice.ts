@@ -31,6 +31,7 @@ const initialState: PodState = {
     rating: 0,
     seriesId: "",
     playCount: 0,
+    rateCount: 0,
     createdAt: "", // in ISO format
     updatedAt: "", // in ISO format
     pathToFile: "",

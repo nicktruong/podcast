@@ -37,7 +37,15 @@ const createRandomPodcastersObj = () => {
 
 const createRandomPodcastSeriesObj = (
   index: number,
-  { rating, playCount }: { rating: number; playCount: number }
+  {
+    rating,
+    rateCount,
+    playCount,
+  }: {
+    rating: number;
+    rateCount: number;
+    playCount: number;
+  }
 ) => {
   const randomCategoryId = faker.helpers.arrayElement(categories).name;
 
@@ -47,6 +55,7 @@ const createRandomPodcastSeriesObj = (
     description: podcastSeries[index].description,
     category: randomCategoryId,
     rating,
+    rateCount,
     playCount,
     audienceSize: faker.number.int({ max: 70_000 }),
     createdAt: seedTimestamp,
@@ -66,12 +75,21 @@ const populateCreatorsPodcastSeries = (userId: string, seriesId: string) => {
 const createRandomPodcastObj = (
   index: number,
   seriesId: string,
-  { rating, playCount }: { rating: number; playCount: number }
+  {
+    rating,
+    rateCount,
+    playCount,
+  }: {
+    rating: number;
+    rateCount: number;
+    playCount: number;
+  }
 ) => {
   return {
     title: podcasts[index].title,
     rating,
     seriesId, // change when user first create series
+    rateCount,
     playCount,
     status: PodStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     createdAt: seedTimestamp,
@@ -97,6 +115,7 @@ export const migrate = async () => {
   for (let i = 0; i < podcastSeries.length; i++) {
     const rating = faker.number.float({ max: 5, precision: 0.1 });
     const playCount = faker.number.int({ max: 100_000 });
+    const rateCount = faker.number.int({ max: playCount });
 
     // create podcasters
     const podcaster = createRandomPodcastersObj();
@@ -106,6 +125,7 @@ export const migrate = async () => {
     // create podcastSeries
     const podcastSeries = createRandomPodcastSeriesObj(i, {
       rating,
+      rateCount,
       playCount,
     });
     const podcastSeriesRef = await addDoc(
@@ -129,7 +149,7 @@ export const migrate = async () => {
     const podcast = createRandomPodcastObj(
       faker.number.int({ max: 59 }),
       podcastSeriesRef.id,
-      { rating, playCount }
+      { rating, rateCount, playCount }
     );
     const podcastRef = await addDoc(collection(db, PODCASTS), podcast);
     console.log("Seeded podcast");

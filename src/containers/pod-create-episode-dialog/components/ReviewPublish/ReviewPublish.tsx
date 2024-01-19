@@ -33,7 +33,7 @@ export default function ReviewPublish({ podInfo, user, image }: Props) {
             width="56px"
             height="56px"
             className="rounded"
-            alt="Podcast cover art"
+            alt="Podcast cover photo"
             src={image}
           />
         ) : (

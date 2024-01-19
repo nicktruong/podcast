@@ -5,6 +5,7 @@ export interface Pod {
   title: string;
   rating: number;
   seriesId: string;
+  rateCount: number;
   playCount: number;
   status: PodStatus;
   createdAt: string; // in ISO format

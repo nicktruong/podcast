@@ -24,6 +24,7 @@ const useHelper = () => {
 
   const dispatch = useAppDispatch();
 
+  const [openModal, setOpenModal] = useState(false);
   const [titleFontSize, setTitleFontSize] = useState("97px");
 
   const seriesTitleRef = useRef<HTMLSpanElement>(null);
@@ -44,6 +45,7 @@ const useHelper = () => {
   }, [id]);
 
   useEffect(() => {
+    // TODO: Add loading state for this!!!
     // resize the podcast title to fit (not overflow) the parent element
     const resizeToFit = () => {
       if (!seriesTitleRef.current || !seriesTitleContainerRef.current) {
@@ -88,8 +90,17 @@ const useHelper = () => {
     dispatch(pauseAudio());
   };
 
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   return {
     classes,
+    openModal,
     seriesDetail,
     loadingDetail,
     titleFontSize,
@@ -97,6 +108,8 @@ const useHelper = () => {
     seriesTitleRef,
     playingEpisodeId,
     seriesTitleContainerRef,
+    handleOpenModal,
+    handleCloseModal,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   };

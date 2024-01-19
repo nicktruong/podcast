@@ -36,8 +36,6 @@ export const getRandomPodcastSeriesPagination = async ({
   categories?: string[];
   notInIds?: string[];
 }) => {
-  // console.log({ notInIds });
-
   const randomPeriod = new Date();
   randomPeriod.setDate(
     randomPeriod.getDate() - Math.floor(Math.random() * period)
@@ -52,10 +50,6 @@ export const getRandomPodcastSeriesPagination = async ({
   if (categories.length) {
     queryConditions.push(where("category", "in", categories));
   }
-
-  // if (notInIds.length) {
-  //   queryConditions.push(where(documentId(), "not-in", notInIds));
-  // }
 
   const qSeries = query(collection(db, PODCAST_SERIES), ...queryConditions);
 

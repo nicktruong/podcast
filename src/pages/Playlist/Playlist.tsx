@@ -7,10 +7,12 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 
 import useHelper from "./useHelper";
+import PodcastRating from "./components/PodcastRating";
 
 export default function Playlist() {
   const {
     classes,
+    openModal,
     seriesDetail,
     loadingDetail,
     titleFontSize,
@@ -18,6 +20,8 @@ export default function Playlist() {
     seriesTitleRef,
     playingEpisodeId,
     seriesTitleContainerRef,
+    handleOpenModal,
+    handleCloseModal,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   } = useHelper();
@@ -34,8 +38,8 @@ export default function Playlist() {
             <img
               width="232px"
               height="232px"
-              alt={seriesDetail.title}
               src={seriesDetail.coverUrl}
+              alt={`${seriesDetail.title} cover photo`}
               className="rounded shadow-white shadow-md"
             />
           </Box>
@@ -213,11 +217,19 @@ export default function Playlist() {
             </Box>
 
             <Box>
-              <Button className={classes.ratingBtn} variant="outlined">
+              <PodcastRating open={openModal} handleClose={handleCloseModal} />
+
+              <Button
+                variant="outlined"
+                onClick={handleOpenModal}
+                className={classes.ratingBtn}
+              >
                 {/* TODO: Change when add rating */}
-                <span>4.9</span>
+                <span>{seriesDetail.rating.toFixed(1)}</span>
                 <StarBorderIcon className={classes.ratingBtnIcon} />
-                <span className={classes.rateCount}>(16)</span>
+                <span className={classes.rateCount}>
+                  ({seriesDetail.rateCount})
+                </span>
               </Button>
             </Box>
 
