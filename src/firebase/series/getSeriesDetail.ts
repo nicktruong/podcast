@@ -2,8 +2,8 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
-import { downloadPhotoFromStorage } from "./downloadPhotoFromStorage";
+import { db } from "../init";
+import { downloadPhotoFromStorage } from "../downloadPhotoFromStorage";
 
 import type { PodcastSeries } from "@/common/interfaces";
 

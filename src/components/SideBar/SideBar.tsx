@@ -58,7 +58,11 @@ export default function SideBar() {
         </Box>
 
         {playlists.map((playlist) => (
-          <Box key={playlist.id} className={classes.podcastContainer}>
+          <Link
+            key={playlist.id}
+            className={classes.podcastContainer}
+            to={routes.userPlaylist.replace(":id", playlist.id)}
+          >
             <Box className={classes.podcastImgContainer}>
               <img
                 className={classes.podcastImg}
@@ -75,7 +79,7 @@ export default function SideBar() {
                 Playlist
               </Typography>
             </Box>
-          </Box>
+          </Link>
         ))}
       </Box>
     </Box>

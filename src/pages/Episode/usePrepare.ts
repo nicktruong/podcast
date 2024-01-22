@@ -1,14 +1,13 @@
 import { useParams } from "react-router-dom";
 import { MouseEvent, SyntheticEvent, useEffect, useState } from "react";
 
-import { useAppDispatch, useAppSelector } from "@/hooks";
-import { selectEpisodeDetail, setEpisodeId } from "@/store/details";
 import {
-  addToPlaylistAction,
   createPlaylist,
   selectPlaylists,
+  addToPlaylistAction,
 } from "@/store/playlists";
-import { addToPlaylist } from "@/firebase/addToPlaylist";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { selectEpisodeDetail, setEpisodeId } from "@/store/details";
 
 import { useStyles } from "./styles";
 

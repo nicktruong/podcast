@@ -1,4 +1,4 @@
-import { Playlist } from "@/common/interfaces/Playlist";
+import { Playlist } from "@/common/interfaces";
 
 export interface PlaylistsState {
   playlists: Playlist[];

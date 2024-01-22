@@ -6,6 +6,7 @@ export const routes = {
   signup: "/signup",
   episode: "/episode/:id",
   playlist: "/playlist/:id",
+  userPlaylist: "/user-playlist/:id",
   categoriesSelection: "/interests-categories-selections",
 
   // podcaster routes

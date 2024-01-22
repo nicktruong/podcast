@@ -30,6 +30,7 @@ export default function RootLayout() {
           height="100%"
           display="flex"
           overflow="auto"
+          borderRadius="8px"
           position="relative"
           flexDirection="column"
         >

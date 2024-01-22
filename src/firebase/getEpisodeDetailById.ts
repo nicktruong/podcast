@@ -24,5 +24,5 @@ export const getEpisodeDetailById = async ({
 
   const result = data as Podcast;
 
-  return { ...result, createdAt, updatedAt, publishedDate };
+  return { ...result, id: snapshot.id, createdAt, updatedAt, publishedDate };
 };

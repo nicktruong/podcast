@@ -4,10 +4,10 @@ import { usePrepare } from "./usePrepare";
 
 const PodcastDetailsHeader = () => {
   const {
+    title,
     classes,
-    isPlaylist,
-    seriesDetail,
-    episodeDetail,
+    coverUrl,
+    authorName,
     titleFontSize,
     seriesTitleRef,
     seriesTitleContainerRef,
@@ -19,8 +19,8 @@ const PodcastDetailsHeader = () => {
         <img
           width="232px"
           height="232px"
-          src={seriesDetail.coverUrl}
-          alt={`${seriesDetail.title} cover photo`}
+          src={coverUrl}
+          alt={`${title} cover photo`}
           className="rounded shadow-white shadow-md"
         />
       </Box>
@@ -34,11 +34,11 @@ const PodcastDetailsHeader = () => {
             fontSize={titleFontSize}
           >
             {/* TODO: Add skeleton loader */}
-            {isPlaylist ? seriesDetail.title : episodeDetail?.title}
+            {title}
           </Typography>
         </Box>
         <Typography fontSize="32px" fontWeight={700}>
-          {seriesDetail.author?.name}
+          {authorName}
         </Typography>
       </Box>
     </Box>

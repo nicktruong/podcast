@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { selectUIState } from "@/store/ui";
+import { selectUserId } from "@/store/user";
 import { routes } from "@/common/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { getUserPlaylists, selectPlaylists } from "@/store/playlists";
@@ -10,6 +11,8 @@ import { useStyles } from "./styles";
 
 const usePrepare = () => {
   const dispatch = useAppDispatch();
+
+  const userId = useAppSelector(selectUserId);
 
   const playlists = useAppSelector(selectPlaylists);
 
@@ -25,8 +28,10 @@ const usePrepare = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserPlaylists());
-  }, []);
+    if (userId) {
+      dispatch(getUserPlaylists());
+    }
+  }, [userId]);
 
   return { active, cx, classes, sidebarExpand, playlists };
 };

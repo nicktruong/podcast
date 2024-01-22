@@ -1,5 +1,7 @@
 import { PodcastStatus } from "../enums";
 
+import { PodcastSeriesWithAuthor } from "./PodcastSeries";
+
 export interface Podcast {
   id: string;
   title: string;
@@ -13,4 +15,8 @@ export interface Podcast {
   pathToFile: string;
   description: string;
   publishedDate: string; // in ISO format
+}
+
+export interface PodcastWithSeriesAndAuthor extends Podcast {
+  series: PodcastSeriesWithAuthor;
 }
