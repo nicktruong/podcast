@@ -12,6 +12,7 @@ export interface User {
   name: string;
   roles: Roles[];
   gender: Genders;
+  history: string[];
   categoriesOfInterest: string[];
 }
 

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
+import { OnProgressProps } from "react-player/base";
 
 import {
   playAudio,
@@ -8,6 +9,7 @@ import {
   selectAudioState,
   setDurationInSeconds,
   setPassedTimeInSeconds,
+  updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -45,7 +47,11 @@ const usePrepare = () => {
     }
   };
 
-  const onProgress = () => {
+  const onProgress = (progress: OnProgressProps) => {
+    if (progress.playedSeconds >= 60) {
+      dispatch(updateAudioPlayedCount());
+    }
+
     dispatch(setPassedTimeInSeconds(reactPlayerRef.current!.getCurrentTime()));
   };
 

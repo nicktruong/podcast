@@ -1,6 +1,7 @@
 export * from "./init";
 export * from "./signup";
 export * from "./series";
+export * from "./history";
 export * from "./uploadFile";
 export * from "./googleAuth";
 export * from "./getUserInfo";

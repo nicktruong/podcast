@@ -2,8 +2,9 @@ import { Duration, intervalToDuration } from "date-fns";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { AsyncThunkConfig } from "@/hooks/redux";
-import { downloadAudioFromStorage } from "@/firebase";
+import { downloadAudioFromStorage, updatePlayCount } from "@/firebase";
 
+import { addHistoryAction } from "../history";
 import { selectSeriesDetail } from "../details";
 
 import type {
@@ -17,6 +18,8 @@ interface AudioState {
   author: string;
   coverUrl: string;
   audioUrl: string;
+  seriesId: string;
+  podcastId: string;
   episodeId: string;
   audioDuration: Duration;
   durationRemain: Duration; // durationRemain = audioDuration - passedDuration
@@ -33,6 +36,8 @@ const initialState: AudioState = {
   author: "",
   coverUrl: "",
   audioUrl: "",
+  seriesId: "",
+  podcastId: "",
   episodeId: "",
   audioDuration: {},
   durationRemain: {},
@@ -44,23 +49,33 @@ const initialState: AudioState = {
   passedTimeInSeconds: 0,
 };
 
+export const updateAudioPlayedCount = createAsyncThunk<
+  void,
+  void,
+  AsyncThunkConfig
+>("audio/updateAudioPlayedCount", async (_, thunkApi) => {
+  const { podcastId, seriesId } = selectAudioState(thunkApi.getState());
+
+  await updatePlayCount({ podcastId, seriesId });
+});
+
 export const downloadAndPlayAudio = createAsyncThunk<
   DownloadAndPlayAudioReturnType,
   DownloadAndPlayAudioParameters,
   AsyncThunkConfig
->(
-  "userPodcastSeries/downloadAndPlayAudio",
-  async ({ episodeId, pathToFile }, thunkApi) => {
-    const audioUrl = await downloadAudioFromStorage(pathToFile);
+>("audio/downloadAndPlayAudio", async ({ episodeId, pathToFile }, thunkApi) => {
+  const audioUrl = await downloadAudioFromStorage(pathToFile);
 
-    const seriesDetail = selectSeriesDetail(thunkApi.getState());
+  const seriesDetail = selectSeriesDetail(thunkApi.getState());
 
-    return { episodeId, audioUrl, seriesDetail };
-  }
-);
+  // TODO: dispatch to history thunk
+  thunkApi.dispatch(addHistoryAction({ seriesDetail }));
+
+  return { episodeId, audioUrl, seriesDetail };
+});
 
 export const audioSlice = createSlice({
-  name: "userPodcastSeries",
+  name: "audio",
   initialState,
   reducers: {
     playAudio: (state) => {
@@ -104,8 +119,10 @@ export const audioSlice = createSlice({
           state.downloaded = true;
           state.audioUrl = audioUrl;
           state.loadingAudio = false;
+          state.podcastId = episodeId;
           state.episodeId = episodeId;
           state.title = seriesDetail.title;
+          state.seriesId = seriesDetail.id;
           state.coverUrl = seriesDetail.coverUrl;
           state.author = seriesDetail.author?.name ?? "";
         }
@@ -115,6 +132,10 @@ export const audioSlice = createSlice({
         state.downloaded = false;
         state.loadingAudio = false;
       });
+
+    builder.addCase(updateAudioPlayedCount.rejected, (_, { error }) => {
+      console.error(error);
+    });
   },
 });
 

@@ -3,9 +3,11 @@ import { useEffect } from "react";
 import {
   getSeriesToTry,
   getSeriesForYou,
+  getRecentlyPlayed,
   selectSeriesToTry,
   selectSeriesForYou,
   selectTrendingSeries,
+  selectRecentlyPlayed,
   getTrendingPodcastSeriesPaginationAction,
 } from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
@@ -21,9 +23,11 @@ const usePrepare = () => {
   const userId = useAppSelector(selectUserId);
   const seriesToTry = useAppSelector(selectSeriesToTry);
   const seriesForYou = useAppSelector(selectSeriesForYou);
+  const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
   const trendingPodcasts = useAppSelector(selectTrendingSeries);
 
   const sections = [
+    { title: "Recently played", podcasts: recentlyPlayed },
     { title: "Trending podcasts", podcasts: trendingPodcasts },
     { title: "Series for you", podcasts: seriesForYou },
     { title: "Series to try", podcasts: seriesToTry },
@@ -31,6 +35,7 @@ const usePrepare = () => {
 
   useEffect(() => {
     const init = async () => {
+      await dispatch(getRecentlyPlayed());
       await dispatch(getTrendingPodcastSeriesPaginationAction({ pageSize: 7 }));
 
       if (userId) {

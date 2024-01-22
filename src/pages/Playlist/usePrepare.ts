@@ -48,7 +48,12 @@ const usePrepare = () => {
     pathToFile: string;
   }) => {
     if (!downloadedAudio) {
-      dispatch(downloadAndPlayAudio({ episodeId, pathToFile }));
+      dispatch(
+        downloadAndPlayAudio({
+          episodeId,
+          pathToFile,
+        })
+      );
     } else {
       dispatch(playAudio());
     }

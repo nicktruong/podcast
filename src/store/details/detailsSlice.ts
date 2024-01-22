@@ -45,6 +45,7 @@ const initialState: DetailsState = {
       id: "",
       dob: "",
       name: "",
+      history: [],
       roles: [Roles.LISTENER],
       categoriesOfInterest: [],
       gender: Genders.NON_BINARY,

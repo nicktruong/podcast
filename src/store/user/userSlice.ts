@@ -14,6 +14,7 @@ const initialState: UserState = {
     dob: "",
     name: "",
     email: "",
+    history: [],
     photoURL: "",
     emailVerified: false,
     gender: Genders.FEMALE,

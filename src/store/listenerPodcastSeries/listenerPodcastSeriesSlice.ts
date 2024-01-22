@@ -5,8 +5,9 @@ import {
   getTrendingPodcastSeriesPagination,
 } from "@/firebase";
 import { AsyncThunkConfig } from "@/hooks/redux";
+import { getHistorySeries } from "@/firebase/history/getHistorySeries";
 
-import { selectUserCategoriesOfInterest } from "../user/userSlice";
+import { selectUser, selectUserCategoriesOfInterest } from "../user/userSlice";
 
 import type { RootState } from "@/store";
 import type { UserPodcastSeriesState } from "./interfaces";
@@ -18,6 +19,17 @@ const initialState: UserPodcastSeriesState = {
   recentlyPlayed: [], // when implement history
   trendingSeries: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
 };
+
+export const getRecentlyPlayed = createAsyncThunk<
+  PodcastSeriesWithAuthor[],
+  undefined,
+  AsyncThunkConfig
+>("userPodcastSeries/getRecentlyPlayed", async (_, thunkApi) => {
+  const user = selectUser(thunkApi.getState());
+  const series = await getHistorySeries(user.history);
+
+  return series;
+});
 
 export const getTrendingPodcastSeriesPaginationAction = createAsyncThunk(
   "userPodcastSeries/getTrendingPodcastSeriesPaginationAction",
@@ -80,6 +92,14 @@ export const userPodcastSeriesSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(getRecentlyPlayed.fulfilled, (state, { payload }) => {
+        state.recentlyPlayed = payload;
+      })
+      .addCase(getRecentlyPlayed.rejected, (_, { error }) => {
+        console.error(error);
+      });
+
+    builder
       .addCase(
         getTrendingPodcastSeriesPaginationAction.fulfilled,
         (state, { payload }) => {
@@ -119,5 +139,8 @@ export const selectSeriesForYou = (state: RootState) =>
 
 export const selectSeriesToTry = (state: RootState) =>
   state.userPodcasts.seriesToTry;
+
+export const selectRecentlyPlayed = (state: RootState) =>
+  state.userPodcasts.recentlyPlayed;
 
 export default userPodcastSeriesSlice.reducer;
