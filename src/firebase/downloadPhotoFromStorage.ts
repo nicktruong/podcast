@@ -1,9 +1,9 @@
-import { getBlob, getStorage, ref } from "firebase/storage";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
 export const downloadPhotoFromStorage = async (path: string) => {
   const storage = getStorage();
 
   const photoRef = ref(storage, path);
 
-  return getBlob(photoRef);
+  return getDownloadURL(photoRef);
 };

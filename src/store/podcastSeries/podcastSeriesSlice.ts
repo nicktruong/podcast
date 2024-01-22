@@ -49,9 +49,9 @@ export const fetchSeriesImage = createAsyncThunk<
   const coverUrl = selectPodSeries(thunkApi.getState()).coverUrl;
 
   if (coverUrl) {
-    const blob = await downloadPhotoFromStorage(coverUrl);
+    const url = await downloadPhotoFromStorage(coverUrl);
 
-    return URL.createObjectURL(blob);
+    return url;
   }
 });
 

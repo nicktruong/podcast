@@ -1,50 +1,26 @@
 import { tss } from "tss-react/mui";
 
-export const useStyles = tss.create(({ theme }) => ({
-  playlistRoot: {
-    flexGrow: 1,
-    width: "100%",
-    borderRadius: "8px",
-    background: "linear-gradient(to bottom, #222222, #121212)",
-  },
-  playlistContent: {
-    padding: "72px 24px",
-  },
-  headerRoot: {
-    display: "flex",
-    gap: "24px",
-  },
-  seriesCoverContainer: {
-    flexShrink: 0,
-  },
-  seriesInfo: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "flex-end",
-  },
+export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   followBtn: {
-    borderRadius: "200px",
-    color: "#ffffff",
-    borderColor: "rgba(255, 255, 255, 0.5)",
-    textTransform: "capitalize",
-    fontSize: "14px",
     fontWeight: 700,
+    color: "#ffffff",
+    fontSize: "14px",
     lineHeight: "14px",
     padding: "8px 16px",
+    borderRadius: "200px",
+    borderColor: "rgba(255, 255, 255, 0.5)",
+    textTransform: "capitalize",
+
     "&:hover": {
       backgroundColor: "rgba(255, 255, 255, 0.1)",
       borderColor: "rgba(255, 255, 255, 1)",
     },
   },
   actions: {
+    gap: "16px",
+    display: "flex",
     marginTop: "32px",
-  },
-  moreIconBtn: {
-    marginLeft: "32px",
-  },
-  moreIcon: {
-    fontSize: "32px",
-    color: theme.palette.text.secondary,
+    alignItems: "center",
   },
   episode: {
     borderTop: "1px solid #2a2a2a",

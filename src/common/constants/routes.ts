@@ -4,6 +4,7 @@ export const routes = {
   login: "/login",
   search: "/search",
   signup: "/signup",
+  episode: "/episode/:id",
   playlist: "/playlist/:id",
   categoriesSelection: "/interests-categories-selections",
 

@@ -1,12 +1,18 @@
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { selectUIState } from "@/store/ui";
 import { routes } from "@/common/constants";
-import { useAppSelector } from "@/hooks/redux";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { getUserPlaylists, selectPlaylists } from "@/store/playlists";
 
 import { useStyles } from "./styles";
 
-const useHelper = () => {
+const usePrepare = () => {
+  const dispatch = useAppDispatch();
+
+  const playlists = useAppSelector(selectPlaylists);
+
   const { sidebarExpand } = useAppSelector(selectUIState);
 
   const { cx, classes } = useStyles();
@@ -18,7 +24,11 @@ const useHelper = () => {
     [routes.search]: pathname === routes.search ? classes.active : "",
   };
 
-  return { active, cx, classes, sidebarExpand };
+  useEffect(() => {
+    dispatch(getUserPlaylists());
+  }, []);
+
+  return { active, cx, classes, sidebarExpand, playlists };
 };
 
-export default useHelper;
+export default usePrepare;

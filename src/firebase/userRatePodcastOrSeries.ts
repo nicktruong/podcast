@@ -62,7 +62,7 @@ export const userRatePodcastOrSeries = async ({
   }
 
   await setDoc(
-    doc(db, Collections.RATING, `${userId}-rates-${podcastOrSeriesId}`),
+    doc(db, Collections.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
     ratingDoc
   );
 

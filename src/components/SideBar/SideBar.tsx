@@ -1,26 +1,33 @@
 import HomeIcon from "@mui/icons-material/Home";
 import SearchIcon from "@mui/icons-material/Search";
-import { Box, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
+import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import {
+  Box,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
-import useHelper from "./useHelper";
+import usePrepare from "./usePrepare";
 
 export default function SideBar() {
-  const { active, cx, classes, sidebarExpand } = useHelper();
+  const { active, cx, classes, sidebarExpand, playlists } = usePrepare();
 
   return (
-    <Box>
+    <Box className={classes.root}>
       <Box className={classes.section}>
         <Link to={routes.index}>
           <ListItemButton className={classes.button}>
-            <ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon}>
               <HomeIcon className={cx(classes.icon, active[routes.index])} />
             </ListItemIcon>
             {sidebarExpand && (
               <ListItemText
-                className={cx(classes.text, active[routes.index])}
+                className={cx(classes.listItemText, active[routes.index])}
                 primary="Home"
               />
             )}
@@ -29,17 +36,47 @@ export default function SideBar() {
 
         <Link to={routes.search}>
           <ListItemButton className={classes.button}>
-            <ListItemIcon>
+            <ListItemIcon className={classes.listItemIcon}>
               <SearchIcon className={cx(classes.icon, active[routes.search])} />
             </ListItemIcon>
             {sidebarExpand && (
               <ListItemText
-                className={cx(classes.text, active[routes.search])}
+                className={cx(classes.listItemText, active[routes.search])}
                 primary="Search"
               />
             )}
           </ListItemButton>
         </Link>
+      </Box>
+
+      <Box className={cx(classes.section, classes.library)}>
+        <Box className={classes.libraryHeading}>
+          <BookmarksIcon className={classes.icon} />
+          {sidebarExpand && (
+            <Typography className={classes.text}>Your Library</Typography>
+          )}
+        </Box>
+
+        {playlists.map((playlist) => (
+          <Box key={playlist.id} className={classes.podcastContainer}>
+            <Box className={classes.podcastImgContainer}>
+              <img
+                className={classes.podcastImg}
+                src={playlist.coverUrl}
+                alt=""
+              />
+            </Box>
+
+            <Box className={classes.playlistInfo}>
+              <Typography className={classes.podcastTitle}>
+                {playlist.title}
+              </Typography>
+              <Typography className={classes.playlistAuthor}>
+                Playlist
+              </Typography>
+            </Box>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

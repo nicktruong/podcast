@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   selectSeriesDetail,
   getSeriesDetailAction,
   selectLoadingSeriesDetail,
-} from "@/store/listenerPodcastSeries";
+} from "@/store/details";
 import {
   playAudio,
   pauseAudio,
@@ -20,15 +20,11 @@ import { useStyles } from "./styles";
 const usePrepare = () => {
   const { id } = useParams();
 
-  const { classes } = useStyles();
+  const { cx, classes } = useStyles();
 
   const dispatch = useAppDispatch();
 
   const [openModal, setOpenModal] = useState(false);
-  const [titleFontSize, setTitleFontSize] = useState("97px");
-
-  const seriesTitleRef = useRef<HTMLSpanElement>(null);
-  const seriesTitleContainerRef = useRef<HTMLDivElement>(null);
 
   const {
     playing: audioIsPlaying,
@@ -43,32 +39,6 @@ const usePrepare = () => {
       dispatch(getSeriesDetailAction({ seriesId: id }));
     }
   }, [id]);
-
-  useEffect(() => {
-    // TODO: Add loading state for this!!!
-    // resize the podcast title to fit (not overflow) the parent element
-    const resizeToFit = () => {
-      if (!seriesTitleRef.current || !seriesTitleContainerRef.current) {
-        return;
-      }
-
-      const fontSize = window.getComputedStyle(seriesTitleRef.current).fontSize;
-
-      const reducedFontSize = parseFloat(fontSize) - 1 + "px";
-      // line below is needed to calculate immediate clientHeight
-      seriesTitleRef.current.style.fontSize = reducedFontSize;
-      setTitleFontSize(reducedFontSize);
-
-      if (
-        seriesTitleRef.current.clientHeight >=
-        seriesTitleContainerRef.current.clientHeight
-      ) {
-        resizeToFit();
-      }
-    };
-
-    resizeToFit();
-  }, [seriesTitleRef.current, seriesTitleContainerRef.current]);
 
   const handleDownloadAndPlayAudio = ({
     episodeId,
@@ -99,15 +69,13 @@ const usePrepare = () => {
   };
 
   return {
+    cx,
     classes,
     openModal,
     seriesDetail,
     loadingDetail,
-    titleFontSize,
     audioIsPlaying,
-    seriesTitleRef,
     playingEpisodeId,
-    seriesTitleContainerRef,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,

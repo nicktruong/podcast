@@ -14,7 +14,7 @@ export const getUserRating = async ({
   podcastOrSeriesId: string;
 }) => {
   const snapshot = await getDoc(
-    doc(db, Collections.RATING, `${userId}-rates-${podcastOrSeriesId}`)
+    doc(db, Collections.RATINGS, `${userId}-rates-${podcastOrSeriesId}`)
   );
   const rating = snapshot.data() as Rating;
 

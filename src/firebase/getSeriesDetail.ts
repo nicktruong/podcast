@@ -25,9 +25,9 @@ export const getSeriesDetail = async ({ seriesId }: { seriesId: string }) => {
   const series = data as PodcastSeries;
 
   if (!series.coverUrl.startsWith("https")) {
-    const blob = await downloadPhotoFromStorage(series.coverUrl);
+    const url = await downloadPhotoFromStorage(series.coverUrl);
 
-    series.coverUrl = URL.createObjectURL(blob);
+    series.coverUrl = url;
   }
 
   return series;

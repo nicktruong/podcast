@@ -4,7 +4,7 @@ import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "@/hooks/redux";
 import { downloadAudioFromStorage } from "@/firebase";
 
-import { selectSeriesDetail } from "../listenerPodcastSeries/listenerPodcastSeriesSlice";
+import { selectSeriesDetail } from "../details";
 
 import type {
   DownloadAndPlayAudioParameters,

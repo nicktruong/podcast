@@ -126,9 +126,9 @@ export const getTrendingPodcastSeriesPagination = async ({
   const images = await Promise.all(
     trendingPodcastSeries.map(async (series) => {
       if (!series.coverUrl.startsWith("https")) {
-        const blob = await downloadPhotoFromStorage(series.coverUrl);
+        const url = await downloadPhotoFromStorage(series.coverUrl);
 
-        return URL.createObjectURL(blob);
+        return url;
       }
 
       return series.coverUrl;

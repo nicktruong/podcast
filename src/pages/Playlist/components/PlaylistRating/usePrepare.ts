@@ -1,12 +1,9 @@
 import { useEffect, useState } from "react";
 
-import {
-  setNewRating,
-  selectSeriesDetail,
-} from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
 import { Collections } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { setNewRating, selectSeriesDetail } from "@/store/details";
 import { getUserRating, userRatePodcastOrSeries } from "@/firebase";
 
 import { useStyles } from "./styles";

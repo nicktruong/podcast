@@ -1,13 +1,15 @@
+import { Box, Button, Typography } from "@mui/material";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+
+import { routes } from "@/common/constants";
 
 import usePrepare from "./usePrepare";
-import PodcastRating from "./components/PodcastRating";
+import PodcastRating from "./components/PlaylistRating";
 
 export default function Playlist() {
   const {
@@ -15,11 +17,8 @@ export default function Playlist() {
     openModal,
     seriesDetail,
     loadingDetail,
-    titleFontSize,
     audioIsPlaying,
-    seriesTitleRef,
     playingEpisodeId,
-    seriesTitleContainerRef,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,
@@ -31,49 +30,17 @@ export default function Playlist() {
   }
 
   return (
-    <Box className={classes.playlistRoot}>
-      <Box className={classes.playlistContent}>
-        <Box component="header" className={classes.headerRoot}>
-          <Box className={classes.seriesCoverContainer}>
-            <img
-              width="232px"
-              height="232px"
-              src={seriesDetail.coverUrl}
-              alt={`${seriesDetail.title} cover photo`}
-              className="rounded shadow-white shadow-md"
-            />
-          </Box>
+    <Box>
+      <Box className={classes.actions}>
+        <Button className={classes.followBtn} variant="outlined">
+          Follow
+        </Button>
+      </Box>
 
-          <Box className={classes.seriesInfo}>
-            <Typography fontSize="14px">Podcast</Typography>
-            <Box height="140px" ref={seriesTitleContainerRef}>
-              <Typography
-                fontWeight={700}
-                ref={seriesTitleRef}
-                fontSize={titleFontSize}
-              >
-                {seriesDetail.title}
-              </Typography>
-            </Box>
-            <Typography fontSize="32px" fontWeight={700}>
-              {seriesDetail.author?.name}
-            </Typography>
-          </Box>
-        </Box>
-
-        <Box className={classes.actions}>
-          <Button className={classes.followBtn} variant="outlined">
-            Follow
-          </Button>
-          <IconButton className={classes.moreIconBtn}>
-            <MoreHorizIcon className={classes.moreIcon} />
-          </IconButton>
-        </Box>
-
-        <Box className={classes.playlistMain}>
-          <Box className={classes.episodes}>
-            {/* TODO Uncomment when implementing history */}
-            {/* <Box className={cx(classes.episode, classes.continueEpisode)}>
+      <Box className={classes.playlistMain}>
+        <Box className={classes.episodes}>
+          {/* TODO Uncomment when implementing history */}
+          {/* <Box className={cx(classes.episode, classes.continueEpisode)}>
               <Typography className={classes.continueListeningEpLabel}>
                 Continue listening
               </Typography>
@@ -119,14 +86,18 @@ export default function Playlist() {
               </Box>
             </Box> */}
 
-            <Box>
-              <Typography className={classes.allEpisodes}>
-                All Episodes
-              </Typography>
+          <Box>
+            <Typography className={classes.allEpisodes}>
+              All Episodes
+            </Typography>
 
-              {seriesDetail.podcasts.map((podcast) => {
-                return (
-                  <Box key={podcast.id} className={classes.episode}>
+            {seriesDetail.podcasts.map((podcast) => {
+              return (
+                <Link
+                  key={podcast.id}
+                  to={routes.episode.replace(":id", podcast.id)}
+                >
+                  <Box className={classes.episode}>
                     <Box>
                       <Typography className={classes.episodeTitle}>
                         {podcast.title}
@@ -196,48 +167,48 @@ export default function Playlist() {
                       </Box>
                     </Box>
                   </Box>
-                );
-              })}
-            </Box>
+                </Link>
+              );
+            })}
+          </Box>
+        </Box>
+
+        <Box className={classes.about}>
+          <Box>
+            <Typography className={classes.aboutHeading} component="h3">
+              About
+            </Typography>
+            <Typography className={classes.aboutDetail}>
+              {/* TODO: Change when Add profile & Bio */}
+              Mình là Nhi và mình là podcast host của Trải Nghiệm?!. Hãy biến
+              Trải nghiệm? là nơi để bạn hiếu kì, tò mò và muốn hiểu biết hơn về
+              UX/UI. Hãy áp dụng Trải nghiệm! để trở thành một người cầu nối
+              giữa người dùng và sản phẩm tốt nhất.
+              http://trainghiempodcast.com/
+            </Typography>
           </Box>
 
-          <Box className={classes.about}>
-            <Box>
-              <Typography className={classes.aboutHeading} component="h3">
-                About
-              </Typography>
-              <Typography className={classes.aboutDetail}>
-                {/* TODO: Change when Add profile & Bio */}
-                Mình là Nhi và mình là podcast host của Trải Nghiệm?!. Hãy biến
-                Trải nghiệm? là nơi để bạn hiếu kì, tò mò và muốn hiểu biết hơn
-                về UX/UI. Hãy áp dụng Trải nghiệm! để trở thành một người cầu
-                nối giữa người dùng và sản phẩm tốt nhất.
-                http://trainghiempodcast.com/
-              </Typography>
-            </Box>
+          <Box>
+            <PodcastRating open={openModal} handleClose={handleCloseModal} />
 
-            <Box>
-              <PodcastRating open={openModal} handleClose={handleCloseModal} />
-
-              <Button
-                variant="outlined"
-                onClick={handleOpenModal}
-                className={classes.ratingBtn}
-              >
-                {/* TODO: Change when add rating */}
-                <span>{seriesDetail.rating.toFixed(1)}</span>
-                <StarBorderIcon className={classes.ratingBtnIcon} />
-                <span className={classes.rateCount}>
-                  ({seriesDetail.rateCount})
-                </span>
-              </Button>
-            </Box>
-
-            {/* TODO: Change to link component when implement search */}
-            <Button className={classes.categoryBtn}>
-              {seriesDetail.category}
+            <Button
+              variant="outlined"
+              onClick={handleOpenModal}
+              className={classes.ratingBtn}
+            >
+              {/* TODO: Change when add rating */}
+              <span>{seriesDetail.rating.toFixed(1)}</span>
+              <StarBorderIcon className={classes.ratingBtnIcon} />
+              <span className={classes.rateCount}>
+                ({seriesDetail.rateCount})
+              </span>
             </Button>
           </Box>
+
+          {/* TODO: Change to link component when implement search */}
+          <Button className={classes.categoryBtn}>
+            {seriesDetail.category}
+          </Button>
         </Box>
       </Box>
     </Box>
