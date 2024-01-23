@@ -29,6 +29,7 @@ const Login = lazy(() => import("@/pages/Login"));
 const Search = lazy(() => import("@/pages/Search"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const Episode = lazy(() => import("@/pages/Episode"));
+const Category = lazy(() => import("@/pages/Category"));
 const Playlist = lazy(() => import("@/pages/Playlist"));
 const UserPlaylist = lazy(() => import("@/pages/UserPlaylist"));
 
@@ -71,6 +72,10 @@ export const router = createBrowserRouter([
               {
                 path: routes.search,
                 element: <Search />,
+              },
+              {
+                path: routes.category,
+                element: <Category />,
               },
             ],
           },

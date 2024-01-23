@@ -5,4 +5,5 @@ export interface UserPodcastSeriesState {
   seriesForYou: PodcastSeriesWithAuthor[];
   recentlyPlayed: PodcastSeriesWithAuthor[];
   trendingSeries: PodcastSeriesWithAuthor[];
+  categoriesSeries: PodcastSeriesWithAuthor[];
 }

@@ -24,18 +24,17 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder.addCase(fetchCategories.pending, (state) => {
-      state.loading = true;
-    });
-
-    builder.addCase(fetchCategories.fulfilled, (state, { payload }) => {
-      state.loading = false;
-      state.categories = payload;
-    });
-
-    builder.addCase(fetchCategories.rejected, (state) => {
-      state.loading = false;
-    });
+    builder
+      .addCase(fetchCategories.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchCategories.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.categories = payload;
+      })
+      .addCase(fetchCategories.rejected, (state) => {
+        state.loading = false;
+      });
   },
 });
 

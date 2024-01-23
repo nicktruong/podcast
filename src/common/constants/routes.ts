@@ -6,6 +6,7 @@ export const routes = {
   signup: "/signup",
   episode: "/episode/:id",
   playlist: "/playlist/:id",
+  category: "/category/:name",
   userPlaylist: "/user-playlist/:id",
   categoriesSelection: "/interests-categories-selections",
 

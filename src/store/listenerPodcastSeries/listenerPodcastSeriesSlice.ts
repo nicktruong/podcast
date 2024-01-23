@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import {
+  getSeriesPagination,
   getRandomPodcastSeriesPagination,
   getTrendingPodcastSeriesPagination,
 } from "@/firebase";
@@ -18,7 +19,25 @@ const initialState: UserPodcastSeriesState = {
   seriesForYou: [], // based on categories of interests, users can choose initially, and the platform will personalized based on users listen history
   recentlyPlayed: [], // when implement history
   trendingSeries: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
+  categoriesSeries: [],
 };
+
+export const fetchCategoriesSeries = createAsyncThunk(
+  "category/fetchCategoriesSeries",
+  async ({
+    pageSize = 14,
+    categories = [],
+    sortBy = "createdAt",
+  }: {
+    sortBy?: string;
+    pageSize?: number;
+    categories?: string[];
+  }) => {
+    const result = await getSeriesPagination({ pageSize, categories, sortBy });
+
+    return result;
+  }
+);
 
 export const getRecentlyPlayed = createAsyncThunk<
   PodcastSeriesWithAuthor[],
@@ -128,6 +147,14 @@ export const userPodcastSeriesSlice = createSlice({
       .addCase(getSeriesToTry.rejected, (state, { error }) => {
         console.error(error);
       });
+
+    builder
+      .addCase(fetchCategoriesSeries.fulfilled, (state, { payload }) => {
+        state.categoriesSeries = payload;
+      })
+      .addCase(fetchCategoriesSeries.rejected, (_, { error }) => {
+        console.error(error);
+      });
   },
 });
 
@@ -142,5 +169,8 @@ export const selectSeriesToTry = (state: RootState) =>
 
 export const selectRecentlyPlayed = (state: RootState) =>
   state.userPodcasts.recentlyPlayed;
+
+export const selectCategoriesSeries = (state: RootState) =>
+  state.userPodcasts.categoriesSeries;
 
 export default userPodcastSeriesSlice.reducer;

@@ -22,18 +22,25 @@ const Search = () => {
             <Box className={classes.categories}>
               {categories.categories.map((category) => {
                 return (
-                  <Box
+                  <Link
                     key={category.name}
-                    className={classes.category}
-                    sx={{ backgroundColor: category.color }}
+                    to={routes.category.replace(
+                      ":name",
+                      encodeURIComponent(category.name)
+                    )}
                   >
-                    <Typography
-                      key={category.name}
-                      className={classes.categoryTitle}
+                    <Box
+                      className={classes.category}
+                      sx={{ backgroundColor: category.color }}
                     >
-                      {category.name}
-                    </Typography>
-                  </Box>
+                      <Typography
+                        key={category.name}
+                        className={classes.categoryTitle}
+                      >
+                        {category.name}
+                      </Typography>
+                    </Box>
+                  </Link>
                 );
               })}
             </Box>
