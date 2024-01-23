@@ -1,6 +1,6 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
 
-import { auth } from "./init";
+import { auth } from "../init";
 
 import type { LoginData } from "@/common/interfaces";
 

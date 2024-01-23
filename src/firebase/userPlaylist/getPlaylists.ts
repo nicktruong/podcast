@@ -5,8 +5,8 @@ import { Playlist } from "@/common/interfaces";
 
 import { db } from "../init";
 import { getSeriesById } from "../series";
-import { getEpisodeDetailById } from "../getEpisodeDetailById";
-import { downloadPhotoFromStorage } from "../downloadPhotoFromStorage";
+import { getEpisodeDetailById } from "../podcast/getEpisodeDetailById";
+import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
 
 export const getOwnedPlaylists = async ({ userId }: { userId: string }) => {
   const snapshot = await getDocs(

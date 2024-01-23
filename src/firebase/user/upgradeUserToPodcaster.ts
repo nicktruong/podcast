@@ -2,7 +2,7 @@ import { doc, updateDoc } from "@firebase/firestore";
 
 import { Roles } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 export const upgradeUserToPodcaster = async (
   userId: string,

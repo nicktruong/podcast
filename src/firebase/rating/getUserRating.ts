@@ -2,7 +2,7 @@ import { doc, getDoc } from "firebase/firestore";
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 import type { Rating } from "@/common/interfaces";
 

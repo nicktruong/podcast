@@ -1,6 +1,7 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { db } from "./init";
+import { db } from "../init";
+
 import { getCreatorsPodcastsPagination } from "./getCreatorsPodcastsPagination";
 
 import type { Podcast } from "@/common/interfaces";

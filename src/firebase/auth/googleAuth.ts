@@ -4,7 +4,7 @@ import {
   signInWithRedirect,
 } from "firebase/auth";
 
-import { auth } from "./init";
+import { auth } from "../init";
 
 const provider = new GoogleAuthProvider();
 

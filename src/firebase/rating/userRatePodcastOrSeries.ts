@@ -8,7 +8,8 @@ import {
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
+
 import { getUserRating } from "./getUserRating";
 
 import type {

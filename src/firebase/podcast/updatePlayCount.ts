@@ -2,7 +2,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 import type { Podcast, PodcastSeries } from "@/common/interfaces";
 

@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { Collections } from "@/common/enums";
 
 import { db } from "../init";
-import { downloadPhotoFromStorage } from "../downloadPhotoFromStorage";
+import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
 
 import type { PodcastSeries } from "@/common/interfaces";
 

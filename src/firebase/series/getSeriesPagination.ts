@@ -12,7 +12,7 @@ import {
 import { Collections } from "@/common/enums";
 
 import { db } from "../init";
-import { downloadPhotoFromStorage } from "../downloadPhotoFromStorage";
+import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
 
 import type { User, PodcastSeries } from "@/common/interfaces";
 

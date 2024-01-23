@@ -2,7 +2,8 @@ import { collection, addDoc, setDoc, doc, Timestamp } from "firebase/firestore";
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
+
 import { getUserInfo } from "./getUserInfo";
 
 import type { UserCreationData } from "@/common/interfaces";

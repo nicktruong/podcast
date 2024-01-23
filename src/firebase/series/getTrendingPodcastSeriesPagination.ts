@@ -3,7 +3,6 @@ import {
   collection,
   doc,
   documentId,
-  endAt,
   getDocs,
   limit,
   orderBy,
@@ -15,16 +14,15 @@ import {
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
-import { downloadPhotoFromStorage } from "./downloadPhotoFromStorage";
+import { db } from "../init";
+import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
 
 import type { User, PodcastSeries } from "@/common/interfaces";
 
-export const getRandomPodcastSeriesPagination = async ({
-  period = 30,
+export const getTrendingPodcastSeriesPagination = async ({
+  period = 7,
   pageSize = 5,
   categories = [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   notInIds = [],
 }: {
   period?: number;
@@ -32,14 +30,12 @@ export const getRandomPodcastSeriesPagination = async ({
   categories?: string[];
   notInIds?: string[];
 }) => {
-  const randomPeriod = new Date();
-  randomPeriod.setDate(
-    randomPeriod.getDate() - Math.floor(Math.random() * period)
-  );
+  const trendingPeriod = new Date();
+  trendingPeriod.setDate(trendingPeriod.getDate() - period);
 
   const queryConditions: any[] = [
-    orderBy("playCount", "asc"),
-    startAt(Timestamp.fromDate(randomPeriod)),
+    orderBy("playCount", "desc"),
+    startAt(Timestamp.fromDate(trendingPeriod)),
     limit(pageSize),
   ];
 
@@ -54,7 +50,7 @@ export const getRandomPodcastSeriesPagination = async ({
 
   const querySnapshot = await getDocs(qSeries);
 
-  const randomPodcastSeries = querySnapshot.docs
+  const trendingPodcastSeries = querySnapshot.docs
     .map((doc) => {
       const data = doc.data();
       data.createdAt = data.createdAt.toDate().toISOString();
@@ -64,41 +60,16 @@ export const getRandomPodcastSeriesPagination = async ({
     })
     .filter((data) => !notInIds.includes(data.id));
 
-  if (querySnapshot.docs.length < pageSize) {
-    queryConditions[1] = endAt(Timestamp.fromDate(randomPeriod));
-  }
-
-  const reverseQuerySnapShot = await getDocs(
-    query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
-  );
-
-  const reverseRandomPodcastSeries = reverseQuerySnapShot.docs
-    .map((doc) => {
-      const data = doc.data();
-      data.createdAt = data.createdAt.toDate().toISOString();
-      data.updatedAt = data.updatedAt.toDate().toISOString();
-
-      return { ...data, id: doc.id } as PodcastSeries;
-    })
-    .filter((data) => !notInIds.includes(data.id));
-
-  randomPodcastSeries.splice(
-    -1,
-    0,
-    ...reverseRandomPodcastSeries.slice(
-      0,
-      pageSize - querySnapshot.docs.length - 1
-    )
-  );
-
-  if (randomPodcastSeries.length < pageSize) {
-    queryConditions[1] = startAfter(randomPodcastSeries.at(-1)?.createdAt ?? 0);
-    queryConditions.push(limit(pageSize - randomPodcastSeries.length));
+  if (trendingPodcastSeries.length < pageSize) {
+    queryConditions[1] = startAfter(
+      trendingPodcastSeries.at(-1)?.playCount ?? 0
+    );
+    queryConditions.push(limit(pageSize - trendingPodcastSeries.length));
     const fillingSnapshot = await getDocs(
       query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
     );
 
-    randomPodcastSeries.concat(
+    trendingPodcastSeries.concat(
       fillingSnapshot.docs
         .map((doc) => {
           const data = doc.data();
@@ -111,9 +82,13 @@ export const getRandomPodcastSeriesPagination = async ({
     );
   }
 
-  const seriesIds = randomPodcastSeries.map(({ id }) =>
-    doc(db, Collections.PODCAST_SERIES, id)
-  );
+  const seriesIds = trendingPodcastSeries
+    .filter(({ id }) => !notInIds.includes(id))
+    .map(({ id }) => doc(db, Collections.PODCAST_SERIES, id));
+
+  if (!seriesIds.length) {
+    return [];
+  }
 
   const qCreatorsSeries = query(
     collection(db, Collections.CREATORS_PODCAST_SERIES),
@@ -149,7 +124,7 @@ export const getRandomPodcastSeriesPagination = async ({
   );
 
   const images = await Promise.all(
-    randomPodcastSeries.map(async (series) => {
+    trendingPodcastSeries.map(async (series) => {
       if (!series.coverUrl.startsWith("https")) {
         const url = await downloadPhotoFromStorage(series.coverUrl);
 
@@ -160,11 +135,11 @@ export const getRandomPodcastSeriesPagination = async ({
     })
   );
 
-  randomPodcastSeries.forEach((series, index) => {
+  trendingPodcastSeries.forEach((series, index) => {
     series.coverUrl = images[index];
   });
 
-  return randomPodcastSeries.map((series) => ({
+  return trendingPodcastSeries.map((series) => ({
     ...series,
     author: creators.find((creator) => {
       const creatorSeries = creatorsSeries.find((creatorSeries) => {

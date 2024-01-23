@@ -8,7 +8,7 @@ import {
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 export const countCreatorEpisodes = async (userId: string) => {
   // TODO: add field to creator document to cache episodes created and remove this function

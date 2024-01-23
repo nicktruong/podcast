@@ -11,7 +11,7 @@ import {
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 import type { Podcast } from "@/common/interfaces";
 

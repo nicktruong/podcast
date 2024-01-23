@@ -2,7 +2,7 @@ import { collection, getDocs } from "firebase/firestore";
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
+import { db } from "../init";
 
 import type { Category } from "@/common/interfaces";
 

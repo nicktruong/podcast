@@ -5,8 +5,8 @@ import {
 
 import { Roles } from "@/common/enums";
 
-import { auth } from "./init";
-import { createUserDocument } from "./createUserDocument";
+import { auth } from "../init";
+import { createUserDocument } from "../user/createUserDocument";
 
 import type { RegisterData } from "@/common/interfaces";
 

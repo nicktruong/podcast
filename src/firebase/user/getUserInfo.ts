@@ -1,6 +1,6 @@
 import { Timestamp, doc, getDoc } from "firebase/firestore";
 
-import { db } from "./init";
+import { db } from "../init";
 
 import type { User } from "@/common/interfaces";
 

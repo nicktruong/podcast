@@ -8,8 +8,8 @@ import {
 
 import { Collections } from "@/common/enums";
 
-import { db } from "./init";
-import { getAllPodcastsOfCreator } from "./getAllPodcastsOfCreator";
+import { db } from "../init";
+import { getAllPodcastsOfCreator } from "../podcast/getAllPodcastsOfCreator";
 
 import type { PodcastSeries } from "@/common/interfaces";
 
