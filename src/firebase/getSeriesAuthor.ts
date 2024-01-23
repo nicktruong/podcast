@@ -33,7 +33,7 @@ export const getSeriesAuthor = async ({ seriesId }: { seriesId: string }) => {
     throw new Error("Not found");
   }
 
-  data.dob = data.dob.toDate().toISOString();
+  data.dob = data.dob?.toDate().toISOString();
 
   return data as User;
 };

@@ -26,6 +26,7 @@ const InterestCategoriesSelection = lazy(
 );
 const Home = lazy(() => import("@/pages/Home"));
 const Login = lazy(() => import("@/pages/Login"));
+const Search = lazy(() => import("@/pages/Search"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const Episode = lazy(() => import("@/pages/Episode"));
 const Playlist = lazy(() => import("@/pages/Playlist"));
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             path: routes.index,
             element: <RootLayout />,
             children: [
+              {
+                path: "*",
+                element: <div>404</div>,
+              },
               {
                 index: true,
                 element: <Home />,
@@ -62,6 +67,10 @@ export const router = createBrowserRouter([
                     element: <UserPlaylist />,
                   },
                 ],
+              },
+              {
+                path: routes.search,
+                element: <Search />,
               },
             ],
           },

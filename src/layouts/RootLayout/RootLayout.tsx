@@ -21,7 +21,7 @@ export default function RootLayout() {
         height={`calc(100vh - ${isAudioPlayerOpen ? 80 : 0}px)`}
       >
         {!isSmallScreen && (
-          <Box flexShrink={0} width={sidebarExpand ? "358px" : "53px"}>
+          <Box flexShrink={0} width={sidebarExpand ? "358px" : "fit-content"}>
             <SideBar />
           </Box>
         )}

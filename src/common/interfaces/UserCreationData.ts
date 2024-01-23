@@ -7,5 +7,6 @@ export interface UserCreationData {
   name: string;
   email: string;
   gender?: string;
+  photoURL?: string;
   categoriesOfInterest: string[];
 }

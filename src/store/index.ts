@@ -4,6 +4,7 @@ import uiReducer from "./ui";
 import userReducer from "./user";
 import audioReducer from "./audio";
 import podReducer from "./podcast";
+import searchReducer from "./search";
 import detailsReducer from "./details";
 import categoryReducer from "./category";
 import playlistsReducer from "./playlists";
@@ -16,6 +17,7 @@ export const store = configureStore({
     pod: podReducer,
     user: userReducer,
     audio: audioReducer,
+    search: searchReducer,
     details: detailsReducer,
     category: categoryReducer,
     playlists: playlistsReducer,

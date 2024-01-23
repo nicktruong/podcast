@@ -35,8 +35,11 @@ export const useStyles = tss
       },
     },
     icon: {
+      height: "40px",
+      display: "flex",
       fontSize: "28px",
       minWidth: "unset",
+      alignItems: "center",
       transition: "0.2s ease-out",
       color: theme.palette.text.secondary,
     },

@@ -25,10 +25,10 @@ export const signup = async (user: RegisterData) => {
       name,
       email,
       gender,
+      categoriesOfInterest,
       role: Roles.LISTENER,
       uid: signedUpUser.uid,
       dob: new Date(+year, +month, +date),
-      categoriesOfInterest,
     });
 
     await sendEmailVerification(signedUpUser);

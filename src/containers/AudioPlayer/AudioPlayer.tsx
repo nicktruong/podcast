@@ -14,6 +14,7 @@ import { padZero } from "@/common/utils";
 import usePrepare from "./usePrepare";
 import { playbackRates } from "./constants";
 
+// TODO: handle download and play on multiple audios
 export default function AudioPlayer() {
   const {
     mute,

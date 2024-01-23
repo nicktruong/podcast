@@ -1,3 +1,4 @@
+import { lighten } from "@mui/material";
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create(({ theme }) => ({
@@ -11,6 +12,37 @@ export const useStyles = tss.create(({ theme }) => ({
     width: "32px",
     height: "32px",
     color: theme.palette.text.secondary,
+  },
+  searchContainer: {
+    gap: "4px",
+    width: "100%",
+    display: "flex",
+    maxWidth: "325px",
+    alignItems: "center",
+    position: "relative",
+  },
+  searchIcon: {
+    zIndex: 1,
+    left: "12px",
+    fontSize: "20px",
+    position: "absolute",
+  },
+  searchInput: {
+    width: "100%",
+    fontSize: "14px",
+    borderRadius: "200px",
+    padding: "16px 16px 16px 36px",
+    border: "1px solid transparent",
+    backgroundColor: lighten("#242424", 0.08),
+
+    "&:hover": {
+      border: `1px solid ${lighten("#242424", 0.2)}`,
+    },
+
+    "&:focus": {
+      outline: "none",
+      border: "1px solid #ffffff",
+    },
   },
   signUpBtn: {
     fontWeight: 700,

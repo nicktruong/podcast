@@ -4,15 +4,16 @@ import { Outlet } from "react-router-dom";
 import {
   setUser,
   setLoading,
-  selectInitialUserDataLoading,
+  // selectInitialUserDataLoading,
 } from "@/store/user";
 import { auth, getUserInfo } from "@/firebase";
 import { fetchCategories } from "@/store/category";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 export default function AuthListener() {
   const dispatch = useAppDispatch();
-  const initialLoading = useAppSelector(selectInitialUserDataLoading);
+  // const initialLoading = useAppSelector(selectInitialUserDataLoading);
 
   useEffect(() => {
     dispatch(fetchCategories());
@@ -46,9 +47,9 @@ export default function AuthListener() {
     });
   }, []);
 
-  if (initialLoading) {
-    return <>Loading...</>;
-  }
+  // if (initialLoading) {
+  //   return <>Loading...</>;
+  // }
 
   return <Outlet />;
 }

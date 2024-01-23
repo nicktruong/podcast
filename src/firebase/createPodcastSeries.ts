@@ -19,23 +19,24 @@ export const createPodcastSeries = async (
 ) => {
   // create podcast series
   const docRef = await addDoc(collection(db, Collections.PODCAST_SERIES), {
-    coverUrl: data.coverUrl,
     title: data.title,
-    description: data.description,
-    category: data.category,
     rating: data.rating,
+    coverUrl: data.coverUrl,
+    category: data.category,
     playCount: data.playCount,
-    audienceSize: data.audienceSize,
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
+    description: data.description,
+    audienceSize: data.audienceSize,
+    searchKeywords: data.title.split(" "),
   });
 
   // create creatorsPodcastSeries
   await addDoc(collection(db, Collections.CREATORS_PODCAST_SERIES), {
-    creatorId: doc(db, Collections.USERS, userId),
-    seriesId: doc(db, Collections.PODCAST_SERIES, docRef.id),
     createdAt: serverTimestamp(),
     updatedAt: serverTimestamp(),
+    creatorId: doc(db, Collections.USERS, userId),
+    seriesId: doc(db, Collections.PODCAST_SERIES, docRef.id),
   });
 
   // update all pocasts belong to this user without seriesId to have this seriesID

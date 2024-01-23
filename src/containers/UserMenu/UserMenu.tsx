@@ -8,6 +8,7 @@ import {
   IconButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import Search from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 
@@ -23,7 +24,9 @@ export default function UserMenu() {
     classes,
     anchorEl,
     userRoles,
+    isSearchPage,
     isSmallScreen,
+    search,
     toggleSidebar,
     handleSignOut,
     handleCloseMenu,
@@ -39,6 +42,17 @@ export default function UserMenu() {
             <IconButton onClick={toggleSidebar}>
               <MenuIcon className={classes.sidebarToggler} />
             </IconButton>
+          </Box>
+        )}
+
+        {isSearchPage && (
+          <Box className={classes.searchContainer}>
+            <Search className={classes.searchIcon} />
+            <input
+              onChange={(e) => search(e.target.value)}
+              className={classes.searchInput}
+              placeholder="What do you want to listen to?"
+            />
           </Box>
         )}
 

@@ -45,9 +45,10 @@ const InterestCategoriesSelection = () => {
 
     await createUserDocument({
       uid: user.id,
-      role: Roles.LISTENER,
       email: user.email,
+      role: Roles.LISTENER,
       name: user.name ?? "",
+      photoURL: user.photoURL,
       categoriesOfInterest: data.categoriesOfInterest,
     });
 

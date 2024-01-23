@@ -18,26 +18,29 @@ import podcastSeries from "./podcast-series.json";
 const seedTimestamp = serverTimestamp();
 
 const createRandomPodcastersObj = () => {
+  const name = faker.person.fullName();
+
   return {
-    name: faker.person.fullName(),
+    name,
     roles: [Roles.LISTENER, Roles.PODCASTER],
+    searchKeywords: name.toLowerCase().split(" "),
     dob: Timestamp.fromDate(faker.date.birthdate()),
     gender: faker.helpers.arrayElement(Object.values(Genders)),
+    photoURL: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
   };
 };
 
-const createRandomPodcastSeriesObj = (
-  index: number,
-  {
-    rating,
-    rateCount,
-    playCount,
-  }: {
-    rating: number;
-    rateCount: number;
-    playCount: number;
-  }
-) => {
+const createRandomPodcastSeriesObj = ({
+  index,
+  rating,
+  rateCount,
+  playCount,
+}: {
+  index: number;
+  rating: number;
+  rateCount: number;
+  playCount: number;
+}) => {
   const randomCategoryId = faker.helpers.arrayElement(categories.slice(5)).name;
 
   return {
@@ -51,6 +54,7 @@ const createRandomPodcastSeriesObj = (
     description: podcastSeries[index].description,
     audienceSize: faker.number.int({ max: 70_000 }),
     coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
+    searchKeywords: podcastSeries[index].title.toLowerCase().split(" "),
   };
 };
 
@@ -63,19 +67,19 @@ const populateCreatorsPodcastSeries = (userId: string, seriesId: string) => {
   };
 };
 
-const createRandomPodcastObj = (
-  index: number,
-  seriesId: string,
-  {
-    rating,
-    rateCount,
-    playCount,
-  }: {
-    rating: number;
-    rateCount: number;
-    playCount: number;
-  }
-) => {
+const createRandomPodcastObj = ({
+  index,
+  rating,
+  seriesId,
+  rateCount,
+  playCount,
+}: {
+  index: number;
+  rating: number;
+  seriesId: string;
+  rateCount: number;
+  playCount: number;
+}) => {
   return {
     rating,
     seriesId, // change when user first create series
@@ -117,8 +121,9 @@ export const migrate = async () => {
     console.log("Seeded pocaster");
 
     // create podcastSeries
-    const podcastSeries = createRandomPodcastSeriesObj(i, {
+    const podcastSeries = createRandomPodcastSeriesObj({
       rating,
+      index: i,
       rateCount,
       playCount,
     });
@@ -140,11 +145,13 @@ export const migrate = async () => {
     console.log("Seeded creators podcastseries");
 
     // create podcast
-    const podcast = createRandomPodcastObj(
-      faker.number.int({ max: 59 }),
-      podcastSeriesRef.id,
-      { rating, rateCount, playCount }
-    );
+    const podcast = createRandomPodcastObj({
+      rating,
+      rateCount,
+      playCount,
+      seriesId: podcastSeriesRef.id,
+      index: faker.number.int({ max: 59 }),
+    });
     const podcastRef = await addDoc(
       collection(db, Collections.PODCASTS),
       podcast

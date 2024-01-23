@@ -1,5 +1,6 @@
 export * from "./init";
 export * from "./signup";
+export * from "./search";
 export * from "./series";
 export * from "./history";
 export * from "./uploadFile";
