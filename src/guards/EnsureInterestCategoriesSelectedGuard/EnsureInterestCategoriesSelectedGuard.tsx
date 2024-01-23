@@ -1,17 +1,14 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-import { useAppSelector } from "@/hooks";
 import { routes } from "@/common/constants";
-import { selectUserId, selectUserCategoriesOfInterest } from "@/store/user";
+
+import { usePrepare } from "./usePrepare";
 
 const EnsureInterestCategoriesSelectedGuard = () => {
-  const userId = useAppSelector(selectUserId);
-  const userCategoriesOfInterest = useAppSelector(
-    selectUserCategoriesOfInterest
-  );
+  const { userId, userCategoriesOfInterest } = usePrepare();
 
   if (userId && userCategoriesOfInterest.length === 0) {
-    return <Navigate to={routes.categoriesSelection} />;
+    return <Navigate to={routes.categoriesSelection} replace />;
   }
 
   return <Outlet />;

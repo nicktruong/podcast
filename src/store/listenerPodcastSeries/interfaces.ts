@@ -7,3 +7,14 @@ export interface UserPodcastSeriesState {
   trendingSeries: PodcastSeriesWithAuthor[];
   categoriesSeries: PodcastSeriesWithAuthor[];
 }
+
+export interface FetchSeriesByCategorySortedAndPaged {
+  sortBy?: string;
+  pageSize?: number;
+  categories?: string[];
+}
+
+export interface FetchSeriesByPeriodPaged {
+  period?: number;
+  pageSize?: number;
+}

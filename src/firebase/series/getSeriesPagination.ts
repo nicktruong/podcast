@@ -21,9 +21,9 @@ export const getSeriesPagination = async ({
   categories = [],
   sortBy = "createdAt",
 }: {
-  sortBy: string;
-  pageSize: number;
-  categories: string[];
+  sortBy?: string;
+  pageSize?: number;
+  categories?: string[];
 }) => {
   const queryConditions: any[] = [orderBy(sortBy, "desc"), limit(pageSize)];
 

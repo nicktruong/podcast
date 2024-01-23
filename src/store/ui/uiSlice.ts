@@ -4,7 +4,7 @@ import type { RootState } from "@/store";
 import type { UIState } from "./interfaces";
 
 const initialState: UIState = {
-  sidebarExpand: true,
+  isSidebarExpand: true,
   isAudioPlayerOpen: false,
 };
 
@@ -13,7 +13,7 @@ export const uiSlice = createSlice({
   initialState,
   reducers: {
     toggleExpand: (state) => {
-      state.sidebarExpand = !state.sidebarExpand;
+      state.isSidebarExpand = !state.isSidebarExpand;
     },
     closeAudioPlayer: (state) => {
       state.isAudioPlayerOpen = false;

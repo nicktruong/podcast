@@ -1,58 +1,58 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import {
+  selectUser,
+  selectUserCategoriesOfInterest,
+} from "@/store/user/userSlice";
+import {
+  getHistorySeries,
   getSeriesPagination,
   getRandomPodcastSeriesPagination,
   getTrendingPodcastSeriesPagination,
 } from "@/firebase";
-import { AsyncThunkConfig } from "@/hooks/redux";
-import { getHistorySeries } from "@/firebase/history/getHistorySeries";
+import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 
-import { selectUser, selectUserCategoriesOfInterest } from "../user/userSlice";
+import {
+  initialState,
+  FETCH_SERIES_TO_TRY_PAGED_TYPE,
+  FETCH_SERIES_FOR_YOU_PAGED_TYPE,
+  FETCH_TRENDING_SERIES_PAGED_TYPE,
+  FETCH_RECENTLY_PLAYED_SERIES_TYPE,
+  FETCH_SERIES_BY_CATEGORY_SORTED_AND_PAGED_TYPE,
+} from "./constants";
 
+import type {
+  FetchSeriesByPeriodPaged,
+  FetchSeriesByCategorySortedAndPaged,
+} from "./interfaces";
 import type { RootState } from "@/store";
-import type { UserPodcastSeriesState } from "./interfaces";
-import type { PodcastSeriesWithAuthor } from "@/common/interfaces";
 
-const initialState: UserPodcastSeriesState = {
-  seriesToTry: [], // random shows
-  seriesForYou: [], // based on categories of interests, users can choose initially, and the platform will personalized based on users listen history
-  recentlyPlayed: [], // when implement history
-  trendingSeries: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
-  categoriesSeries: [],
-};
-
-export const fetchCategoriesSeries = createAsyncThunk(
-  "category/fetchCategoriesSeries",
+export const fetchSeriesByCategorySortedAndPaged = createAppAsyncThunk(
+  FETCH_SERIES_BY_CATEGORY_SORTED_AND_PAGED_TYPE,
   async ({
-    pageSize = 14,
-    categories = [],
-    sortBy = "createdAt",
-  }: {
-    sortBy?: string;
-    pageSize?: number;
-    categories?: string[];
-  }) => {
+    sortBy,
+    pageSize,
+    categories,
+  }: FetchSeriesByCategorySortedAndPaged) => {
     const result = await getSeriesPagination({ pageSize, categories, sortBy });
 
     return result;
   }
 );
 
-export const getRecentlyPlayed = createAsyncThunk<
-  PodcastSeriesWithAuthor[],
-  undefined,
-  AsyncThunkConfig
->("userPodcastSeries/getRecentlyPlayed", async (_, thunkApi) => {
-  const user = selectUser(thunkApi.getState());
-  const series = await getHistorySeries(user.history);
+export const fetchRecentlyPlayedSeries = createAppAsyncThunk(
+  FETCH_RECENTLY_PLAYED_SERIES_TYPE,
+  async (_, thunkApi) => {
+    const user = selectUser(thunkApi.getState());
+    const series = await getHistorySeries(user.history);
 
-  return series;
-});
+    return series;
+  }
+);
 
-export const getTrendingPodcastSeriesPaginationAction = createAsyncThunk(
-  "userPodcastSeries/getTrendingPodcastSeriesPaginationAction",
-  async ({ period, pageSize }: { period?: number; pageSize?: number }) => {
+export const fetchTrendingSeriesPaged = createAppAsyncThunk(
+  FETCH_TRENDING_SERIES_PAGED_TYPE,
+  async ({ period, pageSize }: FetchSeriesByPeriodPaged) => {
     const trendingPodcasts = await getTrendingPodcastSeriesPagination({
       period,
       pageSize,
@@ -62,15 +62,11 @@ export const getTrendingPodcastSeriesPaginationAction = createAsyncThunk(
   }
 );
 
-export const getSeriesForYou = createAsyncThunk<
-  PodcastSeriesWithAuthor[],
-  { period?: number; pageSize?: number },
-  AsyncThunkConfig
->(
-  "userPodcastSeries/getSeriesForYou",
-  async ({ period, pageSize }, thunkApi) => {
-    const categories = selectUserCategoriesOfInterest(thunkApi.getState());
+export const fetchSeriesForYouPaged = createAppAsyncThunk(
+  FETCH_SERIES_FOR_YOU_PAGED_TYPE,
+  async ({ period, pageSize }: FetchSeriesByPeriodPaged, thunkApi) => {
     const trendingSeries = selectTrendingSeries(thunkApi.getState());
+    const categories = selectUserCategoriesOfInterest(thunkApi.getState());
 
     const seriesForYou = await getTrendingPodcastSeriesPagination({
       period,
@@ -83,15 +79,11 @@ export const getSeriesForYou = createAsyncThunk<
   }
 );
 
-export const getSeriesToTry = createAsyncThunk<
-  PodcastSeriesWithAuthor[],
-  { period?: number; pageSize?: number },
-  AsyncThunkConfig
->(
-  "userPodcastSeries/getSeriesToTry",
-  async ({ period, pageSize }, thunkApi) => {
-    const trendingSeries = selectTrendingSeries(thunkApi.getState());
+export const fetchSeriesToTryPaged = createAppAsyncThunk(
+  FETCH_SERIES_TO_TRY_PAGED_TYPE,
+  async ({ period, pageSize }: FetchSeriesByPeriodPaged, thunkApi) => {
     const seriesForYou = selectSeriesForYou(thunkApi.getState());
+    const trendingSeries = selectTrendingSeries(thunkApi.getState());
 
     const seriesToTry = await getRandomPodcastSeriesPagination({
       period,
@@ -111,48 +103,45 @@ export const userPodcastSeriesSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getRecentlyPlayed.fulfilled, (state, { payload }) => {
+      .addCase(fetchRecentlyPlayedSeries.fulfilled, (state, { payload }) => {
         state.recentlyPlayed = payload;
       })
-      .addCase(getRecentlyPlayed.rejected, (_, { error }) => {
+      .addCase(fetchRecentlyPlayedSeries.rejected, (_, { error }) => {
         console.error(error);
       });
 
     builder
-      .addCase(
-        getTrendingPodcastSeriesPaginationAction.fulfilled,
-        (state, { payload }) => {
-          state.trendingSeries = payload;
-        }
-      )
-      .addCase(
-        getTrendingPodcastSeriesPaginationAction.rejected,
-        (_, { error }) => {
-          console.error(error);
-        }
-      );
+      .addCase(fetchTrendingSeriesPaged.fulfilled, (state, { payload }) => {
+        state.trendingSeries = payload;
+      })
+      .addCase(fetchTrendingSeriesPaged.rejected, (_, { error }) => {
+        console.error(error);
+      });
 
     builder
-      .addCase(getSeriesForYou.fulfilled, (state, { payload }) => {
+      .addCase(fetchSeriesForYouPaged.fulfilled, (state, { payload }) => {
         state.seriesForYou = payload;
       })
-      .addCase(getSeriesForYou.rejected, (_, { error }) => {
+      .addCase(fetchSeriesForYouPaged.rejected, (_, { error }) => {
         console.error(error);
       });
 
     builder
-      .addCase(getSeriesToTry.fulfilled, (state, { payload }) => {
+      .addCase(fetchSeriesToTryPaged.fulfilled, (state, { payload }) => {
         state.seriesToTry = payload;
       })
-      .addCase(getSeriesToTry.rejected, (state, { error }) => {
+      .addCase(fetchSeriesToTryPaged.rejected, (state, { error }) => {
         console.error(error);
       });
 
     builder
-      .addCase(fetchCategoriesSeries.fulfilled, (state, { payload }) => {
-        state.categoriesSeries = payload;
-      })
-      .addCase(fetchCategoriesSeries.rejected, (_, { error }) => {
+      .addCase(
+        fetchSeriesByCategorySortedAndPaged.fulfilled,
+        (state, { payload }) => {
+          state.categoriesSeries = payload;
+        }
+      )
+      .addCase(fetchSeriesByCategorySortedAndPaged.rejected, (_, { error }) => {
         console.error(error);
       });
   },

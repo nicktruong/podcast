@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 
 import {
-  getSeriesToTry,
-  getSeriesForYou,
-  getRecentlyPlayed,
+  fetchSeriesToTryPaged,
+  fetchSeriesForYouPaged,
+  fetchRecentlyPlayedSeries,
   selectSeriesToTry,
   selectSeriesForYou,
   selectTrendingSeries,
   selectRecentlyPlayed,
-  getTrendingPodcastSeriesPaginationAction,
+  fetchTrendingSeriesPaged,
 } from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -35,12 +35,12 @@ const usePrepare = () => {
 
   useEffect(() => {
     const init = async () => {
-      await dispatch(getRecentlyPlayed());
-      await dispatch(getTrendingPodcastSeriesPaginationAction({ pageSize: 7 }));
+      await dispatch(fetchRecentlyPlayedSeries());
+      await dispatch(fetchTrendingSeriesPaged({ pageSize: 7 }));
 
       if (userId) {
-        await dispatch(getSeriesForYou({ pageSize: 7, period: 30 }));
-        await dispatch(getSeriesToTry({ pageSize: 7 }));
+        await dispatch(fetchSeriesForYouPaged({ pageSize: 7, period: 30 }));
+        await dispatch(fetchSeriesToTryPaged({ pageSize: 7 }));
       }
     };
 

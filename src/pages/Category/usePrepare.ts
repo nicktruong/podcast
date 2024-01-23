@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
-  fetchCategoriesSeries,
+  fetchSeriesByCategorySortedAndPaged,
   selectCategoriesSeries,
 } from "@/store/listenerPodcastSeries";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -21,7 +21,9 @@ export const usePrepare = () => {
   const [sortBy, setSortBy] = useState<"playCount" | "createdAt">("createdAt");
 
   useEffect(() => {
-    dispatch(fetchCategoriesSeries({ categories: [name ?? ""], sortBy }));
+    dispatch(
+      fetchSeriesByCategorySortedAndPaged({ categories: [name ?? ""], sortBy })
+    );
   }, [sortBy]);
 
   const handleSelectSortBy = (value: "playCount" | "createdAt") => {

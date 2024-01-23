@@ -15,7 +15,7 @@ import { routes } from "@/common/constants";
 import usePrepare from "./usePrepare";
 
 export default function SideBar() {
-  const { active, cx, classes, sidebarExpand, playlists } = usePrepare();
+  const { active, cx, classes, isSidebarExpand, playlists } = usePrepare();
 
   return (
     <Box className={classes.root}>
@@ -25,7 +25,7 @@ export default function SideBar() {
             <ListItemIcon className={classes.listItemIcon}>
               <HomeIcon className={cx(classes.icon, active[routes.index])} />
             </ListItemIcon>
-            {sidebarExpand && (
+            {isSidebarExpand && (
               <ListItemText
                 className={cx(classes.listItemText, active[routes.index])}
                 primary="Home"
@@ -39,7 +39,7 @@ export default function SideBar() {
             <ListItemIcon className={classes.listItemIcon}>
               <SearchIcon className={cx(classes.icon, active[routes.search])} />
             </ListItemIcon>
-            {sidebarExpand && (
+            {isSidebarExpand && (
               <ListItemText
                 className={cx(classes.listItemText, active[routes.search])}
                 primary="Search"
@@ -52,7 +52,7 @@ export default function SideBar() {
       <Box className={cx(classes.section, classes.library)}>
         <Box className={classes.libraryHeading}>
           <BookmarksIcon className={classes.icon} />
-          {sidebarExpand && (
+          {isSidebarExpand && (
             <Typography className={classes.text}>Your Library</Typography>
           )}
         </Box>

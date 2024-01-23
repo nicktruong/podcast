@@ -11,8 +11,8 @@ export default function Home() {
       <Box className={classes.homeContent}>
         {sections
           .filter(({ podcasts }) => podcasts.length > 0)
-          .map(({ title, podcasts }, index) => (
-            <Section key={index} title={title} podcasts={podcasts} />
+          .map(({ title, podcasts }) => (
+            <Section key={title} title={title} podcasts={podcasts} />
           ))}
       </Box>
     </Box>

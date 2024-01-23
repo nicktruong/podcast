@@ -1,17 +1,17 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 import { AuthListener } from "@/containers";
 
-const PreventLoggedInAccessGuard = lazy(
-  () => import("@/guards/PreventLoggedInAccessGuard/PreventLoggedInAccessGuard")
+const EnsureInterestCategoriesSelectedGuard = lazy(
+  () => import("@/guards/EnsureInterestCategoriesSelectedGuard")
 );
 const PreventListenerAccessGuard = lazy(
   () => import("@/guards/PreventListenerAccessGuard/PreventListenerAccessGuard")
 );
-const EnsureInterestCategoriesSelectedGuard = lazy(
-  () => import("@/guards/EnsureInterestCategoriesSelectedGuard")
+const PreventLoggedInAccessGuard = lazy(
+  () => import("@/guards/PreventLoggedInAccessGuard/PreventLoggedInAccessGuard")
 );
 
 const PodcastDetailsLayout = lazy(
@@ -46,6 +46,7 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: "*",
+                // TODO: Add 404 page
                 element: <div>404</div>,
               },
               {

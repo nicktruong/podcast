@@ -1,4 +1,4 @@
 export interface UIState {
-  sidebarExpand: boolean;
+  isSidebarExpand: boolean;
   isAudioPlayerOpen: boolean;
 }

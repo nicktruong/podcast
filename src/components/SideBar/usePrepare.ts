@@ -16,7 +16,7 @@ const usePrepare = () => {
 
   const playlists = useAppSelector(selectPlaylists);
 
-  const { sidebarExpand } = useAppSelector(selectUIState);
+  const { isSidebarExpand } = useAppSelector(selectUIState);
 
   const { cx, classes } = useStyles();
 
@@ -33,7 +33,7 @@ const usePrepare = () => {
     }
   }, [userId]);
 
-  return { active, cx, classes, sidebarExpand, playlists };
+  return { active, cx, classes, isSidebarExpand, playlists };
 };
 
 export default usePrepare;
