@@ -18,11 +18,11 @@ export const useStyles = tss.create(({ theme }) => ({
     lineHeight: "32px",
   },
   onboardingContainer: {
-    padding: "64px 16px",
-    border: "1px solid #c6c6c6",
+    maxWidth: "780px",
     borderRadius: "4px",
     margin: "32px auto",
-    maxWidth: "780px",
+    padding: "64px 16px",
+    border: `1px solid ${theme.palette.custom?.grey.main}`,
   },
   onboardingSteps: {
     display: "flex",
@@ -34,9 +34,9 @@ export const useStyles = tss.create(({ theme }) => ({
     padding: "8px 32px",
   },
   letDoItBtn: {
-    color: "#000000",
     marginTop: "8px",
     padding: "8px 32px",
+    color: theme.palette.common.black,
     backgroundColor: theme.palette.custom?.purple.light,
     "&:hover": {
       backgroundColor: theme.palette.custom?.purple.lighter,

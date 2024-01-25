@@ -5,7 +5,7 @@ export const useStyles = tss.create(({ theme }) => ({
     flexGrow: 1,
     width: "100%",
     borderRadius: "8px",
-    background: "linear-gradient(to bottom, #222222, #121212)",
+    background: theme.palette.custom?.background.gradient,
   },
   categoryContent: {
     padding: "96px 24px 72px",

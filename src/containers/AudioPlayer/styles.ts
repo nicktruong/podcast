@@ -7,8 +7,8 @@ export const useStyles = tss.create(({ theme }) => ({
     height: "80px",
     display: "flex",
     position: "relative",
-    background: "#000000",
     padding: "8px 8px 24px 24px",
+    background: theme.palette.common.black,
   },
   closeIcon: {
     top: "16px",

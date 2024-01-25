@@ -1,3 +1,4 @@
+export * from "./audio";
 export * from "./months";
 export * from "./routes";
 export * from "./errorMessages";

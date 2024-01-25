@@ -43,7 +43,7 @@ export const useStyles = tss.create(({ theme }) => ({
 
     "&:focus": {
       outline: "none",
-      border: "1px solid #ffffff",
+      border: `1px solid ${theme.palette.common.white}`,
     },
   },
   signUpBtn: {

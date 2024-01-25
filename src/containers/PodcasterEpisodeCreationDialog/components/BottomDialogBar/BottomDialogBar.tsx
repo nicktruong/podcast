@@ -23,12 +23,12 @@ export default function BottomDialogBar({
     <AppBar
       elevation={0}
       position="fixed"
-      sx={{
+      sx={(theme) => ({
         bottom: 0,
         top: "auto",
-        backgroundColor: "#ffffff",
-        borderTop: "1px solid #dedede",
-      }}
+        backgroundColor: theme.palette.common.white,
+        borderTop: `1px solid ${theme.palette.custom?.grey.light}`,
+      })}
     >
       <Toolbar
         sx={(theme) => ({
@@ -84,13 +84,13 @@ export default function BottomDialogBar({
               sx={(theme) => ({
                 fontWeight: 700,
                 fontSize: "16px",
-                color: "#000000",
                 lineHeight: "2rem",
                 padding: "8px 32px",
                 width: "fit-content",
                 borderRadius: "200px",
-                backgroundColor: theme.palette.custom?.purple.light,
                 textTransform: "capitalize",
+                color: theme.palette.common.black,
+                backgroundColor: theme.palette.custom?.purple.light,
                 "&:hover": {
                   backgroundColor: theme.palette.custom?.purple.lighter,
                 },
@@ -113,14 +113,14 @@ export default function BottomDialogBar({
           sx={(theme) => ({
             fontWeight: 700,
             fontSize: "16px",
-            color: "#000000",
             marginLeft: "auto",
             lineHeight: "2rem",
             padding: "8px 32px",
             width: "fit-content",
             borderRadius: "200px",
-            backgroundColor: theme.palette.custom?.purple.light,
             textTransform: "capitalize",
+            color: theme.palette.common.black,
+            backgroundColor: theme.palette.custom?.purple.light,
             "&:hover": {
               backgroundColor: theme.palette.custom?.purple.lighter,
             },

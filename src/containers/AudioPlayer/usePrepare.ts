@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
+import { useEffect, useRef, useState } from "react";
 import { OnProgressProps } from "react-player/base";
 
 import {
@@ -9,9 +9,10 @@ import {
   selectAudioState,
   setDurationInSeconds,
   setPassedTimeInSeconds,
-  // updateAudioPlayedCount,
+  updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
+import { MIN_ENGAGE_TIME } from "@/common/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
@@ -36,7 +37,6 @@ const usePrepare = () => {
 
   const [mute, setMute] = useState(false);
   const [volume, setVolume] = useState(100);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [trackedTime, setTrackedTime] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [startTrackedTime, setStartTrackedTime] = useState(0);
@@ -60,8 +60,12 @@ const usePrepare = () => {
     }
   };
 
-  const onProgress = (onProgress: OnProgressProps) => {
+  const onProgress = async (onProgress: OnProgressProps) => {
     dispatch(setPassedTimeInSeconds(onProgress.playedSeconds));
+
+    if (trackedTime / 1000 > MIN_ENGAGE_TIME) {
+      await dispatch(updateAudioPlayedCount());
+    }
   };
 
   const seekToSecond = (second: number) => {

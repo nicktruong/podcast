@@ -12,7 +12,7 @@ export default function DialogBar({ step, handleClose }: DialogBarProps) {
     <AppBar
       sx={(theme) => ({
         position: "relative",
-        borderBottom: "1px solid #dedede",
+        borderBottom: `1px solid ${theme.palette.custom?.grey.light}`,
         color: theme.palette.text.primary,
         backgroundColor: theme.palette.background.paper,
       })}

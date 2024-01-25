@@ -46,16 +46,16 @@ export const useStyles = tss.create(({ theme }) => ({
   submitBtn: {
     fontWeight: 700,
     fontSize: "16px",
-    color: "#000000",
     marginTop: "40px",
     lineHeight: "20px",
     padding: "8px 16px",
     borderRadius: "200px",
-    backgroundColor: "#ffffff",
     textTransform: "capitalize",
+    color: theme.palette.common.black,
+    backgroundColor: theme.palette.common.white,
 
     "&:hover": {
-      backgroundColor: "#ffffff",
+      backgroundColor: theme.palette.common.white,
     },
   },
   remindLogin: {

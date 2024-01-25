@@ -133,7 +133,7 @@ export default function PodDashboardOverview() {
               marginTop: "8px",
               borderRadius: "4px",
               padding: "32px 24px",
-              border: "1px solid #dedede",
+              border: `1px solid ${theme.palette.custom?.grey.light}`,
               justifyContent: "space-between",
               [theme.breakpoints.up("lg")]: {
                 height: "162px",
@@ -254,15 +254,15 @@ export default function PodDashboardOverview() {
           </Typography>
 
           <Box
-            sx={{
+            sx={(theme) => ({
               display: "flex",
               marginTop: "8px",
               minWidth: "307px",
               borderRadius: "4px",
               padding: "32px 24px",
-              border: "1px solid #dedede",
               justifyContent: "space-between",
-            }}
+              border: `1px solid ${theme.palette.custom?.grey.light}`,
+            })}
           >
             <Box sx={{ maxWidth: "calc(100% - 96px)" }}>
               <Typography

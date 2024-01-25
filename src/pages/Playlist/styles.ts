@@ -1,19 +1,20 @@
+import { alpha } from "@mui/material";
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   followBtn: {
     fontWeight: 700,
-    color: "#ffffff",
     fontSize: "14px",
     lineHeight: "14px",
     padding: "8px 16px",
     borderRadius: "200px",
-    borderColor: "rgba(255, 255, 255, 0.5)",
     textTransform: "capitalize",
+    color: theme.palette.common.white,
+    borderColor: alpha(theme.palette.common.white, 0.5),
 
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
-      borderColor: "rgba(255, 255, 255, 1)",
+      borderColor: theme.palette.common.white,
+      backgroundColor: alpha(theme.palette.common.white, 0.1),
     },
   },
   actions: {
@@ -23,16 +24,16 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
     alignItems: "center",
   },
   episode: {
-    borderTop: "1px solid #282828",
+    padding: "16px",
     marginTop: "16px",
     borderRadius: "4px",
-    padding: "16px",
+    borderTop: `1px solid ${theme.palette.custom?.hover.cardBackground}`,
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.1)",
+      backgroundColor: alpha(theme.palette.common.white, 0.1),
     },
   },
   continueEpisode: {
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
+    backgroundColor: alpha(theme.palette.common.white, 0.07),
   },
   continueListeningEpLabel: {
     color: theme.palette.text.secondary,
@@ -48,12 +49,12 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   episodeDescription: {
     marginTop: "8px",
     fontSize: "14px",
-    color: theme.palette.text.secondary,
-    display: "-webkit-box",
     WebkitLineClamp: 2,
     overflow: "hidden",
+    display: "-webkit-box",
     textOverflow: "ellipsis",
     WebkitBoxOrient: "vertical",
+    color: theme.palette.text.secondary,
   },
   playbar: {
     marginTop: "16px",
@@ -71,9 +72,9 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   },
   info: {
     display: "flex",
-    color: theme.palette.text.secondary,
-    alignItems: "center",
     marginLeft: "24px",
+    alignItems: "center",
+    color: theme.palette.text.secondary,
   },
   date: {
     fontSize: "14px",
@@ -115,34 +116,34 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
     color: theme.palette.text.secondary,
   },
   ratingBtn: {
-    borderRadius: "200px",
-    color: "#ffffff",
-    borderColor: "rgba(255, 255, 255, 0)",
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
-    textTransform: "capitalize",
-    fontSize: "14px",
     fontWeight: 700,
+    fontSize: "14px",
+    marginTop: "24px",
     lineHeight: "14px",
     padding: "8px 16px",
-    marginTop: "24px",
+    borderRadius: "200px",
+    textTransform: "capitalize",
+    color: theme.palette.common.white,
+    borderColor: alpha(theme.palette.common.white, 0),
+    backgroundColor: alpha(theme.palette.common.white, 0.07),
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.15)",
-      borderColor: "rgba(255, 255, 255, 0)",
+      borderColor: alpha(theme.palette.common.white, 0),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
     },
   },
   categoryBtn: {
-    borderRadius: "200px",
-    color: "#ffffff",
-    borderColor: "rgba(255, 255, 255, 0)",
-    backgroundColor: "rgba(255, 255, 255, 0.07)",
-    textTransform: "capitalize",
     fontSize: "14px",
+    marginTop: "24px",
     lineHeight: "14px",
     padding: "8px 16px",
-    marginTop: "24px",
+    borderRadius: "200px",
+    textTransform: "capitalize",
+    color: theme.palette.common.white,
+    borderColor: alpha(theme.palette.common.white, 0),
+    backgroundColor: alpha(theme.palette.common.white, 0.07),
     "&:hover": {
-      backgroundColor: "rgba(255, 255, 255, 0.15)",
-      borderColor: "rgba(255, 255, 255, 0)",
+      borderColor: alpha(theme.palette.common.white, 0),
+      backgroundColor: alpha(theme.palette.common.white, 0.15),
     },
   },
   ratingBtnIcon: {
@@ -153,8 +154,8 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
     color: theme.palette.text.secondary,
   },
   allEpisodes: {
+    fontWeight: 700,
     fontSize: "24px",
     marginTop: "16px",
-    fontWeight: 700,
   },
 }));

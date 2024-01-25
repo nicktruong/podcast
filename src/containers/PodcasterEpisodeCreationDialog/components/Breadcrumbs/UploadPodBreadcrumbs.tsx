@@ -27,7 +27,7 @@ export default function UploadPodBreadcrumbs({
                 fontSize: "16px",
                 padding: "8px 8px 12px",
                 borderBottom: isActive
-                  ? "2px solid #554dff"
+                  ? `2px solid ${theme.palette.custom?.purple.main}`
                   : "2px solid transparent",
                 color: isActive
                   ? theme.palette.custom?.purple.main

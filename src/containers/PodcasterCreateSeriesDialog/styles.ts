@@ -48,10 +48,10 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   nextButtonRoot: {
     border: "none",
-    color: "#000000",
     marginTop: "8px",
     fontSize: "16px",
     padding: "8px 32px",
+    color: theme.palette.common.black,
     backgroundColor: theme.palette.custom?.purple.light,
 
     "&:hover": {

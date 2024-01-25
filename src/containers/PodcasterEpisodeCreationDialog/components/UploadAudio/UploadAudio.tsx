@@ -60,7 +60,7 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
       <Dropzone onDrop={onFileUpload}>
         {({ getRootProps, getInputProps }) => (
           <Box
-            sx={{
+            sx={(theme) => ({
               display: "flex",
               cursor: "pointer",
               marginTop: "40px",
@@ -70,8 +70,8 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
               alignItems: "center",
               flexDirection: "column",
               justifyContent: "center",
-              border: "1px dashed #c6c6c6",
-            }}
+              border: `1px dashed ${theme.palette.custom?.grey.main}`,
+            })}
             {...getRootProps()}
           >
             <input {...getInputProps()} className="p-8 bg-blue-100" />
