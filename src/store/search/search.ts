@@ -8,7 +8,7 @@ import { SearchState } from "./interfaces";
 
 const initialState: SearchState = {
   searchResult: {
-    series: [],
+    podcasts: [],
     podcasters: [],
   },
   searchText: "",

@@ -1,10 +1,12 @@
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
-  selectSeriesDetail,
-  getSeriesDetailAction,
-  selectLoadingSeriesDetail,
+  fetchPodcastDetail,
+  selectPodcastDetail,
+  selectEpisodesDetail,
+  selectLoadingPodcastDetail,
+  fetchPlaylistEpisodesDetail,
 } from "@/store/details";
 import {
   playAudio,
@@ -20,6 +22,8 @@ import { useStyles } from "./styles";
 const usePrepare = () => {
   const { id } = useParams();
 
+  const navigate = useNavigate();
+
   const { cx, classes } = useStyles();
 
   const dispatch = useAppDispatch();
@@ -31,25 +35,42 @@ const usePrepare = () => {
     downloaded: downloadedAudio,
     episodeId: playingEpisodeId,
   } = useAppSelector(selectAudioState);
-  const seriesDetail = useAppSelector(selectSeriesDetail);
-  const loadingDetail = useAppSelector(selectLoadingSeriesDetail);
+  const podcastDetail = useAppSelector(selectPodcastDetail);
+  const loadingDetail = useAppSelector(selectLoadingPodcastDetail);
+  const episodesDetail = useAppSelector(selectEpisodesDetail);
 
   useEffect(() => {
     if (id) {
-      dispatch(getSeriesDetailAction({ seriesId: id }));
+      dispatch(fetchPodcastDetail(id));
+
+      if (episodesDetail.length === 0) {
+        dispatch(fetchPlaylistEpisodesDetail(id));
+      }
     }
   }, [id]);
 
   const handleDownloadAndPlayAudio = ({
+    title,
+    author,
+    coverUrl,
+    podcastId,
     episodeId,
     pathToFile,
   }: {
+    title: string;
+    author: string;
+    coverUrl: string;
+    podcastId: string;
     episodeId: string;
     pathToFile: string;
   }) => {
     if (!downloadedAudio) {
       dispatch(
         downloadAndPlayAudio({
+          title,
+          author,
+          coverUrl,
+          podcastId,
           episodeId,
           pathToFile,
         })
@@ -77,10 +98,12 @@ const usePrepare = () => {
     cx,
     classes,
     openModal,
-    seriesDetail,
+    podcastDetail,
     loadingDetail,
+    episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
+    navigate,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,

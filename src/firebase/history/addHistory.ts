@@ -1,21 +1,20 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { PodcastSeriesDetail } from "@/common/interfaces";
+import { User } from "@/common/interfaces";
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
 export const addHistory = async ({
   userId,
-  seriesDetail,
+  podcastId,
 }: {
   userId: string;
-  seriesDetail: PodcastSeriesDetail;
+  podcastId: string;
 }) => {
-  const ref = doc(db, Collections.USERS, userId);
-  const snapshot = await getDoc(ref);
-
-  const user = snapshot.data();
+  const userRef = doc(db, COLLECTIONS.USERS, userId);
+  const userSnapshot = await getDoc(userRef);
+  const user = userSnapshot.data() as User;
 
   if (!user) {
     return;
@@ -23,13 +22,11 @@ export const addHistory = async ({
 
   user.history ??= [];
 
-  const newHistory = user.history.filter(
-    (id: string) => id !== seriesDetail.id
-  );
+  const newHistory = user.history.filter((id: string) => id !== podcastId);
 
-  newHistory.unshift(seriesDetail.id);
+  newHistory.unshift(podcastId);
 
-  await updateDoc(ref, {
+  await updateDoc(userRef, {
     history: newHistory,
   });
 };

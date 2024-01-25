@@ -12,10 +12,10 @@ import Search from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { Roles } from "@/common/enums";
+import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
 
-import useHelper from "./useHelper";
+import usePrepare from "./usePrepare";
 
 export default function UserMenu() {
   const {
@@ -32,13 +32,13 @@ export default function UserMenu() {
     handleCloseMenu,
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
-  } = useHelper();
+  } = usePrepare();
 
   return (
     <AppBar elevation={0} component="nav" className={classes.appbarRoot}>
       <Toolbar>
         {!isSmallScreen && (
-          <Box>
+          <Box className={classes.iconButtonContainer}>
             <IconButton onClick={toggleSidebar}>
               <MenuIcon className={classes.sidebarToggler} />
             </IconButton>
@@ -86,8 +86,8 @@ export default function UserMenu() {
                 }}
               >
                 <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
-                {userRoles.includes(Roles.PODCASTER) ? (
-                  <Link to={routes.podDashboard}>
+                {userRoles?.includes(ROLES.PODCASTER) ? (
+                  <Link to={routes.podcasterDashboard}>
                     <MenuItem onClick={handleCloseMenu}>
                       Go to Podcast Dashboard
                     </MenuItem>

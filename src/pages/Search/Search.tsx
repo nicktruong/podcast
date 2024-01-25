@@ -8,7 +8,7 @@ import { usePrepare } from "./usePrepare";
 const Search = () => {
   const { classes, categories, searchText, searchResult } = usePrepare();
 
-  const { podcasters, series } = searchResult;
+  const { podcasters, podcasts: series } = searchResult;
 
   return (
     <Box className={classes.searchRoot}>
@@ -20,7 +20,7 @@ const Search = () => {
             </Typography>
 
             <Box className={classes.categories}>
-              {categories.categories.map((category) => {
+              {categories.map((category) => {
                 return (
                   <Link
                     key={category.name}

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
-  fetchSeriesByCategorySortedAndPaged,
+  fetchPodcastsByCategorySortedAndPaged,
   selectCategoriesSeries,
 } from "@/store/listenerPodcastSeries";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -22,7 +22,12 @@ export const usePrepare = () => {
 
   useEffect(() => {
     dispatch(
-      fetchSeriesByCategorySortedAndPaged({ categories: [name ?? ""], sortBy })
+      fetchPodcastsByCategorySortedAndPaged({
+        sortBy,
+        offset: 0,
+        pageSize: 7,
+        categories: [name ?? ""],
+      })
     );
   }, [sortBy]);
 

@@ -1,13 +1,34 @@
-import { PodcastWithSeriesAndAuthor } from "./Podcast";
+export interface PlaylistCreationData {
+  title: string;
+  userId: string;
+  coverUrl: string;
+  episodeId: string;
+  podcastId: string;
+}
 
-export interface PlaylistRaw {
+export interface AddToPlaylistData {
+  episodeId: string;
+  podcastId: string;
+  playlistId: string;
+}
+
+export interface EpisodeReference {
+  episodeId: string;
+  playlistId: string;
+}
+
+export interface PlaylistEpisode {
+  podcastId: string;
+  episodeId: string;
+  addedDate: string;
+}
+
+export interface Playlist {
   id: string;
   title: string;
   userId: string;
   coverUrl: string;
-  podcasts: { seriesId: string; podcastId: string }[];
+  createdAt: string;
+  updatedAt: string;
+  episodes: PlaylistEpisode[];
 }
-
-export type Playlist = Omit<PlaylistRaw, "podcasts"> & {
-  podcasts: PodcastWithSeriesAndAuthor[];
-};

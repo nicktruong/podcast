@@ -1,6 +1,6 @@
 import { getDownloadURL, getStorage, ref } from "firebase/storage";
 
-export const downloadAudioFromStorage = async (path: string) => {
+export const downloadFileFromStorage = async (path: string) => {
   const storage = getStorage();
 
   const audioRef = ref(storage, path);

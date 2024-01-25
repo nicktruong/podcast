@@ -1,183 +1,103 @@
 import {
-  Timestamp,
-  collection,
-  doc,
-  documentId,
-  endAt,
-  getDocs,
-  limit,
-  orderBy,
   query,
-  startAfter,
-  startAt,
+  limit,
   where,
+  getDocs,
+  collection,
+  WhereFilterOp,
 } from "firebase/firestore";
+import { nanoid } from "@reduxjs/toolkit";
 
-import { Collections } from "@/common/enums";
+import { Podcast, PopulatedPodcast } from "@/common/interfaces";
+import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
-import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
+import { populatePodcast } from "../utils";
 
-import type { User, PodcastSeries } from "@/common/interfaces";
-
-export const getRandomPodcastSeriesPagination = async ({
-  period = 30,
-  pageSize = 5,
-  categories = [],
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  notInIds = [],
+const generateQuery = ({
+  random,
+  pageSize,
+  condition,
+  categories,
 }: {
-  period?: number;
+  random: string;
+  pageSize: number;
+  categories: string[];
+  condition: WhereFilterOp;
+}) => {
+  const categoryCondition = categories.length
+    ? [where(PODCAST_FIELDS.CATEGORY, "in", categories)]
+    : [];
+
+  return query(
+    collection(db, COLLECTIONS.PODCASTS),
+    ...categoryCondition,
+    where(PODCAST_FIELDS.RANDOM, condition, random),
+    limit(pageSize)
+  );
+};
+
+export const getRandomPocastsPaged = async ({
+  pageSize = 7,
+  categories = [],
+}: {
   pageSize?: number;
   categories?: string[];
-  notInIds?: string[];
 }) => {
-  const randomPeriod = new Date();
-  randomPeriod.setDate(
-    randomPeriod.getDate() - Math.floor(Math.random() * period)
-  );
+  const podcasts: PopulatedPodcast[] = [];
 
-  const queryConditions: any[] = [
-    orderBy("playCount", "asc"),
-    startAt(Timestamp.fromDate(randomPeriod)),
-    limit(pageSize),
-  ];
+  let i = 0;
 
-  if (categories.length) {
-    queryConditions.push(where("category", "in", categories));
-  }
+  do {
+    const random = nanoid();
+    // query 2 times: >= and <= random
+    const halfPageSize = Math.floor(pageSize / 2);
 
-  const qSeries = query(
-    collection(db, Collections.PODCAST_SERIES),
-    ...queryConditions
-  );
+    const subCategories = categories.slice(i * 10, i * 10 + 10);
 
-  const querySnapshot = await getDocs(qSeries);
+    const greaterThanQuery = generateQuery({
+      random,
+      condition: ">=",
+      // period: podcastsPeriod,
+      pageSize: halfPageSize,
+      categories: subCategories,
+    });
 
-  const randomPodcastSeries = querySnapshot.docs
-    .map((doc) => {
-      const data = doc.data();
-      data.createdAt = data.createdAt.toDate().toISOString();
-      data.updatedAt = data.updatedAt.toDate().toISOString();
+    const greaterThanSnapshot = await getDocs(greaterThanQuery);
 
-      return { ...data, id: doc.id } as PodcastSeries;
-    })
-    .filter((data) => !notInIds.includes(data.id));
+    const lessThanQuery = generateQuery({
+      random,
+      condition: "<=",
+      categories: subCategories,
+      pageSize: pageSize - halfPageSize,
+    });
 
-  if (querySnapshot.docs.length < pageSize) {
-    queryConditions[1] = endAt(Timestamp.fromDate(randomPeriod));
-  }
+    const lessThanSnapshot = await getDocs(lessThanQuery);
 
-  const reverseQuerySnapShot = await getDocs(
-    query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
-  );
+    const populated: Record<string, boolean> = {};
 
-  const reverseRandomPodcastSeries = reverseQuerySnapShot.docs
-    .map((doc) => {
-      const data = doc.data();
-      data.createdAt = data.createdAt.toDate().toISOString();
-      data.updatedAt = data.updatedAt.toDate().toISOString();
+    const result = await Promise.all(
+      greaterThanSnapshot.docs.concat(lessThanSnapshot.docs).map((snapshot) => {
+        if (populated[snapshot.id]) {
+          return;
+        }
 
-      return { ...data, id: doc.id } as PodcastSeries;
-    })
-    .filter((data) => !notInIds.includes(data.id));
+        populated[snapshot.id] = true;
 
-  randomPodcastSeries.splice(
-    -1,
-    0,
-    ...reverseRandomPodcastSeries.slice(
-      0,
-      pageSize - querySnapshot.docs.length - 1
-    )
-  );
-
-  if (randomPodcastSeries.length < pageSize) {
-    queryConditions[1] = startAfter(randomPodcastSeries.at(-1)?.createdAt ?? 0);
-    queryConditions.push(limit(pageSize - randomPodcastSeries.length));
-    const fillingSnapshot = await getDocs(
-      query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
+        return populatePodcast({
+          id: snapshot.id,
+          ...snapshot.data(),
+        } as Podcast);
+      })
     );
 
-    randomPodcastSeries.concat(
-      fillingSnapshot.docs
-        .map((doc) => {
-          const data = doc.data();
-          data.createdAt = data.createdAt.toDate().toISOString();
-          data.updatedAt = data.updatedAt.toDate().toISOString();
-
-          return { ...data, id: doc.id } as PodcastSeries;
-        })
-        .filter((data) => !notInIds.includes(data.id))
-    );
-  }
-
-  const seriesIds = randomPodcastSeries.map(({ id }) =>
-    doc(db, Collections.PODCAST_SERIES, id)
-  );
-
-  const qCreatorsSeries = query(
-    collection(db, Collections.CREATORS_PODCAST_SERIES),
-    where("seriesId", "in", seriesIds)
-  );
-
-  const creatorsSeriesSnapshot = await getDocs(qCreatorsSeries);
-
-  const creatorsSeries = creatorsSeriesSnapshot.docs.map((doc) => {
-    const data = doc.data();
-
-    return { creatorId: data.creatorId, seriesId: data.seriesId };
-  });
-
-  const qCreators = query(
-    collection(db, Collections.USERS),
-    where(
-      documentId(),
-      "in",
-      creatorsSeries.map((ele) => ele.creatorId)
-    )
-  );
-
-  const creatorsSnapshot = await getDocs(qCreators);
-
-  const creators = creatorsSnapshot.docs.map(
-    (doc) =>
-      ({
-        ...doc.data(),
-        dob: doc.data().dob.toDate().toISOString(),
-        id: doc.id,
-      }) as User
-  );
-
-  const images = await Promise.all(
-    randomPodcastSeries.map(async (series) => {
-      if (!series.coverUrl.startsWith("https")) {
-        const url = await downloadPhotoFromStorage(series.coverUrl);
-
-        return url;
+    result.forEach((populatedPodcat) => {
+      if (populatedPodcat) {
+        podcasts.push(populatedPodcat);
       }
+    });
+    i++;
+  } while (i < categories.length / 10 && podcasts.length < pageSize);
 
-      return series.coverUrl;
-    })
-  );
-
-  randomPodcastSeries.forEach((series, index) => {
-    series.coverUrl = images[index];
-  });
-
-  return randomPodcastSeries.map((series) => ({
-    ...series,
-    author: creators.find((creator) => {
-      const creatorSeries = creatorsSeries.find((creatorSeries) => {
-        return (
-          creatorSeries.seriesId.path ===
-          doc(db, Collections.PODCAST_SERIES, series.id).path
-        );
-      });
-
-      return (
-        creatorSeries?.creatorId.path ===
-        doc(db, Collections.USERS, creator.id).path
-      );
-    }),
-  }));
+  return podcasts;
 };

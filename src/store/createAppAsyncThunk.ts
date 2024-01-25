@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { AppDispatch, RootState } from ".";
+import type { AppDispatch, RootState } from ".";
 
 // For more information, please visit: https://redux-toolkit.js.org/usage/usage-with-typescript#typing-the-thunkapi-object
 export type AsyncThunkConfig = {

@@ -1,10 +1,8 @@
-export enum Collections {
+export enum COLLECTIONS {
   USERS = "users",
   RATINGS = "ratings",
+  EPISODES = "episodes",
   PODCASTS = "podcasts",
   PLAYLISTS = "playlists",
   CATEGORIES = "categories",
-  PODCAST_SERIES = "podcastSeries",
-  CREATORS_PODCASTS = "creatorsPodcasts",
-  CREATORS_PODCAST_SERIES = "creatorsPodcastSeries",
 }

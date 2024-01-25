@@ -7,7 +7,14 @@ import {
   addToPlaylistAction,
 } from "@/store/playlists";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { selectEpisodeDetail, setEpisodeId } from "@/store/details";
+import {
+  fetchEpisodesDetail,
+  selectEpisodeDetail,
+  selectEpisodeId,
+  selectPodcastDetail,
+  setEpisodeId,
+} from "@/store/details";
+import { selectUserId } from "@/store/user";
 
 import { useStyles } from "./styles";
 
@@ -16,8 +23,13 @@ export const usePrepare = () => {
 
   const { id } = useParams();
 
-  const episodeDetail = useAppSelector(selectEpisodeDetail);
+  const episodeDetail = useAppSelector((state) =>
+    selectEpisodeDetail(state, id ?? "")
+  );
+  const userId = useAppSelector(selectUserId);
+  const episodeId = useAppSelector(selectEpisodeId);
   const playlists = useAppSelector(selectPlaylists);
+  const podcastDetail = useAppSelector(selectPodcastDetail);
 
   const { classes } = useStyles();
 
@@ -27,8 +39,17 @@ export const usePrepare = () => {
   const openActionMenu = Boolean(actionMenuAnchorEl);
 
   useEffect(() => {
-    dispatch(setEpisodeId({ episodeId: id ?? "" }));
-  }, []);
+    if (id) {
+      dispatch(setEpisodeId(id));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (episodeId && !podcastDetail) {
+      // TODO: fetch episodes + podcast
+      dispatch(fetchEpisodesDetail(episodeId));
+    }
+  }, [episodeId]);
 
   const handleTabChange = (event: SyntheticEvent, newValue: number) => {
     setTabIndex(newValue);
@@ -43,16 +64,39 @@ export const usePrepare = () => {
   };
 
   const handleCreatePlaylist = () => {
-    dispatch(createPlaylist());
+    if (!podcastDetail || !episodeDetail || !userId) {
+      return;
+    }
+
+    dispatch(
+      createPlaylist({
+        coverUrl: podcastDetail.coverUrl,
+        episodeId: episodeDetail.id,
+        podcastId: podcastDetail.id,
+        title: episodeDetail.title,
+        userId,
+      })
+    );
     handleActionMenuClose();
   };
 
   const handleAddToPlaylist = (playlistId: string) => {
-    dispatch(addToPlaylistAction({ playlistId }));
+    if (!id || !podcastDetail) {
+      return;
+    }
+
+    dispatch(
+      addToPlaylistAction({
+        playlistId,
+        episodeId: id,
+        podcastId: podcastDetail.id,
+      })
+    );
     handleActionMenuClose();
   };
 
   return {
+    userId,
     classes,
     tabIndex,
     playlists,

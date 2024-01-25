@@ -1,47 +1,33 @@
-import {
-  doc,
-  query,
-  where,
-  getDoc,
-  getDocs,
-  collection,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { Podcast } from "@/common/interfaces";
+import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
+import { downloadFileFromStorage } from "../storage";
 
-import type { CreatorsPodcastSeries, PodcastSeries } from "@/common/interfaces";
-
-export const getCreatorPodcastSeries = async (creatorId: string) => {
-  const creatorsPodcastSeriesSnapshot = await getDocs(
+export const getSinglePodcastOfCreatorId = async (creatorId: string) => {
+  const snapshot = await getDocs(
     query(
-      collection(db, Collections.CREATORS_PODCAST_SERIES),
-      where("creatorId", "==", doc(db, "users", creatorId))
+      collection(db, COLLECTIONS.PODCASTS),
+      where(PODCAST_FIELDS.AUTHOR_ID, "==", creatorId)
     )
   );
 
-  const creatorsPodcastSeriesData = creatorsPodcastSeriesSnapshot.docs.map(
-    (doc) => {
-      const data = doc.data();
-      data.seriesId = data.seriesId.path;
-      data.creatorId = data.creatorId.path;
-      data.createdAt = data.createdAt.toDate().toISOSTring();
-      data.updatedAt = data.updatedAt.toDate().toISOSTring();
+  // TODO: Support multiple series
+  const podcastDoc = snapshot.docs[0];
 
-      return data as CreatorsPodcastSeries;
-    }
-  );
+  if (!podcastDoc) {
+    return;
+  }
 
-  const podcastSeriesSnapshots = await Promise.all(
-    creatorsPodcastSeriesData.map((data) => {
-      return getDoc(doc(db, Collections.PODCAST_SERIES, data.seriesId));
-    })
-  );
+  const podcast = { ...podcastDoc.data(), id: podcastDoc.id } as Podcast;
 
-  const podcastSeries = podcastSeriesSnapshots.map((snapshot) => {
-    return { ...snapshot.data(), id: snapshot.id } as PodcastSeries;
-  });
+  console.log(podcast.coverUrl);
 
-  return podcastSeries[0];
+  if (!podcast.coverUrl.startsWith("https")) {
+    podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+  }
+
+  return podcast;
 };

@@ -1,14 +1,12 @@
 import { EpisodeCreationSteps } from "@/common/enums";
 
-import type { CreatorsPodcasts, Podcast } from "@/common/interfaces";
+import type { Episode, EpisodeCreationData } from "@/common/interfaces";
 
-export interface PodcastState {
-  pod: Podcast;
-  pods: Podcast[];
+export interface EpisodeState {
+  episodes: Episode[];
   uploading: boolean;
-  loadingPods: boolean;
-  episodesCount: number;
-  progressInPercent: number;
+  loadingEpisodes: boolean;
   uploadStep: EpisodeCreationSteps;
-  creatorsPodcasts: CreatorsPodcasts[];
+  audioUploadProgressInPercent: number;
+  episodeCreationData: EpisodeCreationData;
 }

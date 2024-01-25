@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-import { Link } from "react-router-dom";
 import { Box, Button, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -15,10 +14,12 @@ export default function Playlist() {
   const {
     classes,
     openModal,
-    seriesDetail,
+    podcastDetail,
     loadingDetail,
+    episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
+    navigate,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,
@@ -91,22 +92,24 @@ export default function Playlist() {
               All Episodes
             </Typography>
 
-            {seriesDetail.podcasts.map((podcast) => {
+            {episodesDetail.map((episode) => {
               return (
-                <Link
-                  key={podcast.id}
-                  to={routes.episode.replace(":id", podcast.id)}
+                <Box
+                  key={episode.id}
+                  onClick={() => {
+                    navigate(routes.episode.replace(":id", episode.id));
+                  }}
                 >
                   <Box className={classes.episode}>
                     <Box>
                       <Typography className={classes.episodeTitle}>
-                        {podcast.title}
+                        {episode.title}
                       </Typography>
                       <Typography className={classes.seriesName}>
-                        {seriesDetail.title}
+                        {podcastDetail?.title}
                       </Typography>
                       <Typography className={classes.episodeDescription}>
-                        {seriesDetail.description}
+                        {podcastDetail?.description}
                       </Typography>
                     </Box>
 
@@ -114,21 +117,27 @@ export default function Playlist() {
                       <Box className={classes.playbarMainActions}>
                         <Box
                           component="button"
-                          onClick={() => {
+                          onClick={(event) => {
+                            event.stopPropagation();
+
                             if (
-                              playingEpisodeId === podcast.id &&
+                              playingEpisodeId === episode.id &&
                               audioIsPlaying
                             ) {
                               handlePauseAudio();
                             } else {
                               handleDownloadAndPlayAudio({
-                                episodeId: podcast.id,
-                                pathToFile: podcast.pathToFile,
+                                title: episode.title,
+                                episodeId: episode.id,
+                                pathToFile: episode.pathToFile,
+                                podcastId: podcastDetail?.id ?? "",
+                                coverUrl: podcastDetail?.coverUrl ?? "",
+                                author: podcastDetail?.author.name ?? "",
                               });
                             }
                           }}
                         >
-                          {playingEpisodeId === podcast.id && audioIsPlaying ? (
+                          {playingEpisodeId === episode.id && audioIsPlaying ? (
                             <PauseCircleIcon className={classes.icon} />
                           ) : (
                             <PlayCircleIcon className={classes.icon} />
@@ -138,7 +147,7 @@ export default function Playlist() {
                         <Box className={classes.info}>
                           <Typography className={classes.date}>
                             {format(
-                              new Date(seriesDetail.createdAt),
+                              new Date(podcastDetail?.createdAt ?? Date.now()),
                               "MMM d y"
                             )}
                           </Typography>
@@ -167,7 +176,7 @@ export default function Playlist() {
                       </Box>
                     </Box>
                   </Box>
-                </Link>
+                </Box>
               );
             })}
           </Box>
@@ -197,18 +206,20 @@ export default function Playlist() {
               className={classes.ratingBtn}
             >
               {/* TODO: Change when add rating */}
-              <span>{seriesDetail.rating.toFixed(1)}</span>
+              <span>{(podcastDetail?.rating ?? 0).toFixed(1)}</span>
               <StarBorderIcon className={classes.ratingBtnIcon} />
               <span className={classes.rateCount}>
-                ({seriesDetail.rateCount})
+                ({podcastDetail?.rateCount ?? 0})
               </span>
             </Button>
           </Box>
 
           {/* TODO: Change to link component when implement search */}
-          <Button className={classes.categoryBtn}>
-            {seriesDetail.category}
-          </Button>
+          {podcastDetail && (
+            <Button className={classes.categoryBtn}>
+              {podcastDetail.category}
+            </Button>
+          )}
         </Box>
       </Box>
     </Box>

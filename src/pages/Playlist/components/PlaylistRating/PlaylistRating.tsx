@@ -5,7 +5,7 @@ import { usePrepare } from "./usePrepare";
 import { PodcastRatingProps } from "./interfaces";
 
 const PodcastRating = ({ open, handleClose }: PodcastRatingProps) => {
-  const { userId, title, classes, coverUrl, rating, setRating, handleRate } =
+  const { userId, podcastDetail, classes, rating, setRating, handleRate } =
     usePrepare();
 
   return (
@@ -22,11 +22,13 @@ const PodcastRating = ({ open, handleClose }: PodcastRatingProps) => {
 
         <Box className={classes.ratingContainer}>
           <img
-            alt={`${title} cover photo`}
+            alt={`${podcastDetail?.title} cover photo`}
             className={classes.seriesImage}
-            src={coverUrl}
+            src={podcastDetail?.coverUrl}
           />
-          <Typography className={classes.seriesTitle}>{title}</Typography>
+          <Typography className={classes.seriesTitle}>
+            {podcastDetail?.title}
+          </Typography>
           {userId ? (
             <>
               <Rating

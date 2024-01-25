@@ -2,35 +2,24 @@ import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-import {
-  selectPodSeries,
-  fetchSeriesImage,
-  selectCoverImage,
-} from "@/store/podcastSeries";
-import {
-  selectPods,
-  countEpisodesAction,
-  selectEpisodesCount,
-  getCurrentCreatorPodcastsPaginationAction,
-} from "@/store/podcast";
+import { selectPodcast } from "@/store/podcastSeries";
+import { selectPods, getEpisodesFromCreatorPaged } from "@/store/podcast";
 import { RoundedButton } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { selectUser, selectUserId } from "@/store/user";
 
 export default function PodDashboardOverview() {
   const dispatch = useAppDispatch();
   const pods = useAppSelector(selectPods);
-  const podSeries = useAppSelector(selectPodSeries);
-  const seriesImage = useAppSelector(selectCoverImage);
-  const episodesCount = useAppSelector(selectEpisodesCount);
+  const user = useAppSelector(selectUser);
+  const userId = useAppSelector(selectUserId);
+  const podSeries = useAppSelector(selectPodcast);
 
   useEffect(() => {
-    if (!seriesImage) {
-      dispatch(fetchSeriesImage());
+    if (userId) {
+      dispatch(getEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 }));
     }
-
-    dispatch(countEpisodesAction());
-    dispatch(getCurrentCreatorPodcastsPaginationAction({ pageSize: 1 }));
-  }, []);
+  }, [userId]);
 
   return (
     <Box
@@ -54,8 +43,8 @@ export default function PodDashboardOverview() {
           }}
         >
           <img
-            src={seriesImage}
-            alt={`${podSeries.title} cover photo`}
+            src={podSeries?.coverUrl}
+            alt={`${podSeries?.title} cover photo`}
             className="rounded md:w-[200px] md:h-[200px] w-[280px] h-[280px]"
           />
         </Box>
@@ -94,7 +83,7 @@ export default function PodDashboardOverview() {
                 lineHeight: "32px",
               }}
             >
-              {podSeries.title}
+              {podSeries?.title}
             </Typography>
 
             <Typography
@@ -105,7 +94,7 @@ export default function PodDashboardOverview() {
                 color: theme.palette.text.secondary,
               })}
             >
-              {episodesCount} episode(s)
+              {user?.episodeCount} episode(s)
             </Typography>
           </Box>
 
@@ -166,7 +155,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                {podSeries.playCount}
+                {podSeries?.playCount}
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -200,7 +189,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                {podSeries.audienceSize}
+                {podSeries?.audienceSize}
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -315,7 +304,7 @@ export default function PodDashboardOverview() {
               <img
                 alt={`${pods[0]?.title} cover photo`}
                 className="w-full h-full object-cover rounded"
-                src={seriesImage}
+                src={podSeries?.coverUrl}
               />
             </Box>
           </Box>

@@ -86,6 +86,7 @@ export const useStyles = tss
       maxWidth: "100%",
       cursor: "pointer",
       borderRadius: "8px",
+      justifyContent: "center",
 
       "&:hover": {
         backgroundColor: "#1a1a1a",
@@ -95,15 +96,11 @@ export const useStyles = tss
       // #393939
     },
     podcastImgContainer: {
-      width: "48px",
       flexShrink: 0,
-      height: "48px",
       overflow: "hidden",
       borderRadius: "4px",
     },
     podcastImg: {
-      width: "100%",
-      height: "100%",
       objectFit: "cover",
     },
     playlistInfo: {

@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
 
-import { Roles } from "@/common/enums";
-import { selectUserId, selectUserRoles } from "@/store/user";
+import { ROLES } from "@/common/enums";
 import { useAppSelector } from "@/hooks/redux";
+import { selectUserId, selectUserRoles } from "@/store/user";
 
 export default function PreventListenerAccessGuard() {
   const userId = useAppSelector(selectUserId);
   const userRoles = useAppSelector(selectUserRoles);
 
-  if (!userId || !userRoles.includes(Roles.PODCASTER)) {
+  if (!userId || !userRoles?.includes(ROLES.PODCASTER)) {
     return <>404 Not Found</>;
   }
 

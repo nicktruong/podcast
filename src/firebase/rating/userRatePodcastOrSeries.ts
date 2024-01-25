@@ -1,42 +1,53 @@
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
 import { getUserRating } from "./getUserRating";
 
-import type {
-  Podcast,
-  PodcastSeries,
-  RatingFirestore,
-} from "@/common/interfaces";
+import type { Episode, Podcast, Rating } from "@/common/interfaces";
 import type { PartialBy } from "@/common/types";
 
-export const userRatePodcastOrSeries = async ({
+export const rate = async ({
   type,
   userId,
   rating,
   podcastOrSeriesId,
 }: {
-  type: typeof Collections.PODCAST_SERIES | typeof Collections.PODCASTS;
+  type: typeof COLLECTIONS.PODCASTS | typeof COLLECTIONS.EPISODES;
   userId: string;
   rating: number;
   podcastOrSeriesId: string;
 }) => {
   const prevRating = await getUserRating({ userId, podcastOrSeriesId });
 
-  // get series detail (rateCount, rating)
-  const seriesRef = doc(db, type, podcastOrSeriesId);
-  const seriesSnapshot = await getDoc(seriesRef);
-  const { rating: oldRating, rateCount } =
-    seriesSnapshot.data() as PodcastSeries & Podcast;
+  // get podcast detail (rateCount, rating)
+  const podcastRef = doc(db, type, podcastOrSeriesId);
+  const podcastSnapshot = await getDoc(podcastRef);
+  const { rating: oldRating, rateCount } = podcastSnapshot.data() as Podcast &
+    Episode;
+
+  const currentDate = new Date().toISOString();
+
+  if (!oldRating || rateCount === 0) {
+    await updateDoc(podcastRef, { rateCount: 1, rating });
+
+    const ratingDoc: Rating = {
+      rating,
+      userId,
+      createdAt: currentDate,
+      updatedAt: currentDate,
+      podcastOrSeriesId: podcastOrSeriesId,
+    };
+
+    await setDoc(
+      doc(db, COLLECTIONS.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
+      ratingDoc
+    );
+
+    return { newRateCount: 1, newRating: rating };
+  }
 
   // calculate new rating and rateCount
   const totalRatingScore = oldRating * rateCount;
@@ -48,22 +59,22 @@ export const userRatePodcastOrSeries = async ({
   const newRateCount = prevRating ? rateCount : rateCount + 1;
 
   // update (rateCount, rating)
-  await updateDoc(seriesRef, { rateCount: newRateCount, rating: newRating });
+  await updateDoc(podcastRef, { rateCount: newRateCount, rating: newRating });
 
   // create rating for this user
-  const ratingDoc: PartialBy<RatingFirestore, "createdAt"> = {
+  const ratingDoc: PartialBy<Rating, "createdAt"> = {
     rating,
     userId,
+    updatedAt: currentDate,
     podcastOrSeriesId: podcastOrSeriesId,
-    updatedAt: serverTimestamp(),
   };
 
   if (!prevRating) {
-    ratingDoc.createdAt = serverTimestamp();
+    ratingDoc.createdAt = currentDate;
   }
 
   await setDoc(
-    doc(db, Collections.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
+    doc(db, COLLECTIONS.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
     ratingDoc
   );
 

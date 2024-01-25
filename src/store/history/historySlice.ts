@@ -1,26 +1,29 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-import { AsyncThunkConfig } from "@/hooks";
-import { PodcastSeriesDetail } from "@/common/interfaces";
-import { addHistory } from "@/firebase/history/addHistory";
+import { addHistory } from "@/firebase";
 
 import { selectUserId } from "../user";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
 
-import { HistoryState } from "./interfaces";
+import type { HistoryState } from "./interfaces";
 
 const initialState: HistoryState = {
   history: [],
 };
 
-export const addHistoryAction = createAsyncThunk<
-  void,
-  { seriesDetail: PodcastSeriesDetail },
-  AsyncThunkConfig
->("history/addHistory", async ({ seriesDetail }, thunkApi) => {
-  const userId = selectUserId(thunkApi.getState());
+export const addHistoryAction = createAppAsyncThunk(
+  "history/addHistory",
+  async (podcastId: string, thunkApi) => {
+    const userId = selectUserId(thunkApi.getState());
 
-  await addHistory({ userId, seriesDetail });
-});
+    if (!userId) {
+      return;
+    }
+
+    console.log({ userId, podcastId });
+    await addHistory({ userId, podcastId });
+  }
+);
 
 export const historySlice = createSlice({
   name: "history",

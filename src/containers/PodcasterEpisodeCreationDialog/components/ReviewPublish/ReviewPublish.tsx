@@ -60,7 +60,7 @@ export default function ReviewPublish({
               color: theme.palette.text.secondary,
             })}
           >
-            {user.name}
+            {user?.name}
           </Typography>
         </Box>
       </Box>

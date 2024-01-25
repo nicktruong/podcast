@@ -15,7 +15,7 @@ import { routes } from "@/common/constants";
 import usePrepare from "./usePrepare";
 
 export default function SideBar() {
-  const { active, cx, classes, isSidebarExpand, playlists } = usePrepare();
+  const { cx, active, classes, playlists, isSidebarExpand } = usePrepare();
 
   return (
     <Box className={classes.root}>
@@ -67,18 +67,21 @@ export default function SideBar() {
               <img
                 className={classes.podcastImg}
                 src={playlist.coverUrl}
+                width={isSidebarExpand ? "48px" : "32px"}
+                height={isSidebarExpand ? "48px" : "32px"}
                 alt=""
               />
             </Box>
-
-            <Box className={classes.playlistInfo}>
-              <Typography className={classes.podcastTitle}>
-                {playlist.title}
-              </Typography>
-              <Typography className={classes.playlistAuthor}>
-                Playlist
-              </Typography>
-            </Box>
+            {isSidebarExpand && (
+              <Box className={classes.playlistInfo}>
+                <Typography className={classes.podcastTitle}>
+                  {playlist.title}
+                </Typography>
+                <Typography className={classes.playlistAuthor}>
+                  Playlist
+                </Typography>
+              </Box>
+            )}
           </Link>
         ))}
       </Box>

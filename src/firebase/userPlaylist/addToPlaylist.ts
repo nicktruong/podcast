@@ -1,23 +1,37 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { PlaylistRaw } from "@/common/interfaces";
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
+import type {
+  Playlist,
+  PlaylistEpisode,
+  AddToPlaylistData,
+} from "@/common/interfaces";
+
 export const addToPlaylist = async ({
-  seriesId,
+  episodeId,
   podcastId,
   playlistId,
-}: {
-  seriesId: string;
-  podcastId: string;
-  playlistId: string;
-}) => {
-  const snapshot = await getDoc(doc(db, Collections.PLAYLISTS, playlistId));
-  const data = snapshot.data() as PlaylistRaw;
-  data.podcasts.push({ seriesId, podcastId });
-  await updateDoc(doc(db, Collections.PLAYLISTS, playlistId), {
-    podcasts: data.podcasts,
+}: AddToPlaylistData): Promise<PlaylistEpisode> => {
+  const playlistRef = doc(db, COLLECTIONS.PLAYLISTS, playlistId);
+
+  const playlistSnapshot = await getDoc(playlistRef);
+
+  const data = playlistSnapshot.data() as Playlist;
+
+  const episode: PlaylistEpisode = {
+    podcastId,
+    episodeId,
+    addedDate: new Date().toISOString(),
+  };
+
+  data.episodes.push(episode);
+
+  await updateDoc(playlistRef, {
+    episodes: data.episodes,
   });
+
+  return episode;
 };

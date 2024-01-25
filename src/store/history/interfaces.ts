@@ -1,5 +1,5 @@
-import { PodcastSeriesWithAuthor } from "@/common/interfaces";
+import { PopulatedPodcast } from "@/common/interfaces";
 
 export interface HistoryState {
-  history: PodcastSeriesWithAuthor[];
+  history: PopulatedPodcast[];
 }

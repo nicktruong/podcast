@@ -1,46 +1,32 @@
-import {
-  doc,
-  addDoc,
-  Timestamp,
-  collection,
-  serverTimestamp,
-} from "@firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
-import { Collections, PodcastStatus } from "@/common/enums";
+import { Episode, EpisodeCreationData } from "@/common/interfaces";
+import { COLLECTIONS, PodcastStatus } from "@/common/enums";
 
 import { db } from "../init";
 
-import type { Podcast } from "@/common/interfaces";
+export const publishEpisode = async (
+  data: EpisodeCreationData,
+  authorId: string,
+  podcastId: string
+) => {
+  const currentDate = new Date().toISOString();
 
-export const publishPod = async (podcast: Podcast, userId: string) => {
-  // create pod document
-  const docRef = await addDoc(collection(db, Collections.PODCASTS), {
-    title: podcast.title,
-    rating: null, // change when podcast get first rating
-    seriesId: null, // change when user first create series
+  const newEpisode: Omit<Episode, "id"> = {
+    authorId,
+    podcastId,
     playCount: 0,
-    status: PodcastStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
-    pathToFile: podcast.pathToFile,
-    description: podcast.description,
-    publishedDate: Timestamp.fromDate(new Date(podcast.publishedDate)),
-  });
-
-  const creatorsPodcasts = {
-    creatorId: doc(db, "users", userId),
-    podcastId: doc(db, "podcasts", docRef.id),
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
+    rateCount: 0,
+    rating: null,
+    audienceSize: 0,
+    updatedAt: currentDate,
+    createdAt: currentDate,
+    publishedDate: currentDate,
+    status: PodcastStatus.PUBLISHED,
+    ...data,
   };
 
-  // create creatorsPodcasts document
-  await addDoc(collection(db, Collections.CREATORS_PODCASTS), creatorsPodcasts);
+  await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
 
-  return {
-    creatorId: creatorsPodcasts.creatorId.path,
-    podcastId: creatorsPodcasts.podcastId.path,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  };
+  return newEpisode;
 };

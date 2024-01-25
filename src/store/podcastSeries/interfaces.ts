@@ -1,11 +1,11 @@
-import { SeriesCreationSteps } from "@/common/enums";
+import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
-import type { PodcastSeries } from "@/common/interfaces";
+import type { Podcast, PodcastCreationData } from "@/common/interfaces";
 
-export interface PodSeriesState {
-  image?: string;
+export interface PodcasterManagePodcastState {
+  tempImg: string;
   loading: boolean;
-  hasPodSeries: boolean;
-  step: SeriesCreationSteps;
-  podSeries: PodcastSeries;
+  podcast: Podcast | null;
+  step: PODCAST_CREATION_STEPS;
+  podcastCreationData: PodcastCreationData | null;
 }

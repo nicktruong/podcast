@@ -1,6 +1,6 @@
 export * from "./getSeriesById";
 export * from "./getSeriesAuthor";
-export * from "./getSeriesDetail";
+export * from "./getPodcastDetail";
 export * from "./getSeriesPagination";
 export * from "./createPodcastSeries";
 export * from "./getRandomPodcastSeriesPagination";

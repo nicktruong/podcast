@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 
 import {
@@ -6,8 +7,8 @@ import {
   selectInitialUserDataLoading,
 } from "@/store/user";
 import { auth, getUserInfo } from "@/firebase";
-import { fetchCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import { fetchCategories } from "@/store/category";
 
 export const usePrepare = () => {
   const dispatch = useAppDispatch();
@@ -15,8 +16,6 @@ export const usePrepare = () => {
   const initialLoading = useAppSelector(selectInitialUserDataLoading);
 
   useEffect(() => {
-    dispatch(fetchCategories());
-
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
         // if user not logged in => no need to load user
@@ -40,6 +39,9 @@ export const usePrepare = () => {
           ...userInfo,
         })
       );
+
+      // fetch user's interest categories
+      await dispatch(fetchCategories());
 
       // finish loading user
       dispatch(setLoading(false));

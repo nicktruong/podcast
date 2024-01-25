@@ -8,6 +8,9 @@ export const useStyles = tss.create(({ theme }) => ({
     position: "absolute",
     backgroundColor: "transparent",
   },
+  iconButtonContainer: {
+    marginLeft: "-10px",
+  },
   sidebarToggler: {
     width: "32px",
     height: "32px",

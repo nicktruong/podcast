@@ -1,125 +1,140 @@
-import {
-  createSlice,
-  createSelector,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 import {
   addToPlaylist,
   getOwnedPlaylists,
-  createOwnedPlaylist,
   removeFromPlaylist,
+  createOwnedPlaylist,
+  getEpisodesDetailFromIds,
 } from "@/firebase";
-import { AsyncThunkConfig } from "@/hooks";
-import { Playlist } from "@/common/interfaces/Playlist";
-import { Podcast, PodcastSeries } from "@/common/interfaces";
 
-import { RootState } from "..";
-import { selectUserId } from "../user";
-import { selectEpisodeDetail, selectSeriesDetail } from "../details";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
 
-import { PlaylistsState } from "./interfaces";
+import {
+  SLICE_NAME,
+  initialState,
+  CREATE_PLAYLIST_ACTION,
+  ADD_TO_PLAYLIST_ACTION,
+  FETCH_USER_PLAYLIST_EPISODES_DETAIL_ACTION,
+  REMOVE_PODCAST_FROM_PLAYLIST_ACTION,
+  FETCH_USER_PLAYLIST_ACTION,
+} from "./constants";
 
-const initialState: PlaylistsState = {
-  playlists: [],
-  loadingPlaylists: false,
-};
+import type {
+  Playlist,
+  PlaylistEpisode,
+  EpisodeReference,
+  AddToPlaylistData,
+  PlaylistCreationData,
+} from "@/common/interfaces";
+import type { RootState } from "..";
 
-export const removePodcastFromPlaylist = createAsyncThunk<
-  { playlistRemoved: boolean; playlistId: string } | undefined,
-  { podcastId: string; playlistId: string },
-  AsyncThunkConfig
->("playlists/removePodcastFromPlaylist", async ({ podcastId, playlistId }) => {
-  return removeFromPlaylist({ podcastId, playlistId });
-});
+export const fetchUserPlaylistEpisodesDetail = createAppAsyncThunk(
+  FETCH_USER_PLAYLIST_EPISODES_DETAIL_ACTION,
+  async (episodes: PlaylistEpisode[]) => {
+    const episodesDetail = await getEpisodesDetailFromIds(
+      episodes.map((episode) => episode.episodeId)
+    );
 
-export const getUserPlaylists = createAsyncThunk<
-  Playlist[],
-  void,
-  AsyncThunkConfig
->("playlists/getUserPlaylists", async (_, thunkApi) => {
-  const userId = selectUserId(thunkApi.getState());
-
-  return getOwnedPlaylists({ userId });
-});
-
-export const createPlaylist = createAsyncThunk<
-  Playlist | undefined,
-  void,
-  AsyncThunkConfig
->("playlists/createPlaylist", async (_, thunkApi) => {
-  const userId = selectUserId(thunkApi.getState());
-
-  const podcast = selectEpisodeDetail(thunkApi.getState());
-
-  const series = selectSeriesDetail(thunkApi.getState());
-
-  if (!podcast) {
-    return;
+    return episodesDetail;
   }
+);
 
-  const docId = await createOwnedPlaylist({
+export const fetchUserPlaylists = createAppAsyncThunk(
+  FETCH_USER_PLAYLIST_ACTION,
+  async (userId: string): Promise<Playlist[]> => {
+    if (!userId) {
+      return [];
+    }
+
+    return getOwnedPlaylists({ userId });
+  }
+);
+
+export const createPlaylist = createAppAsyncThunk(
+  CREATE_PLAYLIST_ACTION,
+  async ({
+    title,
+    coverUrl,
+    podcastId,
+    episodeId,
     userId,
-    seriesId: series.id,
-    title: podcast.title,
-    podcastId: podcast.id,
-    coverUrl: series.coverUrl,
-  });
+  }: PlaylistCreationData): Promise<Playlist | undefined> => {
+    console.log({ userId, title, episodeId, podcastId, coverUrl });
 
-  const episodeDetail = selectEpisodeDetail(thunkApi.getState());
+    const { id, currentDate } = await createOwnedPlaylist({
+      userId,
+      title,
+      episodeId,
+      podcastId,
+      coverUrl,
+    });
 
-  if (!episodeDetail) {
-    return;
+    return {
+      id,
+      title,
+      userId,
+      coverUrl,
+      createdAt: currentDate,
+      updatedAt: currentDate,
+      episodes: [
+        {
+          podcastId,
+          episodeId,
+          addedDate: currentDate,
+        },
+      ],
+    };
   }
+);
 
-  return {
-    id: docId,
-    userId: userId,
-    title: podcast.title,
-    podcasts: [{ ...episodeDetail, series }],
-    coverUrl: series.coverUrl,
-  };
-});
+export const addToPlaylistAction = createAppAsyncThunk(
+  ADD_TO_PLAYLIST_ACTION,
+  async (
+    data: AddToPlaylistData
+  ): Promise<AddToPlaylistData & PlaylistEpisode> => {
+    const episode = await addToPlaylist(data);
 
-export const addToPlaylistAction = createAsyncThunk<
-  | { playlistId: string; podcast: Podcast | undefined; series: PodcastSeries }
-  | undefined,
-  { playlistId: string },
-  AsyncThunkConfig
->("playlists/addToPlaylist", async ({ playlistId }, thunkApi) => {
-  const podcast = selectEpisodeDetail(thunkApi.getState());
-
-  const series = selectSeriesDetail(thunkApi.getState());
-
-  if (!podcast) {
-    return;
+    return { ...data, ...episode };
   }
+);
 
-  await addToPlaylist({
-    playlistId,
-    seriesId: series.id,
-    podcastId: podcast.id,
-  });
-
-  const episodeDetail = selectEpisodeDetail(thunkApi.getState());
-
-  return { playlistId, podcast: episodeDetail, series };
-});
+export const removePodcastFromPlaylist = createAppAsyncThunk(
+  REMOVE_PODCAST_FROM_PLAYLIST_ACTION,
+  async ({ episodeId, playlistId }: EpisodeReference) => {
+    return removeFromPlaylist({ episodeId, playlistId });
+  }
+);
 
 export const playlistsSlice = createSlice({
-  name: "playlists",
+  name: SLICE_NAME,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(getUserPlaylists.pending, (state) => {
+      .addCase(fetchUserPlaylistEpisodesDetail.pending, (state) => {
+        state.loadingEpisodes = true;
+      })
+      .addCase(
+        fetchUserPlaylistEpisodesDetail.fulfilled,
+        (state, { payload }) => {
+          state.episodes = payload;
+          state.loadingEpisodes = false;
+        }
+      )
+      .addCase(fetchUserPlaylistEpisodesDetail.rejected, (state, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(fetchUserPlaylists.pending, (state) => {
         state.loadingPlaylists = true;
       })
-      .addCase(getUserPlaylists.fulfilled, (state, { payload }) => {
+      .addCase(fetchUserPlaylists.fulfilled, (state, { payload }) => {
         state.loadingPlaylists = false;
         state.playlists = payload;
       })
-      .addCase(getUserPlaylists.rejected, (state, { error }) => {
+      .addCase(fetchUserPlaylists.rejected, (state, { error }) => {
         state.loadingPlaylists = false;
         console.error(error);
       });
@@ -137,15 +152,13 @@ export const playlistsSlice = createSlice({
 
     builder
       .addCase(addToPlaylistAction.fulfilled, (state, { payload }) => {
-        if (payload && payload.podcast) {
-          const playlist = state.playlists.find(
-            (playlist) => playlist.id === payload.playlistId
-          );
-          playlist?.podcasts.push({
-            ...payload.podcast,
-            series: payload.series,
-          });
-        }
+        const { addedDate, episodeId, playlistId, podcastId } = payload;
+
+        const playlist = state.playlists.find(
+          (playlist) => playlist.id === playlistId
+        );
+
+        playlist?.episodes.push({ addedDate, episodeId, podcastId });
       })
       .addCase(addToPlaylistAction.rejected, (_, { error }) => {
         // TODO: add toast
@@ -154,6 +167,10 @@ export const playlistsSlice = createSlice({
 
     builder
       .addCase(removePodcastFromPlaylist.fulfilled, (state, { payload }) => {
+        state.episodes = state.episodes.filter(
+          (episode) => episode.id !== payload?.episodeId
+        );
+
         if (payload?.playlistRemoved) {
           state.playlists = state.playlists.filter(
             (playlist) => playlist.id !== payload.playlistId
@@ -173,5 +190,8 @@ export const selectPlaylistDetail = createSelector(
   (playlists, playlistId) =>
     playlists.find((playlist) => playlist.id === playlistId)
 );
+
+export const selectPlaylistEpisodesDetail = (state: RootState) =>
+  state.playlists.episodes;
 
 export default playlistsSlice.reducer;

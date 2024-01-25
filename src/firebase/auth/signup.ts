@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { Roles } from "@/common/enums";
+import { ROLES } from "@/common/enums";
 
 import { auth } from "../init";
 import { createUserDocument } from "../user/createUserDocument";
@@ -26,7 +26,7 @@ export const signup = async (user: RegisterData) => {
       email,
       gender,
       categoriesOfInterest,
-      role: Roles.LISTENER,
+      role: ROLES.LISTENER,
       uid: signedUpUser.uid,
       dob: new Date(+year, +month, +date),
     });

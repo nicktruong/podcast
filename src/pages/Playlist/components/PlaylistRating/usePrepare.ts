@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { selectUserId } from "@/store/user";
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { setNewRating, selectSeriesDetail } from "@/store/details";
-import { getUserRating, userRatePodcastOrSeries } from "@/firebase";
+import { setNewRating, selectPodcastDetail } from "@/store/details";
+import { getUserRating, rate } from "@/firebase";
 
 import { useStyles } from "./styles";
 
@@ -15,31 +15,33 @@ export const usePrepare = () => {
 
   const [rating, setRating] = useState(0);
 
-  const { id, title, coverUrl } = useAppSelector(selectSeriesDetail);
+  const podcastDetail = useAppSelector(selectPodcastDetail);
 
   const userId = useAppSelector(selectUserId);
 
   useEffect(() => {
-    if (userId && id) {
-      getUserRating({ userId, podcastOrSeriesId: id }).then((rating) => {
-        setRating(rating?.rating ?? 0);
-      });
+    if (userId && podcastDetail?.id) {
+      getUserRating({ userId, podcastOrSeriesId: podcastDetail.id }).then(
+        (rating) => {
+          setRating(rating?.rating ?? 0);
+        }
+      );
     }
-  }, [userId, id]);
+  }, [userId, podcastDetail?.id]);
 
   const handleRate = async () => {
-    if (!userId) {
+    if (!userId || !podcastDetail) {
       return;
     }
 
-    const { newRateCount, newRating } = await userRatePodcastOrSeries({
+    const { newRateCount, newRating } = await rate({
       userId,
       rating,
-      type: Collections.PODCAST_SERIES,
-      podcastOrSeriesId: id,
+      type: COLLECTIONS.PODCASTS,
+      podcastOrSeriesId: podcastDetail?.id,
     });
     dispatch(setNewRating({ newRateCount, newRating }));
   };
 
-  return { userId, title, coverUrl, classes, rating, setRating, handleRate };
+  return { userId, podcastDetail, classes, rating, setRating, handleRate };
 };

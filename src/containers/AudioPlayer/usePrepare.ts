@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player/lazy";
 import { OnProgressProps } from "react-player/base";
 
@@ -9,7 +9,7 @@ import {
   selectAudioState,
   setDurationInSeconds,
   setPassedTimeInSeconds,
-  updateAudioPlayedCount,
+  // updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -36,10 +36,23 @@ const usePrepare = () => {
 
   const [mute, setMute] = useState(false);
   const [volume, setVolume] = useState(100);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [trackedTime, setTrackedTime] = useState(0);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [startTrackedTime, setStartTrackedTime] = useState(0);
   const [progressInterval, setProgressInterval] = useState(1000);
 
   const reactPlayerRef = useRef<ReactPlayer | null>(null);
+
+  useEffect(() => {
+    if (playing) {
+      setStartTrackedTime(Date.now());
+    } else if (startTrackedTime !== 0) {
+      setTrackedTime(
+        (oldTrackedTime) => oldTrackedTime + Date.now() - startTrackedTime
+      );
+    }
+  }, [playing]);
 
   const onPlayerReady = () => {
     if (reactPlayerRef.current) {
@@ -47,12 +60,8 @@ const usePrepare = () => {
     }
   };
 
-  const onProgress = (progress: OnProgressProps) => {
-    if (progress.playedSeconds >= 60) {
-      dispatch(updateAudioPlayedCount());
-    }
-
-    dispatch(setPassedTimeInSeconds(reactPlayerRef.current!.getCurrentTime()));
+  const onProgress = (onProgress: OnProgressProps) => {
+    dispatch(setPassedTimeInSeconds(onProgress.playedSeconds));
   };
 
   const seekToSecond = (second: number) => {
@@ -61,13 +70,20 @@ const usePrepare = () => {
   };
 
   const skip15Second = () => {
-    seekToSecond(passedTimeInSeconds + 15);
-    dispatch(setPassedTimeInSeconds(passedTimeInSeconds + 15));
+    let newPassedTime = passedTimeInSeconds + 15;
+    newPassedTime =
+      newPassedTime > durationInSeconds ? durationInSeconds : newPassedTime;
+
+    seekToSecond(newPassedTime);
+    dispatch(setPassedTimeInSeconds(newPassedTime));
   };
 
   const rewind15Second = () => {
-    seekToSecond(passedTimeInSeconds - 15);
-    dispatch(setPassedTimeInSeconds(passedTimeInSeconds - 15));
+    let newPassedTime = passedTimeInSeconds - 15;
+    newPassedTime = newPassedTime < 0 ? 0 : newPassedTime;
+
+    seekToSecond(newPassedTime);
+    dispatch(setPassedTimeInSeconds(newPassedTime));
   };
 
   const changePlaybackRate = (rate: number) => {

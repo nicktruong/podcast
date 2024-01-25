@@ -1,37 +1,38 @@
 import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
+import { EpisodeReference, Playlist } from "@/common/interfaces";
 
 import { db } from "../init";
 
 export const removeFromPlaylist = async ({
-  podcastId,
+  episodeId,
   playlistId,
-}: {
-  podcastId: string;
-  playlistId: string;
-}) => {
-  const ref = doc(db, Collections.PLAYLISTS, playlistId);
-  const snapshot = await getDoc(ref);
+}: EpisodeReference) => {
+  const playlistRef = doc(db, COLLECTIONS.PLAYLISTS, playlistId);
+  const playlistSnapshot = await getDoc(playlistRef);
 
-  const data = snapshot.data();
+  const data = playlistSnapshot.data() as Playlist | undefined;
 
   if (!data) {
     return;
   }
 
-  const podcasts = data.podcasts.filter(
-    (podcast: { podcastId: string }) => podcast.podcastId !== podcastId
+  const episodes = data.episodes.filter(
+    (episode) => episode.episodeId !== episodeId
   );
 
-  if (podcasts.length === 0) {
-    await deleteDoc(ref);
+  const playlistEmpty = episodes.length === 0;
+
+  if (playlistEmpty) {
+    await deleteDoc(playlistRef);
   } else {
-    await updateDoc(ref, podcasts);
+    await updateDoc(playlistRef, { episodes });
   }
 
   return {
-    playlistRemoved: podcasts.length === 0,
+    episodeId,
     playlistId,
+    playlistRemoved: playlistEmpty,
   };
 };

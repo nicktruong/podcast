@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { selectUIState } from "@/store/ui";
-import { selectUserId } from "@/store/user";
 import { routes } from "@/common/constants";
+import { selectUserId } from "@/store/user";
+import { selectIsSidebarExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { getUserPlaylists, selectPlaylists } from "@/store/playlists";
+import { fetchUserPlaylists, selectPlaylists } from "@/store/playlists";
 
 import { useStyles } from "./styles";
 
@@ -16,7 +16,7 @@ const usePrepare = () => {
 
   const playlists = useAppSelector(selectPlaylists);
 
-  const { isSidebarExpand } = useAppSelector(selectUIState);
+  const isSidebarExpand = useAppSelector(selectIsSidebarExpand);
 
   const { cx, classes } = useStyles();
 
@@ -29,11 +29,11 @@ const usePrepare = () => {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getUserPlaylists());
+      dispatch(fetchUserPlaylists(userId));
     }
   }, [userId]);
 
-  return { active, cx, classes, isSidebarExpand, playlists };
+  return { cx, active, classes, playlists, isSidebarExpand };
 };
 
 export default usePrepare;

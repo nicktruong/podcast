@@ -11,7 +11,7 @@ import {
 import { Controller } from "react-hook-form";
 import ErrorIcon from "@mui/icons-material/Error";
 
-import { Genders } from "@/common/enums";
+import { GENDERS } from "@/common/enums";
 import { months } from "@/common/constants";
 import { StyledInput, NextButton } from "@/components";
 
@@ -235,7 +235,7 @@ export default function UserInfoForm({
           render={({ field }) => {
             return (
               <RadioGroup sx={{ flexDirection: "row" }} {...field}>
-                {Object.entries(Genders).map(([value, label]) => (
+                {Object.entries(GENDERS).map(([value, label]) => (
                   <FormControlLabel
                     sx={{
                       "& .MuiTypography-root": { fontSize: "14px" },

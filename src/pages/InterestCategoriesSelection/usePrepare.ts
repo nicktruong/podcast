@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { Roles } from "@/common/enums";
+import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
@@ -35,7 +35,7 @@ export const usePrepare = () => {
   const categoriesOfInterest = watch("categoriesOfInterest");
 
   const onSubmit = handleSubmit(async (data) => {
-    if (!user.id || !user.email) {
+    if (!user?.id || !user.email) {
       // TODO: inform user about this error
       console.log("Your account must have a corresponding email");
 
@@ -46,7 +46,7 @@ export const usePrepare = () => {
     await createUserDocument({
       uid: user.id,
       email: user.email,
-      role: Roles.LISTENER,
+      role: ROLES.LISTENER,
       name: user.name ?? "",
       photoURL: user.photoURL,
       categoriesOfInterest: data.categoriesOfInterest,

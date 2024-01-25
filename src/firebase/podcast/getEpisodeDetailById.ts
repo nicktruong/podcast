@@ -1,17 +1,17 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
-import type { Podcast } from "@/common/interfaces";
+import type { Episode } from "@/common/interfaces";
 
 export const getEpisodeDetailById = async ({
   podcastId,
 }: {
   podcastId: string;
 }) => {
-  const snapshot = await getDoc(doc(db, Collections.PODCASTS, podcastId));
+  const snapshot = await getDoc(doc(db, COLLECTIONS.PODCASTS, podcastId));
   const data = snapshot.data();
 
   if (!data) {
@@ -22,7 +22,7 @@ export const getEpisodeDetailById = async ({
   const updatedAt: string = data.updatedAt.toDate().toISOString();
   const publishedDate: string = data.publishedDate.toDate().toISOString();
 
-  const result = data as Podcast;
+  const result = data as Episode;
 
   return { ...result, id: snapshot.id, createdAt, updatedAt, publishedDate };
 };

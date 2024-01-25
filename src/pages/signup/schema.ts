@@ -1,6 +1,6 @@
 import Joi from "joi";
 
-import { Genders } from "@/common/enums";
+import { GENDERS } from "@/common/enums";
 import { getNumberOfDaysInMonth } from "@/common/utils";
 
 import type { RegisterData } from "@/common/interfaces";
@@ -23,7 +23,7 @@ const schema = Joi.object<RegisterData>({
       "string.pattern.base": "Password must pass the below criteria",
     }),
   name: Joi.string().required(),
-  gender: Joi.string().valid(...Object.keys(Genders)),
+  gender: Joi.string().valid(...Object.keys(GENDERS)),
   date: Joi.number()
     .custom((value, helper) => {
       value = +value;

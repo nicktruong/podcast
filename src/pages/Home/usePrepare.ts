@@ -1,14 +1,19 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 
 import {
-  fetchSeriesToTryPaged,
-  fetchSeriesForYouPaged,
-  fetchRecentlyPlayedSeries,
-  selectSeriesToTry,
-  selectSeriesForYou,
-  selectTrendingSeries,
+  selectTrendings,
+  selectPodcastsToTry,
+  selectPodcastsForYou,
   selectRecentlyPlayed,
-  fetchTrendingSeriesPaged,
+  fetchPodcastsToTryPaged,
+  fetchPodcastsForYouPaged,
+  fetchTrendingPodcastsPaged,
+  fetchRecentlyPlayedPodcastsPaged,
+  selectLoadingPodcastsForYou,
+  selectLoadingPodcastsToTry,
+  selectLoadingTrendings,
+  selectLoadingRecentlyPlayed,
 } from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -21,27 +26,41 @@ const usePrepare = () => {
   const dispatch = useAppDispatch();
 
   const userId = useAppSelector(selectUserId);
-  const seriesToTry = useAppSelector(selectSeriesToTry);
-  const seriesForYou = useAppSelector(selectSeriesForYou);
+
+  const podcastsToTry = useAppSelector(selectPodcastsToTry);
+  const trendingPodcasts = useAppSelector(selectTrendings);
+  const podcastsForYou = useAppSelector(selectPodcastsForYou);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
-  const trendingPodcasts = useAppSelector(selectTrendingSeries);
+
+  const loadingTrendingPodcasts = useAppSelector(selectLoadingTrendings);
+  const loadingPodcastsToTry = useAppSelector(selectLoadingPodcastsToTry);
+  const loadingPodcastsForYou = useAppSelector(selectLoadingPodcastsForYou);
+  const loadingRecentlyPlayed = useAppSelector(selectLoadingRecentlyPlayed);
 
   const sections = [
     { title: "Recently played", podcasts: recentlyPlayed },
     { title: "Trending podcasts", podcasts: trendingPodcasts },
-    { title: "Series for you", podcasts: seriesForYou },
-    { title: "Series to try", podcasts: seriesToTry },
+    { title: "Podcasts for you", podcasts: podcastsForYou },
+    { title: "Podcasts to try", podcasts: podcastsToTry },
   ];
 
   useEffect(() => {
     const init = async () => {
-      await dispatch(fetchRecentlyPlayedSeries());
-      await dispatch(fetchTrendingSeriesPaged({ pageSize: 7 }));
+      !loadingRecentlyPlayed &&
+        (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
 
-      if (userId) {
-        await dispatch(fetchSeriesForYouPaged({ pageSize: 7, period: 30 }));
-        await dispatch(fetchSeriesToTryPaged({ pageSize: 7 }));
+      !loadingTrendingPodcasts &&
+        (await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })));
+
+      if (!userId) {
+        return;
       }
+
+      !loadingPodcastsForYou &&
+        (await dispatch(fetchPodcastsForYouPaged({ pageSize: 7, period: 30 })));
+
+      !loadingPodcastsToTry &&
+        (await dispatch(fetchPodcastsToTryPaged({ pageSize: 7 })));
     };
 
     init();

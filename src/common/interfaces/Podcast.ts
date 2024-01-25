@@ -1,22 +1,45 @@
 import { PodcastStatus } from "../enums";
 
-import { PodcastSeriesWithAuthor } from "./PodcastSeries";
+import { User } from "./User";
+import { Podcast, PopulatedPodcast } from "./PodcastSeries";
 
-export interface Podcast {
+export interface Episode {
   id: string;
   title: string;
-  rating: number;
-  seriesId: string;
+  authorId: string;
+  createdAt: string;
+  updatedAt: string;
   rateCount: number;
   playCount: number;
-  status: PodcastStatus;
-  createdAt: string; // in ISO format
-  updatedAt: string; // in ISO format
+  podcastId: string;
   pathToFile: string;
   description: string;
-  publishedDate: string; // in ISO format
+  audienceSize: number;
+  rating: number | null;
+  publishedDate: string;
+  status: PodcastStatus;
 }
 
-export interface PodcastWithSeriesAndAuthor extends Podcast {
-  series: PodcastSeriesWithAuthor;
+export interface EpisodeBasicCreationData {
+  title: string;
+  description: string;
+}
+
+export interface EpisodeCreationData extends EpisodeBasicCreationData {
+  pathToFile: string;
+}
+
+export type PopulatedEpisode = Omit<Episode, "podcastId"> & {
+  podcast: Omit<Podcast, "authorId"> & {
+    author: User;
+  };
+};
+
+export interface EpisodeWithSeriesAndAuthor extends Episode {
+  series: PopulatedPodcast;
+}
+
+export interface PlaylistEpisodes extends Episode {
+  addedDate: string;
+  series: PopulatedPodcast;
 }

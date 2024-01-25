@@ -1,7 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { PlaylistCreationData } from "@/common/interfaces";
+import { COLLECTIONS } from "@/common/enums";
+import { Playlist, PlaylistCreationData } from "@/common/interfaces";
 
 import { db } from "../init";
 
@@ -9,15 +9,27 @@ export const createOwnedPlaylist = async ({
   title,
   userId,
   coverUrl,
-  seriesId,
+  episodeId,
   podcastId,
 }: PlaylistCreationData) => {
-  const docRef = await addDoc(collection(db, Collections.PLAYLISTS), {
+  const currentDate = new Date().toISOString();
+
+  const playlist: Omit<Playlist, "id"> = {
     title,
     userId,
     coverUrl,
-    podcasts: [{ podcastId, seriesId }],
-  });
+    createdAt: currentDate,
+    updatedAt: currentDate,
+    episodes: [
+      {
+        episodeId,
+        podcastId,
+        addedDate: currentDate,
+      },
+    ],
+  };
 
-  return docRef.id;
+  const docRef = await addDoc(collection(db, COLLECTIONS.PLAYLISTS), playlist);
+
+  return { id: docRef.id, currentDate };
 };

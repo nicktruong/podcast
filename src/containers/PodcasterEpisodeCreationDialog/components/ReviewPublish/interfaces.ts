@@ -1,7 +1,7 @@
-import type { Podcast, UserInfo } from "@/common/interfaces";
+import type { EpisodeCreationData, User } from "@/common/interfaces";
 
 export interface ReviewPublishProps {
-  podInfo: Podcast;
-  user: UserInfo;
+  podInfo: EpisodeCreationData;
+  user: Partial<User> | null;
   image?: string;
 }

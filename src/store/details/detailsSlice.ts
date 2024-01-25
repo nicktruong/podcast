@@ -1,148 +1,133 @@
-import {
-  PayloadAction,
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
 
 import {
-  PodcastSeriesDetail,
-  PodcastSeriesWithAuthor,
-} from "@/common/interfaces";
-import {
-  getSeriesAuthor,
-  getSeriesDetail,
-  getEpisodesFromSeriesPagination,
+  getPodcastDetail,
+  getEpisodesDetailFromPodcastId,
+  getPodcastAndEpisodesDetailFromEpisodeId,
 } from "@/firebase";
-import { AsyncThunkConfig } from "@/hooks";
-import { Roles, Genders } from "@/common/enums";
 
-import {
-  selectSeriesToTry,
-  selectSeriesForYou,
-  selectTrendingSeries,
-} from "../listenerPodcastSeries";
 import { RootState } from "..";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
 
 import { DetailsState } from "./interfaces";
 
 // TODO: Split to multiple fields
 const initialState: DetailsState = {
-  seriesDetail: {
-    id: "",
-    title: "",
-    rating: 0,
-    category: "",
-    coverUrl: "",
-    rateCount: 0,
-    playCount: 0,
-    podcasts: [],
-    createdAt: "",
-    updatedAt: "",
-    description: "",
-    audienceSize: 0,
-    author: {
-      id: "",
-      dob: "",
-      name: "",
-      history: [],
-      roles: [Roles.LISTENER],
-      categoriesOfInterest: [],
-      gender: Genders.NON_BINARY,
-    },
-  },
-  episodeDetailId: "",
-  loadingDetail: false,
+  episodeId: "",
+  episodesDetail: [],
+  podcastDetail: null,
+  loadingPodcast: false,
+  loadingEpisodes: false,
 };
 
-// TODO: Split to multiple thunks
-export const getSeriesDetailAction = createAsyncThunk<
-  PodcastSeriesDetail,
-  { seriesId: string },
-  AsyncThunkConfig
->("userPodcastSeries/getSeriesDetailAction", async ({ seriesId }, thunkApi) => {
-  const state = thunkApi.getState();
-  const trendingSeries = selectTrendingSeries(state);
-  const seriesForYou = selectSeriesForYou(state);
-  const seriesToTry = selectSeriesToTry(state);
-  const allSeries = trendingSeries.concat(seriesForYou).concat(seriesToTry);
+export const fetchEpisodesDetail = createAppAsyncThunk(
+  "details/fetchEpisodesDetail",
+  async (episodeId: string) => {
+    // TODO: Consider caching
+    const { podcast, episodesDetail } =
+      await getPodcastAndEpisodesDetailFromEpisodeId(episodeId);
 
-  const cachedSeries = allSeries.find(({ id }) => id === seriesId);
-  let series: PodcastSeriesWithAuthor | undefined = cachedSeries;
-
-  if (!cachedSeries) {
-    // fetch series from firestore
-    series = await getSeriesDetail({ seriesId });
+    return { podcast, episodesDetail };
   }
+);
 
-  if (!series) {
-    return thunkApi.rejectWithValue("No series found");
+export const fetchPlaylistEpisodesDetail = createAppAsyncThunk(
+  "details/fetchPlaylistEpisodesDetail",
+  async (podcastId: string) => {
+    // TODO: Consider caching
+    const episodesDetail = await getEpisodesDetailFromPodcastId(podcastId);
+
+    return episodesDetail;
   }
+);
 
-  // fetch series author
-  if (!series.author) {
-    const author = await getSeriesAuthor({ seriesId });
-    series.author = author;
+export const fetchPodcastDetail = createAppAsyncThunk(
+  "details/fetchPodcastDetail",
+  async (podcastId: string) => {
+    // TODO: Consider caching
+    const podcastDetail = await getPodcastDetail(podcastId);
+
+    return podcastDetail;
   }
-
-  // fetch all episodes from series, TODO: support pagination
-  const podcasts = await getEpisodesFromSeriesPagination({ seriesId });
-
-  const seriesDetail: PodcastSeriesDetail = { ...series, podcasts };
-
-  return seriesDetail;
-});
+);
 
 export const detailsSlice = createSlice({
   name: "details",
   initialState,
   reducers: {
-    setEpisodeId: (
-      state,
-      { payload }: PayloadAction<{ episodeId: string }>
-    ) => {
-      state.episodeDetailId = payload.episodeId;
-    },
     setNewRating: (
       state,
       { payload }: PayloadAction<{ newRateCount: number; newRating: number }>
     ) => {
-      state.seriesDetail.rating = payload.newRating;
-      state.seriesDetail.rateCount = payload.newRateCount;
+      if (!state.podcastDetail) {
+        return;
+      }
+
+      state.podcastDetail.rating = payload.newRating;
+      state.podcastDetail.rateCount = payload.newRateCount;
+    },
+    setEpisodeId: (state, action: PayloadAction<string>) => {
+      state.episodeId = action.payload;
     },
   },
   extraReducers(builder) {
     builder
-      .addCase(getSeriesDetailAction.pending, (state) => {
-        state.loadingDetail = true;
+      .addCase(fetchPodcastDetail.pending, (state) => {
+        state.loadingPodcast = true;
       })
-      .addCase(getSeriesDetailAction.fulfilled, (state, { payload }) => {
-        state.loadingDetail = false;
-        state.seriesDetail = payload;
+      .addCase(fetchPodcastDetail.fulfilled, (state, { payload }) => {
+        state.loadingPodcast = false;
+        state.podcastDetail = payload;
       })
-      .addCase(getSeriesDetailAction.rejected, (state, { error }) => {
-        state.loadingDetail = false;
+      .addCase(fetchPodcastDetail.rejected, (state, { error }) => {
+        state.loadingPodcast = false;
+        console.error(error);
+      });
+
+    builder
+      .addCase(fetchPlaylistEpisodesDetail.pending, (state) => {
+        state.loadingEpisodes = true;
+      })
+      .addCase(fetchPlaylistEpisodesDetail.fulfilled, (state, { payload }) => {
+        state.loadingEpisodes = false;
+        state.episodesDetail = payload;
+      })
+      .addCase(fetchPlaylistEpisodesDetail.rejected, (state, { error }) => {
+        state.loadingEpisodes = false;
+        console.error(error);
+      });
+
+    builder
+      .addCase(fetchEpisodesDetail.fulfilled, (state, { payload }) => {
+        state.podcastDetail = payload.podcast;
+        state.episodesDetail = payload.episodesDetail;
+      })
+      .addCase(fetchEpisodesDetail.rejected, (state, { error }) => {
         console.error(error);
       });
   },
 });
 
-export const { setEpisodeId, setNewRating } = detailsSlice.actions;
+export const { setNewRating, setEpisodeId } = detailsSlice.actions;
 
-export const selectSeriesDetail = (state: RootState) =>
-  state.details.seriesDetail;
+export const selectEpisodeId = (state: RootState) => state.details.episodeId;
 
-export const selectLoadingSeriesDetail = (state: RootState) =>
-  state.details.loadingDetail;
+export const selectPodcastDetail = (state: RootState) =>
+  state.details.podcastDetail;
 
-export const selectEpisodeId = (state: RootState) =>
-  state.details.episodeDetailId;
+export const selectLoadingPodcastDetail = (state: RootState) =>
+  state.details.loadingPodcast;
+
+export const selectEpisodesDetail = (state: RootState) =>
+  state.details.episodesDetail;
+
+export const selectLoadingEpisodesDetail = (state: RootState) =>
+  state.details.loadingEpisodes;
 
 export const selectEpisodeDetail = createSelector(
-  [selectSeriesDetail, selectEpisodeId],
-  (seriesDetail, episodeId) => {
-    return seriesDetail.podcasts.find((podcast) => podcast.id === episodeId);
-  }
+  [selectEpisodesDetail, (state: RootState, episodeId: string) => episodeId],
+  (episodesDetail, episodeId) =>
+    episodesDetail.find((episode) => episode.id === episodeId)
 );
 
 export default detailsSlice.reducer;

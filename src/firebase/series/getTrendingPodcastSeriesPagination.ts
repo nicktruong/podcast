@@ -1,158 +1,68 @@
 import {
-  Timestamp,
-  collection,
-  doc,
-  documentId,
-  getDocs,
-  limit,
-  orderBy,
   query,
+  getDocs,
+  orderBy,
+  collection,
   startAfter,
-  startAt,
+  limit,
   where,
 } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
+import { Podcast, PopulatedPodcast } from "@/common/interfaces";
 
 import { db } from "../init";
-import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
+import { populatePodcast } from "../utils";
 
-import type { User, PodcastSeries } from "@/common/interfaces";
-
-export const getTrendingPodcastSeriesPagination = async ({
+export const getTrendingPodcastsPaged = async ({
+  offset,
   period = 7,
-  pageSize = 5,
+  pageSize = 7,
   categories = [],
-  notInIds = [],
 }: {
+  offset?: Date;
   period?: number;
   pageSize?: number;
   categories?: string[];
-  notInIds?: string[];
 }) => {
   const trendingPeriod = new Date();
   trendingPeriod.setDate(trendingPeriod.getDate() - period);
 
-  const queryConditions: any[] = [
-    orderBy("playCount", "desc"),
-    startAt(Timestamp.fromDate(trendingPeriod)),
-    limit(pageSize),
-  ];
+  const podcasts: PopulatedPodcast[] = [];
 
-  if (categories.length) {
-    queryConditions.push(where("category", "in", categories));
-  }
+  let i = 0;
 
-  const qSeries = query(
-    collection(db, Collections.PODCAST_SERIES),
-    ...queryConditions
-  );
+  do {
+    const subCategories = categories.slice(i * 10, i * 10 + 10);
 
-  const querySnapshot = await getDocs(qSeries);
+    // firestore does not allow "in" to be used with empty array
+    const categoryCondition = subCategories.length
+      ? [where(PODCAST_FIELDS.CATEGORY, "in", subCategories)]
+      : [];
 
-  const trendingPodcastSeries = querySnapshot.docs
-    .map((doc) => {
-      const data = doc.data();
-      data.createdAt = data.createdAt.toDate().toISOString();
-      data.updatedAt = data.updatedAt.toDate().toISOString();
-
-      return { ...data, id: doc.id } as PodcastSeries;
-    })
-    .filter((data) => !notInIds.includes(data.id));
-
-  if (trendingPodcastSeries.length < pageSize) {
-    queryConditions[1] = startAfter(
-      trendingPodcastSeries.at(-1)?.playCount ?? 0
-    );
-    queryConditions.push(limit(pageSize - trendingPodcastSeries.length));
-    const fillingSnapshot = await getDocs(
-      query(collection(db, Collections.PODCAST_SERIES), ...queryConditions)
+    // decide based on playCount in period
+    // offset based on last createdAt
+    const podcastsQuery = query(
+      collection(db, COLLECTIONS.PODCASTS),
+      orderBy(PODCAST_FIELDS.PLAY_COUNT, "desc"),
+      orderBy(PODCAST_FIELDS.CREATED_AT, "desc"),
+      startAfter((offset ?? trendingPeriod).toISOString()),
+      ...categoryCondition,
+      limit(pageSize)
     );
 
-    trendingPodcastSeries.concat(
-      fillingSnapshot.docs
-        .map((doc) => {
-          const data = doc.data();
-          data.createdAt = data.createdAt.toDate().toISOString();
-          data.updatedAt = data.updatedAt.toDate().toISOString();
+    const podcastsSnapshot = await getDocs(podcastsQuery);
 
-          return { ...data, id: doc.id } as PodcastSeries;
-        })
-        .filter((data) => !notInIds.includes(data.id))
+    const populatedPodcasts = await Promise.all(
+      podcastsSnapshot.docs.map((snapshot) =>
+        populatePodcast({ id: snapshot.id, ...snapshot.data() } as Podcast)
+      )
     );
-  }
 
-  const seriesIds = trendingPodcastSeries
-    .filter(({ id }) => !notInIds.includes(id))
-    .map(({ id }) => doc(db, Collections.PODCAST_SERIES, id));
+    podcasts.push(...populatedPodcasts);
 
-  if (!seriesIds.length) {
-    return [];
-  }
+    i++;
+  } while (i < categories.length / 10 && podcasts.length < pageSize);
 
-  const qCreatorsSeries = query(
-    collection(db, Collections.CREATORS_PODCAST_SERIES),
-    where("seriesId", "in", seriesIds)
-  );
-
-  const creatorsSeriesSnapshot = await getDocs(qCreatorsSeries);
-
-  const creatorsSeries = creatorsSeriesSnapshot.docs.map((doc) => {
-    const data = doc.data();
-
-    return { creatorId: data.creatorId, seriesId: data.seriesId };
-  });
-
-  const qCreators = query(
-    collection(db, Collections.USERS),
-    where(
-      documentId(),
-      "in",
-      creatorsSeries.map((ele) => ele.creatorId)
-    )
-  );
-
-  const creatorsSnapshot = await getDocs(qCreators);
-
-  const creators = creatorsSnapshot.docs.map(
-    (doc) =>
-      ({
-        ...doc.data(),
-        dob: doc.data().dob.toDate().toISOString(),
-        id: doc.id,
-      }) as User
-  );
-
-  const images = await Promise.all(
-    trendingPodcastSeries.map(async (series) => {
-      if (!series.coverUrl.startsWith("https")) {
-        const url = await downloadPhotoFromStorage(series.coverUrl);
-
-        return url;
-      }
-
-      return series.coverUrl;
-    })
-  );
-
-  trendingPodcastSeries.forEach((series, index) => {
-    series.coverUrl = images[index];
-  });
-
-  return trendingPodcastSeries.map((series) => ({
-    ...series,
-    author: creators.find((creator) => {
-      const creatorSeries = creatorsSeries.find((creatorSeries) => {
-        return (
-          creatorSeries.seriesId.path ===
-          doc(db, Collections.PODCAST_SERIES, series.id).path
-        );
-      });
-
-      return (
-        creatorSeries?.creatorId.path ===
-        doc(db, Collections.USERS, creator.id).path
-      );
-    }),
-  }));
+  return podcasts;
 };

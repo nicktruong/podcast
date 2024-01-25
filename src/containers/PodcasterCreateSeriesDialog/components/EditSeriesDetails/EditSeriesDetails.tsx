@@ -10,13 +10,13 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { StyledInput } from "@/components";
 
-import type { Category, SeriesCreationData } from "@/common/interfaces";
+import type { Category, PodcastCreationData } from "@/common/interfaces";
 
 interface Props {
   categories: Category;
   classes: Record<string, string>;
-  control: Control<SeriesCreationData>;
-  errors: FieldErrors<SeriesCreationData>;
+  control: Control<PodcastCreationData>;
+  errors: FieldErrors<PodcastCreationData>;
 }
 
 export default function EditSeriesDetails({
@@ -124,7 +124,7 @@ export default function EditSeriesDetails({
                 <MenuItem value="" disabled>
                   Choose one option
                 </MenuItem>
-                {categories.categories.map((category) => (
+                {categories.map((category) => (
                   <MenuItem key={category.name} value={category.name}>
                     {category.name}
                   </MenuItem>

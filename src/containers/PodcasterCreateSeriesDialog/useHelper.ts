@@ -4,19 +4,21 @@ import { ChangeEventHandler, useRef } from "react";
 
 import {
   selectStep,
-  selectCoverImage,
   setSeriesDetails,
-  uploadSeriesCover,
-  createPodcastSeriesAction,
+  uploadPodcastCover,
+  createPodcastAction,
+  selectPodcast,
+  selectPodcastCreationData,
+  selectTempImg,
 } from "@/store/podcastSeries";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
-import { SeriesCreationSteps } from "@/common/enums";
+import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
 
-import type { SeriesCreationData } from "@/common/interfaces";
+import type { PodcastCreationData } from "@/common/interfaces";
 
 interface Props {
   handleClose: () => void;
@@ -26,16 +28,19 @@ const useHelper = ({ handleClose }: Props) => {
   const { classes } = useStyles();
   const dispatch = useAppDispatch();
   const step = useAppSelector(selectStep);
-  const image = useAppSelector(selectCoverImage);
   const fileRef = useRef<HTMLInputElement>(null);
   const categories = useAppSelector(selectCategories);
+  const podcast = useAppSelector(selectPodcast);
+  const podcastCreationData = useAppSelector(selectPodcastCreationData);
+  const tempImg = useAppSelector(selectTempImg);
+  const coverUrl = podcast?.coverUrl ?? tempImg;
 
   const {
     control,
     trigger,
     handleSubmit,
     formState: { errors },
-  } = useForm<SeriesCreationData>({
+  } = useForm<PodcastCreationData>({
     defaultValues: {
       title: "",
       category: "",
@@ -56,13 +61,13 @@ const useHelper = ({ handleClose }: Props) => {
 
   const handleImageSubmit: ChangeEventHandler<HTMLInputElement> = (e) => {
     if (e.target.files?.[0]) {
-      dispatch(uploadSeriesCover(e.target.files[0]));
+      dispatch(uploadPodcastCover(e.target.files[0]));
     }
   };
 
   const handleNextStep = async () => {
     switch (step) {
-      case SeriesCreationSteps.INPUT_SERIES_DETAILS: {
+      case PODCAST_CREATION_STEPS.INPUT_DETAILS: {
         const isValidDetails = await validatePodcastSeriesInfo();
 
         if (isValidDetails) {
@@ -72,13 +77,13 @@ const useHelper = ({ handleClose }: Props) => {
         break;
       }
 
-      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG: {
+      case PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG: {
         fileRef.current?.click();
         break;
       }
 
-      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION: {
-        dispatch(createPodcastSeriesAction());
+      case PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE: {
+        dispatch(createPodcastAction());
         handleClose();
         break;
       }
@@ -90,12 +95,14 @@ const useHelper = ({ handleClose }: Props) => {
 
   return {
     step,
-    image,
+    podcast,
     errors,
     control,
     classes,
     fileRef,
+    coverUrl,
     categories,
+    podcastCreationData,
     onSubmit,
     handleNextStep,
     handleImageSubmit,

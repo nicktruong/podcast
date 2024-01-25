@@ -3,36 +3,37 @@ import { useEffect, useState } from "react";
 import { UploadTask } from "@firebase/storage";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import {
-  setPrevStep,
-  setProgress,
-  setUploadStep,
-  selectPodInfo,
-  selectProgress,
-  selectUploading,
-  publishPodAction,
-  selectUploadStep,
-  setPodPathToFile,
-  resetUploadPodState,
-  setPodUploadDetails,
-} from "@/store/podcast";
 import { selectUser } from "@/store/user";
 import { uploadFile } from "@/firebase";
 import { EpisodeCreationSteps } from "@/common/enums";
-import { selectCoverImage } from "@/store/podcastSeries";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import {
+  setPrevStep,
+  setProgress,
+  selectProgress,
+  selectUploading,
+  selectUploadStep,
+  selectEpisodeInfo,
+  setPathToAudioFile,
+  resetUploadPodState,
+  setPodUploadDetails,
+  publishEpisodeAction,
+} from "@/store/podcast";
+import { selectPodcast, selectTempImg } from "@/store/podcastSeries";
 
 import schema from "./schema";
 
 import type { UsePrepareHookProps } from "./interfaces";
-import type { EpisodeCreationData } from "@/common/interfaces";
+import type { EpisodeBasicCreationData } from "@/common/interfaces";
 
 const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);
-  const podInfo = useAppSelector(selectPodInfo);
-  const image = useAppSelector(selectCoverImage);
+  const podInfo = useAppSelector(selectEpisodeInfo);
+  const podcast = useAppSelector(selectPodcast);
+  const tempImg = useAppSelector(selectTempImg);
+  const image = podcast?.coverUrl ?? tempImg;
   const podUploading = useAppSelector(selectUploading);
   const podUploadingProgress = useAppSelector(selectProgress);
   const [uploadTask, setUploadTask] = useState<UploadTask>();
@@ -41,7 +42,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<EpisodeCreationData>({
+  } = useForm<EpisodeBasicCreationData>({
     defaultValues: {
       title: "",
       description: "",
@@ -55,14 +56,12 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     dispatch(
       setPodUploadDetails({ ...data, publishedDate: new Date().toISOString() })
     );
-    dispatch(setUploadStep(EpisodeCreationSteps.REVIEW_PUBLISH));
   });
 
   const onFileUpload = (acceptedFiles: File[]) => {
     const { uploadTask, fullPath } = uploadFile("audios", acceptedFiles[0]);
     setUploadTask(uploadTask);
-    dispatch(setPodPathToFile(fullPath));
-    dispatch(setUploadStep(EpisodeCreationSteps.EDIT_DETAILS));
+    dispatch(setPathToAudioFile(fullPath));
   };
 
   const handleCancel = () => {
@@ -94,7 +93,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
         break;
 
       case EpisodeCreationSteps.REVIEW_PUBLISH:
-        await dispatch(publishPodAction());
+        await dispatch(publishEpisodeAction());
         handleClose();
         break;
 

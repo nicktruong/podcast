@@ -1,109 +1,79 @@
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
-import {
-  publishPod,
-  countCreatorEpisodes,
-  getCreatorsPodcastsPagination,
-  getPodcastsOfCreatorPagination,
-} from "@/firebase";
-import { AsyncThunkConfig } from "@/hooks/redux";
-import { PodcastStatus, EpisodeCreationSteps } from "@/common/enums";
+import { publishEpisode, fetchEpisodesPagedFromCreatorId } from "@/firebase";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 import { selectUserId } from "../user/userSlice";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
+import { selectPodcast } from "../podcastSeries";
 
 import type { RootState } from "@/store";
-import type { PodcastState } from "./interfaces";
-import type { Podcast, CreatorsPodcasts } from "@/common/interfaces";
+import type { EpisodeState } from "./interfaces";
+import type { Episode } from "@/common/interfaces";
 
-const initialState: PodcastState = {
-  pod: {
-    id: "",
+const initialState: EpisodeState = {
+  episodeCreationData: {
     title: "",
-    rating: 0,
-    seriesId: "",
-    playCount: 0,
-    rateCount: 0,
-    createdAt: "", // in ISO format
-    updatedAt: "", // in ISO format
     pathToFile: "",
     description: "",
-    publishedDate: "", // in ISO format
-    status: PodcastStatus.DRAFT,
   },
-  pods: [],
-  episodesCount: 0,
+  episodes: [],
   uploading: false,
-  loadingPods: false,
-  creatorsPodcasts: [],
-  progressInPercent: 0,
+  loadingEpisodes: false,
+  audioUploadProgressInPercent: 0,
   uploadStep: EpisodeCreationSteps.UPLOAD_AUDIO,
 };
 
-export const getCurrentCreatorPodcastsPaginationAction = createAsyncThunk<
-  Podcast[],
-  { offset?: Date; pageSize?: number },
-  AsyncThunkConfig
->(
-  "pod/getCurrentCreatorPodcastsPagination",
-  async ({ offset, pageSize }, thunkApi) => {
-    const userId = selectUserId(thunkApi.getState());
-
-    const pods = await getPodcastsOfCreatorPagination({
-      creatorId: userId,
+export const getEpisodesFromCreatorPaged = createAppAsyncThunk(
+  "episode/fetchEpisodesPagedFromCreator",
+  async ({
+    creatorId,
+    offset,
+    pageSize,
+  }: {
+    creatorId: string;
+    offset?: Date;
+    pageSize?: number;
+  }): Promise<Episode[]> => {
+    const episodes = await fetchEpisodesPagedFromCreatorId({
+      creatorId,
       offset,
       pageSize,
     });
 
-    return pods;
+    return episodes;
   }
 );
 
-export const countEpisodesAction = createAsyncThunk<
-  number,
-  undefined,
-  AsyncThunkConfig
->("pod/countEpisodesAction", async (_, thunkApi) => {
-  const userId = selectUserId(thunkApi.getState());
+export const publishEpisodeAction = createAppAsyncThunk(
+  "episode/publish",
+  async (
+    _,
+    thunkApi
+  ) /*: Promise<{ creatorsPodcasts: CreatorsPodcasts; pod: Episode }> */ => {
+    if (selectUploading(thunkApi.getState()) === true) {
+      return thunkApi.rejectWithValue("Please wait. Uploading audio...");
+    }
 
-  const count = await countCreatorEpisodes(userId);
+    const podcast = selectPodcast(thunkApi.getState());
 
-  return count;
-});
+    const userId = selectUserId(thunkApi.getState());
 
-export const publishPodAction = createAsyncThunk<
-  { creatorsPodcasts: CreatorsPodcasts; pod: Podcast },
-  undefined,
-  AsyncThunkConfig
->("pod/publish", async (_, thunkApi) => {
-  if (selectUploading(thunkApi.getState()) === true) {
-    return thunkApi.rejectWithValue("Wait for mp3 file done upload");
+    if (!podcast || !userId) {
+      return thunkApi.rejectWithValue("Please create podcast first!");
+    }
+
+    const episode = selectEpisodeInfo(thunkApi.getState());
+
+    const newEpisode = await publishEpisode(episode, userId, podcast.id);
+
+    return newEpisode;
   }
-
-  const userId = selectUserId(thunkApi.getState());
-  const pod = selectPodInfo(thunkApi.getState());
-  const creatorsPodcasts = await publishPod(pod, userId);
-
-  return { pod, creatorsPodcasts };
-});
-
-export const getCreatorsPodsPaginationAction = createAsyncThunk<
-  CreatorsPodcasts[],
-  { offset?: Date; pageSize?: number },
-  AsyncThunkConfig
->("pod/getPodsPagination", async ({ pageSize, offset }, thunkApi) => {
-  const userId = selectUserId(thunkApi.getState());
-  const pods = await getCreatorsPodcastsPagination({
-    creatorId: userId,
-    offset,
-    pageSize,
-  });
-
-  return pods;
-});
+);
 
 export const podSlice = createSlice({
   name: "pod",
-  initialState: initialState,
+  initialState,
   reducers: {
     setPrevStep: (state) => {
       switch (state.uploadStep) {
@@ -116,111 +86,83 @@ export const podSlice = createSlice({
       }
     },
     resetUploadPodState: (state) => {
-      state.pod = initialState.pod;
+      state.episodeCreationData = initialState.episodeCreationData;
       state.uploading = false;
-      state.progressInPercent = 0;
+      state.audioUploadProgressInPercent = 0;
       state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
     },
     setPodUploadDetails: (
       state,
       action: PayloadAction<{
-        title: string;
-        description: string;
-        publishedDate: string;
+        title: string; // 2
+        description: string; // 3
+        publishedDate: string; // 4
         // status: PodStatus;
       }>
     ) => {
-      state.pod = { ...state.pod, ...action.payload };
+      state.episodeCreationData = {
+        ...state.episodeCreationData,
+        ...action.payload,
+      };
+      state.uploadStep = EpisodeCreationSteps.REVIEW_PUBLISH;
     },
-    setPodPathToFile: (state, action: PayloadAction<string>) => {
+    setPathToAudioFile: (state, action: PayloadAction<string>) => {
       state.uploading = true;
-      state.progressInPercent = 0;
-      state.pod.pathToFile = action.payload;
+      state.audioUploadProgressInPercent = 0;
+      state.episodeCreationData.pathToFile = action.payload; // 1
+      state.uploadStep = EpisodeCreationSteps.EDIT_DETAILS;
     },
     setProgress: (state, action: PayloadAction<number>) => {
-      state.progressInPercent = action.payload;
+      state.audioUploadProgressInPercent = action.payload;
 
       if (action.payload === 100) {
         state.uploading = false;
       }
     },
-    setUploadStep: (state, action: PayloadAction<EpisodeCreationSteps>) => {
-      state.uploadStep = action.payload;
-    },
   },
   extraReducers: (builder) => {
-    builder.addCase(publishPodAction.fulfilled, (state, action) => {
-      state.creatorsPodcasts = [action.payload.creatorsPodcasts];
-      state.pods.unshift(action.payload.pod);
-      state.episodesCount += 1;
-      state.pod = initialState.pod;
-      state.progressInPercent = 0;
-      state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
-    });
-
-    builder.addCase(publishPodAction.rejected, (_, { error }) => {
-      console.error(error);
-    });
-
-    builder.addCase(getCreatorsPodsPaginationAction.pending, (state) => {
-      state.loadingPods = true;
-    });
-
-    builder.addCase(
-      getCreatorsPodsPaginationAction.fulfilled,
-      (state, action) => {
-        state.loadingPods = false;
-        state.creatorsPodcasts = action.payload;
-      }
-    );
-
-    builder.addCase(
-      getCreatorsPodsPaginationAction.rejected,
-      (state, action) => {
-        state.loadingPods = false;
-        console.error(action.error);
-      }
-    );
-
-    builder.addCase(countEpisodesAction.fulfilled, (state, action) => {
-      state.episodesCount = action.payload;
-    });
-
-    builder.addCase(countEpisodesAction.rejected, (_, { error }) => {
-      console.error(error);
-    });
-
-    builder.addCase(
-      getCurrentCreatorPodcastsPaginationAction.fulfilled,
-      (state, action) => {
-        state.pods = action.payload;
-      }
-    );
-
-    builder.addCase(
-      getCurrentCreatorPodcastsPaginationAction.rejected,
-      (state, { error }) => {
+    builder
+      .addCase(publishEpisodeAction.fulfilled, (state, action) => {
+        state.audioUploadProgressInPercent = 0;
+        state.episodeCreationData = initialState.episodeCreationData;
+        state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
+        state.episodes = [
+          ...state.episodes,
+          { ...action.payload, id: nanoid() },
+        ];
+      })
+      .addCase(publishEpisodeAction.rejected, (_, { error }) => {
         console.error(error);
-      }
-    );
+      });
+
+    builder
+      .addCase(getEpisodesFromCreatorPaged.fulfilled, (state, action) => {
+        state.episodes = action.payload;
+      })
+      .addCase(getEpisodesFromCreatorPaged.rejected, (state, { error }) => {
+        console.error(error);
+      });
   },
 });
 
-export const selectEpisodesCount = (state: RootState) =>
-  state.pod.episodesCount;
-export const selectCreatorsPodcasts = (state: RootState) =>
-  state.pod.creatorsPodcasts;
-export const selectPods = (state: RootState) => state.pod.pods;
-export const selectPodInfo = (state: RootState) => state.pod.pod;
+export const selectEpisodesOfCreator = (state: RootState) => state.pod.episodes;
+
+export const selectPods = (state: RootState) => state.pod.episodes;
+
+export const selectEpisodeInfo = (state: RootState) =>
+  state.pod.episodeCreationData;
+
 export const selectUploading = (state: RootState) => state.pod.uploading;
+
 export const selectUploadStep = (state: RootState) => state.pod.uploadStep;
-export const selectProgress = (state: RootState) => state.pod.progressInPercent;
+
+export const selectProgress = (state: RootState) =>
+  state.pod.audioUploadProgressInPercent;
 
 export const {
   setPrevStep,
   setProgress,
-  setUploadStep,
-  setPodPathToFile,
+  setPathToAudioFile,
   resetUploadPodState,
   setPodUploadDetails,
 } = podSlice.actions;

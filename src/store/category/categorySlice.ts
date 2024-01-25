@@ -2,16 +2,12 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import { getAllCategories } from "@/firebase";
 
-import type { RootState } from "@/store";
-import type { CategoryState } from "./interfaces";
+import { SLICE_NAME, initialState, FETCH_CATEGORIES_ACTION } from "./constants";
 
-const initialState: CategoryState = {
-  loading: false,
-  categories: { categories: [] },
-};
+import type { RootState } from "@/store";
 
 export const fetchCategories = createAsyncThunk(
-  "category/fetchCategories",
+  FETCH_CATEGORIES_ACTION,
   async () => {
     const categories = await getAllCategories();
 
@@ -20,25 +16,26 @@ export const fetchCategories = createAsyncThunk(
 );
 
 export const categorySlice = createSlice({
-  name: "category",
+  name: SLICE_NAME,
   initialState,
   reducers: {},
   extraReducers(builder) {
     builder
       .addCase(fetchCategories.pending, (state) => {
-        state.loading = true;
+        state.fetchingCategories = true;
       })
       .addCase(fetchCategories.fulfilled, (state, { payload }) => {
-        state.loading = false;
         state.categories = payload;
+        state.fetchingCategories = false;
       })
       .addCase(fetchCategories.rejected, (state) => {
-        state.loading = false;
+        state.fetchingCategories = false;
       });
   },
 });
 
-export const selectLoading = (state: RootState) => state.category.loading;
+export const selectFetchingCategories = (state: RootState) =>
+  state.category.fetchingCategories;
 
 export const selectCategories = (state: RootState) => state.category.categories;
 

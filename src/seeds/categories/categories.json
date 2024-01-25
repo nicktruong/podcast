@@ -1,112 +1,552 @@
 [
-  { "name": "Arts", "imageUrl": "", "color": "#87CEEB" },
-  { "name": "Books", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Design", "imageUrl": "", "color": "#E6E6FA" },
-  { "name": "Fashion & Beauty", "imageUrl": "", "color": "#50C878" },
-  { "name": "Food", "imageUrl": "", "color": "#FFB7C5" },
-  { "name": "Performing Arts", "imageUrl": "", "color": "#FF6F61" },
-  { "name": "Visual Arts", "imageUrl": "", "color": "#007FFF" },
-  { "name": "Business", "imageUrl": "", "color": "#FD5E53" },
-  { "name": "Careers", "imageUrl": "", "color": "#008080" },
-  { "name": "Entrepreneurship", "imageUrl": "", "color": "#E0115F" },
-  { "name": "Investing", "imageUrl": "", "color": "#C0C0C0" },
-  { "name": "Management", "imageUrl": "", "color": "#DA70D6" },
-  { "name": "Marketing", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Non-Profit", "imageUrl": "", "color": "#4CB7A5" },
-  { "name": "Comedy", "imageUrl": "", "color": "#E0B0FF" },
-  { "name": "Comedy Interviews", "imageUrl": "", "color": "#98FB98" },
-  { "name": "Improv", "imageUrl": "", "color": "#FFDAB9" },
-  { "name": "Stand-Up", "imageUrl": "", "color": "#008080" },
-  { "name": "Education", "imageUrl": "", "color": "#D8BFD8" },
-  { "name": "Courses", "imageUrl": "", "color": "#FFD700" },
-  { "name": "How To", "imageUrl": "", "color": "#1E90FF" },
-  { "name": "Language Learning", "imageUrl": "", "color": "#9370DB" },
-  { "name": "Self-Improvement", "imageUrl": "", "color": "#FFA500" },
-  { "name": "Fiction", "imageUrl": "", "color": "#C0C0C0" },
-  { "name": "Comedy Fiction", "imageUrl": "", "color": "#3EB489" },
-  { "name": "Drama", "imageUrl": "", "color": "#8A2BE2" },
-  { "name": "Science Fiction", "imageUrl": "", "color": "#FFA07A" },
-  { "name": "Government", "imageUrl": "", "color": "#191970" },
-  { "name": "History", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Health & Fitness", "imageUrl": "", "color": "#FF69B4" },
-  { "name": "Alternative Health", "imageUrl": "", "color": "#008000" },
-  { "name": "Fitness", "imageUrl": "", "color": "#7FFFD4" },
-  { "name": "Medicine", "imageUrl": "", "color": "#A52A2A" },
-  { "name": "Mental Health", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Nutrition", "imageUrl": "", "color": "#FF4500" },
-  { "name": "Sexuality", "imageUrl": "", "color": "#FFC0CB" },
-  { "name": "Kids & Family", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Education for Kids", "imageUrl": "", "color": "#4B0082" },
-  { "name": "Parenting", "imageUrl": "", "color": "#D2691E" },
-  { "name": "Pets & Animals", "imageUrl": "", "color": "#D2B48C" },
-  { "name": "Stories for Kids", "imageUrl": "", "color": "#87CEEB" },
-  { "name": "Leisure", "imageUrl": "", "color": "#FFA500" },
-  { "name": "Animation & Manga", "imageUrl": "", "color": "#C0C0C0" },
-  { "name": "Automotive", "imageUrl": "", "color": "#808000" },
-  { "name": "Aviation", "imageUrl": "", "color": "#DC143C" },
-  { "name": "Crafts", "imageUrl": "", "color": "#00CED1" },
-  { "name": "Games", "imageUrl": "", "color": "#191970" },
-  { "name": "Hobbies", "imageUrl": "", "color": "#FFE4E1" },
-  { "name": "Home & Garden", "imageUrl": "", "color": "#F0FFFF" },
-  { "name": "Video Games", "imageUrl": "", "color": "#F0F8FF" },
-  { "name": "Music", "imageUrl": "", "color": "#9932CC" },
-  { "name": "Music Commentary", "imageUrl": "", "color": "#FF7F50" },
-  { "name": "Music History", "imageUrl": "", "color": "#8B0000" },
-  { "name": "Music Interviews", "imageUrl": "", "color": "#20B2AA" },
-  { "name": "News", "imageUrl": "", "color": "#00FA9A" },
-  { "name": "Business News", "imageUrl": "", "color": "#4682B4" },
-  { "name": "Daily News", "imageUrl": "", "color": "#FF1493" },
-  { "name": "Entertainment News", "imageUrl": "", "color": "#00FF00" },
-  { "name": "News Commentary", "imageUrl": "", "color": "#7CFC00" },
-  { "name": "Politics", "imageUrl": "", "color": "#BDB76B" },
-  { "name": "Sports News", "imageUrl": "", "color": "#9400D3" },
-  { "name": "Tech News", "imageUrl": "", "color": "#FF8C00" },
-  { "name": "Religion & Spirituality", "imageUrl": "", "color": "#556B2F" },
-  { "name": "Buddhism", "imageUrl": "", "color": "#FF6347" },
-  { "name": "Christianity", "imageUrl": "", "color": "#8B008B" },
-  { "name": "Hinduism", "imageUrl": "", "color": "#4169E1" },
-  { "name": "Islam", "imageUrl": "", "color": "#B0C4DE" },
-  { "name": "Judaism", "imageUrl": "", "color": "#FFDEAD" },
-  { "name": "Religion", "imageUrl": "", "color": "#2F4F4F" },
-  { "name": "Spirituality", "imageUrl": "", "color": "#FFFF00" },
-  { "name": "Science", "imageUrl": "", "color": "#8A2BE2" },
-  { "name": "Astronomy", "imageUrl": "", "color": "#808080" },
-  { "name": "Chemistry", "imageUrl": "", "color": "#F5F5DC" },
-  { "name": "Earth Sciences", "imageUrl": "", "color": "#483D8B" },
-  { "name": "Life Sciences", "imageUrl": "", "color": "#00FF7F" },
-  { "name": "Mathematics", "imageUrl": "", "color": "#6A5ACD" },
-  { "name": "Natural Sciences", "imageUrl": "", "color": "#D3D3D3" },
-  { "name": "Nature", "imageUrl": "", "color": "#8B4513" },
-  { "name": "Physics", "imageUrl": "", "color": "#556B2F" },
-  { "name": "Social Sciences", "imageUrl": "", "color": "#00FFFF" },
-  { "name": "Society & Culture", "imageUrl": "", "color": "#7B68EE" },
-  { "name": "Documentary", "imageUrl": "", "color": "#F5FFFA" },
-  { "name": "Personal Journals", "imageUrl": "", "color": "#FFE4B5" },
-  { "name": "Philosophy", "imageUrl": "", "color": "#2E8B57" },
-  { "name": "Places & Travel", "imageUrl": "", "color": "#1E90FF" },
-  { "name": "Relationships", "imageUrl": "", "color": "#7FFFD4" },
-  { "name": "Sports", "imageUrl": "", "color": "#D8BFD8" },
-  { "name": "Baseball", "imageUrl": "", "color": "#800000" },
-  { "name": "Basketball", "imageUrl": "", "color": "#B0E0E6" },
-  { "name": "Cricket", "imageUrl": "", "color": "#8B4513" },
-  { "name": "Fantasy Sports", "imageUrl": "", "color": "#F08080" },
-  { "name": "Football", "imageUrl": "", "color": "#32CD32" },
-  { "name": "Golf", "imageUrl": "", "color": "#483D8B" },
-  { "name": "Hockey", "imageUrl": "", "color": "#F4A460" },
-  { "name": "Rugby", "imageUrl": "", "color": "#9932CC" },
-  { "name": "Running", "imageUrl": "", "color": "#FFD700" },
-  { "name": "Soccer", "imageUrl": "", "color": "#008080" },
-  { "name": "Swimming", "imageUrl": "", "color": "#FA8072" },
-  { "name": "Tennis", "imageUrl": "", "color": "#800080" },
-  { "name": "Volleyball", "imageUrl": "", "color": "#3CB371" },
-  { "name": "Wilderness", "imageUrl": "", "color": "#DDA0DD" },
-  { "name": "Wrestling", "imageUrl": "", "color": "#A52A2A" },
-  { "name": "Technology", "imageUrl": "", "color": "#DCDCDC" },
-  { "name": "True Crime", "imageUrl": "", "color": "#48D1CC" },
-  { "name": "TV & Film", "imageUrl": "", "color": "#9932CC" },
-  { "name": "After Shows", "imageUrl": "", "color": "#CD5C5C" },
-  { "name": "Film History", "imageUrl": "", "color": "#F0E68C" },
-  { "name": "Film Interviews", "imageUrl": "", "color": "#20B2AA" },
-  { "name": "Film Reviews", "imageUrl": "", "color": "#778899" },
-  { "name": "TV Reviews", "imageUrl": "", "color": "#8B008B" }
+  {
+    "name": "Arts",
+    "imageUrl": "https://picsum.photos/seed/UZpsqrq/640/480",
+    "color": "rgb(108, 164, 188)"
+  },
+  {
+    "name": "Books",
+    "imageUrl": "https://picsum.photos/seed/k1XTZt/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Design",
+    "imageUrl": "https://picsum.photos/seed/iLq6L2sAP2/640/480",
+    "color": "rgb(184, 184, 200)"
+  },
+  {
+    "name": "Fashion & Beauty",
+    "imageUrl": "https://picsum.photos/seed/9nzckBz/640/480",
+    "color": "rgb(64, 160, 96)"
+  },
+  {
+    "name": "Food",
+    "imageUrl": "https://picsum.photos/seed/ifj6Z7v3u0/640/480",
+    "color": "rgb(204, 146, 157)"
+  },
+  {
+    "name": "Performing Arts",
+    "imageUrl": "https://picsum.photos/seed/wnYEDTq4q/640/480",
+    "color": "rgb(204, 88, 77)"
+  },
+  {
+    "name": "Visual Arts",
+    "imageUrl": "https://picsum.photos/seed/xaadBrqS1/640/480",
+    "color": "rgb(0, 101, 204)"
+  },
+  {
+    "name": "Business",
+    "imageUrl": "https://picsum.photos/seed/S9KHJ6hZ/640/480",
+    "color": "rgb(202, 75, 66)"
+  },
+  {
+    "name": "Careers",
+    "imageUrl": "https://picsum.photos/seed/xohbmEs/640/480",
+    "color": "rgb(0, 102, 102)"
+  },
+  {
+    "name": "Entrepreneurship",
+    "imageUrl": "https://picsum.photos/seed/iRfJGBWp4/640/480",
+    "color": "rgb(179, 13, 76)"
+  },
+  {
+    "name": "Investing",
+    "imageUrl": "https://picsum.photos/seed/NhRJTcwMVT/640/480",
+    "color": "rgb(153, 153, 153)"
+  },
+  {
+    "name": "Management",
+    "imageUrl": "https://picsum.photos/seed/mVN6O/640/480",
+    "color": "rgb(174, 89, 171)"
+  },
+  {
+    "name": "Marketing",
+    "imageUrl": "https://picsum.photos/seed/YNlum/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Non-Profit",
+    "imageUrl": "https://picsum.photos/seed/Vv3xkz/640/480",
+    "color": "rgb(60, 146, 132)"
+  },
+  {
+    "name": "Comedy",
+    "imageUrl": "https://picsum.photos/seed/yJS3qCpzr/640/480",
+    "color": "rgb(179, 140, 204)"
+  },
+  {
+    "name": "Comedy Interviews",
+    "imageUrl": "https://picsum.photos/seed/7foP0f85/640/480",
+    "color": "rgb(121, 200, 121)"
+  },
+  {
+    "name": "Improv",
+    "imageUrl": "https://picsum.photos/seed/DS1zkyEt/640/480",
+    "color": "rgb(204, 174, 148)"
+  },
+  {
+    "name": "Stand-Up",
+    "imageUrl": "https://picsum.photos/seed/S2QUv/640/480",
+    "color": "rgb(0, 102, 102)"
+  },
+  {
+    "name": "Education",
+    "imageUrl": "https://picsum.photos/seed/TEuJqsi/640/480",
+    "color": "rgb(172, 152, 172)"
+  },
+  {
+    "name": "Courses",
+    "imageUrl": "https://picsum.photos/seed/lNQCag/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "How To",
+    "imageUrl": "https://picsum.photos/seed/VWdniU/640/480",
+    "color": "rgb(24, 115, 204)"
+  },
+  {
+    "name": "Language Learning",
+    "imageUrl": "https://picsum.photos/seed/LbXkA/640/480",
+    "color": "rgb(117, 89, 175)"
+  },
+  {
+    "name": "Self-Improvement",
+    "imageUrl": "https://picsum.photos/seed/WI49E0srTs/640/480",
+    "color": "rgb(204, 132, 0)"
+  },
+  {
+    "name": "Fiction",
+    "imageUrl": "https://picsum.photos/seed/3UAipL/640/480",
+    "color": "rgb(153, 153, 153)"
+  },
+  {
+    "name": "Comedy Fiction",
+    "imageUrl": "https://picsum.photos/seed/noP9hnrS2/640/480",
+    "color": "rgb(49, 144, 109)"
+  },
+  {
+    "name": "Drama",
+    "imageUrl": "https://picsum.photos/seed/zku4wp/640/480",
+    "color": "rgb(110, 34, 180)"
+  },
+  {
+    "name": "Science Fiction",
+    "imageUrl": "https://picsum.photos/seed/d5L1dj/640/480",
+    "color": "rgb(204, 128, 97)"
+  },
+  {
+    "name": "Government",
+    "imageUrl": "https://picsum.photos/seed/R2dQjk3DR/640/480",
+    "color": "rgb(20, 20, 89)"
+  },
+  {
+    "name": "History",
+    "imageUrl": "https://picsum.photos/seed/Zg5ys/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Health & Fitness",
+    "imageUrl": "https://picsum.photos/seed/cclBy/640/480",
+    "color": "rgb(204, 84, 144)"
+  },
+  {
+    "name": "Alternative Health",
+    "imageUrl": "https://picsum.photos/seed/64Cl6e0/640/480",
+    "color": "rgb(0, 102, 0)"
+  },
+  {
+    "name": "Fitness",
+    "imageUrl": "https://picsum.photos/seed/6aiHi31j5/640/480",
+    "color": "rgb(101, 204, 169)"
+  },
+  {
+    "name": "Medicine",
+    "imageUrl": "https://picsum.photos/seed/AaI4c/640/480",
+    "color": "rgb(132, 33, 33)"
+  },
+  {
+    "name": "Mental Health",
+    "imageUrl": "https://picsum.photos/seed/LyUSX25xi7/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Nutrition",
+    "imageUrl": "https://picsum.photos/seed/rGMbh3z/640/480",
+    "color": "rgb(204, 55, 0)"
+  },
+  {
+    "name": "Sexuality",
+    "imageUrl": "https://picsum.photos/seed/7vgFkHFv/640/480",
+    "color": "rgb(204, 153, 162)"
+  },
+  {
+    "name": "Kids & Family",
+    "imageUrl": "https://picsum.photos/seed/1bvnZrw/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Education for Kids",
+    "imageUrl": "https://picsum.photos/seed/a5imCt/640/480",
+    "color": "rgb(60, 0, 104)"
+  },
+  {
+    "name": "Parenting",
+    "imageUrl": "https://picsum.photos/seed/Kp9rQS9/640/480",
+    "color": "rgb(168, 84, 24)"
+  },
+  {
+    "name": "Pets & Animals",
+    "imageUrl": "https://picsum.photos/seed/IWlGYOT/640/480",
+    "color": "rgb(168, 144, 112)"
+  },
+  {
+    "name": "Stories for Kids",
+    "imageUrl": "https://picsum.photos/seed/dK5bgVgM/640/480",
+    "color": "rgb(108, 164, 188)"
+  },
+  {
+    "name": "Leisure",
+    "imageUrl": "https://picsum.photos/seed/Cq4Xn/640/480",
+    "color": "rgb(204, 132, 0)"
+  },
+  {
+    "name": "Animation & Manga",
+    "imageUrl": "https://picsum.photos/seed/zT7mINVTOn/640/480",
+    "color": "rgb(153, 153, 153)"
+  },
+  {
+    "name": "Automotive",
+    "imageUrl": "https://picsum.photos/seed/s7Cl7NnfR/640/480",
+    "color": "rgb(102, 102, 0)"
+  },
+  {
+    "name": "Aviation",
+    "imageUrl": "https://picsum.photos/seed/DNuTg9F/640/480",
+    "color": "rgb(176, 16, 48)"
+  },
+  {
+    "name": "Crafts",
+    "imageUrl": "https://picsum.photos/seed/IZMfL/640/480",
+    "color": "rgb(0, 164, 167)"
+  },
+  {
+    "name": "Games",
+    "imageUrl": "https://picsum.photos/seed/N84Fu6jEx/640/480",
+    "color": "rgb(20, 20, 89)"
+  },
+  {
+    "name": "Hobbies",
+    "imageUrl": "https://picsum.photos/seed/ygleS/640/480",
+    "color": "rgb(204, 182, 180)"
+  },
+  {
+    "name": "Home & Garden",
+    "imageUrl": "https://picsum.photos/seed/qzllrUymxW/640/480",
+    "color": "rgb(192, 204, 204)"
+  },
+  {
+    "name": "Video Games",
+    "imageUrl": "https://picsum.photos/seed/JG9FgPa3c/640/480",
+    "color": "rgb(192, 198, 204)"
+  },
+  {
+    "name": "Music",
+    "imageUrl": "https://picsum.photos/seed/1ksd45yGoV/640/480",
+    "color": "rgb(122, 40, 163)"
+  },
+  {
+    "name": "Music Commentary",
+    "imageUrl": "https://picsum.photos/seed/Dc47gTY/640/480",
+    "color": "rgb(204, 101, 64)"
+  },
+  {
+    "name": "Music History",
+    "imageUrl": "https://picsum.photos/seed/ZkpEC/640/480",
+    "color": "rgb(111, 0, 0)"
+  },
+  {
+    "name": "Music Interviews",
+    "imageUrl": "https://picsum.photos/seed/Ya1uSmzJfW/640/480",
+    "color": "rgb(25, 142, 136)"
+  },
+  {
+    "name": "News",
+    "imageUrl": "https://picsum.photos/seed/smCQFGuWHF/640/480",
+    "color": "rgb(0, 200, 123)"
+  },
+  {
+    "name": "Business News",
+    "imageUrl": "https://picsum.photos/seed/vM6VDT/640/480",
+    "color": "rgb(56, 104, 144)"
+  },
+  {
+    "name": "Daily News",
+    "imageUrl": "https://picsum.photos/seed/lkvxU/640/480",
+    "color": "rgb(204, 16, 117)"
+  },
+  {
+    "name": "Entertainment News",
+    "imageUrl": "https://picsum.photos/seed/veCiUen/640/480",
+    "color": "rgb(0, 204, 0)"
+  },
+  {
+    "name": "News Commentary",
+    "imageUrl": "https://picsum.photos/seed/Rrnsfkgw1T/640/480",
+    "color": "rgb(99, 201, 0)"
+  },
+  {
+    "name": "Politics",
+    "imageUrl": "https://picsum.photos/seed/YN7Zgu1/640/480",
+    "color": "rgb(151, 146, 85)"
+  },
+  {
+    "name": "Sports News",
+    "imageUrl": "https://picsum.photos/seed/8yo02GJLB/640/480",
+    "color": "rgb(118, 0, 168)"
+  },
+  {
+    "name": "Tech News",
+    "imageUrl": "https://picsum.photos/seed/QI2fs6dLbz/640/480",
+    "color": "rgb(204, 112, 0)"
+  },
+  {
+    "name": "Religion & Spirituality",
+    "imageUrl": "https://picsum.photos/seed/ZMdznHBM/640/480",
+    "color": "rgb(68, 85, 37)"
+  },
+  {
+    "name": "Buddhism",
+    "imageUrl": "https://picsum.photos/seed/rghGUS/640/480",
+    "color": "rgb(204, 79, 56)"
+  },
+  {
+    "name": "Christianity",
+    "imageUrl": "https://picsum.photos/seed/HF7hhf/640/480",
+    "color": "rgb(111, 0, 111)"
+  },
+  {
+    "name": "Hinduism",
+    "imageUrl": "https://picsum.photos/seed/tJYmCQu/640/480",
+    "color": "rgb(52, 84, 180)"
+  },
+  {
+    "name": "Islam",
+    "imageUrl": "https://picsum.photos/seed/ZuVmF1tk/640/480",
+    "color": "rgb(140, 156, 177)"
+  },
+  {
+    "name": "Judaism",
+    "imageUrl": "https://picsum.photos/seed/iP8EQJNP/640/480",
+    "color": "rgb(204, 177, 138)"
+  },
+  {
+    "name": "Religion",
+    "imageUrl": "https://picsum.photos/seed/30MqONHcoS/640/480",
+    "color": "rgb(37, 63, 63)"
+  },
+  {
+    "name": "Spirituality",
+    "imageUrl": "https://picsum.photos/seed/mxzOiF8/640/480",
+    "color": "rgb(204, 204, 0)"
+  },
+  {
+    "name": "Science",
+    "imageUrl": "https://picsum.photos/seed/lra8D8q/640/480",
+    "color": "rgb(110, 34, 180)"
+  },
+  {
+    "name": "Astronomy",
+    "imageUrl": "https://picsum.photos/seed/ITy7lIkU/640/480",
+    "color": "rgb(102, 102, 102)"
+  },
+  {
+    "name": "Chemistry",
+    "imageUrl": "https://picsum.photos/seed/3rajyq/640/480",
+    "color": "rgb(196, 196, 176)"
+  },
+  {
+    "name": "Earth Sciences",
+    "imageUrl": "https://picsum.photos/seed/P5N4v/640/480",
+    "color": "rgb(57, 48, 111)"
+  },
+  {
+    "name": "Life Sciences",
+    "imageUrl": "https://picsum.photos/seed/njEzOvg/640/480",
+    "color": "rgb(0, 204, 101)"
+  },
+  {
+    "name": "Mathematics",
+    "imageUrl": "https://picsum.photos/seed/1J2RRdLVLw/640/480",
+    "color": "rgb(84, 72, 164)"
+  },
+  {
+    "name": "Natural Sciences",
+    "imageUrl": "https://picsum.photos/seed/TquuI648MS/640/480",
+    "color": "rgb(168, 168, 168)"
+  },
+  {
+    "name": "Nature",
+    "imageUrl": "https://picsum.photos/seed/VEUBZ2fJLv/640/480",
+    "color": "rgb(111, 55, 15)"
+  },
+  {
+    "name": "Physics",
+    "imageUrl": "https://picsum.photos/seed/dXX3sARJr/640/480",
+    "color": "rgb(68, 85, 37)"
+  },
+  {
+    "name": "Social Sciences",
+    "imageUrl": "https://picsum.photos/seed/eaCPngfi/640/480",
+    "color": "rgb(0, 204, 204)"
+  },
+  {
+    "name": "Society & Culture",
+    "imageUrl": "https://picsum.photos/seed/E6m5VWO1/640/480",
+    "color": "rgb(98, 83, 190)"
+  },
+  {
+    "name": "Documentary",
+    "imageUrl": "https://picsum.photos/seed/kjgn8c8I/640/480",
+    "color": "rgb(196, 204, 200)"
+  },
+  {
+    "name": "Personal Journals",
+    "imageUrl": "https://picsum.photos/seed/UDIeY2fh9/640/480",
+    "color": "rgb(204, 182, 144)"
+  },
+  {
+    "name": "Philosophy",
+    "imageUrl": "https://picsum.photos/seed/oKZXFq/640/480",
+    "color": "rgb(36, 111, 69)"
+  },
+  {
+    "name": "Places & Travel",
+    "imageUrl": "https://picsum.photos/seed/V3KerlybNV/640/480",
+    "color": "rgb(24, 115, 204)"
+  },
+  {
+    "name": "Relationships",
+    "imageUrl": "https://picsum.photos/seed/iBYJE/640/480",
+    "color": "rgb(101, 204, 169)"
+  },
+  {
+    "name": "Sports",
+    "imageUrl": "https://picsum.photos/seed/FDd6dFGZ/640/480",
+    "color": "rgb(172, 152, 172)"
+  },
+  {
+    "name": "Baseball",
+    "imageUrl": "https://picsum.photos/seed/cPfcojGT/640/480",
+    "color": "rgb(102, 0, 0)"
+  },
+  {
+    "name": "Basketball",
+    "imageUrl": "https://picsum.photos/seed/d2NoAD/640/480",
+    "color": "rgb(140, 179, 184)"
+  },
+  {
+    "name": "Cricket",
+    "imageUrl": "https://picsum.photos/seed/28dd5kcp/640/480",
+    "color": "rgb(111, 55, 15)"
+  },
+  {
+    "name": "Fantasy Sports",
+    "imageUrl": "https://picsum.photos/seed/lfcYe0lM/640/480",
+    "color": "rgb(192, 102, 102)"
+  },
+  {
+    "name": "Football",
+    "imageUrl": "https://picsum.photos/seed/Zh7YZ2/640/480",
+    "color": "rgb(40, 164, 40)"
+  },
+  {
+    "name": "Golf",
+    "imageUrl": "https://picsum.photos/seed/qwHkErJ/640/480",
+    "color": "rgb(57, 48, 111)"
+  },
+  {
+    "name": "Hockey",
+    "imageUrl": "https://picsum.photos/seed/SDlNuqD/640/480",
+    "color": "rgb(195, 131, 76)"
+  },
+  {
+    "name": "Rugby",
+    "imageUrl": "https://picsum.photos/seed/uNhVTPNRmO/640/480",
+    "color": "rgb(122, 40, 163)"
+  },
+  {
+    "name": "Running",
+    "imageUrl": "https://picsum.photos/seed/hSqn9/640/480",
+    "color": "rgb(204, 172, 0)"
+  },
+  {
+    "name": "Soccer",
+    "imageUrl": "https://picsum.photos/seed/uar1kqhYq/640/480",
+    "color": "rgb(0, 102, 102)"
+  },
+  {
+    "name": "Swimming",
+    "imageUrl": "https://picsum.photos/seed/34JgjoPMgp/640/480",
+    "color": "rgb(200, 102, 91)"
+  },
+  {
+    "name": "Tennis",
+    "imageUrl": "https://picsum.photos/seed/SCvZXlgIUg/640/480",
+    "color": "rgb(102, 0, 102)"
+  },
+  {
+    "name": "Volleyball",
+    "imageUrl": "https://picsum.photos/seed/3uMpAO/640/480",
+    "color": "rgb(48, 143, 90)"
+  },
+  {
+    "name": "Wilderness",
+    "imageUrl": "https://picsum.photos/seed/Cprluu/640/480",
+    "color": "rgb(176, 128, 176)"
+  },
+  {
+    "name": "Wrestling",
+    "imageUrl": "https://picsum.photos/seed/eJVOufqj6i/640/480",
+    "color": "rgb(132, 33, 33)"
+  },
+  {
+    "name": "Technology",
+    "imageUrl": "https://picsum.photos/seed/vKuHRI6hMr/640/480",
+    "color": "rgb(176, 176, 176)"
+  },
+  {
+    "name": "True Crime",
+    "imageUrl": "https://picsum.photos/seed/gFbXL/640/480",
+    "color": "rgb(57, 167, 163)"
+  },
+  {
+    "name": "TV & Film",
+    "imageUrl": "https://picsum.photos/seed/Wn6qG/640/480",
+    "color": "rgb(122, 40, 163)"
+  },
+  {
+    "name": "After Shows",
+    "imageUrl": "https://picsum.photos/seed/d9tLW/640/480",
+    "color": "rgb(164, 73, 73)"
+  },
+  {
+    "name": "Film History",
+    "imageUrl": "https://picsum.photos/seed/Umuft/640/480",
+    "color": "rgb(192, 184, 112)"
+  },
+  {
+    "name": "Film Interviews",
+    "imageUrl": "https://picsum.photos/seed/Tyrfvp/640/480",
+    "color": "rgb(25, 142, 136)"
+  },
+  {
+    "name": "Film Reviews",
+    "imageUrl": "https://picsum.photos/seed/SEC2Zjtzc/640/480",
+    "color": "rgb(95, 108, 122)"
+  },
+  {
+    "name": "TV Reviews",
+    "imageUrl": "https://picsum.photos/seed/tWeOl/640/480",
+    "color": "rgb(111, 0, 111)"
+  }
 ]

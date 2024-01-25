@@ -2,7 +2,7 @@ import { Box, Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { RoundedButton } from "@/components";
-import { SeriesCreationSteps } from "@/common/enums";
+import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
 import useHelper from "./useHelper";
 import { ImageForm } from "./components/ImageForm";
@@ -19,11 +19,11 @@ export default function PodcasterCreateSeriesDialog({
 }: Props) {
   const {
     step,
-    image,
     errors,
     control,
     classes,
     fileRef,
+    coverUrl,
     categories,
     handleNextStep,
     handleImageSubmit,
@@ -31,7 +31,7 @@ export default function PodcasterCreateSeriesDialog({
 
   const renderStep = () => {
     switch (step) {
-      case SeriesCreationSteps.INPUT_SERIES_DETAILS:
+      case PODCAST_CREATION_STEPS.INPUT_DETAILS:
         return (
           <EditSeriesDetail
             errors={errors}
@@ -40,16 +40,16 @@ export default function PodcasterCreateSeriesDialog({
             categories={categories}
           />
         );
-      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG:
-      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION:
+      case PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG:
+      case PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE:
         return (
           <ImageForm
             title={
-              step === SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG
+              step === PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG
                 ? "Choose your cover art"
                 : "Review your photo"
             }
-            image={image}
+            image={coverUrl}
             classes={classes}
           />
         );
@@ -61,13 +61,13 @@ export default function PodcasterCreateSeriesDialog({
 
   const renderButtonText = () => {
     switch (step) {
-      case SeriesCreationSteps.INPUT_SERIES_DETAILS:
+      case PODCAST_CREATION_STEPS.INPUT_DETAILS:
         return "Continue";
 
-      case SeriesCreationSteps.UPLOAD_SERIES_COVER_IMG:
+      case PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG:
         return "Upload an image";
 
-      case SeriesCreationSteps.CONFIRM_DETAILS_AND_CREATION:
+      case PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE:
         return "Continue";
 
       default:

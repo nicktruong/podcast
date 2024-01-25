@@ -11,6 +11,6 @@ export const routes = {
   categoriesSelection: "/interests-categories-selections",
 
   // podcaster routes
-  pod: "/pod",
-  podDashboard: "/pod/dashboard",
+  podcaster: "/podcaster",
+  podcasterDashboard: "/podcaster/dashboard",
 };

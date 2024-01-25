@@ -9,8 +9,6 @@ const Category = () => {
   const { classes, sortBy, categoriesSeries, handleSelectSortBy } =
     usePrepare();
 
-  console.log(categoriesSeries);
-
   return (
     <Box className={classes.categoryRoot}>
       <Box className={classes.categoryContent}>

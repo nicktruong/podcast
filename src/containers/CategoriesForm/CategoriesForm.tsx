@@ -26,7 +26,7 @@ export default function CategoriesForm({
     <>
       <Box className="sm:pl-16 sm:pr-4 mt-4">
         <Box className={classes.categoriesContainer}>
-          {categories.categories.map((category) => {
+          {categories.map((category) => {
             const isChosen = chosenCategories.includes(category.name);
 
             return (

@@ -1,20 +1,18 @@
-import { Timestamp, doc, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
+
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
 import type { User } from "@/common/interfaces";
 
-export const getUserInfo = async (uid: string) => {
-  const ref = doc(db, "users", uid);
-  const docSnap = await getDoc(ref);
+export const getUserInfo = async (uid: string): Promise<User | null> => {
+  const userRef = doc(db, COLLECTIONS.USERS, uid);
+  const userSnapshot = await getDoc(userRef);
 
-  if (!docSnap.exists()) {
+  if (!userSnapshot.exists()) {
     return null;
   }
 
-  const user = docSnap.data();
-
-  user.dob = (user.dob as Timestamp)?.toDate()?.toISOString();
-
-  return user as User;
+  return userSnapshot.data() as User;
 };

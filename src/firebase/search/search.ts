@@ -2,23 +2,27 @@ import {
   doc,
   query,
   where,
+  getDoc,
   getDocs,
   collection,
-  documentId,
 } from "firebase/firestore";
 
-import { User } from "@/common/interfaces";
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
+import { User, Podcast, SearchResult } from "@/common/interfaces";
 
 import { db } from "../init";
-import { downloadPhotoFromStorage } from "../storage/downloadPhotoFromStorage";
+import { downloadFileFromStorage } from "../storage";
+// import { downloadFileFromStorage } from "../storage";
 
-export const search = async (searchText: string) => {
+// TODO: create keywords 5 characters ignore punctuations
+export const search = async (searchText: string): Promise<SearchResult> => {
   if (!searchText) {
-    return { podcasters: [], series: [] };
+    return { podcasters: [], podcasts: [] };
   }
 
-  const podcastersRef = collection(db, Collections.USERS);
+  // Podcasters
+  const podcastersRef = collection(db, COLLECTIONS.USERS);
+
   const podcastersSnapshot = await getDocs(
     query(
       podcastersRef,
@@ -27,127 +31,51 @@ export const search = async (searchText: string) => {
     )
   );
 
-  const podcasters = podcastersSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    const dob = data.dob?.toDate().toISOString();
+  const podcasters = podcastersSnapshot.docs.map(
+    (doc) => ({ id: doc.id, ...doc.data() }) as User
+  );
 
-    return { ...data, id: doc.id, dob } as {
-      id: string;
-      dob: string;
-      name: string;
-      photoURL: string;
-    };
-  });
+  // Podcasts
+  const podcastRef = collection(db, COLLECTIONS.PODCASTS);
 
-  const seriesRef = collection(db, Collections.PODCAST_SERIES);
-  const seriesSnapshot = await getDocs(
+  const podcastSnapshot = await getDocs(
     query(
-      seriesRef,
+      podcastRef,
       where("title", ">=", searchText),
       where("title", "<=", searchText + "\uf8ff")
     )
   );
-  const series = seriesSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    const createdAt = data.createdAt.toDate().toISOString();
-    const updatedAt = data.updatedAt.toDate().toISOString();
 
-    return { ...data, id: doc.id, createdAt, updatedAt } as {
-      id: string;
-      title: string;
-      author: string;
-      coverUrl: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-  });
+  const podcasts = await Promise.all(
+    podcastSnapshot.docs.map(async (doc) => {
+      const podcast = { id: doc.id, ...doc.data() } as Podcast;
 
-  let returnSeries: {
-    author: string;
-    id: string;
-    title: string;
-    coverUrl: string;
-    createdAt: string;
-    updatedAt: string;
-  }[] = [];
+      if (!podcast.coverUrl.startsWith("https")) {
+        podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+      }
 
-  if (series.length) {
-    const qCreatorsSeries = query(
-      collection(db, Collections.CREATORS_PODCAST_SERIES),
-      where(
-        "seriesId",
-        "in",
-        series.map(({ id }) => doc(db, Collections.PODCAST_SERIES, id))
-      )
-    );
+      return podcast;
+    })
+  );
 
-    const creatorsSeriesSnapshot = await getDocs(qCreatorsSeries);
-
-    const creatorsSeries = creatorsSeriesSnapshot.docs.map((doc) => {
-      const data = doc.data();
-
-      return { creatorId: data.creatorId, seriesId: data.seriesId };
-    });
-
-    if (creatorsSeries.length) {
-      const qCreators = query(
-        collection(db, Collections.USERS),
-        where(
-          documentId(),
-          "in",
-          creatorsSeries.map((ele) => ele.creatorId)
-        )
+  // Get author name
+  const podcastsWithAuthors = await Promise.all(
+    podcasts.map(async (podcast) => {
+      const authorDoc = await getDoc(
+        doc(db, COLLECTIONS.USERS, podcast.authorId)
       );
 
-      const creatorsSnapshot = await getDocs(qCreators);
+      const author = { id: authorDoc.id, ...authorDoc.data() } as User;
 
-      const creators = creatorsSnapshot.docs.map(
-        (doc) =>
-          ({
-            ...doc.data(),
-            id: doc.id,
-            dob: doc.data().dob.toDate().toISOString(),
-          }) as User
-      );
-
-      const images = await Promise.all(
-        series.map(async (series) => {
-          if (!series.coverUrl.startsWith("https")) {
-            const url = await downloadPhotoFromStorage(series.coverUrl);
-
-            return url;
-          }
-
-          return series.coverUrl;
-        })
-      );
-
-      series.forEach((series, index) => {
-        series.coverUrl = images[index];
-      });
-
-      returnSeries = series.map((series) => ({
-        ...series,
-        author:
-          creators.find((creator) => {
-            const creatorSeries = creatorsSeries.find((creatorSeries) => {
-              return (
-                creatorSeries.seriesId.path ===
-                doc(db, Collections.PODCAST_SERIES, series.id).path
-              );
-            });
-
-            return (
-              creatorSeries?.creatorId.path ===
-              doc(db, Collections.USERS, creator.id).path
-            );
-          })?.name ?? "",
-      }));
-    }
-  }
+      return {
+        ...podcast,
+        author: author.name,
+      };
+    })
+  );
 
   return {
     podcasters,
-    series: returnSeries,
+    podcasts: podcastsWithAuthors,
   };
 };

@@ -1,24 +1,37 @@
-import { Podcast } from "./Podcast";
 import { User } from "./User";
+import { Episode } from "./Podcast";
 
-export interface PodcastSeries {
+export interface Podcast {
   id: string;
   title: string;
-  rating: number;
+  random: string;
+  authorId: string;
   category: string;
-  coverUrl: string; // ref or https
-  rateCount: number;
-  playCount: number;
+  coverUrl: string;
   createdAt: string;
+  playCount: number;
+  rateCount: number;
   updatedAt: string;
   description: string;
   audienceSize: number;
+  rating: null | number;
 }
 
-export interface PodcastSeriesWithAuthor extends PodcastSeries {
-  author?: User;
+export interface PodcastBasicInfo {
+  title: string;
+  category: string;
+  description: string;
 }
 
-export interface PodcastSeriesDetail extends PodcastSeriesWithAuthor {
-  podcasts: Podcast[];
+export interface PodcastCreationData extends PodcastBasicInfo {
+  authorId: string;
+  coverUrl: string;
+}
+
+export interface PopulatedPodcast extends Podcast {
+  author: User;
+}
+
+export interface PodcastDetail extends PopulatedPodcast {
+  podcasts: Episode[];
 }

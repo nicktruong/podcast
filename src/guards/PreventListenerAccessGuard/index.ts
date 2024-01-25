@@ -1,1 +1,1 @@
-export { default as PreventListenerAccessGuard } from "./PreventListenerAccessGuard";
+export { default } from "./PreventListenerAccessGuard";

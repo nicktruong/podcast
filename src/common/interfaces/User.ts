@@ -1,19 +1,17 @@
-import { Roles, Genders } from "../enums";
-
-export interface UserFirebase {
-  email: string;
-  photoURL: string;
-  emailVerified: boolean;
-}
+import { ROLES, GENDERS } from "@/common/enums";
 
 export interface User {
   id: string;
-  dob: string; // ISOString
+  dob: string;
   name: string;
-  roles: Roles[];
-  gender: Genders;
+  email: string;
+  roles: ROLES[];
+  gender: GENDERS;
+  photoURL: string;
   history: string[];
+  createdAt: string;
+  updatedAt: string;
+  emailVerified: boolean;
+  episodeCount: null | number;
   categoriesOfInterest: string[];
 }
-
-export type UserInfo = UserFirebase & User;

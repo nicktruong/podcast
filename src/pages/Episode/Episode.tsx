@@ -3,12 +3,12 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { format } from "date-fns";
 import {
-  Box,
-  Menu,
-  IconButton,
-  MenuItem,
   Tab,
+  Box,
   Tabs,
+  Menu,
+  MenuItem,
+  IconButton,
   Typography,
 } from "@mui/material";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -16,9 +16,9 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import { usePrepare } from "./usePrepare";
 
 interface TabPanelProps {
-  children?: React.ReactNode;
   index: number;
   value: number;
+  children?: React.ReactNode;
 }
 
 const CustomTabPanel = (props: TabPanelProps) => {
@@ -53,6 +53,7 @@ const a11yProps = (index: number) => {
 
 const Episode = () => {
   const {
+    userId,
     classes,
     tabIndex,
     playlists,
@@ -103,15 +104,17 @@ const Episode = () => {
             onClose={handleActionMenuClose}
           >
             <MenuItem className={classes.actionMenuItem}>
-              <Box>
-                <Box className={classes.actionMenuItemContent}>
-                  <AddIcon className={classes.actionMenuItemIcon} />
-                  <Typography className={classes.actionMenuItemText}>
-                    Add to playlist
-                  </Typography>
-                  <ArrowRightIcon className={classes.actionMenuItemEndIcon} />
+              {userId && (
+                <Box>
+                  <Box className={classes.actionMenuItemContent}>
+                    <AddIcon className={classes.actionMenuItemIcon} />
+                    <Typography className={classes.actionMenuItemText}>
+                      Add to playlist
+                    </Typography>
+                    <ArrowRightIcon className={classes.actionMenuItemEndIcon} />
+                  </Box>
                 </Box>
-              </Box>
+              )}
 
               <Box className={classes.nestedMenu}>
                 <Box

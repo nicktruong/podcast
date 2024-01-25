@@ -1,6 +1,6 @@
-import { collection, addDoc, setDoc, doc, Timestamp } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -11,20 +11,16 @@ import type { UserCreationData } from "@/common/interfaces";
 // TODO: Add user avatar
 export const createUserDocument = async (user: UserCreationData) => {
   const { gender, uid, name, dob, role, categoriesOfInterest } = user;
-  let timestampDob: Timestamp | undefined;
-
-  if (dob) {
-    timestampDob = Timestamp.fromDate(dob);
-  }
 
   const userObj = {
     name,
+    history: [],
     roles: [role],
     categoriesOfInterest,
     gender: gender ?? null,
-    dob: timestampDob ?? null,
+    dob: dob?.toISOString() ?? null,
     photoURL: user.photoURL ?? null,
-    searchKeywords: name.toLowerCase().split(" "),
+    // searchKeywords: name.toLowerCase().split(" "),
   };
 
   if (uid) {
@@ -34,8 +30,8 @@ export const createUserDocument = async (user: UserCreationData) => {
       return;
     }
 
-    await setDoc(doc(db, Collections.USERS, uid), userObj);
+    await setDoc(doc(db, COLLECTIONS.USERS, uid), userObj);
   } else {
-    await addDoc(collection(db, Collections.USERS), userObj);
+    await addDoc(collection(db, COLLECTIONS.USERS), userObj);
   }
 };

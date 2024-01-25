@@ -1,1 +1,1 @@
-export { default as PreventLoggedInAccessGuard } from "./PreventLoggedInAccessGuard";
+export { default } from "./PreventLoggedInAccessGuard";

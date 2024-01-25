@@ -1,11 +1,17 @@
-import { Duration, intervalToDuration } from "date-fns";
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { intervalToDuration } from "date-fns";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { AsyncThunkConfig } from "@/hooks/redux";
-import { downloadAudioFromStorage, updatePlayCount } from "@/firebase";
+import { downloadFileFromStorage, updatePlayCount } from "@/firebase";
 
 import { addHistoryAction } from "../history";
-import { selectSeriesDetail } from "../details";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
+
+import {
+  SLICE_NAME,
+  initialState,
+  DOWNLOAD_AND_PLAY_AUDIO_ACTION,
+  UPDATE_AUDIO_PLAYED_COUNT_ACTION,
+} from "./constants";
 
 import type {
   DownloadAndPlayAudioParameters,
@@ -13,69 +19,39 @@ import type {
 } from "./interfaces";
 import type { RootState } from "@/store";
 
-interface AudioState {
-  title: string;
-  author: string;
-  coverUrl: string;
-  audioUrl: string;
-  seriesId: string;
-  podcastId: string;
-  episodeId: string;
-  audioDuration: Duration;
-  durationRemain: Duration; // durationRemain = audioDuration - passedDuration
-  passedDuration: Duration;
-  playing: boolean;
-  downloaded: boolean;
-  loadingAudio: boolean;
-  durationInSeconds: number;
-  passedTimeInSeconds: number;
-}
+export const downloadAndPlayAudio = createAppAsyncThunk(
+  DOWNLOAD_AND_PLAY_AUDIO_ACTION,
+  async (
+    {
+      title,
+      author,
+      coverUrl,
+      podcastId,
+      episodeId,
+      pathToFile,
+    }: DownloadAndPlayAudioParameters,
+    thunkApi
+  ): Promise<DownloadAndPlayAudioReturnType | undefined> => {
+    const audioUrl = await downloadFileFromStorage(pathToFile);
 
-const initialState: AudioState = {
-  title: "",
-  author: "",
-  coverUrl: "",
-  audioUrl: "",
-  seriesId: "",
-  podcastId: "",
-  episodeId: "",
-  audioDuration: {},
-  durationRemain: {},
-  passedDuration: {},
-  playing: false,
-  downloaded: false,
-  loadingAudio: false,
-  durationInSeconds: 0,
-  passedTimeInSeconds: 0,
-};
+    // TODO: dispatch to history thunk
+    await thunkApi.dispatch(addHistoryAction(podcastId));
 
-export const updateAudioPlayedCount = createAsyncThunk<
-  void,
-  void,
-  AsyncThunkConfig
->("audio/updateAudioPlayedCount", async (_, thunkApi) => {
-  const { podcastId, seriesId } = selectAudioState(thunkApi.getState());
+    return { title, author, coverUrl, podcastId, episodeId, audioUrl };
+  }
+);
 
-  await updatePlayCount({ podcastId, seriesId });
-});
+export const updateAudioPlayedCount = createAppAsyncThunk(
+  UPDATE_AUDIO_PLAYED_COUNT_ACTION,
+  async (_, thunkApi) => {
+    const { podcastId, episodeId } = selectAudioState(thunkApi.getState());
 
-export const downloadAndPlayAudio = createAsyncThunk<
-  DownloadAndPlayAudioReturnType,
-  DownloadAndPlayAudioParameters,
-  AsyncThunkConfig
->("audio/downloadAndPlayAudio", async ({ episodeId, pathToFile }, thunkApi) => {
-  const audioUrl = await downloadAudioFromStorage(pathToFile);
-
-  const seriesDetail = selectSeriesDetail(thunkApi.getState());
-
-  // TODO: dispatch to history thunk
-  thunkApi.dispatch(addHistoryAction({ seriesDetail }));
-
-  return { episodeId, audioUrl, seriesDetail };
-});
+    await updatePlayCount({ podcastId, episodeId });
+  }
+);
 
 export const audioSlice = createSlice({
-  name: "audio",
+  name: SLICE_NAME,
   initialState,
   reducers: {
     playAudio: (state) => {
@@ -97,6 +73,10 @@ export const audioSlice = createSlice({
         start: 0,
         end: (state.durationInSeconds - action.payload) * 1000,
       });
+
+      if (action.payload === state.durationInSeconds) {
+        state.playing = false;
+      }
     },
     setDurationInSeconds: (state, action: PayloadAction<number>) => {
       state.durationInSeconds = action.payload;
@@ -112,21 +92,15 @@ export const audioSlice = createSlice({
         state.downloaded = false;
         state.loadingAudio = true;
       })
-      .addCase(
-        downloadAndPlayAudio.fulfilled,
-        (state, { payload: { episodeId, audioUrl, seriesDetail } }) => {
-          state.playing = true;
-          state.downloaded = true;
-          state.audioUrl = audioUrl;
-          state.loadingAudio = false;
-          state.podcastId = episodeId;
-          state.episodeId = episodeId;
-          state.title = seriesDetail.title;
-          state.seriesId = seriesDetail.id;
-          state.coverUrl = seriesDetail.coverUrl;
-          state.author = seriesDetail.author?.name ?? "";
-        }
-      )
+      .addCase(downloadAndPlayAudio.fulfilled, (state, { payload }) => {
+        return {
+          ...state,
+          ...payload,
+          playing: true,
+          downloaded: true,
+          loadingAudio: false,
+        };
+      })
       .addCase(downloadAndPlayAudio.rejected, (state, { error }) => {
         console.error(error);
         state.downloaded = false;

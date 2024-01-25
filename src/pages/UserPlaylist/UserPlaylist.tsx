@@ -17,11 +17,11 @@ import PodcastsIcon from "@mui/icons-material/Podcasts";
 import { usePrepare } from "./usePrepare";
 
 const UserPlaylist = () => {
-  const { classes, playlistDetail, handleRemovePodcastFromPlaylist } =
+  const { classes, playlist, episodesDetail, handleRemovePodcastFromPlaylist } =
     usePrepare();
 
-  if (!playlistDetail) {
-    return <Box className={classes.content}>404 Not Found!</Box>;
+  if (!episodesDetail.length) {
+    return <Box className={classes.content}>This playlist is empty!</Box>;
   }
 
   return (
@@ -38,60 +38,64 @@ const UserPlaylist = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {playlistDetail?.podcasts.map((podcast) => (
-              <TableRow
-                key={podcast.id}
-                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-              >
-                <TableCell className={classes.firstColumn}>
-                  <PodcastsIcon className={classes.icon} />
-                </TableCell>
-                <TableCell
-                  component="th"
-                  scope="row"
-                  className={classes.titleCell}
+            {episodesDetail.map((episode) => {
+              return (
+                <TableRow
+                  key={episode.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
-                  <Box className={classes.titleContainer}>
-                    <img
-                      className={classes.img}
-                      width="40px"
-                      height="40px"
-                      src={podcast.series.coverUrl}
-                      alt={`${podcast.title} cover photo`}
-                    />
+                  <TableCell className={classes.firstColumn}>
+                    <PodcastsIcon className={classes.icon} />
+                  </TableCell>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    className={classes.titleCell}
+                  >
+                    <Box className={classes.titleContainer}>
+                      <img
+                        className={classes.img}
+                        width="40px"
+                        height="40px"
+                        src={episode.podcast.coverUrl}
+                        alt={`${episode.title} cover photo`}
+                      />
 
-                    <Box>
-                      <Typography className={classes.title}>
-                        {podcast.title}
-                      </Typography>
-                      <Typography className={classes.author}>
-                        {podcast.series.author?.name}
+                      <Box className={classes.titleContent}>
+                        <Typography className={classes.title}>
+                          {episode.title}
+                        </Typography>
+                        <Typography className={classes.author}>
+                          {episode.podcast.author.name}
+                        </Typography>
+                      </Box>
+                    </Box>
+                  </TableCell>
+                  <TableCell>
+                    <Box className={classes.podcastContainer}>
+                      <Typography className={classes.podcastTitle}>
+                        {episode.podcast.title}
                       </Typography>
                     </Box>
-                  </Box>
-                </TableCell>
-                <TableCell>
-                  <Typography className={classes.podcastTitle}>
-                    {podcast.series.title}
-                  </Typography>
-                </TableCell>
-                <TableCell>
-                  {format(new Date(Date.now()), "MMM d, y")}
-                </TableCell>
-                <TableCell>
-                  <IconButton
-                    onClick={() =>
-                      handleRemovePodcastFromPlaylist({
-                        podcastId: podcast.id,
-                        playlistId: playlistDetail.id,
-                      })
-                    }
-                  >
-                    <DeleteIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
+                  </TableCell>
+                  <TableCell>
+                    {format(new Date(Date.now()), "MMM d, y")}
+                  </TableCell>
+                  <TableCell>
+                    <IconButton
+                      onClick={() =>
+                        handleRemovePodcastFromPlaylist({
+                          podcastId: episode.id,
+                          playlistId: playlist?.id ?? "",
+                        })
+                      }
+                    >
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

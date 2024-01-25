@@ -4,23 +4,28 @@ import { createBrowserRouter } from "react-router-dom";
 import { routes } from "@/common/constants";
 import { AuthListener } from "@/containers";
 
+// Guards
+const PreventLoggedInAccessGuard = lazy(
+  () => import("@/guards/PreventLoggedInAccessGuard")
+);
+
+const PreventListenerAccessGuard = lazy(
+  () => import("@/guards/PreventListenerAccessGuard")
+);
+
 const EnsureInterestCategoriesSelectedGuard = lazy(
   () => import("@/guards/EnsureInterestCategoriesSelectedGuard")
 );
-const PreventListenerAccessGuard = lazy(
-  () => import("@/guards/PreventListenerAccessGuard/PreventListenerAccessGuard")
-);
-const PreventLoggedInAccessGuard = lazy(
-  () => import("@/guards/PreventLoggedInAccessGuard/PreventLoggedInAccessGuard")
-);
 
+// layouts
 const PodcastDetailsLayout = lazy(
   () => import("@/layouts/PodcastDetailsLayout")
 );
 const RootLayout = lazy(() => import("@/layouts/RootLayout"));
-const PodDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
 const PodLayout = lazy(() => import("@/layouts/PodcasterDashboardLayout"));
+const PodcasterDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
 
+// pages
 const InterestCategoriesSelection = lazy(
   () => import("@/pages/InterestCategoriesSelection")
 );
@@ -45,14 +50,15 @@ export const router = createBrowserRouter([
             element: <RootLayout />,
             children: [
               {
+                index: true,
+                element: <Home />,
+              },
+              {
                 path: "*",
                 // TODO: Add 404 page
                 element: <div>404</div>,
               },
-              {
-                index: true,
-                element: <Home />,
-              },
+
               {
                 element: <PodcastDetailsLayout />,
                 children: [
@@ -105,15 +111,15 @@ export const router = createBrowserRouter([
 
       // Podcaster
       {
-        path: routes.pod,
+        path: routes.podcaster,
         element: <PodLayout />,
         children: [
           {
             element: <PreventListenerAccessGuard />,
             children: [
               {
-                path: routes.podDashboard,
-                element: <PodDashboard />,
+                path: routes.podcasterDashboard,
+                element: <PodcasterDashboard />,
               },
             ],
           },

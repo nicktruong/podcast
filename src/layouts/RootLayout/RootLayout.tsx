@@ -2,8 +2,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import { SideBar } from "@/components";
-import AudioPlayer from "@/containers/AudioPlayer";
-import UserMenu from "@/containers/UserMenu/UserMenu";
+import { AudioPlayer, UserMenu } from "@/containers";
 
 import { usePrepare } from "./usePrepare";
 

@@ -1,6 +1,6 @@
-import type { UserInfo } from "@/common/interfaces";
+import type { User } from "@/common/interfaces";
 
 export interface UserState {
-  user: UserInfo;
+  user: Partial<User> | null;
   isGettingUser: boolean;
 }

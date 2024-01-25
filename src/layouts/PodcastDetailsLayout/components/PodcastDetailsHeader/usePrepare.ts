@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useAppSelector } from "@/hooks";
 import { selectUser } from "@/store/user";
 import { selectPlaylistDetail } from "@/store/playlists";
-import { selectEpisodeDetail, selectSeriesDetail } from "@/store/details";
+import { selectEpisodeDetail, selectPodcastDetail } from "@/store/details";
 
 import { useStyles } from "./styles";
 
@@ -21,9 +21,11 @@ export const usePrepare = () => {
 
   const user = useAppSelector(selectUser);
 
-  const seriesDetail = useAppSelector(selectSeriesDetail);
+  const podcastDetail = useAppSelector(selectPodcastDetail);
 
-  const episodeDetail = useAppSelector((state) => selectEpisodeDetail(state));
+  const episodeDetail = useAppSelector((state) =>
+    selectEpisodeDetail(state, id ?? "")
+  );
 
   const userPlaylistDetail = useAppSelector((state) =>
     selectPlaylistDetail(state, id ?? "")
@@ -41,16 +43,16 @@ export const usePrepare = () => {
   if (isUserPlaylist && userPlaylistDetail) {
     title = userPlaylistDetail.title;
     coverUrl = userPlaylistDetail.coverUrl;
-    authorName = user.name;
+    authorName = user?.name;
   } else {
     if (isPlaylist) {
-      title = seriesDetail.title;
+      title = podcastDetail?.title;
     } else {
       title = episodeDetail?.title;
     }
 
-    coverUrl = seriesDetail.coverUrl;
-    authorName = seriesDetail.author?.name;
+    coverUrl = podcastDetail?.coverUrl;
+    authorName = podcastDetail?.author?.name;
   }
 
   useEffect(() => {

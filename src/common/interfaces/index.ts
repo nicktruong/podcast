@@ -1,5 +1,6 @@
 export * from "./User";
 export * from "./Rating";
+export * from "./Search";
 export * from "./Podcast";
 export * from "./Category";
 export * from "./Playlist";
@@ -7,8 +8,4 @@ export * from "./LoginData";
 export * from "./RegisterData";
 export * from "./PodcastSeries";
 export * from "./UserCreationData";
-export * from "./CreatorsPodcasts";
-export * from "./SeriesCreationData";
-export * from "./EpisodeCreationData";
-export * from "./PlaylistCreationData";
 export * from "./CreatorsPodcastSeries";

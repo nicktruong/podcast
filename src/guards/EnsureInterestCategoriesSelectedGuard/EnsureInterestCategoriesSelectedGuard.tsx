@@ -5,9 +5,13 @@ import { routes } from "@/common/constants";
 import { usePrepare } from "./usePrepare";
 
 const EnsureInterestCategoriesSelectedGuard = () => {
-  const { userId, userCategoriesOfInterest } = usePrepare();
+  const { userId, fetchingCategories, userCategoriesOfInterest } = usePrepare();
 
-  if (userId && userCategoriesOfInterest.length === 0) {
+  if (fetchingCategories) {
+    return <>Loading...</>;
+  }
+
+  if (userId && !userCategoriesOfInterest?.length) {
     return <Navigate to={routes.categoriesSelection} replace />;
   }
 

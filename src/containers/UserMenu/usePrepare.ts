@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { useLocation } from "react-router-dom";
+import { useDebouncedCallback } from "use-debounce";
 
 import {
   signOut,
@@ -15,7 +15,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 
-const useHelper = () => {
+const usePrepare = () => {
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
@@ -78,4 +78,4 @@ const useHelper = () => {
   };
 };
 
-export default useHelper;
+export default usePrepare;
