@@ -5,7 +5,7 @@ const ColorStepIconRoot = styled("div")<{
 }>(({ theme, ownerState }) => ({
   backgroundColor:
     ownerState.icon === 1
-      ? "#9691ff"
+      ? theme.palette.custom?.purple.light
       : theme.palette.mode === "dark"
         ? theme.palette.grey[700]
         : "#ccc",
@@ -18,11 +18,11 @@ const ColorStepIconRoot = styled("div")<{
   justifyContent: "center",
   alignItems: "center",
   ...(ownerState.active && {
-    backgroundColor: "#9691ff",
+    backgroundColor: theme.palette.custom?.purple.light,
     boxShadow: "0 4px 10px 0 rgba(0,0,0,.25)",
   }),
   ...(ownerState.completed && {
-    backgroundColor: "#9691ff",
+    backgroundColor: theme.palette.custom?.purple.light,
   }),
 }));
 

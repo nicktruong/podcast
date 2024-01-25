@@ -13,6 +13,37 @@ declare module "@mui/material/styles" {
       };
     };
   }
+
+  interface CustomPalette {
+    custom?: {
+      background: {
+        main: string;
+        search: string;
+        gradient: string;
+        nestedMenu: string;
+      };
+      hover: {
+        searchBorder: string;
+        cardBackground: string;
+      };
+      purple: {
+        main: string;
+        light: string;
+        lighter: string;
+      };
+      grey: {
+        main: string;
+        dark: string;
+        light: string;
+        darker: string;
+        lighter: string;
+      };
+    };
+  }
+
+  interface Palette extends CustomPalette {}
+
+  interface PaletteOptions extends CustomPalette {}
 }
 
 const BASE_THEME = {
@@ -49,17 +80,41 @@ export const darkTheme = createTheme({
     mode: "dark",
     primary: {
       main: "#1ed760",
-      light: "#1fdf64",
       dark: "#1fdf64",
+      light: "#1fdf64",
       contrastText: "#000000",
     },
     background: {
-      default: "#000000",
       paper: "#000000",
+      default: "#000000",
     },
     text: {
       primary: "#ffffff",
       secondary: "#a7a7a7",
+    },
+    custom: {
+      background: {
+        main: "#121212",
+        search: "#313131",
+        nestedMenu: "#1f1f1f",
+        gradient: "linear-gradient(to bottom, #222222, #121212)",
+      },
+      hover: {
+        searchBorder: "#4f4f4f",
+        cardBackground: "#282828",
+      },
+      purple: {
+        main: "#554dff",
+        light: "#9691ff",
+        lighter: "#9e99ff",
+      },
+      grey: {
+        main: "#c6c6c6",
+        dark: "#a6a6a6",
+        light: "#dedede",
+        darker: "#898989",
+        lighter: "#eaeaf0",
+      },
     },
   },
 });

@@ -52,11 +52,11 @@ export const useStyles = tss.create(({ theme }) => ({
     marginTop: "8px",
     fontSize: "16px",
     padding: "8px 32px",
-    backgroundColor: "#9691ff",
+    backgroundColor: theme.palette.custom?.purple.light,
 
     "&:hover": {
       border: "none",
-      backgroundColor: "#9e99ff",
+      backgroundColor: theme.palette.custom?.purple.lighter,
     },
   },
   coverArtRoot: {
@@ -67,6 +67,6 @@ export const useStyles = tss.create(({ theme }) => ({
   coverArtPlaceHolder: {
     width: "300px",
     height: "300px",
-    color: "#c6c6c6",
+    color: theme.palette.custom?.grey.main,
   },
 }));

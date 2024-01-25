@@ -33,7 +33,9 @@ export default function UserInfoForm({
         <Typography
           fontSize="14px"
           lineHeight="18px"
-          color="#a6a6a6"
+          sx={(theme) => ({
+            color: theme.palette.custom?.grey.darker,
+          })}
           fontWeight={500}
         >
           This name will appear on your profile
@@ -68,7 +70,9 @@ export default function UserInfoForm({
         <Typography
           fontSize="14px"
           lineHeight="18px"
-          color="#a6a6a6"
+          sx={(theme) => ({
+            color: theme.palette.custom?.grey.darker,
+          })}
           fontWeight={500}
         >
           Why do we need your date of birth? Learn more.
@@ -114,14 +118,17 @@ export default function UserInfoForm({
               render={({ field: { onChange, ...field } }) => {
                 return (
                   <Select
-                    sx={{
+                    sx={(theme) => ({
                       marginTop: "8px",
                       flexGrow: 1,
-                      color: field.value === "" ? "#898989" : "inherit",
+                      color:
+                        field.value === ""
+                          ? theme.palette.custom?.grey.darker
+                          : "inherit",
                       "& .MuiSelect-select": {
                         padding: "8px 14px",
                       },
-                    }}
+                    })}
                     id="month"
                     variant="outlined"
                     error={!!errors.month}
@@ -222,7 +229,9 @@ export default function UserInfoForm({
         <Typography
           fontSize="14px"
           lineHeight="18px"
-          color="#a6a6a6"
+          sx={(theme) => ({
+            color: theme.palette.custom?.grey.darker,
+          })}
           fontWeight={500}
         >
           We use your gender to help personalize our content recommendations and

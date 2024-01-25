@@ -9,12 +9,12 @@ const ColorIconConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "#9691ff",
+      backgroundColor: theme.palette.custom?.purple.light,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      backgroundColor: "#9691ff",
+      backgroundColor: theme.palette.custom?.purple.light,
     },
   },
   [`&.${stepConnectorClasses.root}`]: {
@@ -28,7 +28,9 @@ const ColorIconConnector = styled(StepConnector)(({ theme }) => ({
     border: 0,
     width: 6,
     backgroundColor:
-      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[800]
+        : theme.palette.custom?.grey.lighter,
     borderRadius: 1,
   },
 }));

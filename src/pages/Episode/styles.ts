@@ -75,7 +75,7 @@ export const useStyles = tss
       borderRadius: "4px",
       position: "absolute",
       visibility: "hidden",
-      backgroundColor: "#1f1f1f",
+      backgroundColor: theme.palette.custom?.background.nestedMenu,
       transform: "scale(0.75, 0.5625)",
       boxShadow: "rgba(0, 0, 0, 0.7) 0px 10px 30px",
       transition:
@@ -90,7 +90,7 @@ export const useStyles = tss
       alignItems: "center",
 
       "&:hover": {
-        backgroundColor: "#313131",
+        backgroundColor: theme.palette.custom?.background.search,
       },
     },
     nestedMenuItemIcon: {

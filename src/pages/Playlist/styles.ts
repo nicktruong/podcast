@@ -23,7 +23,7 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
     alignItems: "center",
   },
   episode: {
-    borderTop: "1px solid #2a2a2a",
+    borderTop: "1px solid #282828",
     marginTop: "16px",
     borderRadius: "4px",
     padding: "16px",

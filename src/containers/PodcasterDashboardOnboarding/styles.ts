@@ -19,7 +19,7 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   onboardingContainer: {
     padding: "64px 16px",
-    border: "1px solid #b7b7b7",
+    border: "1px solid #c6c6c6",
     borderRadius: "4px",
     margin: "32px auto",
     maxWidth: "780px",
@@ -37,9 +37,9 @@ export const useStyles = tss.create(({ theme }) => ({
     color: "#000000",
     marginTop: "8px",
     padding: "8px 32px",
-    backgroundColor: "#9691ff",
+    backgroundColor: theme.palette.custom?.purple.light,
     "&:hover": {
-      backgroundColor: "#9e99ff",
+      backgroundColor: theme.palette.custom?.purple.lighter,
     },
   },
   stepContent: {

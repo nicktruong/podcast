@@ -21,7 +21,7 @@ export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
           cursor: "pointer",
           padding: "0 0.4rem",
           "& svg": {
-            color: "#a6a6a6",
+            color: theme.palette.custom?.grey.darker,
           },
           "&:hover": {
             "& svg": {
@@ -38,7 +38,12 @@ export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
       </Box>
 
       <Box sx={{ flex: 1, paddingRight: "1rem" }}>
-        <Typography color="#a6a6a6" fontWeight={500}>
+        <Typography
+          sx={(theme) => ({
+            color: theme.palette.custom?.grey.darker,
+          })}
+          fontWeight={500}
+        >
           Step {activeStep + 1} in {steps.length}
         </Typography>
         <Typography fontWeight={700}>{steps[activeStep]}</Typography>

@@ -21,7 +21,9 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`& .${stepConnectorClasses.line}`]: {
     borderColor:
-      theme.palette.mode === "dark" ? theme.palette.grey[800] : "#eaeaf0",
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[800]
+        : theme.palette.custom?.grey.lighter,
     borderTopWidth: 3,
     borderRadius: 1,
   },

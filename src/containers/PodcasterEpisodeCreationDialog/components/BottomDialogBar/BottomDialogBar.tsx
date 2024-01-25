@@ -81,7 +81,7 @@ export default function BottomDialogBar({
           <Box sx={{ marginTop: "24px" }}>
             <Button
               variant="contained"
-              sx={{
+              sx={(theme) => ({
                 fontWeight: 700,
                 fontSize: "16px",
                 color: "#000000",
@@ -89,12 +89,12 @@ export default function BottomDialogBar({
                 padding: "8px 32px",
                 width: "fit-content",
                 borderRadius: "200px",
-                backgroundColor: "#9691ff",
+                backgroundColor: theme.palette.custom?.purple.light,
                 textTransform: "capitalize",
                 "&:hover": {
-                  backgroundColor: "#9e99ff",
+                  backgroundColor: theme.palette.custom?.purple.lighter,
                 },
-              }}
+              })}
               disabled={step === EpisodeCreationSteps.EDIT_DETAILS}
               onClick={handleStepBack}
             >
@@ -110,7 +110,7 @@ export default function BottomDialogBar({
             step === EpisodeCreationSteps.REVIEW_PUBLISH &&
             podUploadingProgress < 100
           }
-          sx={{
+          sx={(theme) => ({
             fontWeight: 700,
             fontSize: "16px",
             color: "#000000",
@@ -119,12 +119,12 @@ export default function BottomDialogBar({
             padding: "8px 32px",
             width: "fit-content",
             borderRadius: "200px",
-            backgroundColor: "#9691ff",
+            backgroundColor: theme.palette.custom?.purple.light,
             textTransform: "capitalize",
             "&:hover": {
-              backgroundColor: "#9e99ff",
+              backgroundColor: theme.palette.custom?.purple.lighter,
             },
-          }}
+          })}
         >
           {step === EpisodeCreationSteps.EDIT_DETAILS ? "Next" : "Publish"}
         </Button>

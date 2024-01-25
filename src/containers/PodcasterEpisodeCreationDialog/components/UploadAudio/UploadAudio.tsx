@@ -70,7 +70,7 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
               alignItems: "center",
               flexDirection: "column",
               justifyContent: "center",
-              border: "1px dashed #dadada",
+              border: "1px dashed #c6c6c6",
             }}
             {...getRootProps()}
           >

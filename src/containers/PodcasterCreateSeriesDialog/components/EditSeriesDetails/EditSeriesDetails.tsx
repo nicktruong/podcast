@@ -72,7 +72,7 @@ export default function EditSeriesDetails({
               <textarea
                 rows={5}
                 id="description"
-                className="border border-[#c4c4c4] rounded w-full py-[8px] px-[14px]"
+                className="border border-[#c6c6c6] rounded w-full py-[8px] px-[14px]"
                 {...field}
               />
             );

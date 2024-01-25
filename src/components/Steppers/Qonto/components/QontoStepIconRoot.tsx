@@ -2,7 +2,10 @@ import { styled } from "@mui/material/styles";
 
 const QontoStepIconRoot = styled("div")<{ ownerState: { active?: boolean } }>(
   ({ theme, ownerState }) => ({
-    color: theme.palette.mode === "dark" ? theme.palette.grey[700] : "#eaeaf0",
+    color:
+      theme.palette.mode === "dark"
+        ? theme.palette.grey[700]
+        : theme.palette.custom?.grey.lighter,
     display: "flex",
     height: 22,
     alignItems: "center",

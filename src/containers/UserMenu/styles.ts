@@ -1,4 +1,3 @@
-import { lighten } from "@mui/material";
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create(({ theme }) => ({
@@ -36,10 +35,10 @@ export const useStyles = tss.create(({ theme }) => ({
     borderRadius: "200px",
     padding: "16px 16px 16px 36px",
     border: "1px solid transparent",
-    backgroundColor: lighten("#242424", 0.08),
+    backgroundColor: theme.palette.custom?.background.search,
 
     "&:hover": {
-      border: `1px solid ${lighten("#242424", 0.2)}`,
+      border: `1px solid ${theme.palette.custom?.hover.searchBorder}`,
     },
 
     "&:focus": {

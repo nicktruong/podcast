@@ -40,7 +40,9 @@ export default function PasswordForm({
           marginTop="8px"
           fontSize="14px"
           lineHeight="18px"
-          color="#a6a6a6"
+          sx={(theme) => ({
+            color: theme.palette.custom?.grey.darker,
+          })}
           fontWeight={500}
         >
           The password must contain at least 8 characters, 1 number and 1

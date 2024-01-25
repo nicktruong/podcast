@@ -57,11 +57,11 @@ export const useStyles = tss.create(({ theme }) => ({
     padding: "16px",
     cursor: "pointer",
     borderRadius: "8px",
-    background: "#181818",
+    background: theme.palette.custom?.background.main,
     transition: "all 0.2s ease-in",
 
     "&:hover": {
-      background: "#282828",
+      background: theme.palette.custom?.hover.cardBackground,
     },
   },
   resultImg: {

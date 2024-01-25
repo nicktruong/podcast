@@ -29,7 +29,9 @@ export default function UploadPodBreadcrumbs({
                 borderBottom: isActive
                   ? "2px solid #554dff"
                   : "2px solid transparent",
-                color: isActive ? "#554dff" : theme.palette.text.secondary,
+                color: isActive
+                  ? theme.palette.custom?.purple.main
+                  : theme.palette.text.secondary,
                 [theme.breakpoints.up("md")]: {
                   display: "block",
                 },
@@ -41,7 +43,9 @@ export default function UploadPodBreadcrumbs({
             <CircleIcon
               sx={(theme) => ({
                 fontSize: isActive ? "16px" : "12px",
-                color: isActive ? "#554dff" : "#b3b3b3",
+                color: isActive
+                  ? theme.palette.custom?.purple.main
+                  : theme.palette.custom?.grey.main,
                 [theme.breakpoints.up("md")]: {
                   display: "none",
                 },

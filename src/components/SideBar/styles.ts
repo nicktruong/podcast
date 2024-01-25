@@ -11,7 +11,7 @@ export const useStyles = tss
     section: {
       padding: "8px 12px",
       borderRadius: "8px",
-      backgroundColor: "#121212",
+      backgroundColor: theme.palette.custom?.background.main,
 
       "&:not(:first-of-type)": {
         marginTop: "8px",
@@ -29,9 +29,9 @@ export const useStyles = tss
       minWidth: "fit-content",
     },
     active: {
-      color: "#ffffff",
+      color: theme.palette.common.white,
       "& .MuiTypography-root": {
-        color: "#ffffff",
+        color: theme.palette.common.white,
       },
     },
     icon: {
@@ -65,10 +65,10 @@ export const useStyles = tss
 
       "&:hover": {
         [`.${classes.icon}`]: {
-          color: "#ffffff",
+          color: theme.palette.common.white,
         },
         [`.${classes.text}`]: {
-          color: "#ffffff",
+          color: theme.palette.common.white,
         },
       },
     },
@@ -89,11 +89,8 @@ export const useStyles = tss
       justifyContent: "center",
 
       "&:hover": {
-        backgroundColor: "#1a1a1a",
+        backgroundColor: theme.palette.custom?.background.nestedMenu,
       },
-      // #1a1a1a
-      // #232323
-      // #393939
     },
     podcastImgContainer: {
       flexShrink: 0,
