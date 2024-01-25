@@ -14,7 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
-import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
+import { FORM_DEFAULT_VALUES } from "@/common/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";

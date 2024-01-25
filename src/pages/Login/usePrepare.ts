@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "@firebase/util";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { routes } from "@/common/constants";
+import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 import { loginWithEmailPassword } from "@/firebase";
-import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 

@@ -20,7 +20,7 @@ import {
   publishEpisodeAction,
 } from "@/store/podcast";
 import { selectPodcast, selectTempImg } from "@/store/podcastSeries";
-import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
+import { FORM_DEFAULT_VALUES } from "@/common/constants";
 
 import schema from "./schema";
 

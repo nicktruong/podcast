@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { ROLES } from "@/common/enums";
-import { routes } from "@/common/constants";
+import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { RegistrationInterests } from "@/common/interfaces";
 import { createUserDocument, getUserInfo } from "@/firebase";
-import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 

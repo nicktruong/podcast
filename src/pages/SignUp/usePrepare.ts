@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { signup } from "@/firebase";
-import { routes } from "@/common/constants";
+import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 import { SignUpSteps } from "@/common/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
-import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 
