@@ -14,6 +14,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
+import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
@@ -23,6 +24,8 @@ import type { PodcastCreationData } from "@/common/interfaces";
 interface Props {
   handleClose: () => void;
 }
+
+const { TITLE, CATEGORY, DESCRIPTION } = FORM_DEFAULT_VALUES;
 
 const useHelper = ({ handleClose }: Props) => {
   const { classes } = useStyles();
@@ -42,9 +45,9 @@ const useHelper = ({ handleClose }: Props) => {
     formState: { errors },
   } = useForm<PodcastCreationData>({
     defaultValues: {
-      title: "",
-      category: "",
-      description: "",
+      title: TITLE,
+      category: CATEGORY,
+      description: DESCRIPTION,
     },
     mode: "onChange",
     reValidateMode: "onChange",

@@ -20,11 +20,14 @@ import {
   publishEpisodeAction,
 } from "@/store/podcast";
 import { selectPodcast, selectTempImg } from "@/store/podcastSeries";
+import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 
 import type { UsePrepareHookProps } from "./interfaces";
 import type { EpisodeBasicCreationData } from "@/common/interfaces";
+
+const { TITLE, DESCRIPTION } = FORM_DEFAULT_VALUES;
 
 const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const dispatch = useAppDispatch();
@@ -44,8 +47,8 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     formState: { errors },
   } = useForm<EpisodeBasicCreationData>({
     defaultValues: {
-      title: "",
-      description: "",
+      title: TITLE,
+      description: DESCRIPTION,
     },
     mode: "onChange",
     reValidateMode: "onChange",

@@ -8,10 +8,22 @@ import { routes } from "@/common/constants";
 import { SignUpSteps } from "@/common/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
+import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 
 import type { RegisterData } from "@/common/interfaces";
+
+const {
+  NAME,
+  DATE,
+  YEAR,
+  MONTH,
+  EMAIL,
+  GENDER,
+  PASSWORD,
+  CATEGORIES_OF_INTEREST,
+} = FORM_DEFAULT_VALUES;
 
 const usePrepare = () => {
   const navigate = useNavigate();
@@ -28,14 +40,14 @@ const usePrepare = () => {
     formState: { errors, isSubmitting },
   } = useForm<RegisterData>({
     defaultValues: {
-      name: "",
-      date: "",
-      year: "",
-      month: "",
-      email: "",
-      gender: "",
-      password: "",
-      categoriesOfInterest: [],
+      name: NAME,
+      date: DATE,
+      year: YEAR,
+      month: MONTH,
+      email: EMAIL,
+      gender: GENDER,
+      password: PASSWORD,
+      categoriesOfInterest: CATEGORIES_OF_INTEREST,
     },
     mode: "onChange",
     reValidateMode: "onChange",

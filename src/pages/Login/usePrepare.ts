@@ -6,10 +6,13 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { routes } from "@/common/constants";
 import { loginWithEmailPassword } from "@/firebase";
+import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
 
 import type { LoginData } from "@/common/interfaces";
+
+const { EMAIL, PASSWORD } = FORM_DEFAULT_VALUES;
 
 const usePrepare = () => {
   const navigate = useNavigate();
@@ -21,8 +24,8 @@ const usePrepare = () => {
     formState: { errors, isSubmitting },
   } = useForm<LoginData>({
     defaultValues: {
-      email: "",
-      password: "",
+      email: EMAIL,
+      password: PASSWORD,
     },
     resolver: joiResolver(schema),
   });

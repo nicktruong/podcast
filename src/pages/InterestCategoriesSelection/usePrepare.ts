@@ -9,8 +9,11 @@ import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { RegistrationInterests } from "@/common/interfaces";
 import { createUserDocument, getUserInfo } from "@/firebase";
+import { FORM_DEFAULT_VALUES } from "@/common/constants/formDefaultValues";
 
 import schema from "./schema";
+
+const { CATEGORIES_OF_INTEREST } = FORM_DEFAULT_VALUES;
 
 export const usePrepare = () => {
   const navigate = useNavigate();
@@ -27,7 +30,7 @@ export const usePrepare = () => {
     formState: { errors, isSubmitting },
   } = useForm<RegistrationInterests>({
     defaultValues: {
-      categoriesOfInterest: [],
+      categoriesOfInterest: CATEGORIES_OF_INTEREST,
     },
     resolver: joiResolver(schema),
   });

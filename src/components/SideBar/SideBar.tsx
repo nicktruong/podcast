@@ -69,7 +69,7 @@ export default function SideBar() {
                 src={playlist.coverUrl}
                 width={isSidebarExpand ? "48px" : "32px"}
                 height={isSidebarExpand ? "48px" : "32px"}
-                alt=""
+                alt={`${playlist.title} cover photo`}
               />
             </Box>
             {isSidebarExpand && (
