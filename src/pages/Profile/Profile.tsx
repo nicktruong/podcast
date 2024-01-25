@@ -9,8 +9,6 @@ import { usePrepare } from "./usePrepare";
 const Profile = () => {
   const { classes, playlists, episodes, user, isMyProfile } = usePrepare();
 
-  console.log({ user });
-
   return (
     <Box className={classes.profileRoot}>
       <Box className={classes.profileContent}>

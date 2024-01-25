@@ -24,11 +24,11 @@ const EditProfile = () => {
     <Box className={classes.root}>
       <Box className={classes.content}>
         <Box className={classes.avatarContainer} onClick={choosePhoto}>
-          {tempAvatar ?? user?.photoURL ? (
+          {tempAvatar || user?.photoURL ? (
             <img
               className={classes.avatar}
               alt={`${user?.name} avatar`}
-              src={tempAvatar ?? user?.photoURL}
+              src={tempAvatar || user?.photoURL}
             />
           ) : (
             <PersonOutlineIcon className={classes.avatarIcon} />
