@@ -1,15 +1,17 @@
 import { PopulatedPodcast } from "@/common/interfaces";
 
 export interface ListenerPodcastState {
-  loadingTrendings: boolean;
-  loadingPodcastsToTry: boolean;
+  loading: {
+    trendings?: boolean;
+    podcastsToTry?: boolean;
+    recentlyPlayed?: boolean;
+    podcastsForYou?: boolean;
+    podcastsOfCategory?: boolean;
+  };
   trendings: PopulatedPodcast[];
-  loadingPodcastsForYou: boolean;
-  loadingRecentlyPlayed: boolean;
   podcastsToTry: PopulatedPodcast[];
   podcastsForYou: PopulatedPodcast[];
   recentlyPlayed: PopulatedPodcast[];
-  loadingPodcastsOfCategory: boolean;
   podcastsOfCategory: PopulatedPodcast[];
 }
 

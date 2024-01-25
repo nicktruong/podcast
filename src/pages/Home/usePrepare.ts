@@ -2,6 +2,7 @@ import { useEffect } from "react";
 
 import {
   selectTrendings,
+  selectLoadingState,
   selectPodcastsToTry,
   selectPodcastsForYou,
   selectRecentlyPlayed,
@@ -9,15 +10,12 @@ import {
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
   fetchRecentlyPlayedPodcastsPaged,
-  selectLoadingPodcastsForYou,
-  selectLoadingPodcastsToTry,
-  selectLoadingTrendings,
-  selectLoadingRecentlyPlayed,
 } from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
+import { SectionData } from "./interfaces";
 
 const usePrepare = () => {
   const { classes } = useStyles();
@@ -26,46 +24,69 @@ const usePrepare = () => {
 
   const userId = useAppSelector(selectUserId);
 
-  const podcastsToTry = useAppSelector(selectPodcastsToTry);
   const trendingPodcasts = useAppSelector(selectTrendings);
+  const podcastsToTry = useAppSelector(selectPodcastsToTry);
   const podcastsForYou = useAppSelector(selectPodcastsForYou);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
 
-  const loadingTrendingPodcasts = useAppSelector(selectLoadingTrendings);
-  const loadingPodcastsToTry = useAppSelector(selectLoadingPodcastsToTry);
-  const loadingPodcastsForYou = useAppSelector(selectLoadingPodcastsForYou);
-  const loadingRecentlyPlayed = useAppSelector(selectLoadingRecentlyPlayed);
+  const loading = useAppSelector(selectLoadingState);
 
-  const sections = [
-    { title: "Recently played", podcasts: recentlyPlayed },
-    { title: "Trending podcasts", podcasts: trendingPodcasts },
-    { title: "Podcasts for you", podcasts: podcastsForYou },
-    { title: "Podcasts to try", podcasts: podcastsToTry },
+  const sections: SectionData[] = [
+    {
+      key: "recentlyPlayed",
+      title: "Recently played",
+      podcasts: recentlyPlayed,
+    },
+    {
+      key: "trendings",
+      title: "Trending podcasts",
+      podcasts: trendingPodcasts,
+    },
+    {
+      key: "podcastsForYou",
+      title: "Podcasts for you",
+      podcasts: podcastsForYou,
+    },
+    {
+      key: "podcastsToTry",
+      title: "Podcasts to try",
+      podcasts: podcastsToTry,
+    },
   ];
 
   useEffect(() => {
-    const init = async () => {
-      !loadingRecentlyPlayed &&
-        (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
-
-      !loadingTrendingPodcasts &&
+    const initTrendingPodcastSection = async () => {
+      !loading.trendings &&
         (await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })));
+    };
 
+    initTrendingPodcastSection();
+  }, []);
+
+  useEffect(() => {
+    const init = async () => {
       if (!userId) {
         return;
       }
 
-      !loadingPodcastsForYou &&
+      !loading.recentlyPlayed &&
+        (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
+
+      !loading.podcastsForYou &&
         (await dispatch(fetchPodcastsForYouPaged({ pageSize: 7, period: 30 })));
 
-      !loadingPodcastsToTry &&
+      !loading.podcastsToTry &&
         (await dispatch(fetchPodcastsToTryPaged({ pageSize: 7 })));
     };
 
     init();
   }, [userId]);
 
-  return { classes, sections };
+  return {
+    classes,
+    loading,
+    sections,
+  };
 };
 
 export default usePrepare;

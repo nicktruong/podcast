@@ -169,7 +169,7 @@ export const userPodcastsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchRecentlyPlayedPodcastsPaged.pending, (state) => {
-        state.loadingRecentlyPlayed = true;
+        state.loading.recentlyPlayed = true;
       })
       .addCase(
         fetchRecentlyPlayedPodcastsPaged.fulfilled,
@@ -178,72 +178,72 @@ export const userPodcastsSlice = createSlice({
             state.recentlyPlayed = payload;
           }
 
-          state.loadingRecentlyPlayed = false;
+          state.loading.recentlyPlayed = false;
         }
       )
       .addCase(
         fetchRecentlyPlayedPodcastsPaged.rejected,
         (state, { error }) => {
           console.error(error);
-          state.loadingRecentlyPlayed = false;
+          state.loading.recentlyPlayed = false;
         }
       );
 
     builder
       .addCase(fetchTrendingPodcastsPaged.pending, (state) => {
-        state.loadingTrendings = true;
+        state.loading.trendings = true;
       })
       .addCase(fetchTrendingPodcastsPaged.fulfilled, (state, { payload }) => {
         state.trendings = payload;
-        state.loadingTrendings = false;
+        state.loading.trendings = false;
       })
       .addCase(fetchTrendingPodcastsPaged.rejected, (state, { error }) => {
         console.error(error);
-        state.loadingTrendings = false;
+        state.loading.trendings = false;
       });
 
     builder
       .addCase(fetchPodcastsToTryPaged.pending, (state) => {
-        state.loadingPodcastsToTry = true;
+        state.loading.podcastsToTry = true;
       })
       .addCase(fetchPodcastsToTryPaged.fulfilled, (state, { payload }) => {
         state.podcastsToTry = payload;
-        state.loadingPodcastsToTry = false;
+        state.loading.podcastsToTry = false;
       })
       .addCase(fetchPodcastsToTryPaged.rejected, (state, { error }) => {
         console.error(error);
-        state.loadingPodcastsToTry = false;
+        state.loading.podcastsToTry = false;
       });
 
     builder
       .addCase(fetchPodcastsForYouPaged.pending, (state) => {
-        state.loadingPodcastsForYou = true;
+        state.loading.podcastsForYou = true;
       })
       .addCase(fetchPodcastsForYouPaged.fulfilled, (state, { payload }) => {
         state.podcastsForYou = payload;
-        state.loadingPodcastsForYou = false;
+        state.loading.podcastsForYou = false;
       })
       .addCase(fetchPodcastsForYouPaged.rejected, (state, { error }) => {
         console.error(error);
-        state.loadingPodcastsForYou = false;
+        state.loading.podcastsForYou = false;
       });
 
     builder
       .addCase(fetchPodcastsByCategorySortedAndPaged.pending, (state) => {
-        state.loadingPodcastsOfCategory = true;
+        state.loading.podcastsOfCategory = true;
       })
       .addCase(
         fetchPodcastsByCategorySortedAndPaged.fulfilled,
         (state, { payload }) => {
           state.podcastsOfCategory = payload;
-          state.loadingPodcastsOfCategory = false;
+          state.loading.podcastsOfCategory = false;
         }
       )
       .addCase(
         fetchPodcastsByCategorySortedAndPaged.rejected,
         (state, { error }) => {
           console.error(error);
-          state.loadingPodcastsOfCategory = false;
+          state.loading.podcastsOfCategory = false;
         }
       );
   },
@@ -252,31 +252,22 @@ export const userPodcastsSlice = createSlice({
 export const selectTrendings = (state: RootState) =>
   state.userPodcasts.trendings;
 
-export const selectLoadingTrendings = (state: RootState) =>
-  state.userPodcasts.loadingTrendings;
+export const selectLoadingState = (state: RootState) =>
+  state.userPodcasts.loading;
 
 export const selectPodcastsForYou = (state: RootState) =>
   state.userPodcasts.podcastsForYou;
 
-export const selectLoadingPodcastsForYou = (state: RootState) =>
-  state.userPodcasts.loadingPodcastsForYou;
-
 export const selectPodcastsToTry = (state: RootState) =>
   state.userPodcasts.podcastsToTry;
-
-export const selectLoadingPodcastsToTry = (state: RootState) =>
-  state.userPodcasts.loadingPodcastsToTry;
 
 export const selectRecentlyPlayed = (state: RootState) =>
   state.userPodcasts.recentlyPlayed;
 
 export const selectLoadingRecentlyPlayed = (state: RootState) =>
-  state.userPodcasts.loadingRecentlyPlayed;
+  state.userPodcasts.loading.recentlyPlayed;
 
 export const selectCategoriesSeries = (state: RootState) =>
   state.userPodcasts.podcastsOfCategory;
-
-export const selectLoadingCategoriesSeries = (state: RootState) =>
-  state.userPodcasts.loadingPodcastsOfCategory;
 
 export default userPodcastsSlice.reducer;

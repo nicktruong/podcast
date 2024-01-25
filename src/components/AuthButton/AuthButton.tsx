@@ -1,5 +1,5 @@
 import { forwardRef } from "react";
-import { Button, ButtonProps } from "@mui/material";
+import { Button, ButtonProps, alpha } from "@mui/material";
 
 const AuthButton = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ children, sx, ...props }, ref) => {
@@ -8,18 +8,20 @@ const AuthButton = forwardRef<HTMLButtonElement, ButtonProps>(
         variant="outlined"
         color="inherit"
         sx={{
-          width: "100%",
-          textTransform: "inherit",
-          fontWeight: 800,
-          fontSize: "16px",
-          position: "relative",
-          borderColor: "rgba(255, 255, 255, 0.23)",
-          borderRadius: "200px",
-          padding: "8px 32px 8px 55px",
-          "&:hover": {
-            borderColor: "rgba(255, 255, 255, 1)",
-            backgroundColor: "inherit",
-          },
+          ...(theme) => ({
+            width: "100%",
+            fontWeight: 800,
+            fontSize: "16px",
+            position: "relative",
+            borderRadius: "200px",
+            textTransform: "inherit",
+            padding: "8px 32px 8px 55px",
+            borderColor: alpha(theme.palette.common.white, 0.23),
+            "&:hover": {
+              backgroundColor: "inherit",
+              borderColor: theme.palette.common.white,
+            },
+          }),
           ...sx,
         }}
         ref={ref}

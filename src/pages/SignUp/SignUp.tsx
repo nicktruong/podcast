@@ -2,17 +2,14 @@ import { Box } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 
 import { SignUpSteps } from "@/common/enums";
+import { CategoriesForm } from "@/containers";
 import { Logo, QontoStepper } from "@/components";
 import { signUpStepsLabel } from "@/common/constants";
 import { RegistrationInterests } from "@/common/interfaces";
 
-import CategoriesForm from "../../containers/CategoriesForm/CategoriesForm";
-
 import usePrepare from "./usePrepare";
-import StepInfo from "./components/StepInfo";
-import EmailForm from "./containers/EmailForm/EmailForm";
-import PasswordForm from "./containers/PasswordForm/PasswordForm";
-import UserInfoForm from "./containers/UserInfoForm/UserInfoForm";
+import { StepInfo } from "./components";
+import { EmailForm, PasswordForm, UserInfoForm } from "./containers";
 
 export default function SignUp() {
   const {
