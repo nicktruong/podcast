@@ -27,6 +27,7 @@ export default function UserMenu() {
     isSearchPage,
     isSmallScreen,
     search,
+    navigate,
     toggleSidebar,
     handleSignOut,
     handleCloseMenu,
@@ -85,13 +86,23 @@ export default function UserMenu() {
                   horizontal: "right",
                 }}
               >
-                <MenuItem onClick={handleCloseMenu}>Profile</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseMenu();
+                    navigate(routes.profile.replace(":id", userId));
+                  }}
+                >
+                  Profile
+                </MenuItem>
                 {userRoles?.includes(ROLES.PODCASTER) ? (
-                  <Link to={routes.podcasterDashboard}>
-                    <MenuItem onClick={handleCloseMenu}>
-                      Go to Podcast Dashboard
-                    </MenuItem>
-                  </Link>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseMenu();
+                      navigate(routes.podcasterDashboard);
+                    }}
+                  >
+                    Go to Podcast Dashboard
+                  </MenuItem>
                 ) : (
                   <MenuItem onClick={handleUpgradeToPodcasterRole}>
                     Upgrade to Podcaster
@@ -129,12 +140,22 @@ export default function UserMenu() {
                     horizontal: "right",
                   }}
                 >
-                  <Link to={routes.signup}>
-                    <MenuItem onClick={handleCloseMenu}>Sign up</MenuItem>
-                  </Link>
-                  <Link to={routes.login}>
-                    <MenuItem onClick={handleCloseMenu}>Log in</MenuItem>
-                  </Link>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseMenu();
+                      navigate(routes.signup);
+                    }}
+                  >
+                    Sign up
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      handleCloseMenu();
+                      navigate(routes.login);
+                    }}
+                  >
+                    Log in
+                  </MenuItem>
                 </Menu>
               </>
             ) : (

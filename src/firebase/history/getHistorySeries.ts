@@ -5,6 +5,7 @@ import { Podcast, PopulatedPodcast } from "@/common/interfaces";
 
 import { db } from "../init";
 import { populatePodcast } from "../utils";
+import { downloadFileFromStorage } from "../storage";
 
 export const getRecentlyPlayedPodcastsPaged = async ({
   offset = 0,
@@ -24,9 +25,15 @@ export const getRecentlyPlayedPodcastsPaged = async ({
   );
 
   const podcasts = await Promise.all(
-    snapshots.map((snapshot) =>
-      populatePodcast({ id: snapshot.id, ...snapshot.data() } as Podcast)
-    )
+    snapshots.map(async (snapshot) => {
+      const podcast = { id: snapshot.id, ...snapshot.data() } as Podcast;
+
+      if (!podcast.coverUrl.startsWith("https")) {
+        podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+      }
+
+      return populatePodcast(podcast);
+    })
   );
 
   return podcasts;

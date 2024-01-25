@@ -2,8 +2,8 @@ import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
 
-import { selectPodcast } from "@/store/podcastSeries";
-import { selectPods, getEpisodesFromCreatorPaged } from "@/store/podcast";
+import { selectPodcast } from "@/store/podcast";
+import { selectPods, getEpisodesFromCreatorPaged } from "@/store/episode";
 import { RoundedButton } from "@/components";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectUser, selectUserId } from "@/store/user";

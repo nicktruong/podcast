@@ -18,8 +18,8 @@ import {
   resetUploadPodState,
   setPodUploadDetails,
   publishEpisodeAction,
-} from "@/store/podcast";
-import { selectPodcast, selectTempImg } from "@/store/podcastSeries";
+} from "@/store/episode";
+import { selectPodcast, selectTempImg } from "@/store/podcast";
 import { FORM_DEFAULT_VALUES } from "@/common/constants";
 
 import schema from "./schema";

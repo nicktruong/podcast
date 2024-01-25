@@ -13,6 +13,7 @@ import { EPISODE_FIELDS } from "@/common/enums/EpisodeFields";
 import { Episode } from "@/common/interfaces";
 
 import { db } from "../init";
+import { populateEpisode } from "../utils";
 
 export const fetchEpisodesPagedFromCreatorId = async ({
   creatorId,
@@ -33,8 +34,14 @@ export const fetchEpisodesPagedFromCreatorId = async ({
     )
   );
 
-  const episodes = snapshot.docs.map(
-    (doc) => ({ id: doc.id, ...doc.data() }) as Episode
+  const episodes = await Promise.all(
+    snapshot.docs.map(async (doc) => {
+      const episode = { id: doc.id, ...doc.data() } as Episode;
+
+      const populatedEpisode = await populateEpisode(episode);
+
+      return populatedEpisode;
+    })
   );
 
   return episodes;

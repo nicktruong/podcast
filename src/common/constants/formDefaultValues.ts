@@ -1,4 +1,5 @@
 export const FORM_DEFAULT_VALUES = {
+  BIO: "",
   NAME: "",
   DATE: "",
   YEAR: "",
@@ -6,6 +7,7 @@ export const FORM_DEFAULT_VALUES = {
   EMAIL: "",
   TITLE: "",
   GENDER: "",
+  AVATAR: undefined,
   PASSWORD: "",
   CATEGORY: "",
   DESCRIPTION: "",

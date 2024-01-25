@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import {
   getEpisodesFromCreatorPaged,
   selectEpisodesOfCreator,
-} from "@/store/podcast";
-import {
-  fetchSinglePodcastOfCreatorId,
-  selectPodcast,
-} from "@/store/podcastSeries";
+} from "@/store/episode";
+import { fetchSinglePodcastOfCreatorId, selectPodcast } from "@/store/podcast";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 

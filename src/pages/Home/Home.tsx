@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box } from "@mui/material";
 
 import usePrepare from "./usePrepare";
@@ -9,13 +10,15 @@ export default function Home() {
   return (
     <Box className={classes.homeRoot}>
       <Box className={classes.homeContent}>
-        {sections.map(({ key, title, podcasts }) => {
-          if (podcasts.length && !loading[key]) {
-            return <Section key={key} title={title} podcasts={podcasts} />;
-          }
+        {sections
+          .filter(({ podcasts }) => podcasts.length > 0)
+          .map(({ key, title, podcasts }) => {
+            if (podcasts.length && !loading[key]) {
+              return <Section key={key} title={title} podcasts={podcasts} />;
+            }
 
-          return <SectionSkeleton key={key} />;
-        })}
+            return <SectionSkeleton key={key} />;
+          })}
       </Box>
     </Box>
   );

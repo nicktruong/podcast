@@ -6,15 +6,24 @@ import {
   selectInitialUserDataLoading,
 } from "@/store/user";
 import { auth, getUserInfo } from "@/firebase";
-import { fetchCategories } from "@/store/category";
+import { fetchCategories, selectFetchingCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 
 export const usePrepare = () => {
   const dispatch = useAppDispatch();
 
+  const fetchingCategories = useAppSelector(selectFetchingCategories);
+
   const initialLoading = useAppSelector(selectInitialUserDataLoading);
 
   useEffect(() => {
+    const init = async () => {
+      // fetch user's interest categories
+      await dispatch(fetchCategories());
+    };
+
+    init();
+
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
         // if user not logged in => no need to load user
@@ -39,13 +48,10 @@ export const usePrepare = () => {
         })
       );
 
-      // fetch user's interest categories
-      await dispatch(fetchCategories());
-
       // finish loading user
       dispatch(setLoading(false));
     });
   }, []);
 
-  return { initialLoading };
+  return { initialLoading, fetchingCategories };
 };

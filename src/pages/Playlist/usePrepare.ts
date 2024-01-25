@@ -13,6 +13,7 @@ import {
   pauseAudio,
   selectAudioState,
   downloadAndPlayAudio,
+  setPassedTimeInSeconds,
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -64,7 +65,9 @@ const usePrepare = () => {
     episodeId: string;
     pathToFile: string;
   }) => {
-    if (!downloadedAudio) {
+    if (!downloadedAudio || episodeId !== playingEpisodeId) {
+      dispatch(setPassedTimeInSeconds(0));
+
       dispatch(
         downloadAndPlayAudio({
           title,

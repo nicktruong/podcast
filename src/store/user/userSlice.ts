@@ -1,7 +1,14 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { ROLES } from "@/common/enums";
-import { auth, upgradeUserToPodcaster } from "@/firebase";
+import {
+  auth,
+  upgradeUserToPodcaster,
+  editProfile,
+  uploadFile,
+} from "@/firebase";
+import { EditProfile } from "@/common/interfaces/EditProfile";
+import { resizeImage } from "@/common/utils";
 
 import { createAppAsyncThunk } from "../createAppAsyncThunk";
 
@@ -14,6 +21,30 @@ import {
 
 import type { RootState } from "@/store";
 import type { User } from "@/common/interfaces";
+
+export const editProfileAction = createAppAsyncThunk(
+  "profile/editProfile",
+  async ({ avatar, bio, name }: EditProfile, thunkApi) => {
+    const userId = selectUserId(thunkApi.getState());
+
+    if (!userId) {
+      return;
+    }
+
+    let src: string | undefined, path: string | undefined;
+
+    if (avatar) {
+      const image = await resizeImage(avatar, { width: 300, height: 300 });
+      const { fullPath } = uploadFile("avatar", image);
+      src = URL.createObjectURL(avatar);
+      path = fullPath;
+    }
+
+    await editProfile({ fullPath: path, name, userId, bio });
+
+    return { name, userId, bio, src };
+  }
+);
 
 export const upgradeToPodcaster = createAppAsyncThunk(
   UPGRADE_TO_PODCASTER_ACTION,
@@ -71,6 +102,20 @@ export const userSlice = createSlice({
         state.user = initialState.user;
       })
       .addCase(signOut.rejected, (state, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(editProfileAction.fulfilled, (state, { payload }) => {
+        if (!state.user || !payload) {
+          return;
+        }
+
+        state.user.bio = payload.bio;
+        state.user.name = payload.name;
+        state.user.photoURL = payload.src ?? state.user.photoURL;
+      })
+      .addCase(editProfileAction.rejected, (state, { error }) => {
         console.error(error);
       });
   },

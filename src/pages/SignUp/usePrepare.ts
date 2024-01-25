@@ -5,9 +5,10 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { signup } from "@/firebase";
 import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
-import { SignUpSteps } from "@/common/enums";
-import { useAppSelector } from "@/hooks/redux";
+import { GENDERS, SignUpSteps } from "@/common/enums";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
+import { setUser } from "@/store/user";
 
 import schema from "./schema";
 
@@ -26,6 +27,7 @@ const {
 
 const usePrepare = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
   const [activeStep, setActiveStep] = useState(SignUpSteps.Email);
 
@@ -54,6 +56,7 @@ const usePrepare = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    dispatch(setUser({ ...data, gender: data.gender as GENDERS }));
     await signup(data);
     navigate(routes.index, { replace: true });
   });

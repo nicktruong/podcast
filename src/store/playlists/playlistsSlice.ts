@@ -60,8 +60,6 @@ export const createPlaylist = createAppAsyncThunk(
     episodeId,
     userId,
   }: PlaylistCreationData): Promise<Playlist | undefined> => {
-    console.log({ userId, title, episodeId, podcastId, coverUrl });
-
     const { id, currentDate } = await createOwnedPlaylist({
       userId,
       title,

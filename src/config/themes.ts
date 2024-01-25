@@ -74,6 +74,31 @@ const BASE_THEME = {
   },
 };
 
+const custom = {
+  background: {
+    main: "#121212",
+    search: "#313131",
+    nestedMenu: "#1f1f1f",
+    gradient: "linear-gradient(to bottom, #222222, #121212)",
+  },
+  hover: {
+    searchBorder: "#4f4f4f",
+    cardBackground: "#282828",
+  },
+  purple: {
+    main: "#554dff",
+    light: "#9691ff",
+    lighter: "#9e99ff",
+  },
+  grey: {
+    main: "#c6c6c6",
+    dark: "#a6a6a6",
+    light: "#dedede",
+    darker: "#898989",
+    lighter: "#eaeaf0",
+  },
+};
+
 export const darkTheme = createTheme({
   ...BASE_THEME,
   palette: {
@@ -92,30 +117,7 @@ export const darkTheme = createTheme({
       primary: "#ffffff",
       secondary: "#a7a7a7",
     },
-    custom: {
-      background: {
-        main: "#121212",
-        search: "#313131",
-        nestedMenu: "#1f1f1f",
-        gradient: "linear-gradient(to bottom, #222222, #121212)",
-      },
-      hover: {
-        searchBorder: "#4f4f4f",
-        cardBackground: "#282828",
-      },
-      purple: {
-        main: "#554dff",
-        light: "#9691ff",
-        lighter: "#9e99ff",
-      },
-      grey: {
-        main: "#c6c6c6",
-        dark: "#a6a6a6",
-        light: "#dedede",
-        darker: "#898989",
-        lighter: "#eaeaf0",
-      },
-    },
+    custom,
   },
 });
 
@@ -135,5 +137,6 @@ export const podcasterDashboardTheme = createTheme({
       primary: "#000000",
       secondary: "#6a6a6a",
     },
+    custom,
   },
 });

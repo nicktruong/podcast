@@ -7,8 +7,8 @@ const AuthButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <Button
         variant="outlined"
         color="inherit"
-        sx={{
-          ...(theme) => ({
+        sx={(theme) => {
+          const result = {
             width: "100%",
             fontWeight: 800,
             fontSize: "16px",
@@ -21,8 +21,9 @@ const AuthButton = forwardRef<HTMLButtonElement, ButtonProps>(
               backgroundColor: "inherit",
               borderColor: theme.palette.common.white,
             },
-          }),
-          ...sx,
+          };
+
+          return { ...result, ...(sx as any) };
         }}
         ref={ref}
         {...props}

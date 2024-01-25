@@ -10,7 +10,7 @@ import {
   selectPodcast,
   selectPodcastCreationData,
   selectTempImg,
-} from "@/store/podcastSeries";
+} from "@/store/podcast";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";

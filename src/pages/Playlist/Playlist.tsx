@@ -15,7 +15,6 @@ export default function Playlist() {
     classes,
     openModal,
     podcastDetail,
-    loadingDetail,
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
@@ -25,10 +24,6 @@ export default function Playlist() {
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   } = usePrepare();
-
-  if (loadingDetail) {
-    return <>Loading...</>;
-  }
 
   return (
     <Box>

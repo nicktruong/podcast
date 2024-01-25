@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   fetchPodcastsByCategorySortedAndPaged,
   selectCategoriesSeries,
+  selectLoadingPodcastsForListener,
 } from "@/store/listenerPodcastSeries";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 
@@ -11,6 +12,10 @@ import { useStyles } from "./styles";
 
 export const usePrepare = () => {
   const { classes } = useStyles();
+
+  const loading = useAppSelector(
+    selectLoadingPodcastsForListener
+  ).podcastsOfCategory;
 
   const categoriesSeries = useAppSelector(selectCategoriesSeries);
 
@@ -35,5 +40,5 @@ export const usePrepare = () => {
     setSortBy(value);
   };
 
-  return { classes, sortBy, categoriesSeries, handleSelectSortBy };
+  return { classes, sortBy, loading, categoriesSeries, handleSelectSortBy };
 };

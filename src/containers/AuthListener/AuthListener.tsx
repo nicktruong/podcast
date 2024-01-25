@@ -2,14 +2,15 @@ import * as Sentry from "@sentry/react";
 import { Outlet } from "react-router-dom";
 
 import Error from "@/pages/Error";
+import Loader from "@/components/Loader";
 
 import { usePrepare } from "./usePrepare";
 
 const AuthListener = () => {
-  const { initialLoading } = usePrepare();
+  const { initialLoading, fetchingCategories } = usePrepare();
 
-  if (initialLoading) {
-    return <>Loading...</>;
+  if (initialLoading || fetchingCategories) {
+    return <Loader />;
   }
 
   return <Outlet />;

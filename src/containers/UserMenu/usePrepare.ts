@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
 
 import {
@@ -16,6 +16,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
+  const navigate = useNavigate();
+
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
@@ -70,6 +72,7 @@ const usePrepare = () => {
     isSearchPage,
     isSmallScreen,
     search,
+    navigate,
     toggleSidebar,
     handleSignOut,
     handleCloseMenu,

@@ -1,12 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
+import CardsSkeleton from "../Home/components/CardsSkeleton";
+
 import { usePrepare } from "./usePrepare";
 
 const Category = () => {
-  const { classes, sortBy, categoriesSeries, handleSelectSortBy } =
+  const { classes, sortBy, loading, categoriesSeries, handleSelectSortBy } =
     usePrepare();
 
   return (
@@ -32,31 +35,35 @@ const Category = () => {
           </Select>
         </Box>
 
-        <Box className={classes.resultContainer}>
-          {categoriesSeries.map((series) => (
-            <Link
-              key={series.id}
-              className={classes.result}
-              to={routes.playlist.replace(":id", series.id)}
-            >
-              <Box>
-                <img
-                  className={classes.resultImg}
-                  src={series.coverUrl}
-                  alt={`${series.title} avatar`}
-                />
-              </Box>
-              <Box className={classes.resultInfo}>
-                <Typography className={classes.resultTitle}>
-                  {series.title}
-                </Typography>
-                <Typography className={classes.resultAdditionalInfo}>
-                  {series.author?.name}
-                </Typography>
-              </Box>
-            </Link>
-          ))}
-        </Box>
+        {!loading ? (
+          <Box className={classes.resultContainer}>
+            {categoriesSeries.map((series) => (
+              <Link
+                key={series.id}
+                className={classes.result}
+                to={routes.playlist.replace(":id", series.id)}
+              >
+                <Box>
+                  <img
+                    className={classes.resultImg}
+                    src={series.coverUrl}
+                    alt={`${series.title} avatar`}
+                  />
+                </Box>
+                <Box className={classes.resultInfo}>
+                  <Typography className={classes.resultTitle}>
+                    {series.title}
+                  </Typography>
+                  <Typography className={classes.resultAdditionalInfo}>
+                    {series.author?.name}
+                  </Typography>
+                </Box>
+              </Link>
+            ))}
+          </Box>
+        ) : (
+          <CardsSkeleton mt={4} />
+        )}
       </Box>
     </Box>
   );

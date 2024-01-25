@@ -20,7 +20,6 @@ export const addHistoryAction = createAppAsyncThunk(
       return;
     }
 
-    console.log({ userId, podcastId });
     await addHistory({ userId, podcastId });
   }
 );

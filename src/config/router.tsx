@@ -34,9 +34,11 @@ const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/404"));
 const Search = lazy(() => import("@/pages/Search"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
+const Profile = lazy(() => import("@/pages/Profile"));
 const Episode = lazy(() => import("@/pages/Episode"));
 const Category = lazy(() => import("@/pages/Category"));
 const Playlist = lazy(() => import("@/pages/Playlist"));
+const EditProfile = lazy(() => import("@/pages/EditProfile"));
 const UserPlaylist = lazy(() => import("@/pages/UserPlaylist"));
 
 export const router = createBrowserRouter([
@@ -83,6 +85,14 @@ export const router = createBrowserRouter([
               {
                 path: routes.category,
                 element: <Category />,
+              },
+              {
+                path: routes.profile,
+                element: <Profile />,
+              },
+              {
+                path: routes.editProfile,
+                element: <EditProfile />,
               },
             ],
           },

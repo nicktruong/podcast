@@ -1,4 +1,5 @@
 export { default as Logo } from "./Logo";
+export { default as Loader } from "./Loader";
 export { default as SideBar } from "./SideBar";
 export { default as AuthButton } from "./AuthButton";
 export { default as NextButton } from "./NextButton";

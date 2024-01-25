@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 
 import {
   selectTrendings,
-  selectLoadingState,
+  selectLoadingPodcastsForListener,
   selectPodcastsToTry,
   selectPodcastsForYou,
   selectRecentlyPlayed,
@@ -10,6 +11,7 @@ import {
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
   fetchRecentlyPlayedPodcastsPaged,
+  selectFetchedPodcastsForListener,
 } from "@/store/listenerPodcastSeries";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -29,7 +31,8 @@ const usePrepare = () => {
   const podcastsForYou = useAppSelector(selectPodcastsForYou);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
 
-  const loading = useAppSelector(selectLoadingState);
+  const loading = useAppSelector(selectLoadingPodcastsForListener);
+  const fetched = useAppSelector(selectFetchedPodcastsForListener);
 
   const sections: SectionData[] = [
     {
@@ -57,6 +60,7 @@ const usePrepare = () => {
   useEffect(() => {
     const initTrendingPodcastSection = async () => {
       !loading.trendings &&
+        !fetched.trendings &&
         (await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })));
     };
 
@@ -73,9 +77,11 @@ const usePrepare = () => {
         (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
 
       !loading.podcastsForYou &&
+        !fetched.podcastsForYou &&
         (await dispatch(fetchPodcastsForYouPaged({ pageSize: 7, period: 30 })));
 
       !loading.podcastsToTry &&
+        !fetched.podcastsToTry &&
         (await dispatch(fetchPodcastsToTryPaged({ pageSize: 7 })));
     };
 

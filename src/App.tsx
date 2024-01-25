@@ -8,9 +8,8 @@ import { router, darkTheme } from "@/config";
 
 function App() {
   return (
-    // as SentryErrorBoundary does not fallback correctly, we need to wrap another error boundary
     <ThemeProvider theme={darkTheme}>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense>
         <Provider store={store}>
           <RouterProvider router={router} />
         </Provider>

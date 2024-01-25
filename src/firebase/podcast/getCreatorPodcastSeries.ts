@@ -23,8 +23,6 @@ export const getSinglePodcastOfCreatorId = async (creatorId: string) => {
 
   const podcast = { ...podcastDoc.data(), id: podcastDoc.id } as Podcast;
 
-  console.log(podcast.coverUrl);
-
   if (!podcast.coverUrl.startsWith("https")) {
     podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
   }

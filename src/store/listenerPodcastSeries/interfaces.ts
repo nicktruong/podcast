@@ -1,18 +1,22 @@
 import { PopulatedPodcast } from "@/common/interfaces";
 
-export interface ListenerPodcastState {
-  loading: {
-    trendings?: boolean;
-    podcastsToTry?: boolean;
-    recentlyPlayed?: boolean;
-    podcastsForYou?: boolean;
-    podcastsOfCategory?: boolean;
-  };
-  trendings: PopulatedPodcast[];
-  podcastsToTry: PopulatedPodcast[];
-  podcastsForYou: PopulatedPodcast[];
-  recentlyPlayed: PopulatedPodcast[];
-  podcastsOfCategory: PopulatedPodcast[];
+type SectionKeys =
+  | "trendings"
+  | "podcastsToTry"
+  | "podcastsForYou"
+  | "recentlyPlayed"
+  | "podcastsOfCategory";
+
+interface LoadingPodcast extends Record<SectionKeys, boolean> {}
+
+interface DownloadedPodcast extends Record<SectionKeys, boolean> {}
+
+interface PopulatedPodcastSections
+  extends Record<SectionKeys, PopulatedPodcast[]> {}
+
+export interface ListenerPodcastState extends PopulatedPodcastSections {
+  loading: LoadingPodcast;
+  fetched: DownloadedPodcast;
 }
 
 export interface FetchPodcastsByCategorySortedAndPaged {

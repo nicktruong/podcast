@@ -1,7 +1,16 @@
 import { ListenerPodcastState } from "./interfaces";
 
+const initialLoadingAndFetched = {
+  trendings: false,
+  podcastsToTry: false,
+  recentlyPlayed: false,
+  podcastsForYou: false,
+  podcastsOfCategory: false,
+};
+
 export const initialState: ListenerPodcastState = {
-  loading: {},
+  loading: initialLoadingAndFetched,
+  fetched: initialLoadingAndFetched,
   trendings: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
   podcastsToTry: [], // random shows
   podcastsForYou: [], // based on categories of interests, users can choose initially, and the platform will personalized based on users listen history

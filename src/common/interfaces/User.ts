@@ -2,6 +2,7 @@ import { ROLES, GENDERS } from "@/common/enums";
 
 export interface User {
   id: string;
+  bio: string;
   dob: string;
   name: string;
   email: string;

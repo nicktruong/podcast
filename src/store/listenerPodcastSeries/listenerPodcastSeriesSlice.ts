@@ -196,6 +196,7 @@ export const userPodcastsSlice = createSlice({
       .addCase(fetchTrendingPodcastsPaged.fulfilled, (state, { payload }) => {
         state.trendings = payload;
         state.loading.trendings = false;
+        state.fetched.trendings = true;
       })
       .addCase(fetchTrendingPodcastsPaged.rejected, (state, { error }) => {
         console.error(error);
@@ -209,6 +210,7 @@ export const userPodcastsSlice = createSlice({
       .addCase(fetchPodcastsToTryPaged.fulfilled, (state, { payload }) => {
         state.podcastsToTry = payload;
         state.loading.podcastsToTry = false;
+        state.fetched.podcastsToTry = true;
       })
       .addCase(fetchPodcastsToTryPaged.rejected, (state, { error }) => {
         console.error(error);
@@ -222,6 +224,7 @@ export const userPodcastsSlice = createSlice({
       .addCase(fetchPodcastsForYouPaged.fulfilled, (state, { payload }) => {
         state.podcastsForYou = payload;
         state.loading.podcastsForYou = false;
+        state.fetched.podcastsForYou = true;
       })
       .addCase(fetchPodcastsForYouPaged.rejected, (state, { error }) => {
         console.error(error);
@@ -252,8 +255,11 @@ export const userPodcastsSlice = createSlice({
 export const selectTrendings = (state: RootState) =>
   state.userPodcasts.trendings;
 
-export const selectLoadingState = (state: RootState) =>
+export const selectLoadingPodcastsForListener = (state: RootState) =>
   state.userPodcasts.loading;
+
+export const selectFetchedPodcastsForListener = (state: RootState) =>
+  state.userPodcasts.fetched;
 
 export const selectPodcastsForYou = (state: RootState) =>
   state.userPodcasts.podcastsForYou;

@@ -1,5 +1,5 @@
-import { selectPodcast } from "@/store/podcastSeries";
-import { selectEpisodesOfCreator } from "@/store/podcast";
+import { selectPodcast } from "@/store/podcast";
+import { selectEpisodesOfCreator } from "@/store/episode";
 import { useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";

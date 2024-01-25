@@ -54,6 +54,12 @@ const usePrepare = () => {
     }
   }, [playing]);
 
+  useEffect(() => {
+    if (reactPlayerRef.current?.getCurrentTime() !== passedTimeInSeconds) {
+      reactPlayerRef.current?.seekTo(passedTimeInSeconds, "seconds");
+    }
+  }, [passedTimeInSeconds]);
+
   const onPlayerReady = () => {
     if (reactPlayerRef.current) {
       dispatch(setDurationInSeconds(reactPlayerRef.current.getDuration()));

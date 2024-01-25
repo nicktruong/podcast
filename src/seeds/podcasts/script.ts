@@ -94,6 +94,7 @@ const createRandomPodcaster = (episodeCount: number): Omit<User, "id"> => {
     episodeCount,
     emailVerified: true,
     categoriesOfInterest,
+    bio: faker.person.bio(),
     createdAt: seedDateString,
     updatedAt: seedDateString,
     email: faker.internet.email(),
