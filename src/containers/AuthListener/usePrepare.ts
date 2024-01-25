@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 
 import {
@@ -7,8 +6,8 @@ import {
   selectInitialUserDataLoading,
 } from "@/store/user";
 import { auth, getUserInfo } from "@/firebase";
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import { fetchCategories } from "@/store/category";
+import { useAppDispatch, useAppSelector } from "@/hooks";
 
 export const usePrepare = () => {
   const dispatch = useAppDispatch();

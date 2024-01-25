@@ -31,6 +31,7 @@ const InterestCategoriesSelection = lazy(
 );
 const Home = lazy(() => import("@/pages/Home"));
 const Login = lazy(() => import("@/pages/Login"));
+const NotFound = lazy(() => import("@/pages/404"));
 const Search = lazy(() => import("@/pages/Search"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
 const Episode = lazy(() => import("@/pages/Episode"));
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
     element: <AuthListener />,
     children: [
       {
+        path: "*",
+        // TODO: Add 404 page
+        element: <NotFound />,
+      },
+      {
         element: <EnsureInterestCategoriesSelectedGuard />,
         children: [
           {
@@ -53,12 +59,6 @@ export const router = createBrowserRouter([
                 index: true,
                 element: <Home />,
               },
-              {
-                path: "*",
-                // TODO: Add 404 page
-                element: <div>404</div>,
-              },
-
               {
                 element: <PodcastDetailsLayout />,
                 children: [

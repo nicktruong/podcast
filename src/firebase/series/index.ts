@@ -1,4 +1,3 @@
-export * from "./getSeriesById";
 export * from "./getSeriesAuthor";
 export * from "./getPodcastDetail";
 export * from "./getSeriesPagination";
