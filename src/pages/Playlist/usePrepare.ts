@@ -16,6 +16,7 @@ import {
   setPassedTimeInSeconds,
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
+import { requestPermission } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
 
@@ -54,10 +55,15 @@ const usePrepare = () => {
   }, [id]);
 
   const handleFollow = () => {
+    // console.log(Notification.permission, "permission");
     if (podcastDetail) {
       if (user?.following?.includes(podcastDetail.id)) {
         dispatch(unfollowPodcast({ podcastId: podcastDetail.id }));
       } else {
+        if (Notification.permission === "default") {
+          requestPermission();
+        }
+
         dispatch(followPodcast({ podcastId: podcastDetail.id }));
       }
     }

@@ -17,7 +17,8 @@
     "jsx": "react-jsx",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "typeRoots": ["./src/common/types", "./node_modules/@types"]
   },
-  "include": ["src"]
+  "include": ["src", "public/firebase-messaging-sw.js"]
 }

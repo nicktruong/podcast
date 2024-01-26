@@ -1,6 +1,7 @@
 export * from "./init";
 export * from "./auth";
 export * from "./user";
+export * from "./utils";
 export * from "./rating";
 export * from "./search";
 export * from "./series";

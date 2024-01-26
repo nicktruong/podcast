@@ -23,6 +23,7 @@ const AuthButton = forwardRef<HTMLButtonElement, ButtonProps>(
             },
           };
 
+          // TODO: Refactor to fix type conflict
           return { ...result, ...(sx as any) };
         }}
         ref={ref}

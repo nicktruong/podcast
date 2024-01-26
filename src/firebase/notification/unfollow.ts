@@ -12,5 +12,5 @@ export const unfollow = async ({
   podcastId: string;
 }) => {
   const userRef = doc(db, COLLECTIONS.USERS, userId);
-  await updateDoc(userRef, { following: arrayRemove([podcastId]) });
+  await updateDoc(userRef, { following: arrayRemove(podcastId) });
 };

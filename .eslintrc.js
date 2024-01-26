@@ -88,6 +88,9 @@ module.exports = {
         alwaysTryTypes: true,
         project: "./",
       },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
     },
   },
 };

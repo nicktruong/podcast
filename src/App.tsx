@@ -4,7 +4,8 @@ import { RouterProvider } from "react-router-dom";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import { store } from "@/store";
-import { router, darkTheme } from "@/config";
+import { darkTheme } from "@/config";
+import { router } from "@/pages/router";
 
 function App() {
   return (

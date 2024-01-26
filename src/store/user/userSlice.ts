@@ -172,7 +172,7 @@ export const userSlice = createSlice({
           return;
         }
 
-        state.user.following?.filter(
+        state.user.following = state.user.following?.filter(
           (podcastId) => podcastId !== payload.podcastId
         );
       })

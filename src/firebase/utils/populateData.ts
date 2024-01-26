@@ -1,16 +1,16 @@
 import { doc, getDoc } from "firebase/firestore";
 
 import {
+  User,
   Episode,
   Podcast,
   PopulatedEpisode,
   PopulatedPodcast,
-  User,
 } from "@/common/interfaces";
 import { COLLECTIONS } from "@/common/enums";
 
-import { db } from "./init";
-import { downloadFileFromStorage } from "./storage";
+import { db } from "../init";
+import { downloadFileFromStorage } from "../storage";
 
 export const populatePodcast = async (
   podcast: Podcast
