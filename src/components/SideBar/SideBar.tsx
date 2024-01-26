@@ -6,9 +6,10 @@ import {
   ListItemButton,
 } from "@mui/material";
 import { Link } from "react-router-dom";
+import { MdOutlineHome } from "react-icons/md";
 import HomeIcon from "@mui/icons-material/Home";
-import SearchIcon from "@mui/icons-material/Search";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import { CgSearch, CgSearchLoading } from "react-icons/cg";
 
 import { routes } from "@/common/constants";
 
@@ -23,11 +24,22 @@ export default function SideBar() {
         <Link to={routes.index}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
-              <HomeIcon className={cx(classes.icon, active[routes.index])} />
+              {active[routes.index] ? (
+                <HomeIcon
+                  style={{ marginRight: "2px" }}
+                  className={cx(classes.icon, {
+                    [classes.active]: active[routes.index],
+                  })}
+                />
+              ) : (
+                <MdOutlineHome className={classes.icon} />
+              )}
             </ListItemIcon>
             {isSidebarExpand && (
               <ListItemText
-                className={cx(classes.listItemText, active[routes.index])}
+                className={cx(classes.listItemText, {
+                  [classes.active]: active[routes.index],
+                })}
                 primary="Home"
               />
             )}
@@ -37,11 +49,22 @@ export default function SideBar() {
         <Link to={routes.search}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
-              <SearchIcon className={cx(classes.icon, active[routes.search])} />
+              {active[routes.search] ? (
+                <CgSearchLoading
+                  style={{ marginLeft: "2px", marginTop: "-2px" }}
+                  className={cx(classes.icon, {
+                    [classes.active]: active[routes.search],
+                  })}
+                />
+              ) : (
+                <CgSearch className={classes.icon} />
+              )}
             </ListItemIcon>
             {isSidebarExpand && (
               <ListItemText
-                className={cx(classes.listItemText, active[routes.search])}
+                className={cx(classes.listItemText, {
+                  [classes.active]: active[routes.search],
+                })}
                 primary="Search"
               />
             )}
@@ -53,7 +76,7 @@ export default function SideBar() {
         <Box className={classes.libraryHeading}>
           <BookmarksIcon className={classes.icon} />
           {isSidebarExpand && (
-            <Typography className={classes.text}>Your Library</Typography>
+            <Typography className={classes.text}>Your Playlists</Typography>
           )}
         </Box>
 

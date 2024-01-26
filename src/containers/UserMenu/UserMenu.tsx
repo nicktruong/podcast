@@ -11,6 +11,8 @@ import { Link } from "react-router-dom";
 import Search from "@mui/icons-material/Search";
 import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
@@ -24,8 +26,9 @@ export default function UserMenu() {
     classes,
     anchorEl,
     userRoles,
+    isSmaller,
     isSearchPage,
-    isSmallScreen,
+    isSidebarExpand,
     search,
     navigate,
     toggleSidebar,
@@ -38,10 +41,14 @@ export default function UserMenu() {
   return (
     <AppBar elevation={0} component="nav" className={classes.appbarRoot}>
       <Toolbar>
-        {!isSmallScreen && (
+        {!isSmaller && (
           <Box className={classes.iconButtonContainer}>
             <IconButton onClick={toggleSidebar}>
-              <MenuIcon className={classes.sidebarToggler} />
+              {isSidebarExpand ? (
+                <ChevronLeftIcon className={classes.sidebarToggler} />
+              ) : (
+                <ChevronRightIcon className={classes.sidebarToggler} />
+              )}
             </IconButton>
           </Box>
         )}
@@ -113,7 +120,7 @@ export default function UserMenu() {
             </>
           )}
           {!userId &&
-            (isSmallScreen ? (
+            (isSmaller ? (
               <>
                 <IconButton
                   id="user-menu-button"

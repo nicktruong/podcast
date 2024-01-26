@@ -4,10 +4,8 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
-import { getToken } from "firebase/messaging";
 
 import { routes } from "@/common/constants";
-import { messaging, sendNotification, subscribeTokenToTopic } from "@/firebase";
 
 import usePrepare from "./usePrepare";
 import PodcastRating from "./components/PlaylistRating";
@@ -31,26 +29,6 @@ export default function Playlist() {
 
   return (
     <Box>
-      <button
-        onClick={async () => {
-          const token = await getToken(messaging, {
-            vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-          });
-          console.log({ token });
-          await subscribeTokenToTopic({ token, topic: "news" });
-          console.log("subscribed to news");
-        }}
-      >
-        Test Subscribe to topic
-      </button>
-      <button
-        onClick={async () => {
-          await sendNotification({ topic: "news" });
-          console.log("sent notification");
-        }}
-      >
-        Send test notification
-      </button>
       <Box className={classes.actions}>
         <Button
           variant="outlined"

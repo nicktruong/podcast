@@ -140,7 +140,7 @@ export const playlistsSlice = createSlice({
     builder
       .addCase(createPlaylist.fulfilled, (state, { payload }) => {
         if (payload) {
-          state.playlists.push(payload);
+          state.playlists.unshift(payload);
         }
       })
       .addCase(createPlaylist.rejected, (_, { error }) => {

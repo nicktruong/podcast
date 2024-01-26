@@ -48,8 +48,9 @@ export const useStyles = tss.create(({ theme }) => ({
     marginTop: "8px",
     overflow: "hidden",
     gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-
-    "&:last-of-type": {
+  },
+  section: {
+    "&:not(:first-of-type)": {
       marginTop: "32px",
     },
   },

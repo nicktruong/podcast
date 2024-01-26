@@ -13,6 +13,7 @@ import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
 import { populatePodcast } from "../utils";
+import { downloadFileFromStorage } from "../storage";
 
 const generateQuery = ({
   random,
@@ -91,11 +92,16 @@ export const getRandomPocastsPaged = async ({
       })
     );
 
-    result.forEach((populatedPodcat) => {
+    for (const populatedPodcat of result) {
       if (populatedPodcat) {
+        if (!populatedPodcat.coverUrl.startsWith("https")) {
+          await downloadFileFromStorage(populatedPodcat.coverUrl);
+        }
+
         podcasts.push(populatedPodcat);
       }
-    });
+    }
+
     i++;
   } while (i < categories.length / 10 && podcasts.length < pageSize);
 

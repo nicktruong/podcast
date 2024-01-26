@@ -84,9 +84,9 @@ export const useStyles = tss
       padding: "8px",
       display: "flex",
       maxWidth: "100%",
+      marginTop: "8px",
       cursor: "pointer",
       borderRadius: "8px",
-      justifyContent: "center",
 
       "&:hover": {
         backgroundColor: theme.palette.custom?.background.nestedMenu,

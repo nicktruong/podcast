@@ -7,7 +7,7 @@ import { AudioPlayer, UserMenu } from "@/containers";
 import { usePrepare } from "./usePrepare";
 
 export default function RootLayout() {
-  const { classes, isAudioPlayerOpen } = usePrepare();
+  const { classes, elementRef, isAudioPlayerOpen } = usePrepare();
 
   return (
     <Box className={classes.rootLayout}>
@@ -15,7 +15,7 @@ export default function RootLayout() {
         <Box className={classes.sidebar}>
           <SideBar />
         </Box>
-        <Box className={classes.mainContent}>
+        <Box ref={elementRef} className={classes.mainContent}>
           <UserMenu />
           <Outlet />
         </Box>

@@ -47,10 +47,12 @@ const Search = () => {
           </>
         ) : (
           <>
-            {!podcasters.length ? (
-              <Box>No podcaster found</Box>
-            ) : (
-              <Box>
+            {!podcasters.length && !series.length && (
+              <Typography>Your search did not match any documents.</Typography>
+            )}
+
+            {!!podcasters.length && (
+              <Box className={classes.section}>
                 <Typography className={classes.searchHeading}>
                   Podcasters
                 </Typography>
@@ -82,10 +84,8 @@ const Search = () => {
               </Box>
             )}
 
-            {!series.length ? (
-              <Box>No series found</Box>
-            ) : (
-              <Box>
+            {!!series.length && (
+              <Box className={classes.section}>
                 <Typography className={classes.searchHeading}>
                   Podcast series
                 </Typography>

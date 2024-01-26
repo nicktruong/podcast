@@ -20,6 +20,7 @@ export const useStyles = tss
       flexShrink: 0,
       width: sidebarWidth,
       display: sidebarDisplay,
+      // transition: `all 0.2s ${theme.transitions.easing.easeOut}`,
     },
     mainContent: {
       flexGrow: 1,

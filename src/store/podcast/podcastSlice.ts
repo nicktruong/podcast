@@ -130,14 +130,14 @@ export const podSeriesSlice = createSlice({
 export const selectLoadingPodcastOfCreator = (state: RootState) =>
   state.podSeries.loading;
 
-export const selectPodcast = (state: RootState) => state.podSeries.podcast;
-
-export const selectTempImg = (state: RootState) => state.podSeries.tempImg;
-
 export const selectPodcastCreationData = (state: RootState) =>
   state.podSeries.podcastCreationData;
 
 export const selectStep = (state: RootState) => state.podSeries.step;
+
+export const selectPodcast = (state: RootState) => state.podSeries.podcast;
+
+export const selectTempImg = (state: RootState) => state.podSeries.tempImg;
 
 export const { setSeriesDetails } = podSeriesSlice.actions;
 

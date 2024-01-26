@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDebouncedCallback } from "use-debounce";
+import { useTheme } from "@mui/material";
 
 import {
   signOut,
@@ -8,29 +9,35 @@ import {
   selectUserRoles,
   upgradeToPodcaster,
 } from "@/store/user";
-import { toggleExpand } from "@/store/ui";
+import { selectUIState, toggleExpand } from "@/store/ui";
 import { searchAction } from "@/store/search";
-import { useSmallScreen } from "@/common/utils";
+import { useMaxWidthScreenMedia } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
+  const theme = useTheme();
+
   const navigate = useNavigate();
 
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
 
+  const { isSidebarExpand } = useAppSelector(selectUIState);
+
   const userId = useAppSelector(selectUserId);
+
   const userRoles = useAppSelector(selectUserRoles);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const location = useLocation();
-  const { isSmallScreen } = useSmallScreen();
   const isSearchPage = location.pathname.includes("/search");
+
+  const { isSmaller } = useMaxWidthScreenMedia(theme.breakpoints.values.md);
 
   const handleClickOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -69,8 +76,9 @@ const usePrepare = () => {
     classes,
     anchorEl,
     userRoles,
+    isSmaller,
     isSearchPage,
-    isSmallScreen,
+    isSidebarExpand,
     search,
     navigate,
     toggleSidebar,

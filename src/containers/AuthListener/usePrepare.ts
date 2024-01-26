@@ -22,8 +22,6 @@ export const usePrepare = () => {
       await dispatch(fetchCategories());
     };
 
-    init();
-
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
         // if user not logged in => no need to load user
@@ -51,6 +49,8 @@ export const usePrepare = () => {
       // finish loading user
       dispatch(setLoading(false));
     });
+
+    init();
   }, []);
 
   return { initialLoading, fetchingCategories };

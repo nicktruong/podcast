@@ -2,9 +2,14 @@ import { useEffect, useState } from "react";
 
 import {
   getEpisodesFromCreatorPaged,
+  selectEpisodesAreLoading,
   selectEpisodesOfCreator,
 } from "@/store/episode";
-import { fetchSinglePodcastOfCreatorId, selectPodcast } from "@/store/podcast";
+import {
+  fetchSinglePodcastOfCreatorId,
+  selectLoadingPodcastOfCreator,
+  selectPodcast,
+} from "@/store/podcast";
 import { selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
@@ -17,6 +22,12 @@ export const usePrepare = () => {
     useAppSelector(selectEpisodesOfCreator)[0] !== undefined;
 
   const podcast = useAppSelector(selectPodcast);
+
+  const episodesAreLoading = useAppSelector(selectEpisodesAreLoading);
+
+  const podcastOfCreatorIsLoading = useAppSelector(
+    selectLoadingPodcastOfCreator
+  );
 
   const [openCreateSeriesDialog, setOpenCreateSeriesDialog] = useState(false);
 
@@ -43,9 +54,11 @@ export const usePrepare = () => {
   }, [userId]);
 
   return {
+    episodesAreLoading,
     createdFirstEpisode,
     openCreateSeriesDialog,
     openCreateEpisodeDialog,
+    podcastOfCreatorIsLoading,
     handleCloseEpisodeDialog,
     handleClickOpenEpisodeDialog,
   };

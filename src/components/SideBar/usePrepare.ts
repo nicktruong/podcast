@@ -23,8 +23,8 @@ const usePrepare = () => {
   const { pathname } = useLocation();
 
   const active = {
-    [routes.index]: pathname === routes.index ? classes.active : "",
-    [routes.search]: pathname === routes.search ? classes.active : "",
+    [routes.index]: pathname === routes.index,
+    [routes.search]: pathname === routes.search,
   };
 
   useEffect(() => {

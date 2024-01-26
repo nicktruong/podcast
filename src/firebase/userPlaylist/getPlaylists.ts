@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
 import { Playlist } from "@/common/interfaces";
@@ -11,7 +11,11 @@ export const getOwnedPlaylists = async ({
   userId: string;
 }): Promise<Playlist[]> => {
   const snapshot = await getDocs(
-    query(collection(db, COLLECTIONS.PLAYLISTS), where("userId", "==", userId))
+    query(
+      collection(db, COLLECTIONS.PLAYLISTS),
+      where("userId", "==", userId),
+      orderBy("createdAt", "desc")
+    )
   );
 
   const playlists = snapshot.docs.map((doc) => {

@@ -7,12 +7,11 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { COLLECTIONS, ROLES } from "@/common/enums";
 import { User, Podcast, SearchResult } from "@/common/interfaces";
 
 import { db } from "../init";
 import { downloadFileFromStorage } from "../storage";
-// import { downloadFileFromStorage } from "../storage";
 
 // TODO: create keywords 5 characters ignore punctuations
 export const search = async (searchText: string): Promise<SearchResult> => {
@@ -26,13 +25,22 @@ export const search = async (searchText: string): Promise<SearchResult> => {
   const podcastersSnapshot = await getDocs(
     query(
       podcastersRef,
+      where("role", "array-contains", ROLES.PODCASTER),
       where("name", ">=", searchText),
       where("name", "<=", searchText + "\uf8ff")
     )
   );
 
-  const podcasters = podcastersSnapshot.docs.map(
-    (doc) => ({ id: doc.id, ...doc.data() }) as User
+  const podcasters = await Promise.all(
+    podcastersSnapshot.docs.map(async (doc) => {
+      const podcaster = { id: doc.id, ...doc.data() } as User;
+
+      if (podcaster.photoURL && !podcaster.photoURL.startsWith("https")) {
+        podcaster.photoURL = await downloadFileFromStorage(podcaster.photoURL);
+      }
+
+      return podcaster;
+    })
   );
 
   // Podcasts
