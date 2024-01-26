@@ -10,3 +10,4 @@ export * from "./podcast";
 export * from "./podcaster";
 export * from "./categories";
 export * from "./userPlaylist";
+export * from "./notification";

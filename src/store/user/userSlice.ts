@@ -6,6 +6,8 @@ import {
   upgradeUserToPodcaster,
   editProfile,
   uploadFile,
+  follow,
+  unfollow,
 } from "@/firebase";
 import { EditProfile } from "@/common/interfaces/EditProfile";
 import { resizeImage } from "@/common/utils";
@@ -22,8 +24,38 @@ import {
 import type { RootState } from "@/store";
 import type { User } from "@/common/interfaces";
 
+export const unfollowPodcast = createAppAsyncThunk(
+  "user/unfollowPodcast",
+  async ({ podcastId }: { podcastId: string }, thunkApi) => {
+    const userId = selectUserId(thunkApi.getState());
+
+    if (!userId) {
+      return;
+    }
+
+    await unfollow({ podcastId, userId });
+
+    return { podcastId };
+  }
+);
+
+export const followPodcast = createAppAsyncThunk(
+  "user/followPodcast",
+  async ({ podcastId }: { podcastId: string }, thunkApi) => {
+    const userId = selectUserId(thunkApi.getState());
+
+    if (!userId) {
+      return;
+    }
+
+    await follow({ podcastId, userId });
+
+    return { podcastId };
+  }
+);
+
 export const editProfileAction = createAppAsyncThunk(
-  "profile/editProfile",
+  "user/editProfile",
   async ({ avatar, bio, name }: EditProfile, thunkApi) => {
     const userId = selectUserId(thunkApi.getState());
 
@@ -116,6 +148,35 @@ export const userSlice = createSlice({
         state.user.photoURL = payload.src ?? state.user.photoURL;
       })
       .addCase(editProfileAction.rejected, (state, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(followPodcast.fulfilled, (state, { payload }) => {
+        if (!state.user || !payload) {
+          return;
+        }
+
+        state.user.following = [
+          ...(state.user.following ?? []),
+          payload.podcastId,
+        ];
+      })
+      .addCase(followPodcast.rejected, (state, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(unfollowPodcast.fulfilled, (state, { payload }) => {
+        if (!state.user || !payload) {
+          return;
+        }
+
+        state.user.following?.filter(
+          (podcastId) => podcastId !== payload.podcastId
+        );
+      })
+      .addCase(unfollowPodcast.rejected, (state, { error }) => {
         console.error(error);
       });
   },

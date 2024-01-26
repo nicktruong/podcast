@@ -12,6 +12,7 @@ import PodcastRating from "./components/PlaylistRating";
 
 export default function Playlist() {
   const {
+    user,
     classes,
     openModal,
     podcastDetail,
@@ -19,6 +20,7 @@ export default function Playlist() {
     audioIsPlaying,
     playingEpisodeId,
     navigate,
+    handleFollow,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,
@@ -28,8 +30,14 @@ export default function Playlist() {
   return (
     <Box>
       <Box className={classes.actions}>
-        <Button className={classes.followBtn} variant="outlined">
-          Follow
+        <Button
+          variant="outlined"
+          onClick={handleFollow}
+          className={classes.followBtn}
+        >
+          {!user?.following?.includes(podcastDetail?.id ?? "")
+            ? "Follow"
+            : "Unfollow"}
         </Button>
       </Box>
 

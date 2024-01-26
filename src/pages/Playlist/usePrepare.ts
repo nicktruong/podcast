@@ -17,6 +17,7 @@ import {
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
 
 import { useStyles } from "./styles";
 
@@ -24,6 +25,8 @@ const usePrepare = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
+
+  const user = useAppSelector(selectUser);
 
   const { cx, classes } = useStyles();
 
@@ -49,6 +52,16 @@ const usePrepare = () => {
       }
     }
   }, [id]);
+
+  const handleFollow = () => {
+    if (podcastDetail) {
+      if (user?.following?.includes(podcastDetail.id)) {
+        dispatch(unfollowPodcast({ podcastId: podcastDetail.id }));
+      } else {
+        dispatch(followPodcast({ podcastId: podcastDetail.id }));
+      }
+    }
+  };
 
   const handleDownloadAndPlayAudio = ({
     title,
@@ -98,7 +111,7 @@ const usePrepare = () => {
   };
 
   return {
-    cx,
+    user,
     classes,
     openModal,
     podcastDetail,
@@ -106,7 +119,9 @@ const usePrepare = () => {
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
+    cx,
     navigate,
+    handleFollow,
     handleOpenModal,
     handleCloseModal,
     handlePauseAudio,
