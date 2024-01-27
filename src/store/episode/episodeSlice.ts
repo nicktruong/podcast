@@ -19,7 +19,7 @@ const initialState: EpisodeState = {
   },
   episodes: [],
   uploading: false,
-  loadingEpisodes: false,
+  loadingEpisodes: true,
   audioUploadProgressInPercent: 0,
   uploadStep: EpisodeCreationSteps.UPLOAD_AUDIO,
 };
@@ -47,10 +47,7 @@ export const getEpisodesFromCreatorPaged = createAppAsyncThunk(
 
 export const publishEpisodeAction = createAppAsyncThunk(
   "episode/publish",
-  async (
-    _,
-    thunkApi
-  ) /*: Promise<{ creatorsPodcasts: CreatorsPodcasts; pod: Episode }> */ => {
+  async (_, thunkApi) => {
     if (selectUploading(thunkApi.getState()) === true) {
       return thunkApi.rejectWithValue("Please wait. Uploading audio...");
     }
@@ -137,9 +134,11 @@ export const podSlice = createSlice({
 
     builder
       .addCase(getEpisodesFromCreatorPaged.fulfilled, (state, action) => {
+        state.loadingEpisodes = false;
         state.episodes = action.payload;
       })
       .addCase(getEpisodesFromCreatorPaged.rejected, (state, { error }) => {
+        state.loadingEpisodes = false;
         console.error(error);
       });
   },

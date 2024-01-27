@@ -42,8 +42,8 @@ export const usePrepare = () => {
   };
 
   const handleCloseEpisodeDialog = () => {
-    setOpenCreateEpisodeDialog(false);
     setOpenCreateSeriesDialog(false);
+    setOpenCreateEpisodeDialog(false);
   };
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { Controller } from "react-hook-form";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
-import { StyledInput, NextButton } from "@/components";
+import { StyledInput } from "@/components";
 
 import { PasswordFormProps } from "./interfaces";
 
@@ -49,9 +49,13 @@ export default function PasswordForm({
           special character.
         </Typography>
 
-        <NextButton sx={{ marginTop: "20px" }} onClick={nextStepHandler}>
+        <Button
+          variant="next"
+          onClick={nextStepHandler}
+          sx={{ marginTop: "20px" }}
+        >
           Next
-        </NextButton>
+        </Button>
       </Box>
     </>
   );

@@ -13,7 +13,7 @@ export interface User {
   createdAt: string;
   updatedAt: string;
   following: string[]; // list of podcasts
+  episodeCount: number;
   emailVerified: boolean;
-  episodeCount: null | number;
   categoriesOfInterest: string[];
 }

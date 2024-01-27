@@ -1,12 +1,12 @@
 import Box from "@mui/material/Box";
 
 import {
+  PodcasterDashboardAppBar,
+  PodcasterDashboardOverview,
   PodcasterCreateSeriesDialog,
   PodcasterDashboardOnboarding,
+  PodcasterEpisodeCreationDialog,
 } from "@/containers";
-import PodAppbar from "@/containers/PodcasterDashboardAppBar";
-import PodDashboardOverview from "@/containers/PodcasterDashboard/PodcasterDashboard";
-import PodcasterEpisodeCreationDialog from "@/containers/PodcasterEpisodeCreationDialog";
 import { Loader } from "@/components";
 
 import { usePrepare } from "./usePrepare";
@@ -36,12 +36,14 @@ export default function PodcasterDashboard() {
       />
     );
   } else {
-    content = <PodDashboardOverview />;
+    content = <PodcasterDashboardOverview />;
   }
 
   return (
     <Box>
-      <PodAppbar handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog} />
+      <PodcasterDashboardAppBar
+        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
+      />
 
       {content}
 

@@ -1,7 +1,6 @@
-import { Box, Dialog } from "@mui/material";
+import { Box, Button, Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { RoundedButton } from "@/components";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
 import useHelper from "./useHelper";
@@ -83,12 +82,13 @@ export default function PodcasterCreateSeriesDialog({
         <form>{renderStep()}</form>
 
         <Box className="text-center mt-12">
-          <RoundedButton
+          <Button
+            variant="roundContained"
             className={classes.nextButtonRoot}
             onClick={handleNextStep}
           >
             {renderButtonText()}
-          </RoundedButton>
+          </Button>
           {/* for submitting series image */}
           <input
             type="file"

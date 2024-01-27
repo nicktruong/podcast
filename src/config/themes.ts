@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { alpha, createTheme } from "@mui/material/styles";
 
 const BASE_THEME = {
   breakpoints: {
@@ -55,6 +55,57 @@ const custom = {
 
 export const darkTheme = createTheme({
   ...BASE_THEME,
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: "auth",
+          },
+          style: ({ theme }) => {
+            return {
+              width: "100%",
+              fontWeight: 800,
+              fontSize: "16px",
+              position: "relative",
+              borderRadius: "200px",
+              textTransform: "inherit",
+              padding: "8px 32px 8px 55px",
+              border: `1px solid ${alpha(theme.palette.common.white, 0.23)}`,
+              "&:hover": {
+                backgroundColor: "inherit",
+                borderColor: theme.palette.common.white,
+              },
+            };
+          },
+        },
+        {
+          props: {
+            variant: "next",
+          },
+          style: ({ theme }) => {
+            return {
+              width: "100%",
+              display: "flex",
+              fontWeight: 700,
+              fontSize: "1rem",
+              minHeight: "48px",
+              padding: "8px 32px",
+              lineHeight: "1.5rem",
+              borderRadius: "200px",
+              textTransform: "capitalize",
+              color: theme.palette.primary.contrastText,
+              backgroundColor: theme.palette.primary.main,
+
+              "&:hover": {
+                backgroundColor: theme.palette.primary.light,
+              },
+            };
+          },
+        },
+      ],
+    },
+  },
   palette: {
     mode: "dark",
     primary: {
@@ -77,6 +128,51 @@ export const darkTheme = createTheme({
 
 export const podcasterDashboardTheme = createTheme({
   ...BASE_THEME,
+  components: {
+    MuiButton: {
+      variants: [
+        {
+          props: {
+            variant: "round",
+          },
+          style: ({ theme }) => {
+            return {
+              fontWeight: 700,
+              padding: "3px 15px",
+              fontSize: "0.8125rem",
+              borderRadius: "200px",
+              textTransform: "capitalize",
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.5)}`,
+
+              "&:hover": {
+                borderColor: theme.palette.primary.main,
+              },
+            };
+          },
+        },
+        {
+          props: {
+            variant: "roundContained",
+          },
+          style: ({ theme }) => {
+            return {
+              fontWeight: 700,
+              padding: "3px 15px",
+              fontSize: "0.8125rem",
+              borderRadius: "200px",
+              textTransform: "capitalize",
+
+              "&:hover": {
+                // boxShadow: theme.shadows[4],
+                borderColor: theme.palette.primary.main,
+              },
+            };
+          },
+        },
+      ],
+    },
+  },
+
   palette: {
     mode: "light",
     primary: {

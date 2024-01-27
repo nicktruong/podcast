@@ -3,12 +3,12 @@ import {
   Typography,
   FormHelperText,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckIcon from "@mui/icons-material/Check";
 
 import { isDark } from "@/common/utils";
-import { NextButton } from "@/components";
 
 import { usePrepare } from "./usePrepare";
 import { CategoriesFormProps } from "./interfaces";
@@ -100,8 +100,9 @@ export default function CategoriesForm({
           )}
         </FormHelperText>
 
-        <NextButton
+        <Button
           type="submit"
+          variant="next"
           sx={{ marginTop: "20px" }}
           endIcon={
             isSubmitting && (
@@ -115,7 +116,7 @@ export default function CategoriesForm({
           }
         >
           Finish
-        </NextButton>
+        </Button>
       </Box>
     </>
   );

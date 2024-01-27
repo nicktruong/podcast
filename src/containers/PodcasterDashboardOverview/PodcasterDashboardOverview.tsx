@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 import { selectPodcast } from "@/store/podcast";
-import { selectPods, getEpisodesFromCreatorPaged } from "@/store/episode";
-import { RoundedButton } from "@/components";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectUser, selectUserId } from "@/store/user";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { selectPods, getEpisodesFromCreatorPaged } from "@/store/episode";
 
 export default function PodDashboardOverview() {
   const dispatch = useAppDispatch();
@@ -99,8 +98,10 @@ export default function PodDashboardOverview() {
           </Box>
 
           <Box sx={{ marginTop: "48px" }}>
-            <RoundedButton sx={{ marginRight: "12px" }}>Share</RoundedButton>
-            <RoundedButton>Profile page</RoundedButton>
+            <Button variant="round" sx={{ marginRight: "12px" }}>
+              Share
+            </Button>
+            <Button variant="round">Profile page</Button>
           </Box>
         </Box>
       </Box>

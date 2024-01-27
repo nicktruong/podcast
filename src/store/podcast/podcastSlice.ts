@@ -18,7 +18,7 @@ import type { PodcasterManagePodcastState } from "./interfaces";
 const initialState: PodcasterManagePodcastState = {
   tempImg: "",
   podcast: null, // for storing podcast
-  loading: false, // fetching process
+  loading: true, // fetching process
   podcastCreationData: null,
   step: PODCAST_CREATION_STEPS.INPUT_DETAILS,
 };

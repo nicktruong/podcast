@@ -1,22 +1,22 @@
-import EditIcon from "@mui/icons-material/Edit";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
-import { Box, Typography } from "@mui/material";
+import { GoPerson } from "react-icons/go";
 import { Controller } from "react-hook-form";
+import EditIcon from "@mui/icons-material/Edit";
+import { Box, Button, Typography } from "@mui/material";
 
-import { NextButton, StyledInput } from "@/components";
+import { StyledInput } from "@/components";
 
 import { usePrepare } from "./usePrepare";
 
 const EditProfile = () => {
   const {
-    classes,
     user,
-    inputRef,
-    control,
     errors,
+    classes,
+    control,
+    inputRef,
     tempAvatar,
-    choosePhoto,
     onSubmit,
+    choosePhoto,
     handleAvatarSubmit,
   } = usePrepare();
 
@@ -31,7 +31,7 @@ const EditProfile = () => {
               src={tempAvatar || user?.photoURL}
             />
           ) : (
-            <PersonOutlineIcon className={classes.avatarIcon} />
+            <GoPerson className={classes.avatarIcon} />
           )}
           <Box className={classes.overlay}>
             <Typography className={classes.text}>Choose photo</Typography>
@@ -68,7 +68,12 @@ const EditProfile = () => {
             }}
           />
 
-          <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
+          <Typography
+            fontSize="14px"
+            marginTop="16px"
+            fontWeight={700}
+            marginBottom="8px"
+          >
             Bio
           </Typography>
           <Controller
@@ -86,9 +91,9 @@ const EditProfile = () => {
             }}
           />
 
-          <NextButton sx={{ marginTop: "20px" }} type="submit">
+          <Button variant="next" sx={{ marginTop: "20px" }} type="submit">
             Save
-          </NextButton>
+          </Button>
         </form>
       </Box>
     </Box>

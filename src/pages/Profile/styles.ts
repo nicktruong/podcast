@@ -22,7 +22,10 @@ export const useStyles = tss.create(({ theme }) => ({
   userAvatarContainer: {
     width: "232px",
     height: "232px",
+    display: "flex",
     borderRadius: "50%",
+    alignItems: "center",
+    justifyContent: "center",
     boxShadow: theme.shadows[20],
     backgroundColor: lighten(theme.palette.common.black, 0.07),
   },
@@ -34,6 +37,10 @@ export const useStyles = tss.create(({ theme }) => ({
     objectFit: "cover",
     borderRadius: "50%",
   },
+  avatarIcon: {
+    fontSize: "160px",
+    color: theme.palette.text.secondary,
+  },
   userInfo: {
     display: "flex",
     flexDirection: "column",
@@ -41,9 +48,9 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   editAction: {
     gap: "8px",
-    display: "flex",
-    marginTop: "24px",
     cursor: "pointer",
+    marginTop: "24px",
+    display: "inline-flex",
   },
   editIcon: {
     fontSize: "20px",

@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
-import { RoundedButton, ColorIconStepper } from "@/components";
+import { ColorIconStepper } from "@/components";
 
 import useHelper from "./useHelper";
 import { PodcasterDashboardOnboardingProps } from "./interfaces";
@@ -51,13 +51,13 @@ export default function PodcasterDashboardOnboarding({
                     a short trailer to get your podcast out there.
                   </Typography>
 
-                  <RoundedButton
-                    variant="contained"
+                  <Button
+                    variant="roundContained"
                     className={classes.letDoItBtn}
                     onClick={handleClickOpenEpisodeDialog}
                   >
                     Let&apos;s do it
-                  </RoundedButton>
+                  </Button>
                 </>
               )}
             </Box>
@@ -75,13 +75,13 @@ export default function PodcasterDashboardOnboarding({
                     later.
                   </Typography>
 
-                  <RoundedButton
-                    variant="outlined"
+                  <Button
+                    variant="roundContained"
                     className={classes.setupBtn}
                     onClick={handleOpenCreateSeriesDialog}
                   >
                     Go to setup
-                  </RoundedButton>
+                  </Button>
                 </>
               )}
             </Box>

@@ -5,13 +5,14 @@ import {
   AlertTitle,
   Typography,
   CircularProgress,
+  Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import { AuthErrorCodes } from "firebase/auth";
 
 import { routes } from "@/common/constants";
-import { Logo, StyledInput, NextButton, AuthButton } from "@/components";
+import { Logo, StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 
 import usePrepare from "./usePrepare";
@@ -111,7 +112,8 @@ export default function Login() {
               />
             </Box>
 
-            <NextButton
+            <Button
+              variant="next"
               sx={{ marginTop: "20px" }}
               type="submit"
               startIcon={isSubmitting && <Box width="20px" />}
@@ -127,7 +129,7 @@ export default function Login() {
               }
             >
               Log In
-            </NextButton>
+            </Button>
           </form>
 
           <Box sx={{ marginTop: "32px" }}>
@@ -144,7 +146,8 @@ export default function Login() {
             </Box>
 
             <Box sx={{ marginTop: "32px" }}>
-              <AuthButton
+              <Button
+                variant="auth"
                 startIcon={
                   <img
                     alt="Google Icon"
@@ -160,8 +163,9 @@ export default function Login() {
                 onClick={loginRedirectWithGoogle}
               >
                 Sign in with Google
-              </AuthButton>
-              <AuthButton
+              </Button>
+              <Button
+                variant="auth"
                 startIcon={
                   <img
                     alt="Facebook Icon"
@@ -176,7 +180,7 @@ export default function Login() {
                 onClick={loginRedirectWithFacebook}
               >
                 Sign in with Facebook
-              </AuthButton>
+              </Button>
             </Box>
 
             <Divider sx={{ marginTop: "32px" }} />

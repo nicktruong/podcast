@@ -31,8 +31,8 @@ const usePrepare = () => {
 
   const userRoles = useAppSelector(selectUserRoles);
 
+  const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
   const location = useLocation();
   const isSearchPage = location.pathname.includes("/search");
@@ -40,11 +40,13 @@ const usePrepare = () => {
   const { isSmaller } = useMaxWidthScreenMedia(theme.breakpoints.values.md);
 
   const handleClickOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setOpen(true);
     setAnchorEl(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
+    setOpen(false);
   };
 
   const handleUpgradeToPodcasterRole = () => {

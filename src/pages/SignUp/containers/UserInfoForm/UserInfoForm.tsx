@@ -1,6 +1,7 @@
 import {
   Box,
   Radio,
+  Button,
   Select,
   MenuItem,
   RadioGroup,
@@ -13,7 +14,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 
 import { GENDERS } from "@/common/enums";
 import { months } from "@/common/constants";
-import { StyledInput, NextButton } from "@/components";
+import { StyledInput } from "@/components";
 
 import { UserInfoFormProps } from "./interfaces";
 
@@ -284,9 +285,13 @@ export default function UserInfoForm({
           </FormHelperText>
         )}
 
-        <NextButton onClick={nextStepHandler} sx={{ marginTop: "20px" }}>
+        <Button
+          variant="next"
+          onClick={nextStepHandler}
+          sx={{ marginTop: "20px" }}
+        >
           <span>Next</span>
-        </NextButton>
+        </Button>
       </Box>
     </>
   );

@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
-import { Box, Divider, Typography } from "@mui/material";
+import { Box, Button, Divider, Typography } from "@mui/material";
 
 import { routes } from "@/common/constants";
-import { StyledInput, NextButton, AuthButton } from "@/components";
+import { StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 
 import { EmailFormProps } from "./interfaces";
@@ -52,9 +52,13 @@ export default function EmailForm({
             );
           }}
         />
-        <NextButton sx={{ marginTop: "20px" }} onClick={nextStepHandler}>
+        <Button
+          variant="next"
+          sx={{ marginTop: "20px" }}
+          onClick={nextStepHandler}
+        >
           Next
-        </NextButton>
+        </Button>
       </Box>
 
       <Box sx={{ marginTop: 4 }}>
@@ -71,7 +75,8 @@ export default function EmailForm({
 
       <Box sx={{ marginTop: 4 }}>
         <Box>
-          <AuthButton
+          <Button
+            variant="auth"
             startIcon={
               <img
                 src={process.env.PUBLIC_URL + "/assets/icons/google-icon.svg"}
@@ -85,8 +90,9 @@ export default function EmailForm({
             sx={{ marginBottom: "8px" }}
           >
             Sign up with Google
-          </AuthButton>
-          <AuthButton
+          </Button>
+          <Button
+            variant="auth"
             startIcon={
               <img
                 src={process.env.PUBLIC_URL + "/assets/icons/facebook-icon.svg"}
@@ -99,7 +105,7 @@ export default function EmailForm({
             onClick={loginRedirectWithFacebook}
           >
             Sign up with Facebook
-          </AuthButton>
+          </Button>
         </Box>
 
         <Divider sx={{ marginTop: 4 }} />

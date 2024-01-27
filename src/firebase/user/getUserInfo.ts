@@ -17,7 +17,7 @@ export const getUserInfo = async (uid: string): Promise<User | undefined> => {
 
   const user = { id: userSnapshot.id, ...userSnapshot.data() } as User;
 
-  if (!user.photoURL.startsWith("https")) {
+  if (user.photoURL && !user.photoURL.startsWith("https")) {
     user.photoURL = await downloadFileFromStorage(user.photoURL);
   }
 

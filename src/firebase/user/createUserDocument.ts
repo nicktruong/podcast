@@ -16,6 +16,7 @@ export const createUserDocument = async (user: UserCreationData) => {
     name,
     history: [],
     roles: [role],
+    episodeCount: 0,
     categoriesOfInterest,
     gender: gender ?? null,
     dob: dob?.toISOString() ?? null,

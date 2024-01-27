@@ -1,3 +1,4 @@
+import { GoPerson } from "react-icons/go";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -15,14 +16,18 @@ const Profile = () => {
         <Box component="header" className={classes.headerRoot}>
           <Box className={classes.seriesCoverContainer}>
             <Box className={classes.userAvatarContainer}>
-              <img
-                width="232px"
-                height="232px"
-                src={user?.photoURL}
-                className={classes.userAvatar}
-                alt={`${user?.photoURL} avatar`}
-                // TODO: ignore google photo
-              />
+              {user?.photoURL ? (
+                <img
+                  width="232px"
+                  height="232px"
+                  src={user?.photoURL}
+                  className={classes.userAvatar}
+                  alt={`${user?.name} avatar`}
+                  // TODO: ignore google photo
+                />
+              ) : (
+                <GoPerson className={classes.avatarIcon} />
+              )}
             </Box>
           </Box>
           <Box className={classes.userInfo}>

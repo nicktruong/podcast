@@ -1,4 +1,10 @@
-import { addDoc, collection } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  increment,
+  updateDoc,
+} from "firebase/firestore";
 
 import { Episode, EpisodeCreationData } from "@/common/interfaces";
 import { COLLECTIONS, PodcastStatus } from "@/common/enums";
@@ -25,6 +31,10 @@ export const publishEpisode = async (
     status: PodcastStatus.PUBLISHED,
     ...data,
   };
+
+  await updateDoc(doc(db, COLLECTIONS.USERS, authorId), {
+    episodeCount: increment(1),
+  });
 
   await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
 

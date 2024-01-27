@@ -68,15 +68,14 @@ export default function UserMenu() {
           {userId && (
             <>
               <IconButton
-                id="user-menu-button"
-                aria-controls={open ? "user-menu" : undefined}
                 aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
+                id="user-menu-button"
                 onClick={handleClickOpenMenu}
+                aria-expanded={open ? "true" : undefined}
+                aria-controls={open ? "user-menu" : undefined}
               >
                 <PersonIcon />
               </IconButton>
-
               <Menu
                 className={classes.mobileMenu}
                 id="user-menu"
