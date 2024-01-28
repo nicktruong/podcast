@@ -5,9 +5,12 @@ import { EpisodeCreationSteps } from "@/common/enums";
 
 import { UploadPodBreadcrumbs } from "../Breadcrumbs";
 
+import { usePrepare } from "./usePrepare";
 import { DialogBarProps } from "./interfaces";
 
 export default function DialogBar({ step, handleClose }: DialogBarProps) {
+  const { t } = usePrepare();
+
   return (
     <AppBar
       sx={(theme) => ({
@@ -44,12 +47,14 @@ export default function DialogBar({ step, handleClose }: DialogBarProps) {
               whiteSpace: "nowrap",
             }}
           >
-            Create episode
+            {t("createEpisode")}
           </Typography>
 
           <UploadPodBreadcrumbs
-            activeStep={step}
-            steps={Object.values(EpisodeCreationSteps)}
+            activeStep={t(step)}
+            steps={Object.values(EpisodeCreationSteps).map((stepValue) =>
+              t(stepValue)
+            )}
           />
         </Box>
 

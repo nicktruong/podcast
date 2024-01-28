@@ -1,10 +1,14 @@
 import Dropzone from "react-dropzone";
+import { Trans } from "react-i18next";
 import { Box, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
+import { usePrepare } from "./usePrepare";
 import { UploadAudioProps } from "./interfaces";
 
 export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
+  const { t } = usePrepare();
+
   return (
     <>
       <Box>
@@ -15,7 +19,7 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
           }}
           component="h1"
         >
-          Upload audio or video
+          {t("uploadAudioOrVideo")}
         </Typography>
 
         <Typography
@@ -25,7 +29,7 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
             color: theme.palette.text.secondary,
           })}
         >
-          Create an audio or video episode in a few simple steps.
+          {t("createAudioAndVideoInSimpleSteps")}
         </Typography>
       </Box>
 
@@ -36,12 +40,14 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
             color: theme.palette.text.secondary,
           })}
         >
-          Supported file types:
+          {t("supportedFileTypes")}
         </Typography>
 
         <Box sx={(theme) => ({ color: theme.palette.text.secondary })}>
           <ul className="mt-3 list-disc">
-            <li className="ml-10 font-medium">Audio files: mp3</li>
+            <li className="ml-10 font-medium">
+              {t("supportedFileTypesValues")}
+            </li>
           </ul>
         </Box>
       </Box>
@@ -53,8 +59,7 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
           color: theme.palette.text.secondary,
         })}
       >
-        For more guidance and best practices, check out our audio and video
-        guidelines.
+        {t("guidanceAndBestPractices")}
       </Typography>
 
       <Dropzone onDrop={onFileUpload}>
@@ -92,8 +97,9 @@ export default function UploadAudio({ onFileUpload }: UploadAudioProps) {
                 color: theme.palette.text.secondary,
               })}
             >
-              Drag and drop <br />
-              or click to select files
+              <Trans i18nKey="dragAndDrop" t={t}>
+                Drag and drop <br /> or click to select files
+              </Trans>
             </Typography>
           </Box>
         )}

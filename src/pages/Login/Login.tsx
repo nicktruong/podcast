@@ -18,7 +18,7 @@ import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 import usePrepare from "./usePrepare";
 
 export default function Login() {
-  const { control, errors, isSubmitting, submitErrorCode, onSubmit } =
+  const { control, errors, isSubmitting, submitErrorCode, t, onSubmit } =
     usePrepare();
 
   return (
@@ -30,7 +30,9 @@ export default function Login() {
           margin: "0 auto",
         })}
       >
-        <Logo />
+        <Link to={routes.index}>
+          <Logo />
+        </Link>
       </Box>
 
       <Box className="px-8">
@@ -49,7 +51,7 @@ export default function Login() {
               },
             })}
           >
-            <span>Log in to</span>{" "}
+            <span>{t("loginTo")}</span>{" "}
             <span className="whitespace-nowrap">Go Podcast</span>
           </Typography>
 
@@ -67,7 +69,7 @@ export default function Login() {
 
             <Box>
               <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-                Email address
+                {t("emailAddress")}
               </Typography>
 
               <Controller
@@ -80,7 +82,7 @@ export default function Login() {
                       variant="outlined"
                       error={!!errors.email}
                       placeholder="name@domain.com"
-                      helperText={errors.email?.message}
+                      helperText={t(errors.email?.message ?? "")}
                       {...field}
                     />
                   );
@@ -90,7 +92,7 @@ export default function Login() {
 
             <Box sx={{ marginTop: "16px" }}>
               <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-                Password
+                {t("password")}
               </Typography>
 
               <Controller
@@ -104,7 +106,7 @@ export default function Login() {
                       variant="outlined"
                       placeholder="Password"
                       error={!!errors.password}
-                      helperText={errors.password?.message}
+                      helperText={t(errors.password?.message ?? "")}
                       {...field}
                     />
                   );
@@ -128,7 +130,7 @@ export default function Login() {
                 )
               }
             >
-              Log In
+              {t("login")}
             </Button>
           </form>
 
@@ -141,7 +143,7 @@ export default function Login() {
                   },
                 })}
               >
-                or
+                {t("or")}
               </Divider>
             </Box>
 
@@ -162,7 +164,7 @@ export default function Login() {
                 sx={{ marginBottom: "8px" }}
                 onClick={loginRedirectWithGoogle}
               >
-                Sign in with Google
+                {t("signInWithGoogle")}
               </Button>
               <Button
                 variant="auth"
@@ -179,7 +181,7 @@ export default function Login() {
                 }
                 onClick={loginRedirectWithFacebook}
               >
-                Sign in with Facebook
+                {t("signInWithFacebook")}
               </Button>
             </Box>
 
@@ -194,12 +196,12 @@ export default function Login() {
                 color: "text.secondary",
               }}
             >
-              <span>Don&apos;t have an account? </span>
+              <span>{t("dontHaveAnAccount")} </span>
               <Link
                 className="font-bold underline text-white block mt-1 pb-4"
                 to={routes.signup}
               >
-                Sign up for GO Podcast
+                {t("signUpForGoPodcast")}
               </Link>
             </Typography>
           </Box>

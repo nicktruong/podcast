@@ -16,7 +16,7 @@ import { routes } from "@/common/constants";
 import usePrepare from "./usePrepare";
 
 export default function SideBar() {
-  const { cx, active, classes, playlists, isSidebarExpand } = usePrepare();
+  const { active, classes, playlists, isSidebarExpand, t, cx } = usePrepare();
 
   return (
     <Box className={classes.root}>
@@ -40,7 +40,7 @@ export default function SideBar() {
                 className={cx(classes.listItemText, {
                   [classes.active]: active[routes.index],
                 })}
-                primary="Home"
+                primary={t("home")}
               />
             )}
           </ListItemButton>
@@ -65,7 +65,7 @@ export default function SideBar() {
                 className={cx(classes.listItemText, {
                   [classes.active]: active[routes.search],
                 })}
-                primary="Search"
+                primary={t("search")}
               />
             )}
           </ListItemButton>
@@ -76,7 +76,9 @@ export default function SideBar() {
         <Box className={classes.libraryHeading}>
           <BookmarksIcon className={classes.icon} />
           {isSidebarExpand && (
-            <Typography className={classes.text}>Your Playlists</Typography>
+            <Typography className={classes.text}>
+              {t("yourPlaylists")}
+            </Typography>
           )}
         </Box>
 
@@ -101,7 +103,7 @@ export default function SideBar() {
                   {playlist.title}
                 </Typography>
                 <Typography className={classes.playlistAuthor}>
-                  Playlist
+                  {t("playlist")}
                 </Typography>
               </Box>
             )}

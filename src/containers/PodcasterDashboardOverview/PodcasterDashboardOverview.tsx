@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
 import { Button, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { selectPodcast } from "@/store/podcast";
 import { selectUser, selectUserId } from "@/store/user";
@@ -13,6 +14,7 @@ export default function PodDashboardOverview() {
   const user = useAppSelector(selectUser);
   const userId = useAppSelector(selectUserId);
   const podSeries = useAppSelector(selectPodcast);
+  const { t } = useTranslation("PodcasterDashboard");
 
   useEffect(() => {
     if (userId) {
@@ -70,7 +72,7 @@ export default function PodDashboardOverview() {
                 textTransform: "uppercase",
               }}
             >
-              Podcast
+              {t("podcast")}
             </Typography>
 
             <Typography
@@ -93,15 +95,15 @@ export default function PodDashboardOverview() {
                 color: theme.palette.text.secondary,
               })}
             >
-              {user?.episodeCount} episode(s)
+              {user?.episodeCount} {t("episode")}
             </Typography>
           </Box>
 
           <Box sx={{ marginTop: "48px" }}>
             <Button variant="round" sx={{ marginRight: "12px" }}>
-              Share
+              {t("share")}
             </Button>
-            <Button variant="round">Profile page</Button>
+            <Button variant="round">{t("profilePage")}</Button>
           </Box>
         </Box>
       </Box>
@@ -123,7 +125,7 @@ export default function PodDashboardOverview() {
           })}
         >
           <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
-            Podcast overview
+            {t("podcastOverview")}
           </Typography>
 
           <Box
@@ -148,7 +150,7 @@ export default function PodDashboardOverview() {
                   fontSize: "13px",
                 }}
               >
-                Plays
+                {t("plays")}
               </Typography>
               <Typography
                 sx={{
@@ -164,7 +166,7 @@ export default function PodDashboardOverview() {
                   color: theme.palette.text.secondary,
                 })}
               >
-                All-time
+                {t("allTime")}
               </Typography>
             </Box>
 
@@ -182,7 +184,7 @@ export default function PodDashboardOverview() {
                   fontSize: "13px",
                 }}
               >
-                Audience size
+                {t("audienceSize")}
               </Typography>
               <Typography
                 sx={{
@@ -198,7 +200,7 @@ export default function PodDashboardOverview() {
                   color: theme.palette.text.secondary,
                 })}
               >
-                All-time
+                {t("allTime")}
               </Typography>
             </Box>
 
@@ -214,7 +216,7 @@ export default function PodDashboardOverview() {
                   fontSize: "13px",
                 }}
               >
-                Followeres
+                {t("followers")}
               </Typography>
               <Typography
                 sx={{
@@ -222,7 +224,7 @@ export default function PodDashboardOverview() {
                   fontSize: "32px",
                 }}
               >
-                0
+                {/* TODO: Implement followers */}0
               </Typography>
               <Typography
                 sx={(theme) => ({
@@ -230,7 +232,7 @@ export default function PodDashboardOverview() {
                   color: theme.palette.text.secondary,
                 })}
               >
-                Grow your audience
+                {t("growYourAudience")}
               </Typography>
             </Box>
           </Box>
@@ -251,7 +253,7 @@ export default function PodDashboardOverview() {
               fontSize: "18px",
             }}
           >
-            Latest episode
+            {t("latestEpisode")}
           </Typography>
 
           <Box
@@ -272,7 +274,7 @@ export default function PodDashboardOverview() {
                   fontSize: "13px",
                 }}
               >
-                Plays
+                {t("plays")}
               </Typography>
               <Typography
                 sx={{

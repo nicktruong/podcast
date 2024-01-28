@@ -1,4 +1,5 @@
 export enum PODCAST_FIELDS {
+  TITLE = "title",
   RANDOM = "random",
   CATEGORY = "category",
   AUTHOR_ID = "authorId",

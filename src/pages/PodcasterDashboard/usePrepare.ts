@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import {
   getEpisodesFromCreatorPaged,
+  resetUploadPodState,
   selectEpisodesAreLoading,
   selectEpisodesOfCreator,
 } from "@/store/episode";
@@ -44,6 +45,7 @@ export const usePrepare = () => {
   const handleCloseEpisodeDialog = () => {
     setOpenCreateSeriesDialog(false);
     setOpenCreateEpisodeDialog(false);
+    dispatch(resetUploadPodState());
   };
 
   useEffect(() => {

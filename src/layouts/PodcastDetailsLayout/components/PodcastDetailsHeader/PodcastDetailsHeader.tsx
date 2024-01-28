@@ -11,6 +11,7 @@ const PodcastDetailsHeader = () => {
     titleFontSize,
     seriesTitleRef,
     seriesTitleContainerRef,
+    t,
   } = usePrepare();
 
   return (
@@ -26,7 +27,7 @@ const PodcastDetailsHeader = () => {
       </Box>
 
       <Box className={classes.seriesInfo}>
-        <Typography fontSize="14px">Podcast</Typography>
+        <Typography fontSize="14px">{t("podcast")}</Typography>
         <Box height="140px" ref={seriesTitleContainerRef}>
           <Typography
             fontWeight={700}

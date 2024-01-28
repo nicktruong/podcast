@@ -10,15 +10,19 @@ import {
   Typography,
   TableContainer,
 } from "@mui/material";
-import { format } from "date-fns";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
 import { usePrepare } from "./usePrepare";
 
 const UserPlaylist = () => {
-  const { classes, playlist, episodesDetail, handleRemovePodcastFromPlaylist } =
-    usePrepare();
+  const {
+    classes,
+    playlist,
+    episodesDetail,
+    t,
+    handleRemovePodcastFromPlaylist,
+  } = usePrepare();
 
   if (!episodesDetail.length) {
     return <Box className={classes.content}>This playlist is empty!</Box>;
@@ -31,9 +35,9 @@ const UserPlaylist = () => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.firstColumn}>#</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Album or podcast</TableCell>
-              <TableCell>Release date</TableCell>
+              <TableCell>{t("title")}</TableCell>
+              <TableCell>{t("podcast")}</TableCell>
+              <TableCell>{t("releaseDateHeading")}</TableCell>
               <TableCell />
             </TableRow>
           </TableHead>
@@ -79,7 +83,17 @@ const UserPlaylist = () => {
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {format(new Date(Date.now()), "MMM d, y")}
+                    {/* {format(new Date(Date.now()), "MMM d, y")} */}
+                    {t("releaseDate", {
+                      val: new Date(episode?.publishedDate ?? Date.now()),
+                      formatParams: {
+                        val: {
+                          month: "long",
+                          day: "numeric",
+                          year: "numeric",
+                        },
+                      },
+                    })}
                   </TableCell>
                   <TableCell>
                     <IconButton

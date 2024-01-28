@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { FirebaseError } from "@firebase/util";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useTranslation } from "react-i18next";
 
 import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 import { loginWithEmailPassword } from "@/firebase";
@@ -14,6 +15,8 @@ import type { LoginData } from "@/common/interfaces";
 const { EMAIL, PASSWORD } = FORM_DEFAULT_VALUES;
 
 const usePrepare = () => {
+  const { t } = useTranslation("Login");
+
   const navigate = useNavigate();
   const [submitErrorCode, setSubmitErrorCode] = useState("");
 
@@ -43,9 +46,10 @@ const usePrepare = () => {
   return {
     errors,
     control,
-    onSubmit,
     isSubmitting,
     submitErrorCode,
+    t,
+    onSubmit,
   };
 };
 

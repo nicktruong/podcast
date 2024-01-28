@@ -1,5 +1,6 @@
 import { Controller } from "react-hook-form";
 import { Box, Button, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 import { StyledInput } from "@/components";
 
@@ -10,11 +11,13 @@ export default function PasswordForm({
   control,
   nextStepHandler,
 }: PasswordFormProps) {
+  const { t } = useTranslation("SignUp");
+
   return (
     <>
       <Box className="sm:pl-16 sm:pr-4 mt-4">
         <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-          Password
+          {t("password")}
         </Typography>
 
         <Controller
@@ -28,7 +31,9 @@ export default function PasswordForm({
                 variant="outlined"
                 error={!!errors.password}
                 helperText={
-                  errors.password && <span>{errors.password.message}</span>
+                  errors.password && (
+                    <span>{t(errors.password.message ?? "")}</span>
+                  )
                 }
                 {...field}
               />
@@ -45,8 +50,7 @@ export default function PasswordForm({
           })}
           fontWeight={500}
         >
-          The password must contain at least 8 characters, 1 number and 1
-          special character.
+          {t("invalidPassword")}
         </Typography>
 
         <Button
@@ -54,7 +58,7 @@ export default function PasswordForm({
           onClick={nextStepHandler}
           sx={{ marginTop: "20px" }}
         >
-          Next
+          {t("next")}
         </Button>
       </Box>
     </>

@@ -1,15 +1,15 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import {
   selectTrendings,
-  selectLoadingPodcastsForListener,
   selectPodcastsToTry,
   selectPodcastsForYou,
   selectRecentlyPlayed,
   fetchPodcastsToTryPaged,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
+  selectLoadingPodcastsForListener,
   fetchRecentlyPlayedPodcastsPaged,
   selectFetchedPodcastsForListener,
 } from "@/store/listenerPodcastSeries";
@@ -20,6 +20,8 @@ import { useStyles } from "./styles";
 import { SectionData } from "./interfaces";
 
 const usePrepare = () => {
+  const { t } = useTranslation("Home");
+
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
@@ -37,44 +39,40 @@ const usePrepare = () => {
   const sections: SectionData[] = [
     {
       key: "recentlyPlayed",
-      title: "Recently played",
+      title: t("recentlyPlayed"),
       podcasts: recentlyPlayed,
     },
     {
       key: "trendings",
-      title: "Trending podcasts",
+      title: t("trendings"),
       podcasts: trendingPodcasts,
     },
     {
       key: "podcastsForYou",
-      title: "Podcasts for you",
+      title: t("podcastsForYou"),
       podcasts: podcastsForYou,
     },
     {
       key: "podcastsToTry",
-      title: "Podcasts to try",
+      title: t("podcastsToTry"),
       podcasts: podcastsToTry,
     },
   ];
 
   useEffect(() => {
-    const initTrendingPodcastSection = async () => {
+    const init = async () => {
+      if (userId) {
+        !loading.recentlyPlayed &&
+          (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
+      }
+
       !loading.trendings &&
         !fetched.trendings &&
         (await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })));
-    };
 
-    initTrendingPodcastSection();
-  }, []);
-
-  useEffect(() => {
-    const init = async () => {
       if (!userId) {
         return;
       }
-
-      !loading.recentlyPlayed &&
-        (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
 
       !loading.podcastsForYou &&
         !fetched.podcastsForYou &&

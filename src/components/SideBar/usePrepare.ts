@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import { routes } from "@/common/constants";
 import { selectUserId } from "@/store/user";
@@ -10,6 +11,8 @@ import { fetchUserPlaylists, selectPlaylists } from "@/store/playlists";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
+  const { t } = useTranslation("RootLayout");
+
   const dispatch = useAppDispatch();
 
   const userId = useAppSelector(selectUserId);
@@ -33,7 +36,7 @@ const usePrepare = () => {
     }
   }, [userId]);
 
-  return { cx, active, classes, playlists, isSidebarExpand };
+  return { active, classes, playlists, isSidebarExpand, t, cx };
 };
 
 export default usePrepare;

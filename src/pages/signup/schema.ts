@@ -11,19 +11,24 @@ const schema = Joi.object<RegisterData>({
     .max(320)
     .required()
     .messages({
-      "string.email":
-        "This email is invalid. Make sure it's written like example@email.com",
-      "string.empty":
-        "This email is invalid. Make sure it's written like example@email.com",
+      "string.email": "invalidMail",
+      "string.empty": "invalidMail",
     }),
   password: Joi.string()
     .pattern(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/)
     .required()
     .messages({
-      "string.pattern.base": "Password must pass the below criteria",
+      "string.empty": "passwordMustPassCriteria",
+      "string.pattern.base": "passwordMustPassCriteria",
     }),
-  name: Joi.string().required(),
-  gender: Joi.string().valid(...Object.keys(GENDERS)),
+  name: Joi.string().required().messages({
+    "string.empty": "invalidName",
+  }),
+  gender: Joi.string()
+    .valid(...Object.keys(GENDERS))
+    .messages({
+      "any.only": "pleaseChooseGender",
+    }),
   date: Joi.number()
     .custom((value, helper) => {
       value = +value;
@@ -43,10 +48,14 @@ const schema = Joi.object<RegisterData>({
       return value;
     })
     .messages({
-      "dob.date": "Date must be a number",
-      "dob.date.range": "Please choose a valid date",
+      "dob.date": "dateMustBeNumber",
+      "number.base": "dateMustBeNumber",
+      "dob.date.range": "invalidDate",
     }),
-  month: Joi.number().required(),
+  month: Joi.number().required().messages({
+    "any.required": "monthMustBeNumber",
+    "number.base": "monthMustBeNumber",
+  }),
   year: Joi.number()
     .custom((value, helper) => {
       value = +value;
@@ -62,8 +71,9 @@ const schema = Joi.object<RegisterData>({
       return value;
     })
     .messages({
-      "dob.year": "Year must be a number",
-      "dob.year.range": "Please choose a valid year (after 1907)",
+      "dob.year": "yearMustBeNumber",
+      "number.base": "yearMustBeNumber",
+      "dob.year.range": "invalidYear",
     }),
   categoriesOfInterest: Joi.array().items(Joi.string()).min(3),
 });

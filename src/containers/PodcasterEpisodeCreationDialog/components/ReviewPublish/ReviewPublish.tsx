@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 
+import { usePrepare } from "./usePrepare";
 import { ReviewPublishProps } from "./interfaces";
 
 export default function ReviewPublish({
@@ -8,6 +9,8 @@ export default function ReviewPublish({
   user,
   image,
 }: ReviewPublishProps) {
+  const { t } = usePrepare();
+
   return (
     <Box>
       <Typography
@@ -16,7 +19,7 @@ export default function ReviewPublish({
           fontSize: "24px",
         }}
       >
-        Review
+        {t("review")}
       </Typography>
 
       <Box
@@ -74,7 +77,7 @@ export default function ReviewPublish({
               marginTop: "32px",
             }}
           >
-            Description
+            {t("description")}
           </Typography>
           <Typography
             sx={(theme) => ({
@@ -106,7 +109,7 @@ export default function ReviewPublish({
               color: theme.palette.text.secondary,
             })}
           >
-            Now
+            {t("now")}
           </Typography>
         </Box>
 
@@ -118,7 +121,7 @@ export default function ReviewPublish({
               marginTop: "16px",
             }}
           >
-            Episode type
+            {t("episodeType")}
           </Typography>
           <Typography
             sx={(theme) => ({
@@ -128,7 +131,7 @@ export default function ReviewPublish({
               color: theme.palette.text.secondary,
             })}
           >
-            Full
+            {t("full")}
           </Typography>
         </Box>
 
@@ -140,7 +143,7 @@ export default function ReviewPublish({
               marginTop: "16px",
             }}
           >
-            Episode availability
+            {t("episodeAvailability")}
           </Typography>
           <Typography
             sx={(theme) => ({
@@ -150,7 +153,7 @@ export default function ReviewPublish({
               color: theme.palette.text.secondary,
             })}
           >
-            Everyone
+            {t("everyone")}
           </Typography>
         </Box>
       </Box>

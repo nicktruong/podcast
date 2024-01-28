@@ -1,0 +1,14 @@
+{
+  "signUpForGoPodcast": "Sign up for GO Podcast",
+  "dontHaveAnAccount": "Don't have an account?",
+  "signInWithFacebook": "Sign in with Facebook",
+  "signInWithGoogle": "Sign in with Google",
+  "invalidPassword": "The password must contain at least 8 characters, 1 number and 1 special character.",
+  "invalidMail": "This email is invalid. Make sure it's written like example@email.com",
+
+  "or": "or",
+  "login": "Log In",
+  "password": "Password",
+  "emailAddress": "Email address",
+  "loginTo": "Log in to"
+}

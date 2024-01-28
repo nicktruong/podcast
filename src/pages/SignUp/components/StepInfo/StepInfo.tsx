@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import { useTranslation } from "react-i18next";
 
 import { SignUpSteps } from "@/common/enums";
 
@@ -10,6 +11,8 @@ interface Props {
 }
 
 export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
+  const { t } = useTranslation("SignUp");
+
   return (
     <Box sx={{ display: "flex" }} className="mt-2">
       <Box
@@ -44,7 +47,7 @@ export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
           })}
           fontWeight={500}
         >
-          Step {activeStep + 1} in {steps.length}
+          {t("step")} {activeStep + 1} in {steps.length}
         </Typography>
         <Typography fontWeight={700}>{steps[activeStep]}</Typography>
       </Box>

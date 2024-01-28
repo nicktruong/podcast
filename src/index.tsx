@@ -1,8 +1,9 @@
+import "./config";
+import "./serviceWorker";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import "./config";
-import "./serviceWorker";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 

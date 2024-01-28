@@ -1,6 +1,10 @@
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create(({ theme }) => ({
+  alignCenter: {
+    display: "flex",
+    alignItems: "center",
+  },
   appbarRoot: {
     width: "100%",
     padding: "12px 0",

@@ -1,7 +1,8 @@
-import { useCallback, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useDebouncedCallback } from "use-debounce";
 import { useTheme } from "@mui/material";
+import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDebouncedCallback } from "use-debounce";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   signOut,
@@ -9,14 +10,16 @@ import {
   selectUserRoles,
   upgradeToPodcaster,
 } from "@/store/user";
-import { selectUIState, toggleExpand } from "@/store/ui";
 import { searchAction } from "@/store/search";
 import { useMaxWidthScreenMedia } from "@/common/utils";
+import { selectUIState, toggleExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
+  const { t } = useTranslation("RootLayout");
+
   const theme = useTheme();
 
   const navigate = useNavigate();
@@ -81,6 +84,7 @@ const usePrepare = () => {
     isSmaller,
     isSearchPage,
     isSidebarExpand,
+    t,
     search,
     navigate,
     toggleSidebar,

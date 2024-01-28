@@ -9,6 +9,7 @@ import {
 
 import { EpisodeCreationSteps } from "@/common/enums";
 
+import { usePrepare } from "./usePrepare";
 import { BottomDialogBarProps } from "./interfaces";
 
 export default function BottomDialogBar({
@@ -19,6 +20,8 @@ export default function BottomDialogBar({
   handleStepBack,
   podUploadingProgress,
 }: BottomDialogBarProps) {
+  const { t } = usePrepare();
+
   return (
     <AppBar
       elevation={0}
@@ -59,7 +62,7 @@ export default function BottomDialogBar({
                   color: theme.palette.text.primary,
                 })}
               >
-                Uploading ({podUploadingProgress}%)
+                {t("uploading")} ({podUploadingProgress}%)
               </Typography>
               {podUploadingProgress < 100 && (
                 <Typography
@@ -72,7 +75,7 @@ export default function BottomDialogBar({
                   })}
                   onClick={handleCancel}
                 >
-                  Cancel
+                  {t("cancel")}
                 </Typography>
               )}
             </Box>
@@ -98,7 +101,7 @@ export default function BottomDialogBar({
               disabled={step === EpisodeCreationSteps.EDIT_DETAILS}
               onClick={handleStepBack}
             >
-              Back
+              {t("back")}
             </Button>
           </Box>
         </Box>
@@ -126,7 +129,9 @@ export default function BottomDialogBar({
             },
           })}
         >
-          {step === EpisodeCreationSteps.EDIT_DETAILS ? "Next" : "Publish"}
+          {step === EpisodeCreationSteps.EDIT_DETAILS
+            ? t("next")
+            : t("publish")}
         </Button>
       </Toolbar>
     </AppBar>

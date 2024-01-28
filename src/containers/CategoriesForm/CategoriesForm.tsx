@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 import ErrorIcon from "@mui/icons-material/Error";
 import CheckIcon from "@mui/icons-material/Check";
+import { useTranslation } from "react-i18next";
 
 import { isDark } from "@/common/utils";
 
@@ -21,6 +22,8 @@ export default function CategoriesForm({
   setValue,
 }: CategoriesFormProps) {
   const { cx, classes } = usePrepare();
+
+  const { t } = useTranslation("SignUp");
 
   return (
     <>
@@ -115,7 +118,7 @@ export default function CategoriesForm({
             )
           }
         >
-          Finish
+          {t("finish")}
         </Button>
       </Box>
     </>

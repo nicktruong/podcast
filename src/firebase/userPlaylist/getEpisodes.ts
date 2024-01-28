@@ -13,6 +13,7 @@ import { EPISODE_FIELDS } from "@/common/enums/EpisodeFields";
 
 import { db } from "../init";
 import { getPodcastDetail } from "../series";
+import { downloadFileFromStorage } from "../storage";
 
 export const getPodcastAndEpisodesDetailFromEpisodeId = async (
   episodeId: string
@@ -51,6 +52,10 @@ export const getEpisodesDetailFromIds = async (episodeIds: string[]) => {
       );
 
       const podcast = podcastSnapshot.data() as Podcast;
+
+      if (podcast.coverUrl && !podcast.coverUrl.startsWith("https")) {
+        podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+      }
 
       // get author
       const authorSnapshot = await getDoc(

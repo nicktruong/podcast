@@ -1,0 +1,8 @@
+{
+  "about": "About",
+  "noBio": "No bio",
+  "follow": "Follow",
+  "unfollow": "Unfollow",
+  "allEpisodes": "All Episodes",
+  "createdAt": "{{ val, datetime }}"
+}

@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -9,6 +10,8 @@ import { selectEpisodeDetail, selectPodcastDetail } from "@/store/details";
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
+  const { t } = useTranslation("PodcastDetailsLayout");
+
   const { classes } = useStyles();
 
   const { id } = useParams();
@@ -90,5 +93,6 @@ export const usePrepare = () => {
     titleFontSize,
     seriesTitleRef,
     seriesTitleContainerRef,
+    t,
   };
 };

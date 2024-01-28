@@ -94,8 +94,13 @@ export const getRandomPocastsPaged = async ({
 
     for (const populatedPodcat of result) {
       if (populatedPodcat) {
-        if (!populatedPodcat.coverUrl.startsWith("https")) {
-          await downloadFileFromStorage(populatedPodcat.coverUrl);
+        if (
+          populatedPodcat.coverUrl &&
+          !populatedPodcat.coverUrl.startsWith("https")
+        ) {
+          populatedPodcat.coverUrl = await downloadFileFromStorage(
+            populatedPodcat.coverUrl
+          );
         }
 
         podcasts.push(populatedPodcat);

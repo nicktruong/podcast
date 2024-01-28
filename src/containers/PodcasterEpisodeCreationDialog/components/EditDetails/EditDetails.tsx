@@ -4,6 +4,7 @@ import { Box, FormHelperText, Typography } from "@mui/material";
 
 import { StyledInput } from "@/components";
 
+import { usePrepare } from "./usePrepare";
 import { EditDetailsProps } from "./interfaces";
 
 export default function EditDetails({
@@ -11,6 +12,8 @@ export default function EditDetails({
   control,
   errors,
 }: EditDetailsProps) {
+  const { t } = usePrepare();
+
   return (
     <Box sx={{ maxWidth: "524px", margin: "0 auto" }}>
       <Typography
@@ -19,7 +22,7 @@ export default function EditDetails({
           fontSize: "24px",
         }}
       >
-        Episode Details
+        {t("episodeDetails")}
       </Typography>
       <Typography
         sx={(theme) => ({
@@ -28,13 +31,13 @@ export default function EditDetails({
           color: theme.palette.text.secondary,
         })}
       >
-        Add information and decide when to publish.
+        {t("addInformation")}
       </Typography>
 
       <form onSubmit={onSubmit}>
         <Box sx={{ marginTop: "40px" }}>
           <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-            Title
+            {t("title")}
           </Typography>
           <Controller
             name="title"
@@ -44,7 +47,7 @@ export default function EditDetails({
                 <StyledInput
                   id="name"
                   variant="outlined"
-                  placeholder="Give your episode a name"
+                  placeholder={t("giveYourEpisodeAName")}
                   error={!!errors.title}
                   helperText={
                     errors.title && <span>{errors.title.message}</span>
@@ -59,7 +62,7 @@ export default function EditDetails({
 
         <Box sx={{ marginTop: "24px" }}>
           <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-            Description
+            {t("description")}
           </Typography>
 
           {/* Max 4000 characters */}
@@ -72,7 +75,7 @@ export default function EditDetails({
                   rows={4}
                   id="description"
                   className="border border-[#c6c6c6] rounded w-full py-[8px] px-[14px]"
-                  placeholder="What else do you want your audience to know?"
+                  placeholder={t("whatDoYouWantYourAudienceToKnow")}
                   {...field}
                 />
               );

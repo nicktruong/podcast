@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   selectPlaylists,
@@ -13,6 +14,8 @@ import { routes } from "@/common/constants";
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
+  const { t } = useTranslation("UserPlaylist");
+
   const navigate = useNavigate();
 
   const dispatch = useAppDispatch();
@@ -58,6 +61,7 @@ export const usePrepare = () => {
     classes,
     playlist,
     episodesDetail,
+    t,
     handleRemovePodcastFromPlaylist,
   };
 };

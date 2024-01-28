@@ -6,6 +6,7 @@ import { routes } from "@/common/constants";
 import { StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 
+import { usePrepare } from "./usePrepare";
 import { EmailFormProps } from "./interfaces";
 
 export default function EmailForm({
@@ -13,6 +14,8 @@ export default function EmailForm({
   errors,
   nextStepHandler,
 }: EmailFormProps) {
+  const { t } = usePrepare();
+
   return (
     <Box className="max-w-80 mx-auto pb-10">
       <Typography
@@ -29,12 +32,12 @@ export default function EmailForm({
           },
         })}
       >
-        <span>Sign up to start listening</span>
+        <span>{t("signUpToStartListening")}</span>
       </Typography>
 
       <Box>
         <Typography fontSize="14px" fontWeight={700} marginBottom="8px">
-          Email address
+          {t("emailAddress")}
         </Typography>
         <Controller
           name="email"
@@ -46,7 +49,9 @@ export default function EmailForm({
                 placeholder="name@domain.com"
                 variant="outlined"
                 error={!!errors.email}
-                helperText={errors.email && <span>{errors.email.message}</span>}
+                helperText={
+                  errors.email && <span>{t(errors.email.message ?? "")}</span>
+                }
                 {...field}
               />
             );
@@ -57,7 +62,7 @@ export default function EmailForm({
           sx={{ marginTop: "20px" }}
           onClick={nextStepHandler}
         >
-          Next
+          {t("next")}
         </Button>
       </Box>
 
@@ -69,7 +74,7 @@ export default function EmailForm({
             },
           })}
         >
-          or
+          {t("or")}
         </Divider>
       </Box>
 
@@ -89,7 +94,7 @@ export default function EmailForm({
             onClick={loginRedirectWithGoogle}
             sx={{ marginBottom: "8px" }}
           >
-            Sign up with Google
+            {t("signUpWithGoogle")}
           </Button>
           <Button
             variant="auth"
@@ -104,7 +109,7 @@ export default function EmailForm({
             }
             onClick={loginRedirectWithFacebook}
           >
-            Sign up with Facebook
+            {t("signUpWithFacebook")}
           </Button>
         </Box>
 
@@ -119,9 +124,9 @@ export default function EmailForm({
             fontWeight: 600,
           }}
         >
-          <span>Already have an account? </span>
+          <span>{t("alreadyHaveAnAccount")} </span>
           <Link className="font-bold underline text-white" to={routes.login}>
-            Log in here
+            {t("loginHere")}
           </Link>
         </Typography>
       </Box>

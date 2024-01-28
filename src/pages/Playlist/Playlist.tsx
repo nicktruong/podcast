@@ -1,4 +1,3 @@
-import { format } from "date-fns";
 import { Box, Button, Typography } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
@@ -19,6 +18,7 @@ export default function Playlist() {
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
+    t,
     navigate,
     handleFollow,
     handleOpenModal,
@@ -36,8 +36,8 @@ export default function Playlist() {
           className={classes.followBtn}
         >
           {!user?.following?.includes(podcastDetail?.id ?? "")
-            ? "Follow"
-            : "Unfollow"}
+            ? t("follow")
+            : t("unfollow")}
         </Button>
       </Box>
 
@@ -92,7 +92,7 @@ export default function Playlist() {
 
           <Box>
             <Typography className={classes.allEpisodes}>
-              All Episodes
+              {t("allEpisodes")}
             </Typography>
 
             {episodesDetail.map((episode) => {
@@ -149,10 +149,18 @@ export default function Playlist() {
 
                         <Box className={classes.info}>
                           <Typography className={classes.date}>
-                            {format(
-                              new Date(podcastDetail?.createdAt ?? Date.now()),
-                              "MMM d y"
-                            )}
+                            {t("createdAt", {
+                              val: new Date(
+                                podcastDetail?.createdAt ?? Date.now()
+                              ),
+                              formatParams: {
+                                val: {
+                                  month: "long",
+                                  day: "numeric",
+                                  year: "numeric",
+                                },
+                              },
+                            })}
                           </Typography>
                           {/* TODO: add progress bar when implementing history */}
                           {/* {!!durationInSeconds && (
@@ -188,15 +196,11 @@ export default function Playlist() {
         <Box className={classes.about}>
           <Box>
             <Typography className={classes.aboutHeading} component="h3">
-              About
+              {t("about")}
             </Typography>
             <Typography className={classes.aboutDetail}>
               {/* TODO: Change when Add profile & Bio */}
-              Mình là Nhi và mình là podcast host của Trải Nghiệm?!. Hãy biến
-              Trải nghiệm? là nơi để bạn hiếu kì, tò mò và muốn hiểu biết hơn về
-              UX/UI. Hãy áp dụng Trải nghiệm! để trở thành một người cầu nối
-              giữa người dùng và sản phẩm tốt nhất.
-              http://trainghiempodcast.com/
+              {podcastDetail?.author.bio ?? t("noBio")}
             </Typography>
           </Box>
 

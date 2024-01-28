@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
+import { useTranslation } from "react-i18next";
 
 import { signup } from "@/firebase";
 import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
@@ -26,6 +27,8 @@ const {
 } = FORM_DEFAULT_VALUES;
 
 const usePrepare = () => {
+  const { t } = useTranslation("SignUp");
+
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const categories = useAppSelector(selectCategories);
@@ -135,6 +138,7 @@ const usePrepare = () => {
     categories,
     activeStep,
     isSubmitting,
+    t,
     watch,
     trigger,
     setValue,

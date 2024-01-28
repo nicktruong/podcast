@@ -7,8 +7,8 @@ import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { UploadPodBreadcrumbsProps } from "./interfaces";
 
 export default function UploadPodBreadcrumbs({
-  activeStep,
   steps,
+  activeStep,
 }: UploadPodBreadcrumbsProps) {
   return (
     <Breadcrumbs

@@ -16,6 +16,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
+import { ChangeLanguageButton } from "@/components";
 
 import usePrepare from "./usePrepare";
 
@@ -29,6 +30,7 @@ export default function UserMenu() {
     isSmaller,
     isSearchPage,
     isSidebarExpand,
+    t,
     search,
     navigate,
     toggleSidebar,
@@ -57,9 +59,9 @@ export default function UserMenu() {
           <Box className={classes.searchContainer}>
             <Search className={classes.searchIcon} />
             <input
-              onChange={(e) => search(e.target.value)}
               className={classes.searchInput}
-              placeholder="What do you want to listen to?"
+              onChange={(e) => search(e.target.value)}
+              placeholder={t("whatDoYouWantToListen")}
             />
           </Box>
         )}
@@ -67,55 +69,57 @@ export default function UserMenu() {
         <Box sx={{ marginLeft: "auto" }}>
           {userId && (
             <>
-              <IconButton
-                aria-haspopup="true"
-                id="user-menu-button"
-                onClick={handleClickOpenMenu}
-                aria-expanded={open ? "true" : undefined}
-                aria-controls={open ? "user-menu" : undefined}
-              >
-                <PersonIcon />
-              </IconButton>
-              <Menu
-                className={classes.mobileMenu}
-                id="user-menu"
-                aria-labelledby="user-menu-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleCloseMenu}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "right",
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-              >
-                <MenuItem
-                  onClick={() => {
-                    handleCloseMenu();
-                    navigate(routes.profile.replace(":id", userId));
+              <Box>
+                <IconButton
+                  aria-haspopup="true"
+                  id="user-menu-button"
+                  onClick={handleClickOpenMenu}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-controls={open ? "user-menu" : undefined}
+                >
+                  <PersonIcon />
+                </IconButton>
+                <Menu
+                  open={open}
+                  id="user-menu"
+                  anchorEl={anchorEl}
+                  onClose={handleCloseMenu}
+                  className={classes.mobileMenu}
+                  aria-labelledby="user-menu-button"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
                   }}
                 >
-                  Profile
-                </MenuItem>
-                {userRoles?.includes(ROLES.PODCASTER) ? (
                   <MenuItem
                     onClick={() => {
                       handleCloseMenu();
-                      navigate(routes.podcasterDashboard);
+                      navigate(routes.profile.replace(":id", userId));
                     }}
                   >
-                    Go to Podcast Dashboard
+                    {t("profile")}
                   </MenuItem>
-                ) : (
-                  <MenuItem onClick={handleUpgradeToPodcasterRole}>
-                    Upgrade to Podcaster
-                  </MenuItem>
-                )}
-                <MenuItem onClick={handleSignOut}>Logout</MenuItem>
-              </Menu>
+                  {userRoles?.includes(ROLES.PODCASTER) ? (
+                    <MenuItem
+                      onClick={() => {
+                        handleCloseMenu();
+                        navigate(routes.podcasterDashboard);
+                      }}
+                    >
+                      {t("dashboard")}
+                    </MenuItem>
+                  ) : (
+                    <MenuItem onClick={handleUpgradeToPodcasterRole}>
+                      {t("becomeAPodcaster")}
+                    </MenuItem>
+                  )}
+                  <MenuItem onClick={handleSignOut}>{t("logout")}</MenuItem>
+                </Menu>
+              </Box>
             </>
           )}
           {!userId &&
@@ -152,7 +156,7 @@ export default function UserMenu() {
                       navigate(routes.signup);
                     }}
                   >
-                    Sign up
+                    {t("signup")}
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -160,18 +164,19 @@ export default function UserMenu() {
                       navigate(routes.login);
                     }}
                   >
-                    Log in
+                    {t("login")}
                   </MenuItem>
                 </Menu>
               </>
             ) : (
-              <Box>
+              <Box className={classes.alignCenter}>
+                <ChangeLanguageButton />
                 <Link to={routes.signup}>
-                  <Button className={classes.signUpBtn}>Sign up</Button>
+                  <Button className={classes.signUpBtn}>{t("signup")}</Button>
                 </Link>
                 <Link to={routes.login}>
                   <Button className={classes.loginBtn} variant="contained">
-                    Log in
+                    {t("login")}
                   </Button>
                 </Link>
               </Box>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 import {
   fetchPodcastDetail,
@@ -23,13 +24,15 @@ import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
+  const { t } = useTranslation("Playlist");
+
   const { id } = useParams();
 
   const navigate = useNavigate();
 
   const user = useAppSelector(selectUser);
 
-  const { cx, classes } = useStyles();
+  const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
 
@@ -125,7 +128,7 @@ const usePrepare = () => {
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
-    cx,
+    t,
     navigate,
     handleFollow,
     handleOpenModal,

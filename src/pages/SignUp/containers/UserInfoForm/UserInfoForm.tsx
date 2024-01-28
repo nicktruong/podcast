@@ -11,10 +11,11 @@ import {
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 import ErrorIcon from "@mui/icons-material/Error";
+import { useTranslation } from "react-i18next";
 
 import { GENDERS } from "@/common/enums";
-import { months } from "@/common/constants";
 import { StyledInput } from "@/components";
+import { months } from "@/common/constants";
 
 import { UserInfoFormProps } from "./interfaces";
 
@@ -24,11 +25,13 @@ export default function UserInfoForm({
   validateDate,
   nextStepHandler,
 }: UserInfoFormProps) {
+  const { t } = useTranslation("SignUp");
+
   return (
     <>
       <Box className="sm:pl-16 sm:pr-4 mt-4">
         <Typography fontSize="14px" fontWeight={700} marginBottom="2px">
-          Name
+          {t("name")}
         </Typography>
 
         <Typography
@@ -39,7 +42,7 @@ export default function UserInfoForm({
           })}
           fontWeight={500}
         >
-          This name will appear on your profile
+          {t("thisNameWillAppearOnYourProfile")}
         </Typography>
 
         <Controller
@@ -52,7 +55,9 @@ export default function UserInfoForm({
                 variant="outlined"
                 error={!!errors.name}
                 sx={{ marginTop: "8px" }}
-                helperText={errors.name && <span>{errors.name.message}</span>}
+                helperText={
+                  errors.name && <span>{t(errors.name.message ?? "")}</span>
+                }
                 {...field}
               />
             );
@@ -65,7 +70,7 @@ export default function UserInfoForm({
           marginBottom="2px"
           marginTop="24px"
         >
-          Date of birth
+          {t("dateOfBirth")}
         </Typography>
 
         <Typography
@@ -76,7 +81,7 @@ export default function UserInfoForm({
           })}
           fontWeight={500}
         >
-          Why do we need your date of birth? Learn more.
+          {t("whyDoWeNeedYourDateOfBirth")}
         </Typography>
 
         <Box>
@@ -95,7 +100,7 @@ export default function UserInfoForm({
                       width: "3rem",
                       flexShrink: 0,
                     }}
-                    placeholder="dd"
+                    placeholder={t("dd")}
                     onChange={async (event) => {
                       if (
                         event.currentTarget.value.length >= 3 ||
@@ -141,7 +146,7 @@ export default function UserInfoForm({
                     displayEmpty
                   >
                     <MenuItem value="" disabled>
-                      Month
+                      {t("month")}
                     </MenuItem>
                     {months.map(({ label, value }) => {
                       // TODO: Capitalize the key
@@ -170,7 +175,7 @@ export default function UserInfoForm({
                       width: "4.2rem",
                       textAlign: "center",
                     }}
-                    placeholder="yyyy"
+                    placeholder={t("yyyy")}
                     onChange={async (event) => {
                       if (
                         event.currentTarget.value.length >= 5 ||
@@ -211,7 +216,7 @@ export default function UserInfoForm({
                       fontWeight: 600,
                     }}
                   >
-                    {message}
+                    {t(message ?? "")}
                   </Typography>
                 </FormHelperText>
               ))}
@@ -224,7 +229,7 @@ export default function UserInfoForm({
           marginBottom="2px"
           marginTop="24px"
         >
-          Gender
+          {t("gender")}
         </Typography>
 
         <Typography
@@ -235,8 +240,7 @@ export default function UserInfoForm({
           })}
           fontWeight={500}
         >
-          We use your gender to help personalize our content recommendations and
-          ads for you.
+          {t("whyWeUseYourGender")}
         </Typography>
 
         <Controller
@@ -280,7 +284,7 @@ export default function UserInfoForm({
                 fontWeight: 600,
               }}
             >
-              {errors.gender?.message}
+              {t(errors.gender?.message ?? "")}
             </Typography>
           </FormHelperText>
         )}
@@ -290,7 +294,7 @@ export default function UserInfoForm({
           onClick={nextStepHandler}
           sx={{ marginTop: "20px" }}
         >
-          <span>Next</span>
+          <span>{t("next")}</span>
         </Button>
       </Box>
     </>

@@ -7,7 +7,7 @@ import { usePrepare } from "./usePrepare";
 import { SectionProps } from "./interfaces";
 
 export default function Section({ title, podcasts }: SectionProps) {
-  const { classes } = usePrepare();
+  const { classes, t } = usePrepare();
 
   return (
     <Box className={classes.section} component="section">
@@ -33,7 +33,7 @@ export default function Section({ title, podcasts }: SectionProps) {
                 {podcast.title}
               </Typography>
               <Typography className={classes.seriesAuthor}>
-                By {podcast.author?.name}
+                {t("by")} {podcast.author?.name}
               </Typography>
             </Box>
           </Link>
