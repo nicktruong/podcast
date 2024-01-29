@@ -49,7 +49,7 @@
     "storybook": "yarn tailwind && storybook dev -p 6006",
     "build-storybook": "yarn tailwind && storybook build",
     "tailwind": "npx tailwindcss -c ./tailwind.config.js -i ./src/index.css -o .tailwind/index.css",
-    "seed": "ts-node -r tsconfig-paths/register --files src/seeds"
+    "seed": "ts-node -r tsconfig-paths/register --files src/firebase/seeds"
   },
   "eslintConfig": {
     "extends": [

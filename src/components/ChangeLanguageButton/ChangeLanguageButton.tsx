@@ -1,6 +1,6 @@
-import { MenuItem, Select } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { MenuItem, Select } from "@mui/material";
 
 import { useStyles } from "./styles";
 

@@ -15,15 +15,15 @@ import userPodcastSeriesReducer from "./listenerPodcastSeries";
 export const store = configureStore({
   reducer: {
     ui: uiReducer,
-    pod: episodeReducer,
     user: userReducer,
+    pod: episodeReducer,
     audio: audioReducer,
     search: searchReducer,
     profile: profileReducer,
     details: detailsReducer,
     category: categoryReducer,
-    playlists: playlistsReducer,
     podSeries: podcastReducer,
+    playlists: playlistsReducer,
     userPodcasts: userPodcastSeriesReducer,
   },
 });

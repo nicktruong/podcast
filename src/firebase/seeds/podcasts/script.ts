@@ -66,15 +66,15 @@ const createRandomEpisode = ({
   return {
     rating,
     authorId,
-    podcastId, // change when user first create series
+    podcastId, // Change when user first create series
     rateCount,
     playCount,
     audienceSize: playCount,
     createdAt: seedDateString,
     updatedAt: seedDateString,
-    title: episodesJSON[index].title,
     publishedDate: seedDateString,
     status: PodcastStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
+    title: episodesJSON[index].title,
     pathToFile: "audios/seed-audio.mp3",
     description: episodesJSON[index].description,
   };
@@ -110,12 +110,21 @@ const createRandomPodcaster = (episodeCount: number): Omit<User, "id"> => {
 export const migrate = async () => {
   console.log("Begin podcasters migration");
 
-  for (let i = 0; i < podcastsJSON.length; i++) {
-    // create random episodes for a podcast
-    const episodes: ReturnType<typeof createRandomEpisode>[] = [];
-    const episodeCount = faker.number.int({ min: 1, max: 6 });
+  let usedEpisodes: number = 0; // Prevent duplicate episodes from multiple podcasts
 
-    // create random podcaster
+  for (
+    let i = 0;
+    i < podcastsJSON.length && usedEpisodes < episodesJSON.length;
+    i++
+  ) {
+    const remainedEpisodes = episodesJSON.length - usedEpisodes;
+    const episodeCount = faker.number.int({
+      min: 1,
+      max: 6 < remainedEpisodes ? 6 : remainedEpisodes,
+    }); // Create the number of episodes this podcaster has
+    const episodes: ReturnType<typeof createRandomEpisode>[] = [];
+
+    // Create random podcaster
     const podcaster = createRandomPodcaster(episodeCount);
     const podcasterDoc = await addDoc(
       collection(db, COLLECTIONS.USERS),
@@ -124,15 +133,18 @@ export const migrate = async () => {
     console.log("Seeded podcaster");
     console.log("=======================================\n");
 
+    // Create random episodes
     for (let j = 0; j < episodeCount; j++) {
       episodes.push(
         createRandomEpisode({
           authorId: "",
           podcastId: "",
-          index: faker.number.int({ max: episodesJSON.length - 1 }),
+          index: j + usedEpisodes, // faker.number.int({ max: episodesJSON.length - 1 }),
         })
       );
     }
+
+    usedEpisodes += episodeCount;
 
     // Calculate stats for podcast
     const audienceSize = episodes.reduce(
@@ -160,11 +172,11 @@ export const migrate = async () => {
     // create random podcast
     const podcast = createRandomPodcast({
       rating,
+      index: i,
       playCount,
       rateCount,
       audienceSize,
       authorId: podcasterDoc.id,
-      index: faker.number.int({ max: podcastsJSON.length - 1 }),
     });
 
     const podcastDoc = await addDoc(

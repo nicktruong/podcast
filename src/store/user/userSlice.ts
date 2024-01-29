@@ -1,18 +1,16 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { ROLES } from "@/common/enums";
 import {
   auth,
-  upgradeUserToPodcaster,
-  editProfile,
-  uploadFile,
   follow,
   unfollow,
+  uploadFile,
+  editProfile,
+  upgradeUserToPodcaster,
 } from "@/firebase";
-import { EditProfile } from "@/common/interfaces/EditProfile";
+import { ROLES } from "@/common/enums";
 import { resizeImage } from "@/common/utils";
-
-import { createAppAsyncThunk } from "../createAppAsyncThunk";
+import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 
 import {
   SLICE_NAME,
@@ -22,7 +20,7 @@ import {
 } from "./constants";
 
 import type { RootState } from "@/store";
-import type { User } from "@/common/interfaces";
+import type { User, EditProfile } from "@/common/interfaces";
 
 export const unfollowPodcast = createAppAsyncThunk(
   "user/unfollowPodcast",
@@ -109,7 +107,7 @@ export const signOut = createAsyncThunk(SIGN_OUT_ACTION, async () => {
 
 export const userSlice = createSlice({
   name: SLICE_NAME,
-  initialState,
+  initialState: initialState,
   reducers: {
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isGettingUser = action.payload;

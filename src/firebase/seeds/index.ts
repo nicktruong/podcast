@@ -2,7 +2,7 @@ import "dotenv/config";
 import { resolve } from "path";
 import { readdir } from "fs/promises";
 
-const base = "./src/seeds";
+const base = "src/firebase/seeds";
 
 readdir(base).then(async (names) => {
   const migrations = await Promise.all(

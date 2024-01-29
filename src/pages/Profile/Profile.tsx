@@ -1,7 +1,7 @@
+import { Link } from "react-router-dom";
 import { GoPerson } from "react-icons/go";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
