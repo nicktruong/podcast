@@ -11,7 +11,7 @@ import { fetchUserPlaylists, selectPlaylists } from "@/store/playlists";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
-  const { t } = useTranslation("RootLayout");
+  const { t } = useTranslation("Root");
 
   const dispatch = useAppDispatch();
 

@@ -1,18 +1,19 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { editProfileAction, selectUser } from "@/store/user";
-import { FORM_DEFAULT_VALUES } from "@/common/constants";
 import { EditProfile } from "@/common/interfaces/EditProfile";
+import { EDIT_PROFILE_DEFAULT_DATA, routes } from "@/common/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
 
-const { AVATAR, BIO, NAME } = FORM_DEFAULT_VALUES;
-
 export const usePrepare = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const [tempAvatar, setTempAvatar] = useState("");
@@ -24,25 +25,21 @@ export const usePrepare = () => {
   const user = useAppSelector(selectUser);
 
   const {
-    reset,
+    // reset,
     control,
     setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<EditProfile>({
-    defaultValues: {
-      bio: BIO,
-      name: NAME,
-      avatar: AVATAR,
-    },
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     resolver: joiResolver(schema),
+    defaultValues: EDIT_PROFILE_DEFAULT_DATA,
   });
 
   const onSubmit = handleSubmit((data) => {
     dispatch(editProfileAction(data));
-    reset();
+    navigate(routes.profile.replace(":id", user?.id ?? ""));
   });
 
   const handleAvatarSubmit = (file: File | undefined) => {

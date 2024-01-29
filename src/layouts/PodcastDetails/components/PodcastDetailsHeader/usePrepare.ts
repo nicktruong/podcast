@@ -10,7 +10,7 @@ import { selectEpisodeDetail, selectPodcastDetail } from "@/store/details";
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
-  const { t } = useTranslation("PodcastDetailsLayout");
+  const { t } = useTranslation("PodcastDetails");
 
   const { classes } = useStyles();
 

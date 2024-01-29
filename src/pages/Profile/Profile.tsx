@@ -33,6 +33,7 @@ const Profile = () => {
           <Box className={classes.userInfo}>
             <Typography className={classes.profile}>Profile</Typography>
             <Typography className={classes.username}>{user?.name}</Typography>
+            <Typography className={classes.bio}>{user?.bio}</Typography>
           </Box>
         </Box>
 

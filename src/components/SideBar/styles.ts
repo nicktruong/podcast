@@ -20,6 +20,10 @@ export const useStyles = tss
     library: {
       flexGrow: 1,
     },
+    logo: {
+      gap: "20px",
+      padding: "12px",
+    },
     button: {
       gap: "20px",
       padding: "4px 12px",

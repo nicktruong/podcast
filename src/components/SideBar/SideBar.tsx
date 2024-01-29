@@ -13,6 +13,8 @@ import { CgSearch, CgSearchLoading } from "react-icons/cg";
 
 import { routes } from "@/common/constants";
 
+import Logo from "../Logo";
+
 import usePrepare from "./usePrepare";
 
 export default function SideBar() {
@@ -21,6 +23,12 @@ export default function SideBar() {
   return (
     <Box className={classes.root}>
       <Box className={classes.section}>
+        <Link to={routes.index}>
+          <Box className={classes.logo}>
+            <Logo hideText={!isSidebarExpand} />
+          </Box>
+        </Link>
+
         <Link to={routes.index}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>

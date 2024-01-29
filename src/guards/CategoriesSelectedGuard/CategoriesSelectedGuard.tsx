@@ -4,7 +4,7 @@ import { routes } from "@/common/constants";
 
 import { usePrepare } from "./usePrepare";
 
-const EnsureInterestCategoriesSelectedGuard = () => {
+const CategoriesSelectedGuard = () => {
   const { userId, userCategoriesOfInterest } = usePrepare();
 
   if (userId && !userCategoriesOfInterest?.length) {
@@ -14,4 +14,4 @@ const EnsureInterestCategoriesSelectedGuard = () => {
   return <Outlet />;
 };
 
-export default EnsureInterestCategoriesSelectedGuard;
+export default CategoriesSelectedGuard;

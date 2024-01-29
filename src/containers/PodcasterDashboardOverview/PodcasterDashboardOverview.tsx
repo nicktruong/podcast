@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import { Button, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { Button, Typography } from "@mui/material";
 
 import { selectPodcast } from "@/store/podcast";
 import { selectUser, selectUserId } from "@/store/user";
@@ -95,7 +95,8 @@ export default function PodDashboardOverview() {
                 color: theme.palette.text.secondary,
               })}
             >
-              {user?.episodeCount} {t("episode")}
+              {user?.episodeCount}{" "}
+              {t("episode", { count: user?.episodeCount ?? 1 })}
             </Typography>
           </Box>
 
@@ -103,7 +104,7 @@ export default function PodDashboardOverview() {
             <Button variant="round" sx={{ marginRight: "12px" }}>
               {t("share")}
             </Button>
-            <Button variant="round">{t("profilePage")}</Button>
+            {/* <Button variant="round">{t("profilePage")}</Button> */}
           </Box>
         </Box>
       </Box>

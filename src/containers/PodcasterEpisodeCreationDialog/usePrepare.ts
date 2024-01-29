@@ -3,10 +3,6 @@ import { useEffect, useState } from "react";
 import { UploadTask } from "@firebase/storage";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { selectUser } from "@/store/user";
-import { uploadFile } from "@/firebase";
-import { EpisodeCreationSteps } from "@/common/enums";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import {
   setPrevStep,
   setProgress,
@@ -19,15 +15,17 @@ import {
   setPodUploadDetails,
   publishEpisodeAction,
 } from "@/store/episode";
+import { uploadFile } from "@/firebase";
+import { selectUser } from "@/store/user";
+import { EpisodeCreationSteps } from "@/common/enums";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectPodcast, selectTempImg } from "@/store/podcast";
-import { FORM_DEFAULT_VALUES } from "@/common/constants";
+import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
 
 import type { UsePrepareHookProps } from "./interfaces";
 import type { EpisodeBasicCreationData } from "@/common/interfaces";
-
-const { TITLE, DESCRIPTION } = FORM_DEFAULT_VALUES;
 
 const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const dispatch = useAppDispatch();
@@ -46,13 +44,10 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     handleSubmit,
     formState: { errors },
   } = useForm<EpisodeBasicCreationData>({
-    defaultValues: {
-      title: TITLE,
-      description: DESCRIPTION,
-    },
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: joiResolver(schema),
+    defaultValues: EPISODE_CREATION_DEFAULT_DATA,
   });
 
   const onSubmit = handleSubmit((data) => {

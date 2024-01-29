@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { ChangeEventHandler, useRef } from "react";
+import { joiResolver } from "@hookform/resolvers/joi";
 
 import {
   selectStep,
+  selectPodcast,
+  selectTempImg,
   setSeriesDetails,
   uploadPodcastCover,
   createPodcastAction,
-  selectPodcast,
   selectPodcastCreationData,
-  selectTempImg,
 } from "@/store/podcast";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectCategories } from "@/store/category";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
-import { FORM_DEFAULT_VALUES } from "@/common/constants";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { PODCAST_CREATION_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
@@ -25,18 +25,16 @@ interface Props {
   handleClose: () => void;
 }
 
-const { TITLE, CATEGORY, DESCRIPTION } = FORM_DEFAULT_VALUES;
-
 const useHelper = ({ handleClose }: Props) => {
   const { classes } = useStyles();
   const dispatch = useAppDispatch();
   const step = useAppSelector(selectStep);
-  const fileRef = useRef<HTMLInputElement>(null);
-  const categories = useAppSelector(selectCategories);
   const podcast = useAppSelector(selectPodcast);
-  const podcastCreationData = useAppSelector(selectPodcastCreationData);
   const tempImg = useAppSelector(selectTempImg);
   const coverUrl = podcast?.coverUrl ?? tempImg;
+  const fileRef = useRef<HTMLInputElement>(null);
+  const categories = useAppSelector(selectCategories);
+  const podcastCreationData = useAppSelector(selectPodcastCreationData);
 
   const {
     control,
@@ -44,14 +42,10 @@ const useHelper = ({ handleClose }: Props) => {
     handleSubmit,
     formState: { errors },
   } = useForm<PodcastCreationData>({
-    defaultValues: {
-      title: TITLE,
-      category: CATEGORY,
-      description: DESCRIPTION,
-    },
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: joiResolver(schema),
+    defaultValues: PODCAST_CREATION_DEFAULT_DATA,
   });
 
   const onSubmit = handleSubmit((data) => {

@@ -216,7 +216,7 @@ export default function Playlist() {
               <span>{(podcastDetail?.rating ?? 0).toFixed(1)}</span>
               <StarBorderIcon className={classes.ratingBtnIcon} />
               <span className={classes.rateCount}>
-                ({podcastDetail?.rateCount ?? 0})
+                ({podcastDetail?.rateCount.toLocaleString() ?? 0})
               </span>
             </Button>
           </Box>

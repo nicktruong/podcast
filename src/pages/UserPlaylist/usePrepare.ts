@@ -57,11 +57,11 @@ export const usePrepare = () => {
   };
 
   return {
-    cx,
     classes,
     playlist,
     episodesDetail,
     t,
+    cx,
     handleRemovePodcastFromPlaylist,
   };
 };

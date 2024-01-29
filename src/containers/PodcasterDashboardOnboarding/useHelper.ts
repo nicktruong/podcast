@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppSelector } from "@/hooks/redux";
 import { selectPodcast } from "@/store/podcast";
 import { selectEpisodesOfCreator } from "@/store/episode";
-import { useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
 

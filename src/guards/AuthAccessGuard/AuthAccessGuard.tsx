@@ -4,7 +4,7 @@ import { routes } from "@/common/constants";
 import { selectUserId } from "@/store/user";
 import { useAppSelector } from "@/hooks/redux";
 
-export default function PreventLoggedInAccessGuard() {
+export default function AuthAccessGuard() {
   const userId = useAppSelector(selectUserId);
 
   if (userId) {

@@ -29,7 +29,7 @@ const ChangeLanguageButton = () => {
       <MenuItem value="vi">
         <img
           className={classes.flag}
-          src={`${process.env.PUBLIC_URL}/assets/images/vietnam-flag.jpg`}
+          src={`${process.env.PUBLIC_URL}/assets/images/vietnam-flag.png`}
           alt="Vietnam flag"
         />
       </MenuItem>

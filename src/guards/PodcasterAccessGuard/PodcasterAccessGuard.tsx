@@ -4,7 +4,7 @@ import { ROLES } from "@/common/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { selectUserId, selectUserRoles } from "@/store/user";
 
-export default function PreventListenerAccessGuard() {
+export default function PodcasterAccessGuard() {
   const userId = useAppSelector(selectUserId);
   const userRoles = useAppSelector(selectUserRoles);
 

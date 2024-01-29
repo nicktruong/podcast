@@ -43,6 +43,7 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   userInfo: {
     display: "flex",
+    marginBottom: "32px",
     flexDirection: "column",
     justifyContent: "flex-end",
   },
@@ -63,7 +64,10 @@ export const useStyles = tss.create(({ theme }) => ({
     fontWeight: 700,
     fontSize: "96px",
     lineHeight: "96px",
-    marginBottom: "32px",
+  },
+  bio: {
+    fontSize: "14px",
+    marginLeft: "4px",
   },
   playlists: {
     marginTop: "32px",

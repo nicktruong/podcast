@@ -2,8 +2,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
+import {
+  routes,
+  REGISTRATION_INTERESTS_DEFAULT_DATA,
+} from "@/common/constants";
 import { ROLES } from "@/common/enums";
-import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -11,8 +14,6 @@ import { RegistrationInterests } from "@/common/interfaces";
 import { createUserDocument, getUserInfo } from "@/firebase";
 
 import schema from "./schema";
-
-const { CATEGORIES_OF_INTEREST } = FORM_DEFAULT_VALUES;
 
 export const usePrepare = () => {
   const navigate = useNavigate();
@@ -28,10 +29,8 @@ export const usePrepare = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegistrationInterests>({
-    defaultValues: {
-      categoriesOfInterest: CATEGORIES_OF_INTEREST,
-    },
     resolver: joiResolver(schema),
+    defaultValues: REGISTRATION_INTERESTS_DEFAULT_DATA,
   });
 
   const categoriesOfInterest = watch("categoriesOfInterest");

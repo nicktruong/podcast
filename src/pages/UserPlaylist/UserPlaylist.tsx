@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 import { usePrepare } from "./usePrepare";
 
@@ -21,6 +22,7 @@ const UserPlaylist = () => {
     playlist,
     episodesDetail,
     t,
+    cx,
     handleRemovePodcastFromPlaylist,
   } = usePrepare();
 
@@ -49,7 +51,12 @@ const UserPlaylist = () => {
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell className={classes.firstColumn}>
-                    <PodcastsIcon className={classes.icon} />
+                    <PodcastsIcon
+                      className={cx(classes.icon, classes.podcastIcon)}
+                    />
+                    <PlayArrowIcon
+                      className={cx(classes.icon, classes.playIcon)}
+                    />
                   </TableCell>
                   <TableCell
                     component="th"

@@ -6,24 +6,21 @@ import { AuthListener } from "@/containers";
 
 // Guards
 const PreventLoggedInAccessGuard = lazy(
-  () => import("@/guards/PreventLoggedInAccessGuard")
+  () => import("@/guards/AuthAccessGuard")
 );
 
 const PreventListenerAccessGuard = lazy(
-  () => import("@/guards/PreventListenerAccessGuard")
+  () => import("@/guards/PodcasterAccessGuard")
 );
 
-const EnsureInterestCategoriesSelectedGuard = lazy(
-  () => import("@/guards/EnsureInterestCategoriesSelectedGuard")
+const CategoriesSelectedGuard = lazy(
+  () => import("@/guards/CategoriesSelectedGuard")
 );
 
 // layouts
-const PodcastDetailsLayout = lazy(
-  () => import("@/layouts/PodcastDetailsLayout")
-);
-const RootLayout = lazy(() => import("@/layouts/RootLayout"));
-const PodLayout = lazy(() => import("@/layouts/PodcasterDashboardLayout"));
-const PodcasterDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
+const RootLayout = lazy(() => import("@/layouts/Root"));
+const PodLayout = lazy(() => import("@/layouts/PodcasterDashboard"));
+const PodcastDetailsLayout = lazy(() => import("@/layouts/PodcastDetails"));
 
 // pages
 const InterestCategoriesSelection = lazy(
@@ -40,6 +37,7 @@ const Category = lazy(() => import("@/pages/Category"));
 const Playlist = lazy(() => import("@/pages/Playlist"));
 const EditProfile = lazy(() => import("@/pages/EditProfile"));
 const UserPlaylist = lazy(() => import("@/pages/UserPlaylist"));
+const PodcasterDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
 
 export const router = createBrowserRouter([
   {
@@ -51,7 +49,7 @@ export const router = createBrowserRouter([
         element: <NotFound />,
       },
       {
-        element: <EnsureInterestCategoriesSelectedGuard />,
+        element: <CategoriesSelectedGuard />,
         children: [
           {
             path: routes.index,

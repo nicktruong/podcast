@@ -1,30 +1,19 @@
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { joiResolver } from "@hookform/resolvers/joi";
 import { useTranslation } from "react-i18next";
+import { joiResolver } from "@hookform/resolvers/joi";
 
 import { signup } from "@/firebase";
 import { setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { GENDERS, SignUpSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
+import { routes, REGISTER_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
 
 import type { RegisterData } from "@/common/interfaces";
-
-const {
-  NAME,
-  DATE,
-  YEAR,
-  MONTH,
-  EMAIL,
-  GENDER,
-  PASSWORD,
-  CATEGORIES_OF_INTEREST,
-} = FORM_DEFAULT_VALUES;
 
 const usePrepare = () => {
   const { t } = useTranslation("SignUp");
@@ -43,19 +32,10 @@ const usePrepare = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<RegisterData>({
-    defaultValues: {
-      name: NAME,
-      date: DATE,
-      year: YEAR,
-      month: MONTH,
-      email: EMAIL,
-      gender: GENDER,
-      password: PASSWORD,
-      categoriesOfInterest: CATEGORIES_OF_INTEREST,
-    },
     mode: "onChange",
     reValidateMode: "onChange",
     resolver: joiResolver(schema),
+    defaultValues: REGISTER_DEFAULT_DATA,
   });
 
   const onSubmit = handleSubmit(async (data) => {

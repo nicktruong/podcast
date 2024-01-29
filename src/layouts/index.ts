@@ -1,2 +1,2 @@
-export { default as RootLayout } from "./RootLayout";
-export { default as PodcasterDashboardLayout } from "./PodcasterDashboardLayout";
+export { default as RootLayout } from "./Root";
+export { default as PodcasterDashboardLayout } from "./PodcasterDashboard";

@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
-  const { t } = useTranslation("RootLayout");
+  const { t } = useTranslation("Root");
 
   const theme = useTheme();
 

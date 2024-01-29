@@ -15,6 +15,7 @@ import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
 import { populatePodcast } from "../utils";
+import { downloadPhotoFromStorage } from "../storage";
 
 export const getPodcastsByCategorySortedAndPaged = async ({
   offset,
@@ -63,9 +64,23 @@ export const getPodcastsByCategorySortedAndPaged = async ({
 
     podcasts.push(
       ...(await Promise.all(
-        podcastsSnapshot.docs.map((snapshot) =>
-          populatePodcast({ id: snapshot.id, ...snapshot.data() } as Podcast)
-        )
+        podcastsSnapshot.docs.map(async (snapshot) => {
+          const populatedPodcast = await populatePodcast({
+            id: snapshot.id,
+            ...snapshot.data(),
+          } as Podcast);
+
+          if (
+            populatedPodcast.coverUrl &&
+            !populatedPodcast.coverUrl.startsWith("https")
+          ) {
+            populatedPodcast.coverUrl = await downloadPhotoFromStorage(
+              populatedPodcast.coverUrl
+            );
+          }
+
+          return populatedPodcast;
+        })
       ))
     );
 
