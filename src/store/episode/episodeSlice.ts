@@ -1,12 +1,12 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
-import { publishEpisode, fetchEpisodesPagedFromCreatorId } from "@/firebase";
-import { EpisodeCreationSteps } from "@/common/enums";
 import { populateEpisode } from "@/firebase/utils";
+import { EpisodeCreationSteps } from "@/common/enums";
+import { publishEpisode, fetchEpisodesPagedFromCreatorId } from "@/firebase";
 
-import { selectUserId } from "../user/userSlice";
-import { createAppAsyncThunk } from "../createAppAsyncThunk";
 import { selectPodcast } from "../podcast";
+import { selectUser, setUser } from "../user/userSlice";
+import { createAppAsyncThunk } from "../createAppAsyncThunk";
 
 import type { RootState } from "@/store";
 import type { EpisodeState } from "./interfaces";
@@ -54,17 +54,19 @@ export const publishEpisodeAction = createAppAsyncThunk(
 
     const podcast = selectPodcast(thunkApi.getState());
 
-    const userId = selectUserId(thunkApi.getState());
+    const user = selectUser(thunkApi.getState());
 
-    if (!podcast || !userId) {
+    if (!podcast || !user?.id) {
       return thunkApi.rejectWithValue("Please create podcast first!");
     }
 
     const episode = selectEpisodeInfo(thunkApi.getState());
 
-    const newEpisode = await publishEpisode(episode, userId, podcast.id);
+    const newEpisode = await publishEpisode(episode, user.id, podcast.id);
 
-    return populateEpisode({ id: "", ...newEpisode });
+    thunkApi.dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
+
+    return populateEpisode(newEpisode);
   }
 );
 
@@ -91,9 +93,9 @@ export const podSlice = createSlice({
     setPodUploadDetails: (
       state,
       action: PayloadAction<{
-        title: string; // 2
-        description: string; // 3
-        publishedDate: string; // 4
+        title: string;
+        description: string;
+        publishedDate: string;
         // status: PodStatus;
       }>
     ) => {
@@ -124,8 +126,8 @@ export const podSlice = createSlice({
         state.episodeCreationData = initialState.episodeCreationData;
         state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
         state.episodes = [
-          ...state.episodes,
           { ...action.payload, id: nanoid() },
+          ...state.episodes,
         ];
       })
       .addCase(publishEpisodeAction.rejected, (_, { error }) => {

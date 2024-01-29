@@ -5,11 +5,11 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { useTranslation } from "react-i18next";
 
 import { signup } from "@/firebase";
-import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
+import { setUser } from "@/store/user";
+import { selectCategories } from "@/store/category";
 import { GENDERS, SignUpSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectCategories } from "@/store/category";
-import { setUser } from "@/store/user";
+import { routes, FORM_DEFAULT_VALUES } from "@/common/constants";
 
 import schema from "./schema";
 

@@ -66,9 +66,10 @@ export default function UserMenu() {
           </Box>
         )}
 
-        <Box sx={{ marginLeft: "auto" }}>
+        <Box sx={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
           {userId && (
             <>
+              <ChangeLanguageButton />
               <Box>
                 <IconButton
                   aria-haspopup="true"
@@ -96,18 +97,20 @@ export default function UserMenu() {
                   }}
                 >
                   <MenuItem
+                    component={Link}
+                    to={routes.profile.replace(":id", userId)}
                     onClick={() => {
                       handleCloseMenu();
-                      navigate(routes.profile.replace(":id", userId));
                     }}
                   >
                     {t("profile")}
                   </MenuItem>
                   {userRoles?.includes(ROLES.PODCASTER) ? (
                     <MenuItem
+                      component={Link}
+                      to={routes.podcasterDashboard}
                       onClick={() => {
                         handleCloseMenu();
-                        navigate(routes.podcasterDashboard);
                       }}
                     >
                       {t("dashboard")}

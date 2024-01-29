@@ -10,6 +10,7 @@ import {
   selectUserRoles,
   upgradeToPodcaster,
 } from "@/store/user";
+import { routes } from "@/common/constants";
 import { searchAction } from "@/store/search";
 import { useMaxWidthScreenMedia } from "@/common/utils";
 import { selectUIState, toggleExpand } from "@/store/ui";
@@ -34,8 +35,8 @@ const usePrepare = () => {
 
   const userRoles = useAppSelector(selectUserRoles);
 
-  const [open, setOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const location = useLocation();
   const isSearchPage = location.pathname.includes("/search");
@@ -43,13 +44,11 @@ const usePrepare = () => {
   const { isSmaller } = useMaxWidthScreenMedia(theme.breakpoints.values.md);
 
   const handleClickOpenMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setOpen(true);
     setAnchorEl(event.currentTarget);
   };
 
   const handleCloseMenu = () => {
     setAnchorEl(null);
-    setOpen(false);
   };
 
   const handleUpgradeToPodcasterRole = () => {
@@ -60,6 +59,7 @@ const usePrepare = () => {
   const handleSignOut = () => {
     dispatch(signOut());
     window.location.reload();
+    navigate(routes.index);
   };
 
   const toggleSidebar = () => {

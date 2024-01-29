@@ -62,7 +62,10 @@ const Category = () => {
             ))}
           </Box>
         ) : (
-          <CardsSkeleton mt={4} />
+          <>
+            <CardsSkeleton mt={4} />
+            <CardsSkeleton mt={4} />
+          </>
         )}
       </Box>
     </Box>

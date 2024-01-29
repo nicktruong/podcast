@@ -32,6 +32,11 @@ export const useStyles = tss.create(({ theme }) => ({
   setupBtn: {
     marginTop: "8px",
     padding: "8px 32px",
+    color: theme.palette.common.black,
+    backgroundColor: theme.palette.custom?.purple.light,
+    "&:hover": {
+      backgroundColor: theme.palette.custom?.purple.lighter,
+    },
   },
   letDoItBtn: {
     marginTop: "8px",

@@ -36,7 +36,7 @@ export const publishEpisode = async (
     episodeCount: increment(1),
   });
 
-  await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
+  const docRef = await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
 
-  return newEpisode;
+  return { id: docRef.id, ...newEpisode };
 };
