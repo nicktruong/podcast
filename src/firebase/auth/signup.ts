@@ -25,6 +25,7 @@ export const signup = async (user: RegisterData) => {
       name,
       email,
       gender,
+      photoURL: "",
       categoriesOfInterest,
       role: ROLES.LISTENER,
       uid: signedUpUser.uid,

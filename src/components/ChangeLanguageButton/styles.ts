@@ -4,7 +4,7 @@ export const useStyles = tss.create({
   select: {
     "& .MuiSelect-select": {
       padding: "0px",
-      minHeight: "unset",
+      minHeight: "unset !important",
       paddingRight: "0px !important",
     },
     "& .MuiSelect-icon": {

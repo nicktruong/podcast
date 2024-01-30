@@ -1,7 +1,9 @@
+import { red } from "@mui/material/colors";
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create(({ theme }) => ({
   alignCenter: {
+    gap: "4px",
     display: "flex",
     alignItems: "center",
   },
@@ -50,6 +52,24 @@ export const useStyles = tss.create(({ theme }) => ({
       border: `1px solid ${theme.palette.common.white}`,
     },
   },
+  notificationContainer: {
+    position: "relative",
+  },
+  notificationCount: {
+    top: "-2px",
+    right: "-2px",
+    width: "16px",
+    height: "16px",
+    display: "flex",
+    fontWeight: 700,
+    fontSize: "12px",
+    borderRadius: "50%",
+    position: "absolute",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: red[500],
+  },
+  notificationIcon: {},
   signUpBtn: {
     fontWeight: 700,
     padding: "8px 32px",

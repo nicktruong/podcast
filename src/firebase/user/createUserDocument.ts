@@ -6,21 +6,37 @@ import { db } from "../init";
 
 import { getUserInfo } from "./getUserInfo";
 
-import type { UserCreationData } from "@/common/interfaces";
+import type { User, UserCreationData } from "@/common/interfaces";
 
 // TODO: Add user avatar
 export const createUserDocument = async (user: UserCreationData) => {
-  const { gender, uid, name, dob, role, categoriesOfInterest } = user;
-
-  const userObj = {
+  const {
+    uid,
+    dob,
+    role,
     name,
+    email,
+    gender,
+    photoURL,
+    categoriesOfInterest,
+  } = user;
+
+  const userObj: Omit<User, "emailVerified" | "id" | "dob"> & {
+    dob: string | null;
+  } = {
+    name,
+    email,
+    gender,
+    bio: "",
+    photoURL,
     history: [],
     roles: [role],
+    following: [],
     episodeCount: 0,
     categoriesOfInterest,
-    gender: gender ?? null,
     dob: dob?.toISOString() ?? null,
-    photoURL: user.photoURL ?? null,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
     // searchKeywords: name.toLowerCase().split(" "),
   };
 

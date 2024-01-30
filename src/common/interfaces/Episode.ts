@@ -1,4 +1,4 @@
-import { PodcastStatus } from "../enums";
+import { PODCAST_STATUS } from "../enums";
 
 import { User } from "./User";
 import { Podcast, PopulatedPodcast } from "./Podcast";
@@ -12,12 +12,13 @@ export interface Episode {
   rateCount: number;
   playCount: number;
   podcastId: string;
+  // keywords: string[];
   pathToFile: string;
   description: string;
   audienceSize: number;
   rating: number | null;
   publishedDate: string;
-  status: PodcastStatus;
+  status: PODCAST_STATUS;
 }
 
 export interface EpisodeBasicCreationData {

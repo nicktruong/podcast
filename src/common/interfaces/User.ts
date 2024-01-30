@@ -12,7 +12,7 @@ export interface User {
   history: string[];
   createdAt: string;
   updatedAt: string;
-  following: string[]; // list of podcasts
+  following: string[]; // list of podcast ids
   episodeCount: number;
   emailVerified: boolean;
   categoriesOfInterest: string[];

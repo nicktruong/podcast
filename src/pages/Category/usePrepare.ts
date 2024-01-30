@@ -30,7 +30,7 @@ export const usePrepare = () => {
       fetchPodcastsByCategorySortedAndPaged({
         sortBy,
         offset: 0,
-        pageSize: 7,
+        pageSize: 14,
         categories: [name ?? ""],
       })
     );

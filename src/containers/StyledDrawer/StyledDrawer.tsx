@@ -60,8 +60,8 @@ export default function StyledDrawer({
 
           <ListItem disablePadding>
             <ListItemButton
-              onClick={() => {
-                toggleDrawer(false);
+              onClick={(e) => {
+                toggleDrawer(false)(e);
                 handleClickOpenEpisodeDialog();
               }}
             >

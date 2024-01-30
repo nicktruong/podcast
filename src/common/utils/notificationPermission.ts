@@ -1,6 +1,3 @@
-export const requestPermission = () => {
-  console.log("Requesting permission...");
-  Notification.requestPermission().then((permission) => {
-    console.log({ permission });
-  });
+export const requestPermission = async () => {
+  return Notification.requestPermission();
 };

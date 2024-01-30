@@ -3,6 +3,8 @@ import { createBrowserRouter } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 import { AuthListener } from "@/containers";
+// Fix for [#22](https://trello.com/c/OyT5t3ix)
+import Profile from "@/pages/Profile";
 
 // Guards
 const PreventLoggedInAccessGuard = lazy(
@@ -31,11 +33,12 @@ const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/404"));
 const Search = lazy(() => import("@/pages/Search"));
 const SignUp = lazy(() => import("@/pages/SignUp"));
-const Profile = lazy(() => import("@/pages/Profile"));
+// const Profile = lazy(() => import("@/pages/Profile")); // Lazy import will trigger rerender and create bug in UserMenu
 const Episode = lazy(() => import("@/pages/Episode"));
 const Category = lazy(() => import("@/pages/Category"));
 const Playlist = lazy(() => import("@/pages/Playlist"));
 const EditProfile = lazy(() => import("@/pages/EditProfile"));
+const Notification = lazy(() => import("@/pages/Notification"));
 const UserPlaylist = lazy(() => import("@/pages/UserPlaylist"));
 const PodcasterDashboard = lazy(() => import("@/pages/PodcasterDashboard"));
 
@@ -45,7 +48,6 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "*",
-        // TODO: Add 404 page
         element: <NotFound />,
       },
       {
@@ -91,6 +93,10 @@ export const router = createBrowserRouter([
               {
                 path: routes.editProfile,
                 element: <EditProfile />,
+              },
+              {
+                path: routes.notification,
+                element: <Notification />,
               },
             ],
           },

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
   fetchPodcastDetail,
@@ -17,10 +17,10 @@ import {
   setPassedTimeInSeconds,
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
+import { addHistoryAction } from "@/store/history";
 import { requestPermission } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
-import { addHistoryAction } from "@/store/history";
 
 import { useStyles } from "./styles";
 

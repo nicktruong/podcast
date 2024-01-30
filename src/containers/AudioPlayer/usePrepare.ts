@@ -106,7 +106,7 @@ const usePrepare = () => {
     setVolume(volume);
   };
 
-  const toggleMuteAudio = (event?: { isMute?: boolean }) => {
+  const toggleMuteAudio = () => (event?: { isMute?: boolean }) => {
     setMute((prevMute) => event?.isMute ?? !prevMute);
   };
 

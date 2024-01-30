@@ -10,8 +10,8 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import { Controller } from "react-hook-form";
-import ErrorIcon from "@mui/icons-material/Error";
 import { useTranslation } from "react-i18next";
+import ErrorIcon from "@mui/icons-material/Error";
 
 import { GENDERS } from "@/common/enums";
 import { StyledInput } from "@/components";
@@ -249,18 +249,20 @@ export default function UserInfoForm({
           render={({ field }) => {
             return (
               <RadioGroup sx={{ flexDirection: "row" }} {...field}>
-                {Object.entries(GENDERS).map(([value, label]) => (
-                  <FormControlLabel
-                    sx={{
-                      "& .MuiTypography-root": { fontSize: "14px" },
-                      "& .MuiSvgIcon-root": { fontSize: "20px" },
-                    }}
-                    key={value}
-                    label={label}
-                    value={value}
-                    control={<Radio />}
-                  />
-                ))}
+                {Object.values(GENDERS)
+                  .filter((gender) => gender !== GENDERS.UNKNOWN)
+                  .map((gender) => (
+                    <FormControlLabel
+                      sx={{
+                        "& .MuiTypography-root": { fontSize: "14px" },
+                        "& .MuiSvgIcon-root": { fontSize: "20px" },
+                      }}
+                      key={gender}
+                      label={gender}
+                      value={gender}
+                      control={<Radio />}
+                    />
+                  ))}
               </RadioGroup>
             );
           }}

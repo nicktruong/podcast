@@ -8,4 +8,5 @@ export * from "./Playlist";
 export * from "./LoginData";
 export * from "./EditProfile";
 export * from "./RegisterData";
+export * from "./Notification";
 export * from "./UserCreationData";

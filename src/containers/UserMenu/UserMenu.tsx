@@ -13,6 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PersonIcon from "@mui/icons-material/Person";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
@@ -30,6 +31,7 @@ export default function UserMenu() {
     isSmaller,
     isSearchPage,
     isSidebarExpand,
+    unreadNotificationsCount,
     t,
     search,
     navigate,
@@ -66,9 +68,26 @@ export default function UserMenu() {
           </Box>
         )}
 
-        <Box sx={{ marginLeft: "auto", display: "flex", alignItems: "center" }}>
+        <Box
+          sx={{
+            gap: "4px",
+            display: "flex",
+            marginLeft: "auto",
+            alignItems: "center",
+          }}
+        >
           {userId && (
             <>
+              <Link to={routes.notification}>
+                <Box className={classes.notificationContainer}>
+                  {unreadNotificationsCount > 0 && (
+                    <span className={classes.notificationCount}>
+                      {unreadNotificationsCount}
+                    </span>
+                  )}
+                  <NotificationsIcon className={classes.notificationIcon} />
+                </Box>
+              </Link>
               <ChangeLanguageButton />
               <Box>
                 <IconButton
@@ -173,6 +192,9 @@ export default function UserMenu() {
               </>
             ) : (
               <Box className={classes.alignCenter}>
+                <Link to={routes.notification}>
+                  <NotificationsIcon />
+                </Link>
                 <ChangeLanguageButton />
                 <Link to={routes.signup}>
                   <Button className={classes.signUpBtn}>{t("signup")}</Button>

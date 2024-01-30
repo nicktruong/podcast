@@ -10,6 +10,7 @@ import podcastReducer from "./podcast";
 import detailsReducer from "./details";
 import categoryReducer from "./category";
 import playlistsReducer from "./playlists";
+import notificationReducer from "./notification";
 import userPodcastSeriesReducer from "./listenerPodcasts";
 
 export const store = configureStore({
@@ -24,6 +25,7 @@ export const store = configureStore({
     category: categoryReducer,
     podSeries: podcastReducer,
     playlists: playlistsReducer,
+    notification: notificationReducer,
     userPodcasts: userPodcastSeriesReducer,
   },
 });

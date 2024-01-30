@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -57,55 +58,55 @@ const usePrepare = () => {
     },
   ];
 
-  useEffect(() => {
-    const init = async () => {
-      try {
-        if (user) {
-          await dispatch(
-            fetchRecentlyPlayedPodcastsPaged({
-              userHistory: user.history ?? [],
-            })
-          );
-        }
+  // useEffect(() => {
+  //   const init = async () => {
+  //     try {
+  //       if (user) {
+  //         await dispatch(
+  //           fetchRecentlyPlayedPodcastsPaged({
+  //             userHistory: user.history ?? [],
+  //           })
+  //         );
+  //       }
 
-        const fetchedPodcastIds: string[] = [];
+  //       const fetchedPodcastIds: string[] = [];
 
-        const trendingPodcasts = await dispatch(
-          fetchTrendingPodcastsPaged({ pageSize: 7 })
-        ).unwrap();
+  //       const trendingPodcasts = await dispatch(
+  //         fetchTrendingPodcastsPaged({ pageSize: 7 })
+  //       ).unwrap();
 
-        fetchedPodcastIds.push(
-          ...(trendingPodcasts.map((podcast) => podcast.id) ?? [])
-        );
+  //       fetchedPodcastIds.push(
+  //         ...(trendingPodcasts.map((podcast) => podcast.id) ?? [])
+  //       );
 
-        if (!user) return;
+  //       if (!user) return;
 
-        const podcastsForYou = await dispatch(
-          fetchPodcastsForYouPaged({
-            period: 30,
-            pageSize: 7,
-            podcastIdsToExclude: fetchedPodcastIds,
-            categories: user.categoriesOfInterest ?? [],
-          })
-        ).unwrap();
+  //       const podcastsForYou = await dispatch(
+  //         fetchPodcastsForYouPaged({
+  //           period: 30,
+  //           pageSize: 7,
+  //           podcastIdsToExclude: fetchedPodcastIds,
+  //           categories: user.categoriesOfInterest ?? [],
+  //         })
+  //       ).unwrap();
 
-        fetchedPodcastIds.push(
-          ...(podcastsForYou.map((podcast) => podcast.id) ?? [])
-        );
+  //       fetchedPodcastIds.push(
+  //         ...(podcastsForYou.map((podcast) => podcast.id) ?? [])
+  //       );
 
-        await dispatch(
-          fetchPodcastsToTryPaged({
-            pageSize: 7,
-            podcastIdsToExclude: fetchedPodcastIds,
-          })
-        );
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  //       await dispatch(
+  //         fetchPodcastsToTryPaged({
+  //           pageSize: 7,
+  //           podcastIdsToExclude: fetchedPodcastIds,
+  //         })
+  //       );
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
 
-    init();
-  }, [user]);
+  //   init();
+  // }, [user]);
 
   return {
     classes,

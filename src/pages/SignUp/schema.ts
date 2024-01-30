@@ -25,7 +25,9 @@ const schema = Joi.object<RegisterData>({
     "string.empty": "invalidName",
   }),
   gender: Joi.string()
-    .valid(...Object.keys(GENDERS))
+    .valid(
+      ...Object.values(GENDERS).filter((gender) => gender !== GENDERS.UNKNOWN)
+    )
     .messages({
       "any.only": "pleaseChooseGender",
     }),

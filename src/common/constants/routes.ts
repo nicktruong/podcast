@@ -9,6 +9,7 @@ export const routes = {
   playlist: "/playlist/:id",
   category: "/category/:name",
   editProfile: "/edit-profile",
+  notification: "/notification",
   userPlaylist: "/user-playlist/:id",
   categoriesSelection: "/interests-categories-selections",
 

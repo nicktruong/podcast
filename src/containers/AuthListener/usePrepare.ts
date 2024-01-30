@@ -2,7 +2,13 @@ import { useEffect } from "react";
 
 import { auth, getUserInfo } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
+import {
+  setUser,
+  setLoading,
+  selectUserId,
+  selectIsUserLoading,
+} from "@/store/user";
+import { fetchNotifications } from "@/store/notification";
 import { getCategories, selectFetchingCategories } from "@/store/category";
 
 export const usePrepare = () => {
@@ -11,6 +17,8 @@ export const usePrepare = () => {
   const fetchingCategories = useAppSelector(selectFetchingCategories);
 
   const initialLoading = useAppSelector(selectIsUserLoading);
+
+  const userId = useAppSelector(selectUserId);
 
   useEffect(() => {
     const init = async () => {
@@ -48,6 +56,12 @@ export const usePrepare = () => {
 
     init();
   }, []);
+
+  // TODO: Refactor guards, fetch notifications
+  useEffect(() => {
+    if (!userId) return;
+    dispatch(fetchNotifications(userId));
+  }, [userId]);
 
   return { initialLoading, fetchingCategories };
 };

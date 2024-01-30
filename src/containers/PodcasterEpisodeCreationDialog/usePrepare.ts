@@ -15,9 +15,9 @@ import {
   setPodUploadDetails,
   publishEpisodeAction,
 } from "@/store/episode";
-import { uploadFile } from "@/firebase";
 import { selectUser, setUser } from "@/store/user";
 import { EpisodeCreationSteps } from "@/common/enums";
+import { notifyFollower, uploadFile } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectPodcast, selectTempImg } from "@/store/podcast";
 import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
@@ -31,7 +31,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);
-  const podInfo = useAppSelector(selectEpisodeInfo);
+  const episodeInfo = useAppSelector(selectEpisodeInfo);
   const podcast = useAppSelector(selectPodcast);
   const tempImg = useAppSelector(selectTempImg);
   const image = podcast?.coverUrl ?? tempImg;
@@ -40,6 +40,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const [uploadTask, setUploadTask] = useState<UploadTask>();
 
   const {
+    reset,
     control,
     handleSubmit,
     formState: { errors },
@@ -92,9 +93,23 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
 
       case EpisodeCreationSteps.REVIEW_PUBLISH:
         if (!user?.id) return;
+        reset();
+        handleClose();
+
         await dispatch(publishEpisodeAction(user.id));
         dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
-        handleClose();
+
+        if (!podcast) return;
+
+        // Create notification to all followers
+        await notifyFollower({
+          podcastId: podcast.id,
+          podcastName: podcast.title,
+          creatorName: user.name ?? "",
+          episodeName: episodeInfo.title,
+          creatorAvatar: user.photoURL ?? "",
+        });
+
         break;
 
       default:
@@ -108,7 +123,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     image,
     errors,
     control,
-    podInfo,
+    podInfo: episodeInfo,
     onSubmit,
     handleNext,
     onFileUpload,

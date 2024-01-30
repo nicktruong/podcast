@@ -11,10 +11,11 @@ import {
   upgradeToPodcaster,
 } from "@/store/user";
 import { routes } from "@/common/constants";
-import { searchAction, setSearchText } from "@/store/search";
 import { useMaxWidthScreenMedia } from "@/common/utils";
 import { selectUIState, toggleExpand } from "@/store/ui";
+import { searchAction, setSearchText } from "@/store/search";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { selectUnreadNotificationsCount } from "@/store/notification";
 
 import { useStyles } from "./styles";
 
@@ -32,10 +33,13 @@ const usePrepare = () => {
   const { isSidebarExpand } = useAppSelector(selectUIState);
 
   const user = useAppSelector(selectUser);
-
   const userId = user?.id;
 
   const userRoles = useAppSelector(selectUserRoles);
+
+  const unreadNotificationsCount = useAppSelector(
+    selectUnreadNotificationsCount
+  );
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -69,6 +73,7 @@ const usePrepare = () => {
 
   const handleSignOut = () => {
     dispatch(signOut());
+    navigate(routes.index);
     window.location.reload();
     navigate(routes.index);
   };
@@ -96,6 +101,7 @@ const usePrepare = () => {
     isSmaller,
     isSearchPage,
     isSidebarExpand,
+    unreadNotificationsCount,
     t,
     search,
     navigate,

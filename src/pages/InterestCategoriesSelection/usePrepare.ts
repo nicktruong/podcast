@@ -6,7 +6,7 @@ import {
   routes,
   REGISTRATION_INTERESTS_DEFAULT_DATA,
 } from "@/common/constants";
-import { ROLES } from "@/common/enums";
+import { GENDERS, ROLES } from "@/common/enums";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -49,7 +49,8 @@ export const usePrepare = () => {
       email: user.email,
       role: ROLES.LISTENER,
       name: user.name ?? "",
-      photoURL: user.photoURL,
+      gender: GENDERS.UNKNOWN,
+      photoURL: user.photoURL ?? "",
       categoriesOfInterest: data.categoriesOfInterest,
     });
 

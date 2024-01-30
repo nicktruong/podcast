@@ -20,5 +20,5 @@
     },
     "typeRoots": ["./src/common/types", "./node_modules/@types"]
   },
-  "include": ["src", "public/firebase-messaging-sw.js"]
+  "include": ["src", "public/firebase-messaging-sw.ts"]
 }

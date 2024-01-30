@@ -79,13 +79,11 @@ const Profile = () => {
             </Box>
           </Box>
         )}
-
         {episodes.length > 0 && (
           <Box className={classes.playlists}>
             <Typography className={classes.playlistsHeading}>
               Episodes Published
             </Typography>
-
             <Box className={classes.playlist}>
               {episodes.map((episode) => (
                 <Link

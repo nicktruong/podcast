@@ -33,11 +33,14 @@ messaging.onBackgroundMessage((payload) => {
     "[firebase-messaging-sw.js] Received background message ",
     payload
   );
+
+  const { data } = payload;
+
   // Customize notification here
-  const notificationTitle = "Background Message Title";
+  const notificationTitle = `${data.creatorName} ${data.action} ${data.subject}`;
   const notificationOptions = {
-    body: "Background Message body.",
-    icon: "/firebase-logo.png",
+    body: "GO Podcast now to listen",
+    icon: data.creatorAvatar,
   };
   self.registration.showNotification(notificationTitle, notificationOptions);
 });

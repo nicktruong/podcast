@@ -144,12 +144,12 @@ export default function AudioPlayer() {
         {volume === 0 || mute ? (
           <VolumeMuteIcon
             className={classes.volumeIcon}
-            onClick={() => toggleMuteAudio()}
+            onClick={toggleMuteAudio}
           />
         ) : (
           <VolumeUpIcon
             className={classes.volumeIcon}
-            onClick={() => toggleMuteAudio()}
+            onClick={toggleMuteAudio}
           />
         )}
 
@@ -160,7 +160,7 @@ export default function AudioPlayer() {
           value={mute ? 0 : volume}
           className={classes.volumeSlider}
           onChange={(_, volume) => {
-            toggleMuteAudio({ isMute: false });
+            toggleMuteAudio()({ isMute: false });
             changeAudioVolumn(volume as number);
           }}
         />

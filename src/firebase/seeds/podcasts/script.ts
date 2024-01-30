@@ -4,7 +4,8 @@ import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
 import { Episode, Podcast, User } from "@/common/interfaces";
-import { COLLECTIONS, GENDERS, PodcastStatus, ROLES } from "@/common/enums";
+import { COLLECTIONS, GENDERS, PODCAST_STATUS, ROLES } from "@/common/enums";
+// import { generateKeywords } from "@/common/utils";
 
 import categories from "../categories/categories.json";
 
@@ -45,8 +46,8 @@ const createRandomPodcast = ({
     category: randomCategoryId,
     title: podcastsJSON[index].title,
     description: podcastsJSON[index].description,
+    // keywords: generateKeywords(podcastsJSON[index].title),
     coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
-    // searchKeywords: podcastsJSON[index].title.toLowerCase().split(" "), // TODO: gen keywords
   };
 };
 
@@ -73,10 +74,11 @@ const createRandomEpisode = ({
     createdAt: seedDateString,
     updatedAt: seedDateString,
     publishedDate: seedDateString,
-    status: PodcastStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     title: episodesJSON[index].title,
+    status: PODCAST_STATUS.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     pathToFile: "audios/seed-audio.mp3",
     description: episodesJSON[index].description,
+    // keywords: generateKeywords(podcastsJSON[index].title),
   };
 };
 

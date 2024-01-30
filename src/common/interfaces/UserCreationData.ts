@@ -1,4 +1,4 @@
-import { ROLES } from "@/common/enums";
+import { GENDERS, ROLES } from "@/common/enums";
 
 export interface UserCreationData {
   dob?: Date;
@@ -6,7 +6,7 @@ export interface UserCreationData {
   uid?: string;
   name: string;
   email: string;
-  gender?: string;
-  photoURL?: string;
+  gender: GENDERS;
+  photoURL: string;
   categoriesOfInterest: string[];
 }

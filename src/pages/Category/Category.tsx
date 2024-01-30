@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Box, MenuItem, Select, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 

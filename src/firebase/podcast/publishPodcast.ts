@@ -7,7 +7,7 @@ import {
 } from "firebase/firestore";
 
 import { Episode, EpisodeCreationData } from "@/common/interfaces";
-import { COLLECTIONS, PodcastStatus } from "@/common/enums";
+import { COLLECTIONS, PODCAST_STATUS } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -28,7 +28,7 @@ export const publishEpisode = async (
     updatedAt: currentDate,
     createdAt: currentDate,
     publishedDate: currentDate,
-    status: PodcastStatus.PUBLISHED,
+    status: PODCAST_STATUS.PUBLISHED,
     ...data,
   };
 

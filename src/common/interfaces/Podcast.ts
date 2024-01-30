@@ -12,6 +12,7 @@ export interface Podcast {
   playCount: number;
   rateCount: number;
   updatedAt: string;
+  // keywords: string[];
   description: string;
   audienceSize: number;
   rating: null | number;

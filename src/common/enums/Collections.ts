@@ -5,4 +5,5 @@ export enum COLLECTIONS {
   PODCASTS = "podcasts",
   PLAYLISTS = "playlists",
   CATEGORIES = "categories",
+  NOTIFICATIONS = "notifications",
 }
