@@ -41,7 +41,7 @@ module.exports = {
       },
     ],
     "arrow-parens": ["error", "always"],
-    curly: "error",
+    curly: "off",
     "import/order": [
       "error",
       {

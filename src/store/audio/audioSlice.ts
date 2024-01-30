@@ -1,57 +1,29 @@
 import { intervalToDuration } from "date-fns";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { downloadFileFromStorage, updatePlayCount } from "@/firebase";
+import { downloadAndPlayAudio, updateAudioPlayedCount } from "./thunks";
 
-import { addHistoryAction } from "../history";
-import { createAppAsyncThunk } from "../createAppAsyncThunk";
+import type { AudioState } from "./interfaces";
 
-import {
-  SLICE_NAME,
-  initialState,
-  DOWNLOAD_AND_PLAY_AUDIO_ACTION,
-  UPDATE_AUDIO_PLAYED_COUNT_ACTION,
-} from "./constants";
-
-import type {
-  DownloadAndPlayAudioParameters,
-  DownloadAndPlayAudioReturnType,
-} from "./interfaces";
-import type { RootState } from "@/store";
-
-export const downloadAndPlayAudio = createAppAsyncThunk(
-  DOWNLOAD_AND_PLAY_AUDIO_ACTION,
-  async (
-    {
-      title,
-      author,
-      coverUrl,
-      podcastId,
-      episodeId,
-      pathToFile,
-    }: DownloadAndPlayAudioParameters,
-    thunkApi
-  ): Promise<DownloadAndPlayAudioReturnType | undefined> => {
-    const audioUrl = await downloadFileFromStorage(pathToFile);
-
-    // TODO: dispatch to history thunk
-    await thunkApi.dispatch(addHistoryAction(podcastId));
-
-    return { title, author, coverUrl, podcastId, episodeId, audioUrl };
-  }
-);
-
-export const updateAudioPlayedCount = createAppAsyncThunk(
-  UPDATE_AUDIO_PLAYED_COUNT_ACTION,
-  async (_, thunkApi) => {
-    const { podcastId, episodeId } = selectAudioState(thunkApi.getState());
-
-    await updatePlayCount({ podcastId, episodeId });
-  }
-);
+export const initialState: AudioState = {
+  title: "",
+  author: "",
+  coverUrl: "",
+  audioUrl: "",
+  podcastId: "",
+  episodeId: "",
+  audioDuration: {},
+  durationRemain: {},
+  passedDuration: {},
+  playing: false,
+  downloaded: false,
+  loadingAudio: false,
+  durationInSeconds: 0,
+  passedTimeInSeconds: 0,
+};
 
 export const audioSlice = createSlice({
-  name: SLICE_NAME,
+  name: "audio",
   initialState,
   reducers: {
     playAudio: (state) => {
@@ -120,7 +92,5 @@ export const {
   setDurationInSeconds,
   setPassedTimeInSeconds,
 } = audioSlice.actions;
-
-export const selectAudioState = (state: RootState) => state.audio;
 
 export default audioSlice.reducer;

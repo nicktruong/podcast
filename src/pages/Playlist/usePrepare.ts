@@ -20,6 +20,7 @@ import { openAudioPlayer } from "@/store/ui";
 import { requestPermission } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
+import { addHistoryAction } from "@/store/history";
 
 import { useStyles } from "./styles";
 
@@ -58,17 +59,26 @@ const usePrepare = () => {
   }, [id]);
 
   const handleFollow = () => {
-    // console.log(Notification.permission, "permission");
-    if (podcastDetail) {
-      if (user?.following?.includes(podcastDetail.id)) {
-        dispatch(unfollowPodcast({ podcastId: podcastDetail.id }));
-      } else {
-        if (Notification.permission === "default") {
-          requestPermission();
-        }
+    if (!podcastDetail?.id || !user?.id || !user?.following) return;
 
-        dispatch(followPodcast({ podcastId: podcastDetail.id }));
+    if (user.following.includes(podcastDetail.id)) {
+      dispatch(
+        unfollowPodcast({
+          userId: user.id,
+          podcastId: podcastDetail.id,
+        })
+      );
+    } else {
+      if (Notification.permission === "default") {
+        requestPermission();
       }
+
+      dispatch(
+        followPodcast({
+          userId: user.id,
+          podcastId: podcastDetail.id,
+        })
+      );
     }
   };
 
@@ -100,6 +110,9 @@ const usePrepare = () => {
           pathToFile,
         })
       );
+
+      if (!user?.id) return;
+      dispatch(addHistoryAction({ podcastId, userId: user.id }));
     } else {
       dispatch(playAudio());
     }

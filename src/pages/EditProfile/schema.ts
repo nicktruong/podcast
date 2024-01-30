@@ -1,11 +1,9 @@
 import Joi from "joi";
 
-import { EditProfile } from "@/common/interfaces/EditProfile";
-
-const schema = Joi.object<EditProfile>({
-  bio: Joi.string().allow("").optional(),
-  avatar: Joi.object().optional(),
+const schema = Joi.object({
   name: Joi.string().required(),
+  avatar: Joi.object().optional(),
+  bio: Joi.string().allow("").optional(),
 });
 
 export default schema;

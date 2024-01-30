@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import {
-  getEpisodesFromCreatorPaged,
+  fetchEpisodesFromCreatorPaged,
   resetUploadPodState,
   selectEpisodesAreLoading,
   selectEpisodesOfCreator,
@@ -51,7 +51,9 @@ export const usePrepare = () => {
   useEffect(() => {
     if (userId) {
       dispatch(fetchSinglePodcastOfCreatorId(userId));
-      dispatch(getEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 }));
+      dispatch(
+        fetchEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 })
+      );
     }
   }, [userId]);
 

@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import type { RootState } from "@/store";
 import type { UIState } from "./interfaces";
 
 const initialState: UIState = {
@@ -26,13 +25,5 @@ export const uiSlice = createSlice({
 
 export const { toggleExpand, closeAudioPlayer, openAudioPlayer } =
   uiSlice.actions;
-
-export const selectUIState = (state: RootState) => state.ui;
-
-export const selectIsSidebarExpand = (state: RootState) =>
-  state.ui.isSidebarExpand;
-
-export const selectIsAudioPlayerOpen = (state: RootState) =>
-  state.ui.isAudioPlayerOpen;
 
 export default uiSlice.reducer;

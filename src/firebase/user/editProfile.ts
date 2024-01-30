@@ -5,16 +5,16 @@ import { User } from "@/common/interfaces";
 
 import { db } from "../init";
 
-export const editProfile = async ({
-  fullPath,
-  name,
+export const userEditProfile = async ({
   bio,
+  name,
   userId,
+  fullPath,
 }: {
-  fullPath?: string;
   name: string;
   bio?: string;
   userId: string;
+  fullPath?: string;
 }) => {
   const userRef = doc(db, COLLECTIONS.USERS, userId);
 

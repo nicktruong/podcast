@@ -14,7 +14,7 @@ interface DownloadedPodcast extends Record<SectionKeys, boolean> {}
 interface PopulatedPodcastSections
   extends Record<SectionKeys, PopulatedPodcast[]> {}
 
-export interface ListenerPodcastState extends PopulatedPodcastSections {
+export interface ListenerPodcastsState extends PopulatedPodcastSections {
   loading: LoadingPodcast;
   fetched: DownloadedPodcast;
 }
@@ -26,13 +26,23 @@ export interface FetchPodcastsByCategorySortedAndPaged {
   categories?: string[];
 }
 
-export interface FetchPodcastsByPeriodPaged {
+export interface FetchPodcastsOptions {
   offset?: any;
   period?: number;
   pageSize?: number;
 }
 
-export interface FetchRecentlyPlayedPodcastsPaged {
+export interface FetchPodcastsForYouOptions extends FetchPodcastsOptions {
+  categories: string[];
+  podcastIdsToExclude?: string[];
+}
+
+export interface FetchPodcastsToTryOptions extends FetchPodcastsOptions {
+  podcastIdsToExclude?: string[];
+}
+
+export interface FetchRecentlyPlayedPodcastsOptions {
   offset?: number;
   pageSize?: number;
+  userHistory: string[];
 }

@@ -1,4 +1,4 @@
-import { Playlist, PopulatedEpisode } from "@/common/interfaces";
+import type { Playlist, PopulatedEpisode } from "@/common/interfaces";
 
 export interface PlaylistsState {
   playlists: Playlist[];

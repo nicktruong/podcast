@@ -4,7 +4,7 @@ import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
-export const follow = async ({
+export const userFollowPodcast = async ({
   userId,
   podcastId,
 }: {

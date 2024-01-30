@@ -6,12 +6,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import {
   signOut,
-  selectUserId,
+  selectUser,
   selectUserRoles,
   upgradeToPodcaster,
 } from "@/store/user";
 import { routes } from "@/common/constants";
-import { searchAction } from "@/store/search";
+import { searchAction, setSearchText } from "@/store/search";
 import { useMaxWidthScreenMedia } from "@/common/utils";
 import { selectUIState, toggleExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -31,7 +31,9 @@ const usePrepare = () => {
 
   const { isSidebarExpand } = useAppSelector(selectUIState);
 
-  const userId = useAppSelector(selectUserId);
+  const user = useAppSelector(selectUser);
+
+  const userId = user?.id;
 
   const userRoles = useAppSelector(selectUserRoles);
 
@@ -53,7 +55,16 @@ const usePrepare = () => {
 
   const handleUpgradeToPodcasterRole = () => {
     handleCloseMenu();
-    dispatch(upgradeToPodcaster());
+
+    if (!user?.id || !user.roles) return;
+
+    dispatch(
+      upgradeToPodcaster({
+        userId: user.id,
+        userRoles: user.roles,
+        emailVerified: !!user.emailVerified,
+      })
+    );
   };
 
   const handleSignOut = () => {
@@ -68,6 +79,7 @@ const usePrepare = () => {
 
   const search = useDebouncedCallback(
     useCallback((value) => {
+      dispatch(setSearchText(value));
       dispatch(searchAction(value));
     }, []),
     500

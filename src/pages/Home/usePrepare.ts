@@ -2,18 +2,17 @@ import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 import {
-  selectTrendings,
   selectPodcastsToTry,
   selectPodcastsForYou,
   selectRecentlyPlayed,
+  selectTrendingPodcasts,
   fetchPodcastsToTryPaged,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
-  selectLoadingPodcastsForListener,
+  selectIsLoadingListenerPodcasts,
   fetchRecentlyPlayedPodcastsPaged,
-  selectFetchedPodcastsForListener,
-} from "@/store/listenerPodcastSeries";
-import { selectUserId } from "@/store/user";
+} from "@/store/listenerPodcasts";
+import { selectUser } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
@@ -26,15 +25,14 @@ const usePrepare = () => {
 
   const dispatch = useAppDispatch();
 
-  const userId = useAppSelector(selectUserId);
+  const user = useAppSelector(selectUser);
 
-  const trendingPodcasts = useAppSelector(selectTrendings);
   const podcastsToTry = useAppSelector(selectPodcastsToTry);
   const podcastsForYou = useAppSelector(selectPodcastsForYou);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
+  const trendingPodcasts = useAppSelector(selectTrendingPodcasts);
 
-  const loading = useAppSelector(selectLoadingPodcastsForListener);
-  const fetched = useAppSelector(selectFetchedPodcastsForListener);
+  const loading = useAppSelector(selectIsLoadingListenerPodcasts);
 
   const sections: SectionData[] = [
     {
@@ -61,30 +59,53 @@ const usePrepare = () => {
 
   useEffect(() => {
     const init = async () => {
-      if (userId) {
-        !loading.recentlyPlayed &&
-          (await dispatch(fetchRecentlyPlayedPodcastsPaged()));
+      try {
+        if (user) {
+          await dispatch(
+            fetchRecentlyPlayedPodcastsPaged({
+              userHistory: user.history ?? [],
+            })
+          );
+        }
+
+        const fetchedPodcastIds: string[] = [];
+
+        const trendingPodcasts = await dispatch(
+          fetchTrendingPodcastsPaged({ pageSize: 7 })
+        ).unwrap();
+
+        fetchedPodcastIds.push(
+          ...(trendingPodcasts.map((podcast) => podcast.id) ?? [])
+        );
+
+        if (!user) return;
+
+        const podcastsForYou = await dispatch(
+          fetchPodcastsForYouPaged({
+            period: 30,
+            pageSize: 7,
+            podcastIdsToExclude: fetchedPodcastIds,
+            categories: user.categoriesOfInterest ?? [],
+          })
+        ).unwrap();
+
+        fetchedPodcastIds.push(
+          ...(podcastsForYou.map((podcast) => podcast.id) ?? [])
+        );
+
+        await dispatch(
+          fetchPodcastsToTryPaged({
+            pageSize: 7,
+            podcastIdsToExclude: fetchedPodcastIds,
+          })
+        );
+      } catch (error) {
+        console.error(error);
       }
-
-      !loading.trendings &&
-        !fetched.trendings &&
-        (await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })));
-
-      if (!userId) {
-        return;
-      }
-
-      !loading.podcastsForYou &&
-        !fetched.podcastsForYou &&
-        (await dispatch(fetchPodcastsForYouPaged({ pageSize: 7, period: 30 })));
-
-      !loading.podcastsToTry &&
-        !fetched.podcastsToTry &&
-        (await dispatch(fetchPodcastsToTryPaged({ pageSize: 7 })));
     };
 
     init();
-  }, [userId]);
+  }, [user]);
 
   return {
     classes,

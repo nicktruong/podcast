@@ -3,13 +3,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
+import { editProfile, selectUser } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { editProfileAction, selectUser } from "@/store/user";
-import { EditProfile } from "@/common/interfaces/EditProfile";
 import { EDIT_PROFILE_DEFAULT_DATA, routes } from "@/common/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
+
+import type { EditProfile } from "@/common/interfaces";
 
 export const usePrepare = () => {
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export const usePrepare = () => {
     setValue,
     handleSubmit,
     formState: { errors },
-  } = useForm<EditProfile>({
+  } = useForm<Omit<EditProfile, "userId">>({
     mode: "onSubmit",
     reValidateMode: "onSubmit",
     resolver: joiResolver(schema),
@@ -38,8 +39,10 @@ export const usePrepare = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    dispatch(editProfileAction(data));
-    navigate(routes.profile.replace(":id", user?.id ?? ""));
+    if (!user?.id) return;
+
+    dispatch(editProfile({ userId: user.id, ...data }));
+    navigate(routes.profile.replace(":id", user.id));
   });
 
   const handleAvatarSubmit = (file: File | undefined) => {

@@ -11,6 +11,7 @@ import {
   createPodcastAction,
   selectPodcastCreationData,
 } from "@/store/podcast";
+import { selectUserId } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -29,6 +30,7 @@ const useHelper = ({ handleClose }: Props) => {
   const { classes } = useStyles();
   const dispatch = useAppDispatch();
   const step = useAppSelector(selectStep);
+  const userId = useAppSelector(selectUserId);
   const podcast = useAppSelector(selectPodcast);
   const tempImg = useAppSelector(selectTempImg);
   const coverUrl = podcast?.coverUrl ?? tempImg;
@@ -80,7 +82,8 @@ const useHelper = ({ handleClose }: Props) => {
       }
 
       case PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE: {
-        dispatch(createPodcastAction());
+        if (!userId) return;
+        dispatch(createPodcastAction(userId));
         handleClose();
         break;
       }

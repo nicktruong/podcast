@@ -15,7 +15,7 @@ import { Episode } from "@/common/interfaces";
 import { db } from "../init";
 import { populateEpisode } from "../utils";
 
-export const fetchEpisodesPagedFromCreatorId = async ({
+export const getEpisodesFromCreatorPaged = async ({
   creatorId,
   pageSize = 5,
   offset = new Date(),

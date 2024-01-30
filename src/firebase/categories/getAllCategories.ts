@@ -6,7 +6,7 @@ import { db } from "../init";
 
 import type { CategoryRaw } from "@/common/interfaces";
 
-export const getAllCategories = async () => {
+export const fetchAllCategories = async () => {
   const querySnapshot = await getDocs(collection(db, COLLECTIONS.CATEGORIES));
 
   const { categories } = querySnapshot.docs[0].data() as CategoryRaw;

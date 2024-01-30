@@ -9,6 +9,7 @@ import type { User } from "@/common/interfaces";
 
 export const getUserInfo = async (uid: string): Promise<User | undefined> => {
   const userRef = doc(db, COLLECTIONS.USERS, uid);
+
   const userSnapshot = await getDoc(userRef);
 
   if (!userSnapshot.exists()) {

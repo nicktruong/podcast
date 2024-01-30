@@ -10,7 +10,7 @@ import podcastReducer from "./podcast";
 import detailsReducer from "./details";
 import categoryReducer from "./category";
 import playlistsReducer from "./playlists";
-import userPodcastSeriesReducer from "./listenerPodcastSeries";
+import userPodcastSeriesReducer from "./listenerPodcasts";
 
 export const store = configureStore({
   reducer: {

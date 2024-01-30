@@ -10,11 +10,11 @@ import { router } from "@/pages/router";
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
-      <Suspense>
-        <Provider store={store}>
+      <Provider store={store}>
+        <Suspense>
           <RouterProvider router={router} />
-        </Provider>
-      </Suspense>
+        </Suspense>
+      </Provider>
       <CssBaseline />
     </ThemeProvider>
   );

@@ -6,7 +6,7 @@ import {
   selectPlaylists,
   removePodcastFromPlaylist,
   selectPlaylistEpisodesDetail,
-  fetchUserPlaylistEpisodesDetail,
+  fetchUserPlaylistEpisodesFromIds,
 } from "@/store/playlists";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { routes } from "@/common/constants";
@@ -31,13 +31,13 @@ export const usePrepare = () => {
   const episodesDetail = useAppSelector(selectPlaylistEpisodesDetail);
 
   useEffect(() => {
-    if (playlist) {
-      const episodes = playlist.episodes;
+    if (!playlist) return;
 
-      if (episodes) {
-        dispatch(fetchUserPlaylistEpisodesDetail(episodes));
-      }
-    }
+    dispatch(
+      fetchUserPlaylistEpisodesFromIds(
+        playlist.episodes.map((episode) => episode.episodeId)
+      )
+    );
   }, [playlist]);
 
   const handleRemovePodcastFromPlaylist = async ({

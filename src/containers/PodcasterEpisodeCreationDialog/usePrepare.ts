@@ -16,7 +16,7 @@ import {
   publishEpisodeAction,
 } from "@/store/episode";
 import { uploadFile } from "@/firebase";
-import { selectUser } from "@/store/user";
+import { selectUser, setUser } from "@/store/user";
 import { EpisodeCreationSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectPodcast, selectTempImg } from "@/store/podcast";
@@ -91,7 +91,9 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
         break;
 
       case EpisodeCreationSteps.REVIEW_PUBLISH:
-        await dispatch(publishEpisodeAction());
+        if (!user?.id) return;
+        await dispatch(publishEpisodeAction(user.id));
+        dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
         handleClose();
         break;
 

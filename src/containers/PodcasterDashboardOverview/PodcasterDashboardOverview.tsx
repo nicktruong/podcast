@@ -6,7 +6,7 @@ import { Button, Typography } from "@mui/material";
 import { selectPodcast } from "@/store/podcast";
 import { selectUser, selectUserId } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectPods, getEpisodesFromCreatorPaged } from "@/store/episode";
+import { selectPods, fetchEpisodesFromCreatorPaged } from "@/store/episode";
 
 export default function PodDashboardOverview() {
   const dispatch = useAppDispatch();
@@ -18,7 +18,9 @@ export default function PodDashboardOverview() {
 
   useEffect(() => {
     if (userId) {
-      dispatch(getEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 }));
+      dispatch(
+        fetchEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 })
+      );
     }
   }, [userId]);
 

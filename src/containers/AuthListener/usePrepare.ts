@@ -1,25 +1,21 @@
 import { useEffect } from "react";
 
-import {
-  setUser,
-  setLoading,
-  selectInitialUserDataLoading,
-} from "@/store/user";
 import { auth, getUserInfo } from "@/firebase";
-import { fetchCategories, selectFetchingCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
+import { getCategories, selectFetchingCategories } from "@/store/category";
 
 export const usePrepare = () => {
   const dispatch = useAppDispatch();
 
   const fetchingCategories = useAppSelector(selectFetchingCategories);
 
-  const initialLoading = useAppSelector(selectInitialUserDataLoading);
+  const initialLoading = useAppSelector(selectIsUserLoading);
 
   useEffect(() => {
     const init = async () => {
       // fetch user's interest categories
-      await dispatch(fetchCategories());
+      await dispatch(getCategories());
     };
 
     auth.onAuthStateChanged(async (user) => {

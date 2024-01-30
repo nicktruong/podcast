@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks";
 import { selectUser } from "@/store/user";
 import { selectPlaylists } from "@/store/playlists";
 import {
-  getEpisodesFromCreatorPaged,
+  fetchEpisodesFromCreatorPaged,
   selectEpisodesOfCreator,
 } from "@/store/episode";
 import { fetchUserInfo, selectUserProfile } from "@/store/profile";
@@ -38,7 +38,7 @@ export const usePrepare = () => {
         dispatch(fetchUserInfo(id));
       }
 
-      dispatch(getEpisodesFromCreatorPaged({ creatorId: id }));
+      dispatch(fetchEpisodesFromCreatorPaged({ creatorId: id }));
     }
   }, [id]);
 
