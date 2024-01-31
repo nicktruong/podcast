@@ -1,28 +1,14 @@
+import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 import { downloadFileFromStorage, updatePlayCount } from "@/firebase";
 
-import { createAppAsyncThunk } from "../createAppAsyncThunk";
-
 import { selectAudioState } from "./selectors";
-import {
-  DownloadAndPlayAudioParameters,
-  DownloadAndPlayAudioReturnType,
-} from "./interfaces";
 
 export const downloadAndPlayAudio = createAppAsyncThunk(
   "audio/downloadAndPlayAudio",
-  async ({
-    title,
-    author,
-    coverUrl,
-    podcastId,
-    episodeId,
-    pathToFile,
-  }: DownloadAndPlayAudioParameters): Promise<
-    DownloadAndPlayAudioReturnType | undefined
-  > => {
+  async (pathToFile: string) => {
     const audioUrl = await downloadFileFromStorage(pathToFile);
 
-    return { title, author, coverUrl, podcastId, episodeId, audioUrl };
+    return audioUrl;
   }
 );
 

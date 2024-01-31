@@ -6,7 +6,14 @@ export const useStyles = tss
     content: {
       marginTop: "24px",
     },
-    firstColumn: {
+    removePlaylistBtn: {
+      marginBottom: "24px",
+    },
+    playColumnHeader: {
+      paddingLeft: "24px",
+      paddingRight: "0px",
+    },
+    playColumn: {
       width: "40px",
       cursor: "pointer",
       paddingRight: "0px",
@@ -20,7 +27,11 @@ export const useStyles = tss
         },
       },
     },
+    activeColor: {
+      color: theme.palette.primary.main,
+    },
     podcastIcon: {
+      marginLeft: "4px",
       display: "inline-block",
     },
     playIcon: {
@@ -32,33 +43,57 @@ export const useStyles = tss
     titleContainer: {
       gap: "12px",
       display: "flex",
-      maxWidth: "300px",
+      maxWidth: "320px",
       alignItems: "center",
     },
     img: {
       borderRadius: "4px",
     },
-    titleCell: {},
-    titleContent: {
-      maxWidth: "100%",
+    titleCell: {
+      maxWidth: "320px",
     },
-    title: {
+    titleContent: {
+      maxWidth: "320px",
       overflow: "hidden",
       whiteSpace: "nowrap",
       textOverflow: "ellipsis",
-      color: theme.palette.primary.main,
+    },
+    title: {
+      maxWidth: "100%",
+      fontSize: "16px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+      color: theme.palette.common.white,
+
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
     author: {
       fontSize: "14px",
       color: theme.palette.text.secondary,
     },
+    podcastCell: {
+      maxWidth: "320px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
+    },
     podcastContainer: {
       maxWidth: "320px",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
     },
     podcastTitle: {
       fontSize: "14px",
       overflow: "hidden",
       whiteSpace: "nowrap",
       textOverflow: "ellipsis",
+
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
   }));

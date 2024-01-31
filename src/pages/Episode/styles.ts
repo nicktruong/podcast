@@ -102,4 +102,7 @@ export const useStyles = tss
       overflow: "hidden",
       textOverflow: "ellipsis",
     },
+    seeAllEpisodesBtn: {
+      marginTop: "32px",
+    },
   }));

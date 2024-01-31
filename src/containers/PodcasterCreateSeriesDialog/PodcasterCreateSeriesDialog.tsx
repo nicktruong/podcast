@@ -83,7 +83,7 @@ export default function PodcasterCreateSeriesDialog({
 
         <Box className="text-center mt-12">
           <Button
-            variant="roundContained"
+            variant="roundedContained"
             className={classes.nextButtonRoot}
             onClick={handleNextStep}
           >

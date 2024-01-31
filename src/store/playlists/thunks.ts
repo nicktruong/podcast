@@ -4,6 +4,7 @@ import {
   removeFromPlaylist,
   createOwnedPlaylist,
   getEpisodesDetailFromIds,
+  removePlaylist,
 } from "@/firebase";
 
 import { createAppAsyncThunk } from "../createAppAsyncThunk";
@@ -12,12 +13,13 @@ import type {
   EpisodeReference,
   AddToPlaylistData,
   PlaylistCreationData,
+  PlaylistEpisode,
 } from "@/common/interfaces";
 
-export const fetchUserPlaylistEpisodesFromIds = createAppAsyncThunk(
+export const fetchUserPlaylistEpisodes = createAppAsyncThunk(
   "playlists/fetchUserPlaylistEpisodesFromIds",
-  async (episodeIds: string[]) => {
-    const episodesDetail = await getEpisodesDetailFromIds(episodeIds);
+  async (episodes: PlaylistEpisode[]) => {
+    const episodesDetail = await getEpisodesDetailFromIds(episodes);
 
     return episodesDetail;
   }
@@ -84,7 +86,14 @@ export const addToPlaylistAction = createAppAsyncThunk(
 
 export const removePodcastFromPlaylist = createAppAsyncThunk(
   "playlists/removePodcastFromPlaylist",
-  async ({ episodeId, playlistId }: EpisodeReference) => {
-    return removeFromPlaylist({ episodeId, playlistId });
+  async ({ episode, playlistId }: EpisodeReference) => {
+    return removeFromPlaylist({ episode, playlistId });
+  }
+);
+
+export const removeUserPlaylist = createAppAsyncThunk(
+  "playlists/removePlaylist",
+  async (playlistId: string) => {
+    return removePlaylist(playlistId);
   }
 );

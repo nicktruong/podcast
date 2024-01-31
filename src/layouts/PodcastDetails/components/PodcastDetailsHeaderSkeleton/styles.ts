@@ -1,4 +1,4 @@
-import { tss } from "tss-react";
+import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create({
   headerRoot: {
@@ -13,8 +13,5 @@ export const useStyles = tss.create({
     display: "flex",
     flexDirection: "column",
     justifyContent: "flex-end",
-  },
-  title: {
-    lineHeight: "120%",
   },
 });

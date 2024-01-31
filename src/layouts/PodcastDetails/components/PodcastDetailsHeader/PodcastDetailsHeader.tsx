@@ -1,5 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
+import PodcastDetailsHeaderSkeleton from "../PodcastDetailsHeaderSkeleton";
+
 import { usePrepare } from "./usePrepare";
 
 const PodcastDetailsHeader = () => {
@@ -8,11 +10,16 @@ const PodcastDetailsHeader = () => {
     classes,
     coverUrl,
     authorName,
+    loadingDetail,
     titleFontSize,
     seriesTitleRef,
     seriesTitleContainerRef,
     t,
   } = usePrepare();
+
+  if (loadingDetail) {
+    return <PodcastDetailsHeaderSkeleton />;
+  }
 
   return (
     <Box component="header" className={classes.headerRoot}>
@@ -28,8 +35,9 @@ const PodcastDetailsHeader = () => {
 
       <Box className={classes.seriesInfo}>
         <Typography fontSize="14px">{t("podcast")}</Typography>
-        <Box height="140px" ref={seriesTitleContainerRef}>
+        <Box height="120px" ref={seriesTitleContainerRef}>
           <Typography
+            className={classes.title}
             fontWeight={700}
             ref={seriesTitleRef}
             fontSize={titleFontSize}

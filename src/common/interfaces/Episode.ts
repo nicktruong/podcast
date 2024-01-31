@@ -39,8 +39,3 @@ export type PopulatedEpisode = Omit<Episode, "podcastId"> & {
 export interface EpisodeWithSeriesAndAuthor extends Episode {
   series: PopulatedPodcast;
 }
-
-export interface PlaylistEpisodes extends Episode {
-  addedDate: string;
-  series: PopulatedPodcast;
-}

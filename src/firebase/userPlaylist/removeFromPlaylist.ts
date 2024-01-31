@@ -1,4 +1,11 @@
-import { deleteDoc, doc, getDoc, updateDoc } from "firebase/firestore";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  arrayRemove,
+  deleteDoc,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
 import { EpisodeReference, Playlist } from "@/common/interfaces";
@@ -6,33 +13,38 @@ import { EpisodeReference, Playlist } from "@/common/interfaces";
 import { db } from "../init";
 
 export const removeFromPlaylist = async ({
-  episodeId,
+  episode,
   playlistId,
 }: EpisodeReference) => {
   const playlistRef = doc(db, COLLECTIONS.PLAYLISTS, playlistId);
-  const playlistSnapshot = await getDoc(playlistRef);
 
-  const data = playlistSnapshot.data() as Playlist | undefined;
+  await updateDoc(playlistRef, { episodes: arrayRemove(episode) });
 
-  if (!data) {
-    return;
-  }
+  return { episode, playlistId };
 
-  const episodes = data.episodes.filter(
-    (episode) => episode.episodeId !== episodeId
-  );
+  // const playlistSnapshot = await getDoc(playlistRef);
 
-  const playlistEmpty = episodes.length === 0;
+  // const data = playlistSnapshot.data() as Playlist | undefined;
 
-  if (playlistEmpty) {
-    await deleteDoc(playlistRef);
-  } else {
-    await updateDoc(playlistRef, { episodes });
-  }
+  // if (!data) {
+  //   return;
+  // }
 
-  return {
-    episodeId,
-    playlistId,
-    playlistRemoved: playlistEmpty,
-  };
+  // const episodes = data.episodes.filter(
+  //   (episode) => episode.episodeId !== episodeId
+  // );
+
+  // const playlistEmpty = episodes.length === 0;
+
+  // if (playlistEmpty) {
+  //   await deleteDoc(playlistRef);
+  // } else {
+  //   await updateDoc(playlistRef, { episodes });
+  // }
+
+  // return {
+  //   episodeId,
+  //   playlistId,
+  //   playlistRemoved: playlistEmpty,
+  // };
 };

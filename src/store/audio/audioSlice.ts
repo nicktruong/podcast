@@ -3,7 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { downloadAndPlayAudio, updateAudioPlayedCount } from "./thunks";
 
-import type { AudioState } from "./interfaces";
+import type { AudioInfo, AudioState } from "./interfaces";
 
 export const initialState: AudioState = {
   title: "",
@@ -26,6 +26,9 @@ export const audioSlice = createSlice({
   name: "audio",
   initialState,
   reducers: {
+    setAudioInfo: (state, { payload }: PayloadAction<AudioInfo>) => {
+      return { ...state, ...payload };
+    },
     playAudio: (state) => {
       state.playing = true;
     },
@@ -67,9 +70,9 @@ export const audioSlice = createSlice({
       .addCase(downloadAndPlayAudio.fulfilled, (state, { payload }) => {
         return {
           ...state,
-          ...payload,
           playing: true,
           downloaded: true,
+          audioUrl: payload,
           loadingAudio: false,
         };
       })
@@ -89,6 +92,7 @@ export const {
   playAudio,
   pauseAudio,
   resetAudio,
+  setAudioInfo,
   setDurationInSeconds,
   setPassedTimeInSeconds,
 } = audioSlice.actions;

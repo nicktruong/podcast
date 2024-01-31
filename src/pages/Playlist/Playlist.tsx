@@ -1,20 +1,23 @@
-import { Box, Button, Typography } from "@mui/material";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Box, Button, Typography, alpha } from "@mui/material";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
 import { routes } from "@/common/constants";
+import { isDark } from "@/common/utils";
 
 import usePrepare from "./usePrepare";
 import PodcastRating from "./components/PlaylistRating";
+import PlaylistSkeleton from "./components/PlaylistSkeleton";
 
 export default function Playlist() {
   const {
     user,
     classes,
+    category,
     openModal,
     podcastDetail,
+    loadingDetail,
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,
@@ -26,6 +29,10 @@ export default function Playlist() {
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   } = usePrepare();
+
+  if (loadingDetail) {
+    return <PlaylistSkeleton />;
+  }
 
   return (
     <Box>
@@ -43,154 +50,78 @@ export default function Playlist() {
 
       <Box className={classes.playlistMain}>
         <Box className={classes.episodes}>
-          {/* TODO Uncomment when implementing history */}
-          {/* <Box className={cx(classes.episode, classes.continueEpisode)}>
-              <Typography className={classes.continueListeningEpLabel}>
-                Continue listening
-              </Typography>
-              <Typography className={classes.episodeTitle}>
-                #32 - 7 bài học để trở thành 1 &quot;intermediate&quot; UX
-                designer
-              </Typography>
-              <Typography className={classes.seriesName}>
-                Trải nghiệm?!
-              </Typography>
-              <Typography className={classes.episodeDescription}>
-                Năm 2023 trôi qua, mình học được 7 kĩ năng đã giúp mình trở
-                thành 1 intermediate UX designer. Ngoài những cái bài học bạn
-                hay nghe như là &quot;học dùng platform&quot;, có những kĩ năng
-                mềm gì mọi người có thể học để nâng cấp level designer của bạn
-              </Typography>
+          <Typography className={classes.episodesHeading}>
+            {t("allEpisodes")}
+          </Typography>
 
-              <Box className={classes.playbar}>
-                <Box className={classes.playbarMainActions}>
-                  <Box component="button">
-                    <PlayCircleIcon className={classes.icon} />
-                  </Box>
-
-                  <Box className={classes.info}>
-                    <Typography className={classes.date}>Jan 3</Typography>
-                    <Box className={classes.dot}>·</Box>
-                    <Typography className={classes.timeleft}>
-                      36 min 27 sec left
-                    </Typography>
-                    <LinearProgress
-                      className={classes.timeline}
-                      variant="determinate"
-                      value={100}
-                    />
-                  </Box>
+          {episodesDetail.map((episode) => {
+            return (
+              <Box
+                key={episode.id}
+                className={classes.episode}
+                onClick={() =>
+                  navigate(routes.episode.replace(":id", episode.id))
+                }
+              >
+                <Box>
+                  <Typography className={classes.episodeTitle}>
+                    {episode.title}
+                  </Typography>
+                  <Typography className={classes.podcastName}>
+                    {podcastDetail?.title}
+                  </Typography>
+                  <Typography className={classes.episodeDescription}>
+                    {episode.description}
+                  </Typography>
                 </Box>
 
-                <Box>
-                  <Box component="button">
-                    <AddCircleIcon className={classes.iconSecondary} />
+                <Box className={classes.playbar}>
+                  <Box className={classes.playbarMainActions}>
+                    <Box
+                      component="button"
+                      onClick={(event) => {
+                        event.stopPropagation();
+
+                        if (playingEpisodeId === episode.id && audioIsPlaying) {
+                          handlePauseAudio();
+                        } else {
+                          handleDownloadAndPlayAudio({
+                            title: episode.title,
+                            episodeId: episode.id,
+                            pathToFile: episode.pathToFile,
+                            podcastId: podcastDetail?.id ?? "",
+                            coverUrl: podcastDetail?.coverUrl ?? "",
+                            author: podcastDetail?.author.name ?? "",
+                          });
+                        }
+                      }}
+                    >
+                      {playingEpisodeId === episode.id && audioIsPlaying ? (
+                        <PauseCircleIcon className={classes.icon} />
+                      ) : (
+                        <PlayCircleIcon className={classes.icon} />
+                      )}
+                    </Box>
+
+                    <Box className={classes.info}>
+                      <Typography className={classes.date}>
+                        {t("createdAt", {
+                          val: new Date(podcastDetail?.createdAt ?? Date.now()),
+                          formatParams: {
+                            val: {
+                              month: "long",
+                              day: "numeric",
+                              year: "numeric",
+                            },
+                          },
+                        })}
+                      </Typography>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box> */}
-
-          <Box>
-            <Typography className={classes.allEpisodes}>
-              {t("allEpisodes")}
-            </Typography>
-
-            {episodesDetail.map((episode) => {
-              return (
-                <Box
-                  key={episode.id}
-                  onClick={() => {
-                    navigate(routes.episode.replace(":id", episode.id));
-                  }}
-                >
-                  <Box className={classes.episode}>
-                    <Box>
-                      <Typography className={classes.episodeTitle}>
-                        {episode.title}
-                      </Typography>
-                      <Typography className={classes.seriesName}>
-                        {podcastDetail?.title}
-                      </Typography>
-                      <Typography className={classes.episodeDescription}>
-                        {podcastDetail?.description}
-                      </Typography>
-                    </Box>
-
-                    <Box className={classes.playbar}>
-                      <Box className={classes.playbarMainActions}>
-                        <Box
-                          component="button"
-                          onClick={(event) => {
-                            event.stopPropagation();
-
-                            if (
-                              playingEpisodeId === episode.id &&
-                              audioIsPlaying
-                            ) {
-                              handlePauseAudio();
-                            } else {
-                              handleDownloadAndPlayAudio({
-                                title: episode.title,
-                                episodeId: episode.id,
-                                pathToFile: episode.pathToFile,
-                                podcastId: podcastDetail?.id ?? "",
-                                coverUrl: podcastDetail?.coverUrl ?? "",
-                                author: podcastDetail?.author.name ?? "",
-                              });
-                            }
-                          }}
-                        >
-                          {playingEpisodeId === episode.id && audioIsPlaying ? (
-                            <PauseCircleIcon className={classes.icon} />
-                          ) : (
-                            <PlayCircleIcon className={classes.icon} />
-                          )}
-                        </Box>
-
-                        <Box className={classes.info}>
-                          <Typography className={classes.date}>
-                            {t("createdAt", {
-                              val: new Date(
-                                podcastDetail?.createdAt ?? Date.now()
-                              ),
-                              formatParams: {
-                                val: {
-                                  month: "long",
-                                  day: "numeric",
-                                  year: "numeric",
-                                },
-                              },
-                            })}
-                          </Typography>
-                          {/* TODO: add progress bar when implementing history */}
-                          {/* {!!durationInSeconds && (
-                            <>
-                              <Box className={classes.dot}>·</Box>
-                              <Typography className={classes.timeleft}>
-                                {padZero(durationRemain.minutes)} min{" "}
-                                {padZero(durationRemain.seconds)} sec left
-                              </Typography>
-                              <LinearProgress
-                                variant="determinate"
-                                className={classes.timeline}
-                                value={passedTimeInSeconds / durationInSeconds}
-                              />
-                            </>
-                          )} */}
-                        </Box>
-                      </Box>
-
-                      <Box>
-                        <Box component="button">
-                          <AddCircleIcon className={classes.iconSecondary} />
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
+            );
+          })}
         </Box>
 
         <Box className={classes.about}>
@@ -222,8 +153,22 @@ export default function Playlist() {
           </Box>
 
           {/* TODO: Change to link component when implement search */}
-          {podcastDetail && (
-            <Button className={classes.categoryBtn}>
+          {podcastDetail && category && (
+            <Button
+              className={classes.categoryBtn}
+              sx={(theme) => ({
+                color: isDark(category.color)
+                  ? theme.palette.common.white
+                  : theme.palette.common.black,
+                borderColor: alpha(category.color, 0),
+                backgroundColor: alpha(category.color, 0.6),
+
+                "&:hover": {
+                  borderColor: alpha(category.color, 0),
+                  backgroundColor: alpha(category.color, 0.8),
+                },
+              })}
+            >
               {podcastDetail.category}
             </Button>
           )}

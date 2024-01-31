@@ -122,7 +122,7 @@ const customComponents: Components<Omit<Theme, "components">> = {
       },
       {
         props: {
-          variant: "roundContained",
+          variant: "roundedContained",
         },
         style: ({ theme }) => {
           return {
@@ -135,6 +135,26 @@ const customComponents: Components<Omit<Theme, "components">> = {
             "&:hover": {
               // boxShadow: theme.shadows[4],
               borderColor: theme.palette.primary.main,
+            },
+          };
+        },
+      },
+      {
+        props: {
+          variant: "roundedOutlined",
+        },
+        style: ({ theme }) => {
+          return {
+            fontWeight: 700,
+            padding: "3px 15px",
+            fontSize: "0.8125rem",
+            borderRadius: "200px",
+            textTransform: "capitalize",
+            color: theme.palette.text.primary,
+            border: `1px solid ${alpha(theme.palette.text.primary, 0.4)}`,
+
+            "&:hover": {
+              borderColor: theme.palette.text.primary,
             },
           };
         },

@@ -5,8 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   fetchPodcastDetail,
   selectPodcastDetail,
+  selectLoadingDetail,
   selectEpisodesDetail,
-  selectLoadingPodcastDetail,
   fetchPlaylistEpisodesDetail,
 } from "@/store/details";
 import {
@@ -15,8 +15,10 @@ import {
   selectAudioState,
   downloadAndPlayAudio,
   setPassedTimeInSeconds,
+  setAudioInfo,
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
+import { selectCategory } from "@/store/category";
 import { addHistoryAction } from "@/store/history";
 import { requestPermission } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
@@ -24,29 +26,33 @@ import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
 
 import { useStyles } from "./styles";
 
+import type { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
+
 const usePrepare = () => {
+  const { id } = useParams();
+
   const { t } = useTranslation("Playlist");
 
-  const { id } = useParams();
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
-  const user = useAppSelector(selectUser);
-
   const { classes } = useStyles();
-
-  const dispatch = useAppDispatch();
 
   const [openModal, setOpenModal] = useState(false);
 
   const {
     playing: audioIsPlaying,
-    downloaded: downloadedAudio,
     episodeId: playingEpisodeId,
+    downloaded: downloadedAudio,
   } = useAppSelector(selectAudioState);
+  const user = useAppSelector(selectUser);
   const podcastDetail = useAppSelector(selectPodcastDetail);
-  const loadingDetail = useAppSelector(selectLoadingPodcastDetail);
+  const loadingDetail = useAppSelector(selectLoadingDetail);
   const episodesDetail = useAppSelector(selectEpisodesDetail);
+  const category = useAppSelector((state) =>
+    selectCategory(state, podcastDetail?.category ?? "")
+  );
 
   useEffect(() => {
     if (id) {
@@ -82,42 +88,27 @@ const usePrepare = () => {
     }
   };
 
-  const handleDownloadAndPlayAudio = ({
-    title,
-    author,
-    coverUrl,
-    podcastId,
-    episodeId,
-    pathToFile,
-  }: {
-    title: string;
-    author: string;
-    coverUrl: string;
-    podcastId: string;
-    episodeId: string;
-    pathToFile: string;
-  }) => {
-    if (!downloadedAudio || episodeId !== playingEpisodeId) {
-      dispatch(setPassedTimeInSeconds(0));
+  const handleDownloadAndPlayAudio = (data: DownloadAndPlayAudioParameters) => {
+    const { pathToFile, ...audioInfo } = data;
 
-      dispatch(
-        downloadAndPlayAudio({
-          title,
-          author,
-          coverUrl,
-          podcastId,
-          episodeId,
-          pathToFile,
-        })
-      );
-
-      if (!user?.id) return;
-      dispatch(addHistoryAction({ podcastId, userId: user.id }));
-    } else {
+    if (downloadedAudio && data.episodeId === playingEpisodeId) {
       dispatch(playAudio());
+
+      return;
     }
 
+    dispatch(setPassedTimeInSeconds(0));
+
+    dispatch(setAudioInfo(audioInfo));
+
+    dispatch(downloadAndPlayAudio(pathToFile));
+
     dispatch(openAudioPlayer());
+
+    if (!user?.id || !podcastDetail?.id) return;
+    dispatch(
+      addHistoryAction({ podcastId: podcastDetail?.id, userId: user.id })
+    );
   };
 
   const handlePauseAudio = () => {
@@ -135,9 +126,10 @@ const usePrepare = () => {
   return {
     user,
     classes,
+    category,
     openModal,
-    podcastDetail,
     loadingDetail,
+    podcastDetail,
     episodesDetail,
     audioIsPlaying,
     playingEpisodeId,

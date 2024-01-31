@@ -6,15 +6,26 @@ import {
   selectPlaylists,
   addToPlaylistAction,
 } from "@/store/playlists";
-import { useAppDispatch, useAppSelector } from "@/hooks";
 import {
-  fetchEpisodesDetail,
-  selectEpisodeDetail,
-  selectEpisodeId,
-  selectPodcastDetail,
   setEpisodeId,
+  selectEpisodeId,
+  selectEpisodeDetail,
+  selectPodcastDetail,
+  fetchEpisodesDetail,
 } from "@/store/details";
+import {
+  playAudio,
+  setAudioInfo,
+  selectAudioState,
+  downloadAndPlayAudio,
+  setPassedTimeInSeconds,
+  pauseAudio,
+} from "@/store/audio";
 import { selectUserId } from "@/store/user";
+import { openAudioPlayer } from "@/store/ui";
+import { addHistoryAction } from "@/store/history";
+import { useAppDispatch, useAppSelector } from "@/hooks";
+import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
 
 import { useStyles } from "./styles";
 
@@ -23,6 +34,11 @@ export const usePrepare = () => {
 
   const { id } = useParams();
 
+  const {
+    playing: audioIsPlaying,
+    episodeId: playingEpisodeId,
+    downloaded: downloadedAudio,
+  } = useAppSelector(selectAudioState);
   const episodeDetail = useAppSelector((state) =>
     selectEpisodeDetail(state, id ?? "")
   );
@@ -70,11 +86,11 @@ export const usePrepare = () => {
 
     dispatch(
       createPlaylist({
-        coverUrl: podcastDetail.coverUrl,
+        userId,
+        title: episodeDetail.title,
         episodeId: episodeDetail.id,
         podcastId: podcastDetail.id,
-        title: episodeDetail.title,
-        userId,
+        coverUrl: podcastDetail.coverUrl,
       })
     );
     handleActionMenuClose();
@@ -95,18 +111,48 @@ export const usePrepare = () => {
     handleActionMenuClose();
   };
 
+  const handleDownloadAndPlayAudio = (data: DownloadAndPlayAudioParameters) => {
+    const { pathToFile, ...audioInfo } = data;
+
+    if (downloadedAudio && data.episodeId === playingEpisodeId) {
+      dispatch(playAudio());
+
+      return;
+    }
+
+    dispatch(setPassedTimeInSeconds(0));
+
+    dispatch(setAudioInfo(audioInfo));
+
+    dispatch(downloadAndPlayAudio(pathToFile));
+
+    dispatch(openAudioPlayer());
+
+    if (!userId || !podcastDetail?.id) return;
+    dispatch(addHistoryAction({ podcastId: podcastDetail.id, userId }));
+  };
+
+  const handlePauseAudio = () => {
+    dispatch(pauseAudio());
+  };
+
   return {
     userId,
     classes,
     tabIndex,
     playlists,
+    podcastDetail,
     episodeDetail,
     openActionMenu,
+    audioIsPlaying,
+    playingEpisodeId,
     actionMenuAnchorEl,
     handleTabChange,
+    handlePauseAudio,
     handleAddToPlaylist,
     handleCreatePlaylist,
     handleActionMenuClose,
     handleActionMenuBtnClick,
+    handleDownloadAndPlayAudio,
   };
 };

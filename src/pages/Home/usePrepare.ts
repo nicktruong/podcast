@@ -9,6 +9,7 @@ import {
   fetchPodcastsToTryPaged,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
+  selectListenerPodcastsFetched,
   selectIsLoadingListenerPodcasts,
   fetchRecentlyPlayedPodcastsPaged,
 } from "@/store/listenerPodcasts";
@@ -32,28 +33,33 @@ const usePrepare = () => {
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
   const trendingPodcasts = useAppSelector(selectTrendingPodcasts);
 
+  const fetched = useAppSelector(selectListenerPodcastsFetched);
   const loading = useAppSelector(selectIsLoadingListenerPodcasts);
 
   const sections: SectionData[] = [
     {
+      requireLogin: true,
       key: "recentlyPlayed",
-      title: t("recentlyPlayed"),
       podcasts: recentlyPlayed,
+      title: t("recentlyPlayed"),
     },
     {
       key: "trendings",
+      requireLogin: false,
       title: t("trendings"),
       podcasts: trendingPodcasts,
     },
     {
+      requireLogin: true,
       key: "podcastsForYou",
-      title: t("podcastsForYou"),
       podcasts: podcastsForYou,
+      title: t("podcastsForYou"),
     },
     {
+      requireLogin: true,
       key: "podcastsToTry",
-      title: t("podcastsToTry"),
       podcasts: podcastsToTry,
+      title: t("podcastsToTry"),
     },
   ];
 
@@ -68,37 +74,40 @@ const usePrepare = () => {
           );
         }
 
-        const fetchedPodcastIds: string[] = [];
+        const fetchedPodcastIds: string[] = []; // Use to prevent duplicated podcasts
 
-        const trendingPodcasts = await dispatch(
-          fetchTrendingPodcastsPaged({ pageSize: 7 })
-        ).unwrap();
+        const newTrendingPodcasts = !fetched.trendings
+          ? await dispatch(fetchTrendingPodcastsPaged({ pageSize: 7 })).unwrap()
+          : trendingPodcasts;
 
         fetchedPodcastIds.push(
-          ...(trendingPodcasts.map((podcast) => podcast.id) ?? [])
+          ...(newTrendingPodcasts.map((podcast) => podcast.id) ?? [])
         );
 
         if (!user) return;
 
-        const podcastsForYou = await dispatch(
-          fetchPodcastsForYouPaged({
-            period: 30,
-            pageSize: 7,
-            podcastIdsToExclude: fetchedPodcastIds,
-            categories: user.categoriesOfInterest ?? [],
-          })
-        ).unwrap();
+        const newPodcastsForYou = !fetched.podcastsForYou
+          ? await dispatch(
+              fetchPodcastsForYouPaged({
+                period: 30,
+                pageSize: 7,
+                podcastIdsToExclude: fetchedPodcastIds,
+                categories: user.categoriesOfInterest ?? [],
+              })
+            ).unwrap()
+          : podcastsForYou;
 
         fetchedPodcastIds.push(
-          ...(podcastsForYou.map((podcast) => podcast.id) ?? [])
+          ...(newPodcastsForYou.map((podcast) => podcast.id) ?? [])
         );
 
-        await dispatch(
-          fetchPodcastsToTryPaged({
-            pageSize: 7,
-            podcastIdsToExclude: fetchedPodcastIds,
-          })
-        );
+        !fetched.podcastsToTry &&
+          (await dispatch(
+            fetchPodcastsToTryPaged({
+              pageSize: 7,
+              podcastIdsToExclude: fetchedPodcastIds,
+            })
+          ));
       } catch (error) {
         console.error(error);
       }
@@ -108,6 +117,7 @@ const usePrepare = () => {
   }, [user]);
 
   return {
+    user,
     classes,
     loading,
     sections,

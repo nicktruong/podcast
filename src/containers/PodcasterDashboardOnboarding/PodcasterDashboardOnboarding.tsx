@@ -54,7 +54,7 @@ export default function PodcasterDashboardOnboarding({
                   </Typography>
 
                   <Button
-                    variant="roundContained"
+                    variant="roundedContained"
                     className={classes.letDoItBtn}
                     onClick={handleClickOpenEpisodeDialog}
                   >
@@ -78,7 +78,7 @@ export default function PodcasterDashboardOnboarding({
                   </Typography>
 
                   <Button
-                    variant="roundContained"
+                    variant="roundedContained"
                     className={classes.setupBtn}
                     onClick={handleOpenCreateSeriesDialog}
                   >

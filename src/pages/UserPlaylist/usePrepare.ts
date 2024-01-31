@@ -1,22 +1,37 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useNavigate, useParams } from "react-router-dom";
 
 import {
+  playAudio,
+  pauseAudio,
+  setAudioInfo,
+  selectAudioState,
+  downloadAndPlayAudio,
+  setPassedTimeInSeconds,
+} from "@/store/audio";
+import {
   selectPlaylists,
+  selectLoadingEpisodes,
   removePodcastFromPlaylist,
   selectPlaylistEpisodesDetail,
-  fetchUserPlaylistEpisodesFromIds,
+  fetchUserPlaylistEpisodes,
+  removeUserPlaylist,
 } from "@/store/playlists";
+import { openAudioPlayer } from "@/store/ui";
+import { selectUserId } from "@/store/user";
+import { addHistoryAction } from "@/store/history";
 import { useAppDispatch, useAppSelector } from "@/hooks";
+import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
+import { PlaylistEpisode } from "@/common/interfaces";
 import { routes } from "@/common/constants";
 
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
-  const { t } = useTranslation("UserPlaylist");
-
   const navigate = useNavigate();
+
+  const { t } = useTranslation("UserPlaylist");
 
   const dispatch = useAppDispatch();
 
@@ -24,44 +39,77 @@ export const usePrepare = () => {
 
   const { id } = useParams();
 
+  const {
+    playing: audioIsPlaying,
+    episodeId: playingEpisodeId,
+    downloaded: downloadedAudio,
+  } = useAppSelector(selectAudioState);
+  const userId = useAppSelector(selectUserId);
   const playlists = useAppSelector(selectPlaylists);
-
   const playlist = playlists.find((playlist) => playlist.id === id);
-
+  const loadingEpisodes = useAppSelector(selectLoadingEpisodes);
   const episodesDetail = useAppSelector(selectPlaylistEpisodesDetail);
 
   useEffect(() => {
     if (!playlist) return;
 
-    dispatch(
-      fetchUserPlaylistEpisodesFromIds(
-        playlist.episodes.map((episode) => episode.episodeId)
-      )
-    );
+    dispatch(fetchUserPlaylistEpisodes(playlist.episodes));
   }, [playlist]);
 
-  const handleRemovePodcastFromPlaylist = async ({
-    podcastId,
+  const handleRemoveEpisodeFromPlaylist = async ({
+    episode,
     playlistId,
   }: {
-    podcastId: string;
     playlistId: string;
+    episode: PlaylistEpisode;
   }) => {
-    const result = await dispatch(
-      removePodcastFromPlaylist({ playlistId, episodeId: podcastId })
-    ).unwrap();
+    await dispatch(removePodcastFromPlaylist({ playlistId, episode })).unwrap();
+  };
 
-    if (result && result.playlistRemoved) {
-      navigate(routes.index);
+  const handleDownloadAndPlayAudio = (data: DownloadAndPlayAudioParameters) => {
+    const { pathToFile, ...audioInfo } = data;
+
+    if (downloadedAudio && data.episodeId === playingEpisodeId) {
+      dispatch(playAudio());
+
+      return;
     }
+
+    dispatch(setPassedTimeInSeconds(0));
+
+    dispatch(setAudioInfo(audioInfo));
+
+    dispatch(downloadAndPlayAudio(pathToFile));
+
+    dispatch(openAudioPlayer());
+
+    // TODO: Refactor database playlists => podcasts
+    if (!userId) return;
+    dispatch(addHistoryAction({ podcastId: data.podcastId, userId }));
+  };
+
+  const handlePauseAudio = () => {
+    dispatch(pauseAudio());
+  };
+
+  const handleRemovePlaylist = async () => {
+    if (!playlist?.id) return;
+    await dispatch(removeUserPlaylist(playlist.id)).unwrap();
+    navigate(routes.index);
   };
 
   return {
     classes,
     playlist,
     episodesDetail,
+    audioIsPlaying,
+    loadingEpisodes,
+    playingEpisodeId,
     t,
     cx,
-    handleRemovePodcastFromPlaylist,
+    handlePauseAudio,
+    handleRemovePlaylist,
+    handleDownloadAndPlayAudio,
+    handleRemoveEpisodeFromPlaylist,
   };
 };

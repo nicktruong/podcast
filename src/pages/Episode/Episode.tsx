@@ -1,7 +1,3 @@
-import AddIcon from "@mui/icons-material/Add";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { format } from "date-fns";
 import {
   Tab,
   Box,
@@ -10,8 +6,17 @@ import {
   MenuItem,
   IconButton,
   Typography,
+  Button,
 } from "@mui/material";
+import { format } from "date-fns";
+import AddIcon from "@mui/icons-material/Add";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
+import { Link } from "react-router-dom";
+
+import { routes } from "@/common/constants";
 
 import { usePrepare } from "./usePrepare";
 
@@ -35,11 +40,7 @@ const CustomTabPanel = (props: TabPanelProps) => {
       aria-labelledby={`simple-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
+      {value === index && <Box>{children}</Box>}
     </div>
   );
 };
@@ -58,13 +59,18 @@ const Episode = () => {
     tabIndex,
     playlists,
     episodeDetail,
+    podcastDetail,
     openActionMenu,
+    audioIsPlaying,
+    playingEpisodeId,
     actionMenuAnchorEl,
     handleTabChange,
+    handlePauseAudio,
     handleAddToPlaylist,
     handleCreatePlaylist,
     handleActionMenuClose,
     handleActionMenuBtnClick,
+    handleDownloadAndPlayAudio,
   } = usePrepare();
 
   return (
@@ -76,18 +82,44 @@ const Episode = () => {
       </Box>
 
       <Box className={classes.actions}>
-        <PlayCircleIcon className={classes.playIcon} />
+        <Box
+          component="button"
+          onClick={(event) => {
+            event.stopPropagation();
+
+            if (playingEpisodeId === episodeDetail?.id && audioIsPlaying) {
+              handlePauseAudio();
+            } else {
+              handleDownloadAndPlayAudio({
+                title: episodeDetail?.title ?? "",
+                episodeId: episodeDetail?.id ?? "",
+                pathToFile: episodeDetail?.pathToFile ?? "",
+                podcastId: podcastDetail?.id ?? "",
+                coverUrl: podcastDetail?.coverUrl ?? "",
+                author: podcastDetail?.author.name ?? "",
+              });
+            }
+          }}
+        >
+          {audioIsPlaying && playingEpisodeId === episodeDetail?.id ? (
+            <PauseCircleIcon className={classes.playIcon} />
+          ) : (
+            <PlayCircleIcon className={classes.playIcon} />
+          )}
+        </Box>
 
         <Box>
-          <IconButton
-            id="action-menu-btn"
-            aria-haspopup="true"
-            onClick={handleActionMenuBtnClick}
-            aria-expanded={openActionMenu ? "true" : undefined}
-            aria-controls={openActionMenu ? "action-menu" : undefined}
-          >
-            <MoreHorizIcon className={classes.moreIcon} />
-          </IconButton>
+          {userId && (
+            <IconButton
+              id="action-menu-btn"
+              aria-haspopup="true"
+              onClick={handleActionMenuBtnClick}
+              aria-expanded={openActionMenu ? "true" : undefined}
+              aria-controls={openActionMenu ? "action-menu" : undefined}
+            >
+              <MoreHorizIcon className={classes.moreIcon} />
+            </IconButton>
+          )}
           <Menu
             MenuListProps={{
               className: classes.actionMenu,
@@ -154,7 +186,15 @@ const Episode = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={tabIndex} index={0}>
-        {episodeDetail?.description}
+        <Typography>{episodeDetail?.description}</Typography>
+        <Button
+          className={classes.seeAllEpisodesBtn}
+          variant="roundedOutlined"
+          component={Link}
+          to={routes.playlist.replace(":id", podcastDetail?.id ?? "")}
+        >
+          See all episodes
+        </Button>
       </CustomTabPanel>
     </Box>
   );

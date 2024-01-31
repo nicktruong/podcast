@@ -8,7 +8,13 @@ import {
 } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Episode, Podcast, User } from "@/common/interfaces";
+import {
+  Episode,
+  PlaylistEpisode,
+  Podcast,
+  PopulatedPlaylistEpisode,
+  User,
+} from "@/common/interfaces";
 import { EPISODE_FIELDS } from "@/common/enums/EpisodeFields";
 
 import { db } from "../init";
@@ -33,12 +39,12 @@ export const getPodcastAndEpisodesDetailFromEpisodeId = async (
   return { podcast, episodesDetail };
 };
 
-export const getEpisodesDetailFromIds = async (episodeIds: string[]) => {
+export const getEpisodesDetailFromIds = async (episodes: PlaylistEpisode[]) => {
   const episodesDetail = await Promise.all(
-    episodeIds.map(async (episodeId) => {
+    episodes.map(async (playlistEpisode) => {
       // get episodes
       const episodeSnapshot = await getDoc(
-        doc(db, COLLECTIONS.EPISODES, episodeId)
+        doc(db, COLLECTIONS.EPISODES, playlistEpisode.episodeId)
       );
 
       const episode = {
@@ -51,7 +57,7 @@ export const getEpisodesDetailFromIds = async (episodeIds: string[]) => {
         doc(db, COLLECTIONS.PODCASTS, episode.podcastId)
       );
 
-      const podcast = podcastSnapshot.data() as Podcast;
+      const podcast = podcastSnapshot.data() as Omit<Podcast, "id">;
 
       if (podcast.coverUrl && !podcast.coverUrl.startsWith("https")) {
         podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
@@ -64,7 +70,15 @@ export const getEpisodesDetailFromIds = async (episodeIds: string[]) => {
 
       const author = authorSnapshot.data() as User;
 
-      return { ...episode, podcast: { ...podcast, author } };
+      return {
+        ...episode,
+        podcast: {
+          ...podcast,
+          author,
+          id: podcastSnapshot.id,
+        },
+        addedDate: playlistEpisode.addedDate,
+      } as PopulatedPlaylistEpisode;
     })
   );
 

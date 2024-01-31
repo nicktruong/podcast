@@ -1,3 +1,7 @@
+import { Episode } from "./Episode";
+import { Podcast } from "./Podcast";
+import { User } from "./User";
+
 export interface PlaylistCreationData {
   title: string;
   userId: string;
@@ -13,14 +17,21 @@ export interface AddToPlaylistData {
 }
 
 export interface EpisodeReference {
-  episodeId: string;
   playlistId: string;
+  episode: PlaylistEpisode;
 }
 
 export interface PlaylistEpisode {
   podcastId: string;
   episodeId: string;
   addedDate: string;
+}
+
+export interface PopulatedPlaylistEpisode extends Episode {
+  addedDate: string;
+  podcast: Podcast & {
+    author: User;
+  };
 }
 
 export interface Playlist {

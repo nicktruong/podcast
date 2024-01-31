@@ -5,7 +5,8 @@ import {
   fetchUserPlaylists,
   addToPlaylistAction,
   removePodcastFromPlaylist,
-  fetchUserPlaylistEpisodesFromIds,
+  fetchUserPlaylistEpisodes,
+  removeUserPlaylist,
 } from "./thunks";
 
 import type { PlaylistsState } from "./interfaces";
@@ -23,22 +24,16 @@ export const playlistsSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUserPlaylistEpisodesFromIds.pending, (state) => {
+      .addCase(fetchUserPlaylistEpisodes.pending, (state) => {
         state.loadingEpisodes = true;
       })
-      .addCase(
-        fetchUserPlaylistEpisodesFromIds.fulfilled,
-        (state, { payload }) => {
-          state.episodes = payload;
-          state.loadingEpisodes = false;
-        }
-      )
-      .addCase(
-        fetchUserPlaylistEpisodesFromIds.rejected,
-        (state, { error }) => {
-          console.error(error);
-        }
-      );
+      .addCase(fetchUserPlaylistEpisodes.fulfilled, (state, { payload }) => {
+        state.episodes = payload;
+        state.loadingEpisodes = false;
+      })
+      .addCase(fetchUserPlaylistEpisodes.rejected, (state, { error }) => {
+        console.error(error);
+      });
 
     builder
       .addCase(fetchUserPlaylists.pending, (state) => {
@@ -59,7 +54,7 @@ export const playlistsSlice = createSlice({
           state.playlists.unshift(payload);
         }
       })
-      .addCase(createPlaylist.rejected, (_, { error }) => {
+      .addCase(createPlaylist.rejected, (state, { error }) => {
         // TODO: add toast
         console.error(error);
       });
@@ -74,7 +69,7 @@ export const playlistsSlice = createSlice({
 
         playlist?.episodes.push({ addedDate, episodeId, podcastId });
       })
-      .addCase(addToPlaylistAction.rejected, (_, { error }) => {
+      .addCase(addToPlaylistAction.rejected, (state, { error }) => {
         // TODO: add toast
         console.error(error);
       });
@@ -82,16 +77,20 @@ export const playlistsSlice = createSlice({
     builder
       .addCase(removePodcastFromPlaylist.fulfilled, (state, { payload }) => {
         state.episodes = state.episodes.filter(
-          (episode) => episode.id !== payload?.episodeId
+          (episode) => episode.id !== payload?.episode.episodeId
         );
-
-        if (payload?.playlistRemoved) {
-          state.playlists = state.playlists.filter(
-            (playlist) => playlist.id !== payload.playlistId
-          );
-        }
       })
-      .addCase(removePodcastFromPlaylist.rejected, (_, { error }) => {
+      .addCase(removePodcastFromPlaylist.rejected, (state, { error }) => {
+        console.error(error);
+      });
+
+    builder
+      .addCase(removeUserPlaylist.fulfilled, (state, { payload }) => {
+        state.playlists = state.playlists.filter(
+          (playlist) => playlist.id !== payload
+        );
+      })
+      .addCase(removeUserPlaylist.rejected, (state, { error }) => {
         console.error(error);
       });
   },

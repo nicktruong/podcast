@@ -18,12 +18,11 @@ export interface AudioState {
 }
 
 export interface DownloadAndPlayAudioReturnType {
-  title: string;
-  author: string;
   audioUrl: string;
-  coverUrl: string;
-  episodeId: string;
-  podcastId: string;
+}
+
+export interface DownloadAndPlayAudioParameters {
+  pathToFile: string;
 }
 
 export interface DownloadAndPlayAudioParameters {
@@ -33,4 +32,12 @@ export interface DownloadAndPlayAudioParameters {
   podcastId: string;
   episodeId: string;
   pathToFile: string;
+}
+
+export interface AudioInfo {
+  title: string;
+  author: string;
+  coverUrl: string;
+  podcastId: string;
+  episodeId: string;
 }

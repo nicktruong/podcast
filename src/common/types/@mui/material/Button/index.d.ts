@@ -5,6 +5,7 @@ declare module "@mui/material/Button" {
     auth: true;
     next: true;
     round: true;
-    roundContained: true;
+    roundedOutlined: true;
+    roundedContained: true;
   }
 }
