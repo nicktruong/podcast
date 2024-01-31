@@ -31,7 +31,7 @@ import { useStyles } from "./styles";
 export const usePrepare = () => {
   const navigate = useNavigate();
 
-  const { t } = useTranslation("UserPlaylist");
+  const { t } = useTranslation("pages/UserPlaylist");
 
   const dispatch = useAppDispatch();
 

@@ -16,7 +16,7 @@ import schema from "./schema";
 import type { RegisterData } from "@/common/interfaces";
 
 const usePrepare = () => {
-  const { t } = useTranslation("SignUp");
+  const { t } = useTranslation("pages/SignUp");
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

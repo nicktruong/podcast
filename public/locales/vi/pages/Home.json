@@ -3,6 +3,6 @@
   "trendings": "Podcast nổi bật",
   "podcastsToTry": "Podcast để thử",
   "recentlyPlayed": "Đã phát gần đây",
-  "updatedAt": "{{val, relativeTime(day)}}",
-  "podcastsForYou": "Podcast dành cho bạn"
+  "podcastsForYou": "Podcast dành cho bạn",
+  "updatedAt": "{{val, relativeTime(day)}}"
 }

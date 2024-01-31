@@ -14,7 +14,7 @@ export default function PodDashboardOverview() {
   const user = useAppSelector(selectUser);
   const userId = useAppSelector(selectUserId);
   const podSeries = useAppSelector(selectPodcast);
-  const { t } = useTranslation("PodcasterDashboard");
+  const { t } = useTranslation("pages/PodcasterDashboard");
 
   useEffect(() => {
     if (userId) {

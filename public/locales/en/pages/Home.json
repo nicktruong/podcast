@@ -3,5 +3,6 @@
   "trendings": "Trending podcasts",
   "podcastsToTry": "Podcasts to try",
   "recentlyPlayed": "Recently played",
-  "podcastsForYou": "Podcasts for you"
+  "podcastsForYou": "Podcasts for you",
+  "updatedAt": "{{val, relativeTime(day)}}"
 }

@@ -11,7 +11,7 @@ export default function PasswordForm({
   control,
   nextStepHandler,
 }: PasswordFormProps) {
-  const { t } = useTranslation("SignUp");
+  const { t } = useTranslation("pages/SignUp");
 
   return (
     <>

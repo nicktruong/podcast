@@ -7,7 +7,7 @@ import { selectEpisodesOfCreator } from "@/store/episode";
 import { useStyles } from "./styles";
 
 const useHelper = () => {
-  const { t } = useTranslation("PodcasterDashboard");
+  const { t } = useTranslation("pages/PodcasterDashboard");
 
   const createdFirstEp =
     useAppSelector(selectEpisodesOfCreator)[0] !== undefined;

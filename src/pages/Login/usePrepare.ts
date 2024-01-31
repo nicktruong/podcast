@@ -13,7 +13,7 @@ import schema from "./schema";
 import type { LoginData } from "@/common/interfaces";
 
 const usePrepare = () => {
-  const { t } = useTranslation("Login");
+  const { t } = useTranslation("pages/Login");
 
   const navigate = useNavigate();
   const [submitErrorCode, setSubmitErrorCode] = useState("");

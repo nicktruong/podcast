@@ -20,7 +20,7 @@ import { selectUnreadNotificationsCount } from "@/store/notification";
 import { useStyles } from "./styles";
 
 const usePrepare = () => {
-  const { t } = useTranslation("Root");
+  const { t } = useTranslation("layouts/Root");
 
   const theme = useTheme();
 

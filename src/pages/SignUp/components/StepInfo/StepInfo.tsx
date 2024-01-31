@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function StepInfo({ handlePrevStep, activeStep, steps }: Props) {
-  const { t } = useTranslation("SignUp");
+  const { t } = useTranslation("pages/SignUp");
 
   return (
     <Box sx={{ display: "flex" }} className="mt-2">

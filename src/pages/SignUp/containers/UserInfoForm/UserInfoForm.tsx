@@ -25,7 +25,7 @@ export default function UserInfoForm({
   validateDate,
   nextStepHandler,
 }: UserInfoFormProps) {
-  const { t } = useTranslation("SignUp");
+  const { t } = useTranslation("pages/SignUp");
 
   return (
     <>

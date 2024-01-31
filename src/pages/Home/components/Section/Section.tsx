@@ -4,7 +4,8 @@ import { Box, Typography } from "@mui/material";
 import { routes } from "@/common/constants";
 
 import { usePrepare } from "./usePrepare";
-import { SectionProps } from "./interfaces";
+
+import type { SectionProps } from "./interfaces";
 
 export default function Section({ title, podcasts }: SectionProps) {
   const { classes, t } = usePrepare();
@@ -12,7 +13,7 @@ export default function Section({ title, podcasts }: SectionProps) {
   return (
     <Box className={classes.section} component="section">
       <Typography className={classes.sectionTitle} component="h2">
-        {title}
+        {t(title)}
       </Typography>
       <Box className={classes.playlist}>
         {podcasts.map((podcast) => (

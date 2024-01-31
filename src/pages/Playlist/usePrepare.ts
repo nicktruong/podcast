@@ -31,7 +31,7 @@ import type { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
 const usePrepare = () => {
   const { id } = useParams();
 
-  const { t } = useTranslation("Playlist");
+  const { t } = useTranslation("pages/Playlist");
 
   const dispatch = useAppDispatch();
 

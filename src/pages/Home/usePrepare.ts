@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 
 import {
   selectPodcastsToTry,
@@ -23,8 +22,6 @@ import { useStyles } from "./styles";
 import { SectionData } from "./interfaces";
 
 const usePrepare = () => {
-  const { t } = useTranslation("Home");
-
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
@@ -53,25 +50,25 @@ const usePrepare = () => {
       requireLogin: true,
       key: "recentlyPlayed",
       podcasts: recentlyPlayed,
-      title: t("recentlyPlayed"),
+      title: "recentlyPlayed",
     },
     {
       key: "trendings",
       requireLogin: false,
-      title: t("trendings"),
+      title: "trendings",
       podcasts: trendingPodcasts,
     },
     {
       requireLogin: true,
       key: "podcastsForYou",
       podcasts: podcastsForYou,
-      title: t("podcastsForYou"),
+      title: "podcastsForYou",
     },
     {
       requireLogin: true,
       key: "podcastsToTry",
       podcasts: podcastsToTry,
-      title: t("podcastsToTry"),
+      title: "podcastsToTry",
     },
   ];
 
@@ -137,7 +134,6 @@ const usePrepare = () => {
     standoutPodcast,
     standoutCategory,
     isLoadingStandoutPodcast,
-    t,
   };
 };
 

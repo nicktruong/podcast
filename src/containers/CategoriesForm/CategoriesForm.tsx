@@ -23,7 +23,7 @@ export default function CategoriesForm({
 }: CategoriesFormProps) {
   const { cx, classes } = usePrepare();
 
-  const { t } = useTranslation("SignUp");
+  const { t } = useTranslation("pages/SignUp");
 
   return (
     <>

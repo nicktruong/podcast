@@ -14,7 +14,7 @@ export const usePrepare = () => {
 
   const location = useLocation();
 
-  const { t } = useTranslation("PodcastDetails");
+  const { t } = useTranslation("layouts/PodcastDetails");
 
   const { authorName, coverUrl, title } = useAppSelector((state) =>
     selectHeaderDetail(state, { id, path: location.pathname })

@@ -17,4 +17,7 @@ export const useStyles = tss.create({
   title: {
     lineHeight: "120%",
   },
+  author: {
+    marginTop: "16px",
+  },
 });

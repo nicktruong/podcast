@@ -46,7 +46,7 @@ const PodcastDetailsHeader = () => {
             {title}
           </Typography>
         </Box>
-        <Typography fontSize="32px" fontWeight={700}>
+        <Typography fontSize="32px" fontWeight={700} className={classes.author}>
           {authorName}
         </Typography>
       </Box>
