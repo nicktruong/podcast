@@ -1,5 +1,5 @@
-import { PodcastDetail } from "@/common/interfaces";
+import { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface PlaylistHeaderProps {
-  seriesDetail: PodcastDetail;
+  seriesDetail: PopulatedPodcastWithAuthor;
 }

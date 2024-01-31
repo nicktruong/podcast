@@ -20,6 +20,7 @@ const createRandomPodcast = ({
   authorId,
   rateCount,
   playCount,
+  episodeCount,
   audienceSize,
 }: {
   index: number;
@@ -27,6 +28,7 @@ const createRandomPodcast = ({
   authorId: string;
   rateCount: number;
   playCount: number;
+  episodeCount: number;
   audienceSize: number;
 }): Omit<Podcast, "id"> => {
   // Only fill 5 categories
@@ -44,6 +46,7 @@ const createRandomPodcast = ({
     createdAt: seedDateString,
     updatedAt: seedDateString,
     category: randomCategoryId,
+    noOfEpisodes: episodeCount,
     title: podcastsJSON[index].title,
     description: podcastsJSON[index].description,
     // keywords: generateKeywords(podcastsJSON[index].title),
@@ -52,10 +55,12 @@ const createRandomPodcast = ({
 };
 
 const createRandomEpisode = ({
+  no,
   index,
   authorId,
   podcastId,
 }: {
+  no: number;
   index: number;
   authorId: string;
   podcastId: string;
@@ -65,6 +70,7 @@ const createRandomEpisode = ({
   const rating = faker.number.float({ max: 5, precision: 0.1 });
 
   return {
+    no,
     rating,
     authorId,
     podcastId, // Change when user first create series
@@ -78,6 +84,7 @@ const createRandomEpisode = ({
     status: PODCAST_STATUS.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     pathToFile: "audios/seed-audio.mp3",
     description: episodesJSON[index].description,
+    pathToImgFile: faker.image.urlPicsumPhotos({ height: 300, width: 300 }),
     // keywords: generateKeywords(podcastsJSON[index].title),
   };
 };
@@ -139,6 +146,7 @@ export const migrate = async () => {
     for (let j = 0; j < episodeCount; j++) {
       episodes.push(
         createRandomEpisode({
+          no: j + 1,
           authorId: "",
           podcastId: "",
           index: j + usedEpisodes, // faker.number.int({ max: episodesJSON.length - 1 }),
@@ -178,6 +186,7 @@ export const migrate = async () => {
       playCount,
       rateCount,
       audienceSize,
+      episodeCount,
       authorId: podcasterDoc.id,
     });
 

@@ -15,6 +15,7 @@ export const createPodcast = async (data: PodcastCreationData) => {
     rating: null,
     playCount: 0,
     rateCount: 0,
+    noOfEpisodes: 0,
     audienceSize: 0,
     random: nanoid(),
     title: data.title,

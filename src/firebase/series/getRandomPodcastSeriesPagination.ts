@@ -8,11 +8,11 @@ import {
 } from "firebase/firestore";
 import { nanoid } from "@reduxjs/toolkit";
 
-import { Podcast, PopulatedPodcast } from "@/common/interfaces";
+import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
-import { populatePodcast } from "../utils";
+import { populatePodcastWithAuthor } from "../podcast";
 import { downloadFileFromStorage } from "../storage";
 
 const generateQuery = ({
@@ -45,7 +45,7 @@ export const getRandomPocastsPaged = async ({
   pageSize?: number;
   categories?: string[];
 }) => {
-  const podcasts: PopulatedPodcast[] = [];
+  const podcasts: PopulatedPodcastWithAuthor[] = [];
 
   let i = 0;
 
@@ -85,7 +85,7 @@ export const getRandomPocastsPaged = async ({
 
         populated[snapshot.id] = true;
 
-        return populatePodcast({
+        return populatePodcastWithAuthor({
           id: snapshot.id,
           ...snapshot.data(),
         } as Podcast);

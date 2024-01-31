@@ -1,4 +1,7 @@
-import { PopulatedPodcast } from "@/common/interfaces";
+import {
+  PopulatedPodcast,
+  PopulatedPodcastWithAuthor,
+} from "@/common/interfaces";
 
 type SectionKeys =
   | "trendings"
@@ -12,11 +15,13 @@ interface LoadingPodcast extends Record<SectionKeys, boolean> {}
 interface DownloadedPodcast extends Record<SectionKeys, boolean> {}
 
 interface PopulatedPodcastSections
-  extends Record<SectionKeys, PopulatedPodcast[]> {}
+  extends Record<SectionKeys, PopulatedPodcastWithAuthor[]> {}
 
 export interface ListenerPodcastsState extends PopulatedPodcastSections {
   loading: LoadingPodcast;
   fetched: DownloadedPodcast;
+  loadingStandoutPodcast: boolean;
+  standoutPodcast: PopulatedPodcast | null;
 }
 
 export interface FetchPodcastsByCategorySortedAndPaged {

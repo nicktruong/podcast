@@ -1,6 +1,6 @@
-import type { Category } from "@/common/interfaces";
+import type { Categories } from "@/common/interfaces";
 
 export interface CategoryState {
-  categories: Category;
+  categories: Categories;
   fetchingCategories: boolean;
 }

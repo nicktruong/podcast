@@ -14,6 +14,7 @@ import { AuthErrorCodes } from "firebase/auth";
 import { routes } from "@/common/constants";
 import { Logo, StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
+import { FacebookIconImg } from "@/assets";
 
 import usePrepare from "./usePrepare";
 
@@ -174,9 +175,7 @@ export default function Login() {
                     width={24}
                     height={24}
                     className="absolute left-5 top-1/2 -translate-y-1/2"
-                    src={
-                      process.env.PUBLIC_URL + "/assets/icons/facebook-icon.svg"
-                    }
+                    src={FacebookIconImg}
                   />
                 }
                 onClick={loginRedirectWithFacebook}

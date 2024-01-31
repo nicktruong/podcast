@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EPISODE_CREATION_STEPS } from "@/common/enums";
 
 import usePrepare from "./usePrepare";
 import { DialogBar } from "./components/DialogBar";
@@ -11,6 +11,7 @@ import { EditDetails } from "./components/EditDetails";
 import { ReviewPublish } from "./components/ReviewPublish";
 import { BottomDialogBar } from "./components/BottomDialogBar";
 import { PodcasterEpisodeCreationDialogProps } from "./interfaces";
+import UploadPhoto from "./components/UploadPhoto/UploadPhoto";
 
 export default function PodcasterEpisodeCreationDialog({
   open,
@@ -23,26 +24,30 @@ export default function PodcasterEpisodeCreationDialog({
     errors,
     control,
     podInfo,
+    podUploading,
+    podUploadingProgress,
     onSubmit,
     handleNext,
     onFileUpload,
     handleCancel,
-    podUploading,
+    onPhotoUpload,
     handleStepBack,
-    podUploadingProgress,
   } = usePrepare({ handleClose });
 
   const renderStep = () => {
     switch (step) {
-      case EpisodeCreationSteps.UPLOAD_AUDIO:
+      case EPISODE_CREATION_STEPS.UPLOAD_AUDIO:
         return <UploadAudio onFileUpload={onFileUpload} />;
 
-      case EpisodeCreationSteps.EDIT_DETAILS:
+      case EPISODE_CREATION_STEPS.EDIT_DETAILS:
         return (
           <EditDetails control={control} errors={errors} onSubmit={onSubmit} />
         );
 
-      case EpisodeCreationSteps.REVIEW_PUBLISH:
+      case EPISODE_CREATION_STEPS.UPLOAD_PHOTO:
+        return <UploadPhoto onFileUpload={onPhotoUpload} />;
+
+      case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
         return <ReviewPublish podInfo={podInfo} user={user} image={image} />;
 
       default:
@@ -68,7 +73,7 @@ export default function PodcasterEpisodeCreationDialog({
         </Box>
 
         {/* bottom app bar */}
-        {step !== EpisodeCreationSteps.UPLOAD_AUDIO && (
+        {step !== EPISODE_CREATION_STEPS.UPLOAD_AUDIO && (
           <BottomDialogBar
             handleCancel={handleCancel}
             handleNext={handleNext}

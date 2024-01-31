@@ -1,9 +1,9 @@
-import { PopulatedPodcast } from "@/common/interfaces";
+import { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 import { ListenerPodcastsState } from "@/store/listenerPodcasts/interfaces";
 
 export interface SectionData {
   title: string;
   requireLogin?: boolean;
-  podcasts: PopulatedPodcast[];
+  podcasts: PopulatedPodcastWithAuthor[];
   key: keyof ListenerPodcastsState["loading"];
 }

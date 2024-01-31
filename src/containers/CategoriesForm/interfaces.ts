@@ -1,9 +1,9 @@
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
 
-import type { Category, RegistrationInterests } from "@/common/interfaces";
+import type { Categories, RegistrationInterests } from "@/common/interfaces";
 
 export interface CategoriesFormProps {
-  categories: Category;
+  categories: Categories;
   isSubmitting: boolean;
   chosenCategories: string[];
   errors: FieldErrors<RegistrationInterests>;

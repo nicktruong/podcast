@@ -133,12 +133,6 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
     borderRadius: "200px",
     textTransform: "capitalize",
     color: theme.palette.common.white,
-    // borderColor: alpha(theme.palette.common.white, 0),
-    // backgroundColor: alpha(theme.palette.common.white, 0.07),
-    // "&:hover": {
-    //   borderColor: alpha(theme.palette.common.white, 0),
-    //   backgroundColor: alpha(theme.palette.common.white, 0.15),
-    // },
   },
   ratingBtnIcon: {
     fontSize: "16px",

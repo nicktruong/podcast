@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { MenuItem, Select } from "@mui/material";
 
+import { AmericanFlagImg, VietnamFlagImg } from "@/assets";
+
 import { useStyles } from "./styles";
 
 const ChangeLanguageButton = () => {
@@ -22,16 +24,12 @@ const ChangeLanguageButton = () => {
       <MenuItem value="en">
         <img
           className={classes.flag}
-          src={`${process.env.PUBLIC_URL}/assets/images/american-flag.jpg`}
+          src={AmericanFlagImg}
           alt="American flag"
         />
       </MenuItem>
       <MenuItem value="vi">
-        <img
-          className={classes.flag}
-          src={`${process.env.PUBLIC_URL}/assets/images/vietnam-flag.png`}
-          alt="Vietnam flag"
-        />
+        <img className={classes.flag} src={VietnamFlagImg} alt="Vietnam flag" />
       </MenuItem>
     </Select>
   );

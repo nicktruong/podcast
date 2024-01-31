@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { UploadTask } from "@firebase/storage";
@@ -6,6 +7,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import {
   setPrevStep,
   setProgress,
+  setPathToImg,
   selectProgress,
   selectUploading,
   selectUploadStep,
@@ -16,11 +18,12 @@ import {
   publishEpisodeAction,
 } from "@/store/episode";
 import { selectUser, setUser } from "@/store/user";
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EPISODE_CREATION_STEPS } from "@/common/enums";
 import { notifyFollower, uploadFile } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectPodcast, selectTempImg } from "@/store/podcast";
+import { selectPodcast } from "@/store/podcast";
 import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
+import { resizeImage } from "@/common/utils";
 
 import schema from "./schema";
 
@@ -33,11 +36,12 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const step = useAppSelector(selectUploadStep);
   const episodeInfo = useAppSelector(selectEpisodeInfo);
   const podcast = useAppSelector(selectPodcast);
-  const tempImg = useAppSelector(selectTempImg);
-  const image = podcast?.coverUrl ?? tempImg;
   const podUploading = useAppSelector(selectUploading);
   const podUploadingProgress = useAppSelector(selectProgress);
+  const [image, setImage] = useState("");
   const [uploadTask, setUploadTask] = useState<UploadTask>();
+
+  console.log({ episodeInfo });
 
   const {
     reset,
@@ -61,6 +65,18 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     const { uploadTask, fullPath } = uploadFile("audios", acceptedFiles[0]);
     setUploadTask(uploadTask);
     dispatch(setPathToAudioFile(fullPath));
+  };
+
+  const onPhotoUpload = async (acceptedFiles: File[]) => {
+    const image = await resizeImage(acceptedFiles[0], {
+      width: 300,
+      height: 300,
+    });
+
+    setImage(URL.createObjectURL(acceptedFiles[0]));
+
+    const { fullPath } = uploadFile("photos", image);
+    dispatch(setPathToImg(fullPath));
   };
 
   const handleCancel = () => {
@@ -87,28 +103,29 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
 
   const handleNext = async () => {
     switch (step) {
-      case EpisodeCreationSteps.EDIT_DETAILS:
+      case EPISODE_CREATION_STEPS.EDIT_DETAILS:
         onSubmit();
         break;
 
-      case EpisodeCreationSteps.REVIEW_PUBLISH:
+      case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
         if (!user?.id) return;
-        reset();
-        handleClose();
 
         await dispatch(publishEpisodeAction(user.id));
-        dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
 
-        if (!podcast) return;
+        reset();
+        handleClose();
+        // dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
+
+        // if (!podcast) return;
 
         // Create notification to all followers
-        await notifyFollower({
-          podcastId: podcast.id,
-          podcastName: podcast.title,
-          creatorName: user.name ?? "",
-          episodeName: episodeInfo.title,
-          creatorAvatar: user.photoURL ?? "",
-        });
+        // await notifyFollower({
+        //   podcastId: podcast.id,
+        //   podcastName: podcast.title,
+        //   creatorName: user.name ?? "",
+        //   episodeName: episodeInfo.title,
+        //   creatorAvatar: user.photoURL ?? "",
+        // });
 
         break;
 
@@ -123,14 +140,15 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     image,
     errors,
     control,
+    podUploading,
     podInfo: episodeInfo,
+    podUploadingProgress,
     onSubmit,
     handleNext,
     onFileUpload,
     handleCancel,
-    podUploading,
+    onPhotoUpload,
     handleStepBack,
-    podUploadingProgress,
   };
 };
 

@@ -1,10 +1,10 @@
 import { doc, getDoc } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Podcast, PopulatedPodcast } from "@/common/interfaces";
+import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 import { db } from "../init";
-import { populatePodcast } from "../utils";
+import { populatePodcastWithAuthor } from "../podcast";
 import { downloadFileFromStorage } from "../storage";
 
 export const getRecentlyPlayedPodcastsPaged = async ({
@@ -15,7 +15,7 @@ export const getRecentlyPlayedPodcastsPaged = async ({
   offset?: number;
   pageSize?: number;
   history?: string[];
-}): Promise<PopulatedPodcast[]> => {
+}): Promise<PopulatedPodcastWithAuthor[]> => {
   history = history.slice(offset, offset + pageSize);
 
   const snapshots = await Promise.all(
@@ -32,7 +32,7 @@ export const getRecentlyPlayedPodcastsPaged = async ({
         podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
       }
 
-      return populatePodcast(podcast);
+      return populatePodcastWithAuthor(podcast);
     })
   );
 

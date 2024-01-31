@@ -1,6 +1,6 @@
-import type { PopulatedPodcast } from "@/common/interfaces";
+import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface SectionProps {
   title: string;
-  podcasts: PopulatedPodcast[];
+  podcasts: PopulatedPodcastWithAuthor[];
 }

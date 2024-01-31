@@ -8,7 +8,7 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   sectionTitle: {
     fontWeight: 700,
-    fontSize: "24px",
+    fontSize: "32px",
     color: theme.palette.text.primary,
   },
   playlist: {

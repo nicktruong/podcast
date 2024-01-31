@@ -10,11 +10,11 @@ import {
   QueryFieldFilterConstraint,
 } from "firebase/firestore";
 
-import { Podcast, PopulatedPodcast } from "@/common/interfaces";
+import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
-import { populatePodcast } from "../utils";
+import { populatePodcastWithAuthor } from "../podcast";
 import { downloadPhotoFromStorage } from "../storage";
 
 export const getPodcastsByCategorySortedAndPaged = async ({
@@ -28,7 +28,7 @@ export const getPodcastsByCategorySortedAndPaged = async ({
   pageSize?: number;
   categories?: string[];
 }) => {
-  const podcasts: PopulatedPodcast[] = [];
+  const podcasts: PopulatedPodcastWithAuthor[] = [];
 
   let i = 0;
 
@@ -65,7 +65,7 @@ export const getPodcastsByCategorySortedAndPaged = async ({
     podcasts.push(
       ...(await Promise.all(
         podcastsSnapshot.docs.map(async (snapshot) => {
-          const populatedPodcast = await populatePodcast({
+          const populatedPodcast = await populatePodcastWithAuthor({
             id: snapshot.id,
             ...snapshot.data(),
           } as Podcast);

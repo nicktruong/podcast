@@ -6,7 +6,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { usePrepare } from "./usePrepare";
 import { UploadAudioProps } from "./interfaces";
 
-const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
+const UploadPhoto = ({ onFileUpload }: UploadAudioProps) => {
   const { t } = usePrepare();
 
   return (
@@ -19,7 +19,7 @@ const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
           }}
           component="h1"
         >
-          {t("uploadAudioOrVideo")}
+          {t("uploadYourEpisodePhoto")}
         </Typography>
 
         <Typography
@@ -29,38 +29,9 @@ const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
             color: theme.palette.text.secondary,
           })}
         >
-          {t("createAudioAndVideoInSimpleSteps")}
+          {t("uploadAnImageThatMatchesYourPodcast")}
         </Typography>
       </Box>
-
-      <Box sx={{ marginTop: "32px" }}>
-        <Typography
-          sx={(theme) => ({
-            fontWeight: 700,
-            color: theme.palette.text.secondary,
-          })}
-        >
-          {t("supportedFileTypes")}
-        </Typography>
-
-        <Box sx={(theme) => ({ color: theme.palette.text.secondary })}>
-          <ul className="mt-3 list-disc">
-            <li className="ml-10 font-medium">
-              {t("supportedFileTypesValues")}
-            </li>
-          </ul>
-        </Box>
-      </Box>
-
-      <Typography
-        sx={(theme) => ({
-          fontWeight: 500,
-          marginTop: "24px",
-          color: theme.palette.text.secondary,
-        })}
-      >
-        {t("guidanceAndBestPractices")}
-      </Typography>
 
       <Dropzone onDrop={onFileUpload}>
         {({ getRootProps, getInputProps }) => (
@@ -108,4 +79,4 @@ const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
   );
 };
 
-export default UploadAudio;
+export default UploadPhoto;

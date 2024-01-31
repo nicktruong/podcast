@@ -1,9 +1,9 @@
-import { Episode, PopulatedPodcast } from "@/common/interfaces";
+import { Episode, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface DetailsState {
   episodeId: string;
   loadingPodcast: boolean;
   loadingEpisodes: boolean;
   episodesDetail: Episode[];
-  podcastDetail: PopulatedPodcast | null;
+  podcastDetail: PopulatedPodcastWithAuthor | null;
 }

@@ -3,6 +3,7 @@ import {
   getTrendingPodcastsPaged,
   getRecentlyPlayedPodcastsPaged,
   getPodcastsByCategorySortedAndPaged,
+  populatePodcast,
 } from "@/firebase";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 
@@ -13,7 +14,7 @@ import type {
   FetchRecentlyPlayedPodcastsOptions,
   FetchPodcastsByCategorySortedAndPaged,
 } from "./interfaces";
-import type { PopulatedPodcast } from "@/common/interfaces";
+import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchRecentlyPlayedPodcastsPaged",
@@ -34,16 +35,30 @@ export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
   }
 );
 
+export const populateStandoutPodcast = createAppAsyncThunk(
+  "listenerPodcasts/populateStandoutPodcast",
+  async (podcastToPopulate: PopulatedPodcastWithAuthor) => {
+    const podcastWithEpisodes = await populatePodcast(podcastToPopulate);
+
+    return podcastWithEpisodes;
+  }
+);
+
 export const fetchTrendingPodcastsPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchTrendingPodcastsPaged",
-  async ({ offset, period = 7, pageSize = 7 }: FetchPodcastsOptions) => {
+  async (
+    { offset, period = 7, pageSize = 8 }: FetchPodcastsOptions,
+    thunkApi
+  ) => {
     const trendingPodcasts = await getTrendingPodcastsPaged({
       period,
       offset,
       pageSize,
     });
 
-    return trendingPodcasts;
+    thunkApi.dispatch(populateStandoutPodcast(trendingPodcasts[0]));
+
+    return trendingPodcasts.slice(1);
   }
 );
 
@@ -56,7 +71,7 @@ export const fetchPodcastsForYouPaged = createAppAsyncThunk(
     pageSize = 7,
     podcastIdsToExclude,
   }: FetchPodcastsForYouOptions) => {
-    const podcastsForYou: PopulatedPodcast[] = [];
+    const podcastsForYou: PopulatedPodcastWithAuthor[] = [];
     const MAX_REDO = 3;
     let redo = 0;
     const redoPeriodScales = [1, 2, 7];
@@ -88,7 +103,7 @@ export const fetchPodcastsForYouPaged = createAppAsyncThunk(
 export const fetchPodcastsToTryPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchPodcastsToTryPaged",
   async ({ pageSize = 7, podcastIdsToExclude }: FetchPodcastsToTryOptions) => {
-    const podcastsToTry: PopulatedPodcast[] = [];
+    const podcastsToTry: PopulatedPodcastWithAuthor[] = [];
     const MAX_REDO = 3;
     const redoPeriodScales = [1, 2, 7];
     let redo = 0;

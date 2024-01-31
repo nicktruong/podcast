@@ -1,5 +1,5 @@
-import { User } from "./User";
 import { Episode } from "./Episode";
+import { User } from "./User";
 
 export interface Podcast {
   id: string;
@@ -14,6 +14,7 @@ export interface Podcast {
   updatedAt: string;
   // keywords: string[];
   description: string;
+  noOfEpisodes: number;
   audienceSize: number;
   rating: null | number;
 }
@@ -29,10 +30,10 @@ export interface PodcastCreationData extends PodcastBasicInfo {
   coverUrl: string;
 }
 
-export interface PopulatedPodcast extends Podcast {
+export interface PopulatedPodcastWithAuthor extends Podcast {
   author: User;
 }
 
-export interface PodcastDetail extends PopulatedPodcast {
-  podcasts: Episode[];
+export interface PopulatedPodcast extends PopulatedPodcastWithAuthor {
+  episodes: Episode[];
 }

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 import {
   fetchPodcastsToTryPaged,
+  populateStandoutPodcast,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
   fetchRecentlyPlayedPodcastsPaged,
@@ -23,7 +24,9 @@ export const initialState: ListenerPodcastsState = {
   podcastsToTry: [], // random shows
   podcastsForYou: [], // based on categories of interests, users can choose initially, and the platform will personalized based on users listen history
   recentlyPlayed: [], // when implement history
+  standoutPodcast: null,
   podcastsOfCategory: [],
+  loadingStandoutPodcast: true,
   loading: initialLoadingAndFetched,
   fetched: initialLoadingAndFetched,
 };
@@ -115,6 +118,19 @@ export const listenerPodcasts = createSlice({
           state.loading.podcastsOfCategory = false;
         }
       );
+
+    builder
+      .addCase(populateStandoutPodcast.pending, (state) => {
+        state.loadingStandoutPodcast = true;
+      })
+      .addCase(populateStandoutPodcast.fulfilled, (state, { payload }) => {
+        state.standoutPodcast = payload;
+        state.loadingStandoutPodcast = false;
+      })
+      .addCase(populateStandoutPodcast.rejected, (state, { error }) => {
+        state.loadingStandoutPodcast = false;
+        console.error(error);
+      });
   },
 });
 

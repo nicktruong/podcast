@@ -1,7 +1,7 @@
-import type { PopulatedPodcast } from "@/common/interfaces";
+import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface HistoryState {
-  history: PopulatedPodcast[];
+  history: PopulatedPodcastWithAuthor[];
 }
 
 export interface PodcastUserIdPair {

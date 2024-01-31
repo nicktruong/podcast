@@ -9,15 +9,15 @@ import {
 } from "firebase/firestore";
 
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
-import { Podcast, PopulatedPodcast } from "@/common/interfaces";
+import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 import { db } from "../init";
-import { populatePodcast } from "../utils";
+import { populatePodcastWithAuthor } from "../podcast";
 
 export const getTrendingPodcastsPaged = async ({
   offset,
   period = 7,
-  pageSize = 7,
+  pageSize = 8,
   categories = [],
 }: {
   offset?: Date;
@@ -28,7 +28,7 @@ export const getTrendingPodcastsPaged = async ({
   const trendingPeriod = new Date();
   trendingPeriod.setDate(trendingPeriod.getDate() - period);
 
-  const podcasts: PopulatedPodcast[] = [];
+  const podcasts: PopulatedPodcastWithAuthor[] = [];
 
   let i = 0;
 
@@ -55,7 +55,7 @@ export const getTrendingPodcastsPaged = async ({
 
     const populatedPodcasts = await Promise.all(
       podcastsSnapshot.docs.map((snapshot) =>
-        populatePodcast({ id: snapshot.id, ...snapshot.data() } as Podcast)
+        populatePodcastWithAuthor({ id: snapshot.id, ...snapshot.data() } as Podcast)
       )
     );
 

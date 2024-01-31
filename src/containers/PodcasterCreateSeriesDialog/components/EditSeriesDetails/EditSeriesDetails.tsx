@@ -10,10 +10,10 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 
 import { StyledInput } from "@/components";
 
-import type { Category, PodcastCreationData } from "@/common/interfaces";
+import type { Categories, PodcastCreationData } from "@/common/interfaces";
 
 interface Props {
-  categories: Category;
+  categories: Categories;
   classes: Record<string, string>;
   control: Control<PodcastCreationData>;
   errors: FieldErrors<PodcastCreationData>;

@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EPISODE_CREATION_STEPS } from "@/common/enums";
 
 import { publishEpisodeAction, fetchEpisodesFromCreatorPaged } from "./thunks";
 
@@ -11,12 +11,13 @@ const initialState: EpisodeState = {
     title: "",
     pathToFile: "",
     description: "",
+    pathToImgFile: "",
   },
   episodes: [],
   uploading: false,
   loadingEpisodes: true,
   audioUploadProgressInPercent: 0,
-  uploadStep: EpisodeCreationSteps.UPLOAD_AUDIO,
+  uploadStep: EPISODE_CREATION_STEPS.UPLOAD_AUDIO,
 };
 
 export const podSlice = createSlice({
@@ -25,8 +26,8 @@ export const podSlice = createSlice({
   reducers: {
     setPrevStep: (state) => {
       switch (state.uploadStep) {
-        case EpisodeCreationSteps.REVIEW_PUBLISH:
-          state.uploadStep = EpisodeCreationSteps.EDIT_DETAILS;
+        case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
+          state.uploadStep = EPISODE_CREATION_STEPS.EDIT_DETAILS;
           break;
 
         default:
@@ -37,7 +38,7 @@ export const podSlice = createSlice({
       state.episodeCreationData = initialState.episodeCreationData;
       state.uploading = false;
       state.audioUploadProgressInPercent = 0;
-      state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
+      state.uploadStep = EPISODE_CREATION_STEPS.UPLOAD_AUDIO;
     },
     setPodUploadDetails: (
       state,
@@ -52,13 +53,17 @@ export const podSlice = createSlice({
         ...state.episodeCreationData,
         ...action.payload,
       };
-      state.uploadStep = EpisodeCreationSteps.REVIEW_PUBLISH;
+      state.uploadStep = EPISODE_CREATION_STEPS.UPLOAD_PHOTO;
     },
     setPathToAudioFile: (state, action: PayloadAction<string>) => {
       state.uploading = true;
       state.audioUploadProgressInPercent = 0;
       state.episodeCreationData.pathToFile = action.payload; // 1
-      state.uploadStep = EpisodeCreationSteps.EDIT_DETAILS;
+      state.uploadStep = EPISODE_CREATION_STEPS.EDIT_DETAILS;
+    },
+    setPathToImg: (state, action: PayloadAction<string>) => {
+      state.episodeCreationData.pathToImgFile = action.payload;
+      state.uploadStep = EPISODE_CREATION_STEPS.REVIEW_PUBLISH;
     },
     setProgress: (state, action: PayloadAction<number>) => {
       state.audioUploadProgressInPercent = action.payload;
@@ -73,7 +78,7 @@ export const podSlice = createSlice({
       .addCase(publishEpisodeAction.fulfilled, (state, action) => {
         state.audioUploadProgressInPercent = 0;
         state.episodeCreationData = initialState.episodeCreationData;
-        state.uploadStep = EpisodeCreationSteps.UPLOAD_AUDIO;
+        state.uploadStep = EPISODE_CREATION_STEPS.UPLOAD_AUDIO;
         state.episodes = [
           { ...action.payload, id: nanoid() },
           ...state.episodes,
@@ -98,6 +103,7 @@ export const podSlice = createSlice({
 export const {
   setPrevStep,
   setProgress,
+  setPathToImg,
   setPathToAudioFile,
   resetUploadPodState,
   setPodUploadDetails,

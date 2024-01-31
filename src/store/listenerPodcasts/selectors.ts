@@ -20,3 +20,9 @@ export const selectIsLoadingListenerPodcasts = (state: RootState) =>
 
 export const selectListenerPodcastsFetched = (state: RootState) =>
   state.userPodcasts.fetched;
+
+export const selectStandOutPodcast = (state: RootState) =>
+  state.userPodcasts.standoutPodcast;
+
+export const selectLoadingStandoutPodcast = (state: RootState) =>
+  state.userPodcasts.loadingStandoutPodcast;

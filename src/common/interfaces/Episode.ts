@@ -1,10 +1,11 @@
 import { PODCAST_STATUS } from "../enums";
 
 import { User } from "./User";
-import { Podcast, PopulatedPodcast } from "./Podcast";
+import { Podcast, PopulatedPodcastWithAuthor } from "./Podcast";
 
 export interface Episode {
   id: string;
+  no: number;
   title: string;
   authorId: string;
   createdAt: string;
@@ -16,6 +17,7 @@ export interface Episode {
   pathToFile: string;
   description: string;
   audienceSize: number;
+  pathToImgFile: string;
   rating: number | null;
   publishedDate: string;
   status: PODCAST_STATUS;
@@ -28,6 +30,7 @@ export interface EpisodeBasicCreationData {
 
 export interface EpisodeCreationData extends EpisodeBasicCreationData {
   pathToFile: string;
+  pathToImgFile: string;
 }
 
 export type PopulatedEpisode = Omit<Episode, "podcastId"> & {
@@ -37,5 +40,5 @@ export type PopulatedEpisode = Omit<Episode, "podcastId"> & {
 };
 
 export interface EpisodeWithSeriesAndAuthor extends Episode {
-  series: PopulatedPodcast;
+  series: PopulatedPodcastWithAuthor;
 }
