@@ -1,7 +1,8 @@
 import { tss } from "tss-react/mui";
 
 export const useStyles = tss.create(({ theme }) => ({
-  series: {
+  podcast: {
+    height: "100%",
     padding: "16px",
     cursor: "pointer",
     borderRadius: "8px",
@@ -14,7 +15,7 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   seriesImg: {
     width: "100%",
-    // aspectRatio: "1/1",
+    height: "268px",
     objectFit: "cover",
     borderRadius: "4px",
   },
@@ -22,16 +23,28 @@ export const useStyles = tss.create(({ theme }) => ({
     marginTop: "16px",
   },
   seriesTitle: {
-    fontWeight: 700,
+    fontWeight: 600,
+    fontSize: "20px",
+    marginTop: "12px",
+    lineHeight: "140%",
     overflow: "hidden",
-    whiteSpace: "nowrap",
+    WebkitLineClamp: 3,
+    display: "-webkit-box",
     textOverflow: "ellipsis",
+    WebkitBoxOrient: "vertical",
   },
-  seriesAuthor: {
+  createdAt: {
     fontSize: "14px",
+    marginTop: "12px",
     color: theme.palette.text.secondary,
-    overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
+  },
+  categoryBtn: {
+    fontSize: "14px",
+    marginTop: "4px",
+    lineHeight: "14px",
+    padding: "8px 16px",
+    borderRadius: "200px",
+    textTransform: "capitalize",
+    color: theme.palette.common.white,
   },
 }));

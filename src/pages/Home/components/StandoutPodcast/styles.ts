@@ -1,166 +1,136 @@
 import { tss } from "tss-react/mui";
 
-export const useStyles = tss.create(({ theme }) => ({
-  standoutPodcastContainer: {
-    display: "flex",
-    marginTop: "24px",
-    gap: "clamp(2rem, 4%, 4rem)",
-  },
-  standoutPodcastHeading: {
-    fontWeight: 700,
-    fontSize: "32px",
-    marginTop: "16px",
-    lineHeight: "140%",
-  },
-  standoutPodcastHeadingSkeleton: {
-    width: "275px",
-    height: "45px",
-    marginTop: "16px",
-  },
-  standoutPodcast: {
-    width: "34%",
-    marginTop: "16px",
-    overflow: "hidden",
-    borderRadius: "8px",
-  },
-  standoutPodcastImg: {
-    width: "100%",
-    objectFit: "cover",
-    aspectRatio: "1/1",
-    borderRadius: "32px",
-  },
-  standoutPodcastImgSkeleton: {
-    width: "100%",
-    height: "unset",
-    aspectRatio: "1/1",
-    borderRadius: "32px",
-  },
-  categoryBtn: {
-    fontSize: "14px",
-    marginTop: "24px",
-    lineHeight: "14px",
-    padding: "8px 16px",
-    borderRadius: "200px",
-    textTransform: "capitalize",
-    color: theme.palette.common.white,
-  },
-  categoryBtnSkeleton: {
-    width: "150px",
-    height: "30px",
-    marginTop: "24px",
-  },
-  standoutPodcastTitle: {
-    fontWeight: 700,
-    fontSize: "24px",
-    marginTop: "16px",
-    lineHeight: "140%",
-    overflow: "hidden",
-    WebkitLineClamp: 3,
-    display: "-webkit-box",
-    textOverflow: "ellipsis",
-    WebkitBoxOrient: "vertical",
-
-    "&:hover": {
-      textDecoration: "underline",
+export const useStyles = tss.withParams<{ breakpoint: number }>().create(
+  ({
+    breakpoint,
+    theme: {
+      palette,
+      breakpoints: {
+        values: { sm, md },
+      },
     },
-  },
-  standoutPodcastTitleSkeleton: {
-    width: "100%",
-    height: "68px",
-    marginTop: "16px",
-  },
-  standoutPodcastDesc: {
-    marginTop: "4px",
-    overflow: "hidden",
-    WebkitLineClamp: 5,
-    display: "-webkit-box",
-    textOverflow: "ellipsis",
-    WebkitBoxOrient: "vertical",
-    color: theme.palette.text.secondary,
-  },
-  standoutPodcastDescSkeleton: {
-    marginTop: "4px",
-  },
-  episodesContainer: {
-    width: "66%",
-  },
-  episodes: {
-    marginTop: "16px",
-  },
-  episode: {
-    gap: "4%",
-    display: "flex",
-    borderRadius: "8px",
-    alignItems: "flex-start",
-
-    "&:not(:first-of-type)": {
+  }) => ({
+    flexWrap: {
+      flexWrap: "wrap",
+    },
+    standoutPodcastContainer: {
+      display: "flex",
       marginTop: "24px",
+      gap: "clamp(2rem, 4%, 4rem)",
+      flexWrap: breakpoint < md ? "wrap" : "unset",
     },
-  },
-  episodeInfo: {
-    width: "100%",
-  },
-  episodeCover: {
-    flexShrink: 0,
-    width: "184px",
-    aspectRatio: "1/1",
-    borderRadius: "8px",
-  },
-  episodeCoverSkeleton: {
-    flexShrink: 0,
-    width: "184px",
-    height: "unset",
-    aspectRatio: "1/1",
-  },
-  episodeCreatedAt: {
-    fontSize: "14px",
-    textTransform: "capitalize",
-    color: theme.palette.text.secondary,
-  },
-  episodeCreatedAtSkeleton: {
-    width: "106px",
-    height: "21px",
-  },
-  episodeTitle: {
-    fontSize: "18px",
-    marginTop: "8px",
-    display: "block",
-
-    "&:hover": {
-      textDecoration: "underline",
+    standoutPodcastHeading: {
+      fontWeight: 700,
+      fontSize: "32px",
+      marginTop: "16px",
+      lineHeight: "140%",
     },
-  },
-  episodeTitleSkeleton: {
-    width: "100%",
-    height: "27px",
-    marginTop: "8px",
-  },
-  episodeDesc: {
-    marginTop: "8px",
-    overflow: "hidden",
-    WebkitLineClamp: 3,
-    display: "-webkit-box",
-    textOverflow: "ellipsis",
-    WebkitBoxOrient: "vertical",
-    color: theme.palette.text.secondary,
-  },
-  episodeDescSkeleton: {
-    width: "100%",
-    display: "block",
+    standoutPodcast: {
+      width: breakpoint < md ? "100%" : "34%",
+      marginTop: "16px",
+      overflow: "hidden",
+      borderRadius: "8px",
+    },
+    standoutPodcastImg: {
+      width: "100%",
+      objectFit: "cover",
+      aspectRatio: "1/1",
+      borderRadius: "32px",
+    },
+    categoryBtn: {
+      fontSize: "14px",
+      marginTop: "24px",
+      lineHeight: "14px",
+      padding: "8px 16px",
+      borderRadius: "200px",
+      textTransform: "capitalize",
+      color: palette.common.white,
+    },
+    standoutPodcastTitle: {
+      fontWeight: 700,
+      fontSize: "24px",
+      marginTop: "16px",
+      lineHeight: "140%",
+      overflow: "hidden",
+      WebkitLineClamp: 3,
+      display: "-webkit-box",
+      textOverflow: "ellipsis",
+      WebkitBoxOrient: "vertical",
 
-    "&:first-of-type": {
+      "&:hover": {
+        textDecoration: "underline",
+      },
+    },
+    standoutPodcastDesc: {
+      marginTop: "4px",
+      overflow: "hidden",
+      display: "-webkit-box",
+      textOverflow: "ellipsis",
+      WebkitBoxOrient: "vertical",
+      color: palette.text.secondary,
+      WebkitLineClamp: breakpoint < md ? 3 : 5,
+    },
+    episodesContainer: {
+      width: breakpoint < md ? "100%" : "66%",
+    },
+    episodes: {
+      marginTop: "16px",
+    },
+    episode: {
+      gap: "4%",
+      display: "flex",
+      borderRadius: "8px",
+      alignItems: "flex-start",
+
+      "&:not(:first-of-type)": {
+        marginTop: "24px",
+      },
+    },
+    episodeInfo: {
+      width: "100%",
+      display: "flex",
+      alignSelf: "stretch",
+      flexDirection: "column",
+    },
+    episodeCover: {
+      flexShrink: 0,
+      aspectRatio: "1/1",
+      borderRadius: "8px",
+      width: breakpoint < md ? "clamp(104px, 20vw, 184px)" : "184px",
+    },
+    episodeCreatedAt: {
+      fontSize: "14px",
+      color: palette.text.secondary,
+    },
+    episodeTitle: {
+      fontSize: "18px",
       marginTop: "8px",
+      overflow: "hidden",
+      WebkitLineClamp: 2,
+      display: "-webkit-box",
+      textOverflow: "ellipsis",
+      WebkitBoxOrient: "vertical",
+
+      "&:hover": {
+        textDecoration: "underline",
+      },
     },
-  },
-  playIcon: {
-    fontSize: "48px",
-    marginTop: "4px",
-    cursor: "pointer",
-    marginLeft: "-3px",
-  },
-  playIconSkeleton: {
-    width: "48px",
-    height: "48px",
-    marginTop: "4px",
-  },
-}));
+    episodeDesc: {
+      marginTop: "8px",
+      overflow: "hidden",
+      WebkitLineClamp: 2,
+      textOverflow: "ellipsis",
+      WebkitBoxOrient: "vertical",
+      color: palette.text.secondary,
+      display: breakpoint < sm ? "none" : "-webkit-box",
+    },
+    playIconBtn: {
+      alignSelf: "flex-start",
+      marginTop: breakpoint < sm ? "auto" : "4px",
+    },
+    playIcon: {
+      fontSize: "48px",
+      marginLeft: "-3px",
+    },
+  })
+);

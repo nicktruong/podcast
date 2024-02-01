@@ -1,5 +1,9 @@
 import { useTranslation } from "react-i18next";
 
+import { useAppSelector } from "@/hooks";
+import { selectUIState } from "@/store/ui";
+import { selectCategories } from "@/store/category";
+
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
@@ -7,5 +11,8 @@ export const usePrepare = () => {
 
   const { classes } = useStyles();
 
-  return { classes, t };
+  const categories = useAppSelector(selectCategories);
+  const { isSidebarExpand } = useAppSelector(selectUIState);
+
+  return { classes, categories, isSidebarExpand, t };
 };

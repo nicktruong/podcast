@@ -1,27 +1,67 @@
-import { Link } from "react-router-dom";
-import { Box, Typography } from "@mui/material";
+import { formatDistance } from "date-fns";
+import { Box, Button, Typography, alpha } from "@mui/material";
 
-import { useStyles } from "./styles";
+import { routes } from "@/common/constants";
+import { capFirstChar, isDark } from "@/common/utils";
+
 import { usePrepare } from "./helpers";
 
 import type { CardProps } from "./interfaces";
 
-const Card = ({ link, image, imageAlt, title, author }: CardProps) => {
-  const { t } = usePrepare();
-  const { classes } = useStyles();
+const Card = ({
+  link,
+  image,
+  title,
+  author,
+  imageAlt,
+  createdAt,
+  categoryData,
+}: CardProps) => {
+  const { classes, navigate } = usePrepare();
 
   return (
-    <Link className={classes.series} to={link}>
+    <Box
+      className={classes.podcast}
+      onClick={() => {
+        navigate(link);
+      }}
+    >
       <Box>
         <img src={image} alt={imageAlt} className={classes.seriesImg} />
       </Box>
       <Box className={classes.seriesInfo}>
-        <Typography className={classes.seriesTitle}>{title}</Typography>
-        <Typography className={classes.seriesAuthor}>
-          {t("by")} {author}
+        <Button
+          className={classes.categoryBtn}
+          onClick={(event) => {
+            event.stopPropagation();
+            navigate(routes.category.replace(":name", categoryData.name));
+          }}
+          sx={(theme) => ({
+            color: isDark(categoryData.color)
+              ? theme.palette.common.white
+              : theme.palette.common.black,
+            borderColor: alpha(categoryData.color, 0),
+            backgroundColor: alpha(categoryData.color, 0.6),
+
+            "&:hover": {
+              borderColor: alpha(categoryData.color, 0),
+              backgroundColor: alpha(categoryData.color, 0.8),
+            },
+          })}
+        >
+          {categoryData?.name}
+        </Button>
+
+        <Typography className={classes.seriesTitle}>
+          {title} - {author}
+        </Typography>
+        <Typography className={classes.createdAt}>
+          {capFirstChar(
+            formatDistance(new Date(createdAt), new Date(), { addSuffix: true })
+          )}
         </Typography>
       </Box>
-    </Link>
+    </Box>
   );
 };
 

@@ -23,7 +23,7 @@ export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchRecentlyPlayedPodcastsPaged",
   async ({
     offset = 0,
-    pageSize = 7,
+    pageSize = 4,
     userHistory = [],
   }: FetchRecentlyPlayedPodcastsOptions) => {
     if (userHistory.length === 0) return;
@@ -73,7 +73,7 @@ export const fetchPodcastsForYouPaged = createAppAsyncThunk(
     offset,
     categories,
     period = 7,
-    pageSize = 7,
+    pageSize = 4,
     podcastIdsToExclude,
   }: FetchPodcastsForYouOptions) => {
     const podcastsForYou: PopulatedPodcastWithAuthor[] = [];
@@ -107,7 +107,7 @@ export const fetchPodcastsForYouPaged = createAppAsyncThunk(
 
 export const fetchPodcastsToTryPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchPodcastsToTryPaged",
-  async ({ pageSize = 7, podcastIdsToExclude }: FetchPodcastsToTryOptions) => {
+  async ({ pageSize = 4, podcastIdsToExclude }: FetchPodcastsToTryOptions) => {
     const podcastsToTry: PopulatedPodcastWithAuthor[] = [];
     const MAX_REDO = 3;
     const redoPeriodScales = [1, 2, 7];

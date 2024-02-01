@@ -16,7 +16,7 @@ import type {
 export const getRecentlyPlayedPodcastsPaged = async ({
   offset = 0,
   history = [],
-  pageSize = 7,
+  pageSize = 4,
 }: GetRecentlyPlayedPodcastsOptions): Promise<PopulatedPodcastWithAuthor[]> => {
   history = history.slice(offset, offset + pageSize);
 

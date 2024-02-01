@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { UIState } from "./interfaces";
 
 const initialState: UIState = {
-  isSidebarExpand: true,
+  isSidebarExpand: false,
   isAudioPlayerOpen: false,
 };
 

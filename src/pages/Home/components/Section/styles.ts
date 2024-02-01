@@ -11,14 +11,12 @@ export const useStyles = tss.create(({ theme }) => ({
     fontSize: "32px",
     color: theme.palette.text.primary,
   },
-  playlist: {
-    gap: "24px",
-    height: "233px",
-    display: "grid",
-    marginTop: "8px",
-    overflow: "hidden",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-  },
+  // playlist: {
+  //   gap: "24px",
+  //   display: "grid",
+  //   marginTop: "8px",
+  //   gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+  // },
 }));
 
 export type Styles = ReturnType<typeof useStyles>["classes"];

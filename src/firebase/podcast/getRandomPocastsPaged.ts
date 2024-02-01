@@ -41,7 +41,7 @@ const generateQuery = ({
 };
 
 export const getRandomPocastsPaged = async ({
-  pageSize = 7,
+  pageSize = 4,
   categories = [],
 }: {
   pageSize?: number;
