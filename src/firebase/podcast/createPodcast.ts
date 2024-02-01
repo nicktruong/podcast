@@ -8,7 +8,6 @@ import { db } from "../init";
 import type { Podcast, PodcastCreationData } from "@/common/interfaces";
 
 export const createPodcast = async (data: PodcastCreationData) => {
-  // create podcast
   const currentDate = new Date().toISOString();
 
   const podcast: Omit<Podcast, "id"> = {

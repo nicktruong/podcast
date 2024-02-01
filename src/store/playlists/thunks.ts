@@ -3,7 +3,7 @@ import {
   getOwnedPlaylists,
   removeFromPlaylist,
   createOwnedPlaylist,
-  getEpisodesDetailFromIds,
+  getEpisodesDetailFromPlaylistEpisodes,
   removePlaylist,
 } from "@/firebase";
 
@@ -19,7 +19,8 @@ import type {
 export const fetchUserPlaylistEpisodes = createAppAsyncThunk(
   "playlists/fetchUserPlaylistEpisodesFromIds",
   async (episodes: PlaylistEpisode[]) => {
-    const episodesDetail = await getEpisodesDetailFromIds(episodes);
+    const episodesDetail =
+      await getEpisodesDetailFromPlaylistEpisodes(episodes);
 
     return episodesDetail;
   }

@@ -8,10 +8,11 @@ import {
 } from "firebase/firestore";
 
 import { COLLECTIONS, ROLES } from "@/common/enums";
-import { User, Podcast, SearchResult } from "@/common/interfaces";
 
 import { db } from "../init";
-import { downloadFileFromStorage } from "../storage";
+import { downloadFile } from "../storage";
+
+import type { User, Podcast, SearchResult } from "@/common/interfaces";
 
 // TODO: create keywords 5 characters ignore punctuations
 export const search = async (searchText: string): Promise<SearchResult> => {
@@ -36,7 +37,7 @@ export const search = async (searchText: string): Promise<SearchResult> => {
       const podcaster = { id: doc.id, ...doc.data() } as User;
 
       if (podcaster.photoURL && !podcaster.photoURL.startsWith("https")) {
-        podcaster.photoURL = await downloadFileFromStorage(podcaster.photoURL);
+        podcaster.photoURL = await downloadFile(podcaster.photoURL);
       }
 
       return podcaster;
@@ -59,7 +60,7 @@ export const search = async (searchText: string): Promise<SearchResult> => {
       const podcast = { id: doc.id, ...doc.data() } as Podcast;
 
       if (!podcast.coverUrl.startsWith("https")) {
-        podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+        podcast.coverUrl = await downloadFile(podcast.coverUrl);
       }
 
       return podcast;

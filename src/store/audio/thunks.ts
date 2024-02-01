@@ -1,12 +1,12 @@
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
-import { downloadFileFromStorage, updatePlayCount } from "@/firebase";
+import { downloadFile, updatePlayCount } from "@/firebase";
 
 import { selectAudioState } from "./selectors";
 
 export const downloadAndPlayAudio = createAppAsyncThunk(
   "audio/downloadAndPlayAudio",
   async (pathToFile: string) => {
-    const audioUrl = await downloadFileFromStorage(pathToFile);
+    const audioUrl = await downloadFile(pathToFile);
 
     return audioUrl;
   }

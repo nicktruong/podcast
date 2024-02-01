@@ -11,12 +11,12 @@ import {
 import { resizeImage } from "@/common/utils";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 
-import type { EditProfile } from "@/common/interfaces";
-import type { PodcastAndUserId, UserUpgradeInfo } from "./interfaces";
+import type { UserUpgradeInfo } from "./interfaces";
+import type { EditProfile, PodcastUserIdPair } from "@/common/interfaces";
 
 export const unfollowPodcast = createAppAsyncThunk(
   "user/unfollowPodcast",
-  async ({ podcastId, userId }: PodcastAndUserId) => {
+  async ({ podcastId, userId }: PodcastUserIdPair) => {
     await userUnfollowPodcast({ podcastId, userId });
 
     return { podcastId };
@@ -25,7 +25,7 @@ export const unfollowPodcast = createAppAsyncThunk(
 
 export const followPodcast = createAppAsyncThunk(
   "user/followPodcast",
-  async ({ podcastId, userId }: PodcastAndUserId) => {
+  async ({ podcastId, userId }: PodcastUserIdPair) => {
     await userFollowPodcast({ podcastId, userId });
 
     return { podcastId };
@@ -40,7 +40,7 @@ export const editProfile = createAppAsyncThunk(
     if (avatar) {
       const image = await resizeImage(avatar, { width: 300, height: 300 });
 
-      const { fullPath } = uploadFile("avatar", image);
+      const { fullPath } = uploadFile(`avatar/${userId}`, image);
 
       srcPath.path = fullPath;
 

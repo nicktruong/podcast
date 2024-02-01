@@ -1,4 +1,4 @@
-import {
+import type {
   PopulatedPodcast,
   PopulatedPodcastWithAuthor,
 } from "@/common/interfaces";

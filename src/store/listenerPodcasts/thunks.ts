@@ -3,7 +3,7 @@ import {
   getTrendingPodcastsPaged,
   getRecentlyPlayedPodcastsPaged,
   getPodcastsByCategorySortedAndPaged,
-  populatePodcast,
+  populatePodcastWithEpisodes,
 } from "@/firebase";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 
@@ -14,7 +14,10 @@ import type {
   FetchRecentlyPlayedPodcastsOptions,
   FetchPodcastsByCategorySortedAndPaged,
 } from "./interfaces";
-import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
+import type {
+  PopulatedPodcast,
+  PopulatedPodcastWithAuthor,
+} from "@/common/interfaces";
 
 export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
   "listenerPodcasts/fetchRecentlyPlayedPodcastsPaged",
@@ -38,7 +41,9 @@ export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
 export const populateStandoutPodcast = createAppAsyncThunk(
   "listenerPodcasts/populateStandoutPodcast",
   async (podcastToPopulate: PopulatedPodcastWithAuthor) => {
-    const podcastWithEpisodes = await populatePodcast(podcastToPopulate);
+    const podcastWithEpisodes = (await populatePodcastWithEpisodes(
+      podcastToPopulate
+    )) as PopulatedPodcast;
 
     return podcastWithEpisodes;
   }

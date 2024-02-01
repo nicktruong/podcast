@@ -1,15 +1,21 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, limit, query } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
-import type { CategoryRaw } from "@/common/interfaces";
+import type { Categories, CategoryRaw } from "@/common/interfaces";
 
-export const fetchAllCategories = async () => {
-  const querySnapshot = await getDocs(collection(db, COLLECTIONS.CATEGORIES));
+export const fetchAllCategories = async (): Promise<Categories | undefined> => {
+  const snapshot = await getDocs(
+    query(collection(db, COLLECTIONS.CATEGORIES), limit(1))
+  );
 
-  const { categories } = querySnapshot.docs[0].data() as CategoryRaw;
+  const doc = snapshot.docs.at(0);
+
+  if (!doc?.exists()) return;
+
+  const { categories } = doc.data() as CategoryRaw;
 
   return categories;
 };

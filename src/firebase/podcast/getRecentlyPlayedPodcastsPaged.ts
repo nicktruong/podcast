@@ -1,21 +1,23 @@
 import { doc, getDoc } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 import { db } from "../init";
-import { populatePodcastWithAuthor } from "../podcast";
-import { downloadFileFromStorage } from "../storage";
+import { downloadFile } from "../storage";
+
+import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
+
+import type {
+  Podcast,
+  PopulatedPodcastWithAuthor,
+  GetRecentlyPlayedPodcastsOptions,
+} from "@/common/interfaces";
 
 export const getRecentlyPlayedPodcastsPaged = async ({
   offset = 0,
   history = [],
   pageSize = 7,
-}: {
-  offset?: number;
-  pageSize?: number;
-  history?: string[];
-}): Promise<PopulatedPodcastWithAuthor[]> => {
+}: GetRecentlyPlayedPodcastsOptions): Promise<PopulatedPodcastWithAuthor[]> => {
   history = history.slice(offset, offset + pageSize);
 
   const snapshots = await Promise.all(
@@ -24,17 +26,21 @@ export const getRecentlyPlayedPodcastsPaged = async ({
     )
   );
 
+  // TODO: move this to another file
   const podcasts = await Promise.all(
     snapshots.map(async (snapshot) => {
+      // TODO: Consider store id to documents on firestore
       const podcast = { id: snapshot.id, ...snapshot.data() } as Podcast;
 
       if (!podcast.coverUrl.startsWith("https")) {
-        podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+        podcast.coverUrl = await downloadFile(podcast.coverUrl);
       }
 
       return populatePodcastWithAuthor(podcast);
     })
   );
 
-  return podcasts;
+  return podcasts.filter(
+    (podcast) => podcast !== undefined
+  ) as PopulatedPodcastWithAuthor[];
 };

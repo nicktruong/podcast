@@ -23,10 +23,11 @@ import { selectUserId } from "@/store/user";
 import { addHistoryAction } from "@/store/history";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
-import { PlaylistEpisode } from "@/common/interfaces";
 import { routes } from "@/common/constants";
 
 import { useStyles } from "./styles";
+
+import type { PlaylistEpisode } from "@/common/interfaces";
 
 export const usePrepare = () => {
   const navigate = useNavigate();

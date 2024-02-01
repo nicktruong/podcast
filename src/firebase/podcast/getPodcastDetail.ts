@@ -1,10 +1,11 @@
 import { doc, getDoc } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Podcast, User } from "@/common/interfaces";
 
 import { db } from "../init";
-import { downloadFileFromStorage } from "../storage";
+import { downloadFile } from "../storage";
+
+import type { Podcast, User } from "@/common/interfaces";
 
 export const getPodcastDetail = async (podcastId: string) => {
   // podcast
@@ -18,7 +19,7 @@ export const getPodcastDetail = async (podcastId: string) => {
   } as Podcast;
 
   if (!podcast.coverUrl.startsWith("https")) {
-    podcast.coverUrl = await downloadFileFromStorage(podcast.coverUrl);
+    podcast.coverUrl = await downloadFile(podcast.coverUrl);
   }
 
   // author

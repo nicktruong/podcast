@@ -4,13 +4,12 @@ import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
+import type { UserNotificationsIds } from "@/common/interfaces";
+
 export const markAsRead = async ({
   userId,
   notificationIds,
-}: {
-  userId: string;
-  notificationIds: string[];
-}) => {
+}: UserNotificationsIds) => {
   const batch = writeBatch(db);
 
   notificationIds.forEach((id) => {

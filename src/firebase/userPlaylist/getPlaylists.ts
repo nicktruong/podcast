@@ -1,9 +1,10 @@
 import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Playlist } from "@/common/interfaces";
 
 import { db } from "../init";
+
+import type { Playlist } from "@/common/interfaces";
 
 export const getOwnedPlaylists = async ({
   userId,

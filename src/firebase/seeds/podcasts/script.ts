@@ -3,7 +3,6 @@ import { nanoid } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
-import { Episode, Podcast, User } from "@/common/interfaces";
 import { COLLECTIONS, GENDERS, PODCAST_STATUS, ROLES } from "@/common/enums";
 // import { generateKeywords } from "@/common/utils";
 
@@ -11,6 +10,8 @@ import categories from "../categories/categories.json";
 
 import episodesJSON from "./episodes.json";
 import podcastsJSON from "./podcasts.json";
+
+import type { Episode, Podcast, User } from "@/common/interfaces";
 
 const seedDateString = new Date().toISOString();
 

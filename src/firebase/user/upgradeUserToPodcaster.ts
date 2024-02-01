@@ -1,6 +1,6 @@
 import { doc, updateDoc } from "@firebase/firestore";
 
-import { ROLES } from "@/common/enums";
+import { COLLECTIONS, ROLES } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -12,7 +12,7 @@ export const upgradeUserToPodcaster = async (
     return false;
   }
 
-  await updateDoc(doc(db, "users", userId), {
+  await updateDoc(doc(db, COLLECTIONS.USERS, userId), {
     roles: [...oldRoles, ROLES.PODCASTER],
   });
 

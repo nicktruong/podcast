@@ -37,3 +37,20 @@ export interface PopulatedPodcastWithAuthor extends Podcast {
 export interface PopulatedPodcast extends PopulatedPodcastWithAuthor {
   episodes: Episode[];
 }
+
+export interface GetRecentlyPlayedPodcastsOptions {
+  offset?: number;
+  pageSize?: number;
+  history?: string[];
+}
+
+export interface PodcastEpisodeIdPair {
+  episodeId: string;
+  podcastId: string;
+}
+
+export interface GetEpisodesFromCreatorPagedOptions {
+  creatorId: string;
+  offset?: Date;
+  pageSize?: number;
+}

@@ -19,7 +19,7 @@ export const categorySlice = createSlice({
         state.fetchingCategories = true;
       })
       .addCase(getCategories.fulfilled, (state, { payload }) => {
-        state.categories = payload;
+        state.categories = payload ?? [];
         state.fetchingCategories = false;
       })
       .addCase(getCategories.rejected, (state) => {

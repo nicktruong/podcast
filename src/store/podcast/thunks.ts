@@ -13,10 +13,10 @@ import { selectPodcastCreationData } from "./selectors";
 // TODO: Cron job to clean img if not used for series
 export const uploadPodcastCover = createAsyncThunk(
   "podSeries/uploadCover",
-  async (file: File) => {
+  async ({ userId, file }: { userId: string; file: File }) => {
     const image = await resizeImage(file, { width: 300, height: 300 });
 
-    const { fullPath } = uploadFile("photos", image);
+    const { fullPath } = uploadFile(`photos/${userId}`, image);
 
     const src = URL.createObjectURL(file);
 

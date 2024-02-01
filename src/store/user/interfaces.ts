@@ -7,11 +7,6 @@ export interface UserState {
   user: Partial<User> | null;
 }
 
-export interface PodcastAndUserId {
-  userId: string;
-  podcastId: string;
-}
-
 export interface UserUpgradeInfo {
   userId: string;
   userRoles: ROLES[];

@@ -1,20 +1,21 @@
 import {
-  collection,
-  getDocs,
   limit,
-  orderBy,
   query,
   where,
+  getDocs,
+  orderBy,
+  collection,
 } from "firebase/firestore";
 
 import { COLLECTIONS, EPISODE_FIELDS } from "@/common/enums";
-import { Episode, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 import { db } from "../init";
-import { downloadFileFromStorage } from "../storage";
+import { downloadFile } from "../storage";
 
-export const populatePodcast = async (
-  podcastToPopulate: PopulatedPodcastWithAuthor
+import type { Episode, Podcast } from "@/common/interfaces";
+
+export const populatePodcastWithEpisodes = async (
+  podcastToPopulate: Podcast
 ) => {
   const snapshot = await getDocs(
     query(
@@ -31,7 +32,7 @@ export const populatePodcast = async (
       const episode = { id: doc.id, ...doc.data() } as Episode;
 
       if (!episode.pathToFile.startsWith("https")) {
-        episode.pathToFile = await downloadFileFromStorage(episode.pathToFile);
+        episode.pathToFile = await downloadFile(episode.pathToFile);
       }
 
       return episode;

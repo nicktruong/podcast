@@ -1,4 +1,4 @@
-import { Episode, PopulatedPodcastWithAuthor } from "@/common/interfaces";
+import type { Episode, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface DetailsState {
   episodeId: string;

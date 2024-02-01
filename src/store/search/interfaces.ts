@@ -1,4 +1,4 @@
-import { SearchResult } from "@/common/interfaces";
+import type { SearchResult } from "@/common/interfaces";
 
 export interface SearchState {
   searchText: string;

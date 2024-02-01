@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { onMessage } from "firebase/messaging";
 
 import { store } from "@/store";
@@ -6,26 +5,23 @@ import { addNewNotification } from "@/store/notification";
 
 import { messaging } from "../init";
 
-import type { UserNotification } from "@/common/interfaces";
+import type { NotificationData } from "@/common/interfaces";
 
+// Listen to FCM for new notifications
 onMessage(messaging, ({ data }) => {
   if (!data) return;
 
-  data = data as {
-    action: string;
-    subject: string;
-    createdAt: string;
-    creatorName: string;
-    creatorAvatar: string;
-  };
+  const { action, subject, createdAt, creatorName, creatorAvatar } =
+    data as unknown as NotificationData;
 
+  // TODO: Consider removing the title field
   store.dispatch(
     addNewNotification({
-      createdAt: data.createdAt,
-      creatorAvatar: data.creatorAvatar,
-      creatorName: data.creatorName,
+      createdAt,
       read: false,
-      title: `<strong>${data.creatorName}</strong> ${data.action} <strong>${data.subject}</strong>`,
-    } as Omit<UserNotification, "id">)
+      creatorName,
+      creatorAvatar,
+      title: `<strong>${creatorName}</strong> ${action} <strong>${subject}</strong>`,
+    })
   );
 });

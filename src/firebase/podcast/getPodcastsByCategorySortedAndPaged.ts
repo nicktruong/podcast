@@ -10,12 +10,14 @@ import {
   QueryFieldFilterConstraint,
 } from "firebase/firestore";
 
-import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
-import { populatePodcastWithAuthor } from "../podcast";
-import { downloadPhotoFromStorage } from "../storage";
+import { downloadFile } from "../storage";
+
+import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
+
+import type { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export const getPodcastsByCategorySortedAndPaged = async ({
   offset,
@@ -63,25 +65,29 @@ export const getPodcastsByCategorySortedAndPaged = async ({
     const podcastsSnapshot = await getDocs(podcastsQuery);
 
     podcasts.push(
-      ...(await Promise.all(
-        podcastsSnapshot.docs.map(async (snapshot) => {
-          const populatedPodcast = await populatePodcastWithAuthor({
-            id: snapshot.id,
-            ...snapshot.data(),
-          } as Podcast);
+      ...((
+        await Promise.all(
+          podcastsSnapshot.docs.map(async (snapshot) => {
+            const populatedPodcast = await populatePodcastWithAuthor({
+              id: snapshot.id,
+              ...snapshot.data(),
+            } as Podcast);
 
-          if (
-            populatedPodcast.coverUrl &&
-            !populatedPodcast.coverUrl.startsWith("https")
-          ) {
-            populatedPodcast.coverUrl = await downloadPhotoFromStorage(
-              populatedPodcast.coverUrl
-            );
-          }
+            if (!populatedPodcast) return;
 
-          return populatedPodcast;
-        })
-      ))
+            if (
+              populatedPodcast.coverUrl &&
+              !populatedPodcast.coverUrl.startsWith("https")
+            ) {
+              populatedPodcast.coverUrl = await downloadFile(
+                populatedPodcast.coverUrl
+              );
+            }
+
+            return populatedPodcast;
+          })
+        )
+      ).filter(Boolean) as PopulatedPodcastWithAuthor[])
     );
 
     i++;

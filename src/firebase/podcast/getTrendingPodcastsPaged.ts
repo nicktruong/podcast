@@ -9,10 +9,12 @@ import {
 } from "firebase/firestore";
 
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
-import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 import { db } from "../init";
-import { populatePodcastWithAuthor } from "../podcast";
+
+import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
+
+import type { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export const getTrendingPodcastsPaged = async ({
   offset,
@@ -53,11 +55,14 @@ export const getTrendingPodcastsPaged = async ({
 
     const podcastsSnapshot = await getDocs(podcastsQuery);
 
-    const populatedPodcasts = await Promise.all(
+    const populatedPodcasts = (await Promise.all(
       podcastsSnapshot.docs.map((snapshot) =>
-        populatePodcastWithAuthor({ id: snapshot.id, ...snapshot.data() } as Podcast)
+        populatePodcastWithAuthor({
+          id: snapshot.id,
+          ...snapshot.data(),
+        } as Podcast)
       )
-    );
+    )) as PopulatedPodcastWithAuthor[];
 
     podcasts.push(...populatedPodcasts);
 

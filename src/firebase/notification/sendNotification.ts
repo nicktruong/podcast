@@ -1,5 +1,7 @@
 import { instance } from "@/config";
 
+import type { SendNotificationOptions } from "@/common/interfaces";
+
 export const sendNotification = async ({
   topic,
   action,
@@ -7,14 +9,7 @@ export const sendNotification = async ({
   createdAt,
   creatorName,
   creatorAvatar,
-}: {
-  topic: string;
-  action: string;
-  subject: string;
-  createdAt: string;
-  creatorName: string;
-  creatorAvatar: string;
-}) => {
+}: SendNotificationOptions) => {
   await instance.post("https://fcm.googleapis.com/fcm/send", {
     to: `/topics/${topic}`,
     data: {

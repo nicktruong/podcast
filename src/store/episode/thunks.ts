@@ -1,4 +1,4 @@
-import { populateEpisode } from "@/firebase/utils";
+import { populateEpisode } from "@/firebase/episode";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
 import { publishEpisode, getEpisodesFromCreatorPaged } from "@/firebase";
 
@@ -37,6 +37,8 @@ export const publishEpisodeAction = createAppAsyncThunk(
     const episode = selectEpisodeInfo(thunkApi.getState());
 
     const newEpisode = await publishEpisode(episode, userId, podcast.id);
+
+    if (!newEpisode) return;
 
     return populateEpisode(newEpisode);
   }

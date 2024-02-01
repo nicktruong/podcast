@@ -8,12 +8,14 @@ import {
 } from "firebase/firestore";
 import { nanoid } from "@reduxjs/toolkit";
 
-import { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
-import { populatePodcastWithAuthor } from "../podcast";
-import { downloadFileFromStorage } from "../storage";
+import { downloadFile } from "../storage";
+
+import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
+
+import type { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 const generateQuery = ({
   random,
@@ -98,7 +100,7 @@ export const getRandomPocastsPaged = async ({
           populatedPodcat.coverUrl &&
           !populatedPodcat.coverUrl.startsWith("https")
         ) {
-          populatedPodcat.coverUrl = await downloadFileFromStorage(
+          populatedPodcat.coverUrl = await downloadFile(
             populatedPodcat.coverUrl
           );
         }

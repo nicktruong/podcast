@@ -6,11 +6,12 @@ import { SignUpSteps } from "@/common/enums";
 import { CategoriesForm } from "@/containers";
 import { Logo, QontoStepper } from "@/components";
 import { routes, signUpStepsLabel } from "@/common/constants";
-import { RegistrationInterests } from "@/common/interfaces";
 
 import usePrepare from "./usePrepare";
 import { StepInfo } from "./components";
 import { EmailForm, PasswordForm, UserInfoForm } from "./containers";
+
+import type { RegistrationInterests } from "@/common/interfaces";
 
 export default function SignUp() {
   const {

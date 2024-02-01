@@ -19,7 +19,10 @@ export const addToPlaylist = async ({
 
   const playlistSnapshot = await getDoc(playlistRef);
 
-  const data = playlistSnapshot.data() as Playlist;
+  const data = {
+    id: playlistSnapshot.id,
+    ...playlistSnapshot.data(),
+  } as Playlist;
 
   const episode: PlaylistEpisode = {
     podcastId,

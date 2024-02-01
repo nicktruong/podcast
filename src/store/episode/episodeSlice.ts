@@ -77,14 +77,17 @@ export const podSlice = createSlice({
     builder
       .addCase(publishEpisodeAction.fulfilled, (state, action) => {
         state.audioUploadProgressInPercent = 0;
-        state.episodeCreationData = initialState.episodeCreationData;
         state.uploadStep = EPISODE_CREATION_STEPS.UPLOAD_AUDIO;
+        state.episodeCreationData = initialState.episodeCreationData;
+
+        if (!action.payload) return;
+
         state.episodes = [
           { ...action.payload, id: nanoid() },
           ...state.episodes,
         ];
       })
-      .addCase(publishEpisodeAction.rejected, (_, { error }) => {
+      .addCase(publishEpisodeAction.rejected, (state, { error }) => {
         console.error(error);
       });
 

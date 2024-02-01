@@ -41,8 +41,6 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const [image, setImage] = useState("");
   const [uploadTask, setUploadTask] = useState<UploadTask>();
 
-  console.log({ episodeInfo });
-
   const {
     reset,
     control,
@@ -62,12 +60,19 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   });
 
   const onFileUpload = (acceptedFiles: File[]) => {
-    const { uploadTask, fullPath } = uploadFile("audios", acceptedFiles[0]);
+    if (!user?.id) return;
+
+    const { uploadTask, fullPath } = uploadFile(
+      `audios/${user.id}`,
+      acceptedFiles[0]
+    );
     setUploadTask(uploadTask);
     dispatch(setPathToAudioFile(fullPath));
   };
 
   const onPhotoUpload = async (acceptedFiles: File[]) => {
+    if (!user?.id) return;
+
     const image = await resizeImage(acceptedFiles[0], {
       width: 300,
       height: 300,
@@ -75,7 +80,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
 
     setImage(URL.createObjectURL(acceptedFiles[0]));
 
-    const { fullPath } = uploadFile("photos", image);
+    const { fullPath } = uploadFile(`photos/${user.id}`, image);
     dispatch(setPathToImg(fullPath));
   };
 

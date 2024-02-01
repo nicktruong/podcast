@@ -4,19 +4,16 @@ import { COLLECTIONS } from "@/common/enums";
 
 import { db } from "../init";
 
-import type { Rating } from "@/common/interfaces";
+import type { Rating, GetUserRatingOptions } from "@/common/interfaces";
 
 export const getUserRating = async ({
   userId,
   podcastOrSeriesId,
-}: {
-  userId: string;
-  podcastOrSeriesId: string;
-}) => {
-  const snapshot = await getDoc(
-    doc(db, COLLECTIONS.RATINGS, `${userId}-rates-${podcastOrSeriesId}`)
-  );
-  const rating = snapshot.data() as Rating;
+}: GetUserRatingOptions): Promise<Rating | undefined> => {
+  const docId = `${userId}-rates-${podcastOrSeriesId}`;
+  const docRef = doc(db, COLLECTIONS.RATINGS, docId);
+  const snapshot = await getDoc(docRef);
+  const rating = snapshot.data() as Rating | undefined;
 
   return rating;
 };

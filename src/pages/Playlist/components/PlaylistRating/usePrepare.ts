@@ -30,17 +30,19 @@ export const usePrepare = () => {
   }, [userId, podcastDetail?.id]);
 
   const handleRate = async () => {
-    if (!userId || !podcastDetail) {
-      return;
-    }
+    if (!userId || !podcastDetail) return;
 
-    const { newRateCount, newRating } = await rate({
+    const rateResult = await rate({
       userId,
       rating,
       type: COLLECTIONS.PODCASTS,
       podcastOrSeriesId: podcastDetail?.id,
     });
-    dispatch(setNewRating({ newRateCount, newRating }));
+
+    // TODO: Toast rate failed
+    if (!rateResult) return;
+
+    dispatch(setNewRating(rateResult));
   };
 
   return { userId, podcastDetail, classes, rating, setRating, handleRate };

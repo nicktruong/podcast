@@ -59,8 +59,8 @@ const useHelper = ({ handleClose }: Props) => {
   };
 
   const handleImageSubmit: ChangeEventHandler<HTMLInputElement> = (e) => {
-    if (e.target.files?.[0]) {
-      dispatch(uploadPodcastCover(e.target.files[0]));
+    if (e.target.files?.[0] && userId) {
+      dispatch(uploadPodcastCover({ userId, file: e.target.files[0] }));
     }
   };
 

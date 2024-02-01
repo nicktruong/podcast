@@ -1,25 +1,21 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
-import { Notification } from "@/common/interfaces";
 import { COLLECTIONS, USER_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
 
 import { sendNotification } from "./sendNotification";
 
+import type { Notification, NotifyFollowerOptions } from "@/common/interfaces";
+
+// TODO: Review params
 export const notifyFollower = async ({
   podcastId,
   creatorName,
   episodeName,
   // podcastName,
   creatorAvatar,
-}: {
-  podcastId: string;
-  creatorName: string;
-  episodeName: string;
-  podcastName: string;
-  creatorAvatar: string;
-}) => {
+}: NotifyFollowerOptions) => {
   const createdAt = new Date().toISOString();
 
   // FCM

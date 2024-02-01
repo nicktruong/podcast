@@ -1,4 +1,4 @@
-import { PopulatedPodcastWithAuthor } from "@/common/interfaces";
+import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface PlaylistHeaderProps {
   seriesDetail: PopulatedPodcastWithAuthor;

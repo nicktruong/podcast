@@ -5,7 +5,7 @@ import { FirebaseError } from "@firebase/util";
 import { useTranslation } from "react-i18next";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import { loginWithEmailPassword } from "@/firebase";
+import { loginEmailPassword } from "@/firebase";
 import { routes, LOGIN_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
@@ -29,7 +29,7 @@ const usePrepare = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await loginWithEmailPassword(data);
+      await loginEmailPassword(data);
       navigate(routes.index, { replace: true });
     } catch (error) {
       if (error instanceof FirebaseError) {

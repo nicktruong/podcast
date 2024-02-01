@@ -1,37 +1,54 @@
 import {
-  addDoc,
-  collection,
   doc,
+  addDoc,
   getDoc,
   increment,
   updateDoc,
+  collection,
 } from "firebase/firestore";
 
-import { Episode, EpisodeCreationData, Podcast } from "@/common/interfaces";
 import { COLLECTIONS, PODCAST_STATUS } from "@/common/enums";
 
 import { db } from "../init";
+
+import type {
+  Episode,
+  Podcast,
+  EpisodeCreationData,
+} from "@/common/interfaces";
 
 export const publishEpisode = async (
   data: EpisodeCreationData,
   authorId: string,
   podcastId: string
-) => {
-  const currentDate = new Date().toISOString();
-
+): Promise<Episode | undefined> => {
   const podcastSnapshot = await getDoc(
     doc(db, COLLECTIONS.PODCASTS, podcastId)
   );
 
-  const podcast = podcastSnapshot.data() as Podcast;
+  const podcast = podcastSnapshot.data() as Podcast | undefined;
 
+  if (!podcast) return;
+
+  const currentDate = new Date().toISOString();
+
+  await updateDoc(doc(db, COLLECTIONS.USERS, authorId), {
+    updatedAt: currentDate,
+    episodeCount: increment(1),
+  });
+
+  await updateDoc(doc(db, COLLECTIONS.PODCASTS, podcastId), {
+    updatedAt: currentDate,
+    noOfEpisodes: increment(1),
+  });
+
+  // Create new episode
   const newEpisode: Omit<Episode, "id"> = {
     authorId,
     podcastId,
-    // coverUrl: "", // TODO: get coverUrl from data
+    rating: null,
     playCount: 0,
     rateCount: 0,
-    rating: null,
     audienceSize: 0,
     updatedAt: currentDate,
     createdAt: currentDate,
@@ -40,14 +57,6 @@ export const publishEpisode = async (
     status: PODCAST_STATUS.PUBLISHED,
     ...data,
   };
-
-  await updateDoc(doc(db, COLLECTIONS.USERS, authorId), {
-    episodeCount: increment(1),
-  });
-
-  await updateDoc(doc(db, COLLECTIONS.PODCASTS, podcastId), {
-    updatedAt: new Date().toISOString(),
-  });
 
   const docRef = await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
 

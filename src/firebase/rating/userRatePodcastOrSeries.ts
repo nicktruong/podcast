@@ -6,7 +6,13 @@ import { db } from "../init";
 
 import { getUserRating } from "./getUserRating";
 
-import type { Episode, Podcast, Rating } from "@/common/interfaces";
+import type {
+  Rating,
+  Episode,
+  Podcast,
+  NewRate,
+  RateOptions,
+} from "@/common/interfaces";
 import type { PartialBy } from "@/common/types";
 
 export const rate = async ({
@@ -14,22 +20,24 @@ export const rate = async ({
   userId,
   rating,
   podcastOrSeriesId,
-}: {
-  type: typeof COLLECTIONS.PODCASTS | typeof COLLECTIONS.EPISODES;
-  userId: string;
-  rating: number;
-  podcastOrSeriesId: string;
-}) => {
-  const prevRating = await getUserRating({ userId, podcastOrSeriesId });
+}: RateOptions): Promise<NewRate | undefined> => {
+  const prevRating = await getUserRating({
+    userId,
+    podcastOrSeriesId,
+  });
 
   // get podcast detail (rateCount, rating)
   const podcastRef = doc(db, type, podcastOrSeriesId);
   const podcastSnapshot = await getDoc(podcastRef);
+
+  if (!podcastSnapshot.exists()) return;
+
   const { rating: oldRating, rateCount } = podcastSnapshot.data() as Podcast &
     Episode;
 
   const currentDate = new Date().toISOString();
 
+  // First rating of this podcast
   if (!oldRating || rateCount === 0) {
     await updateDoc(podcastRef, { rateCount: 1, rating });
 
@@ -58,10 +66,8 @@ export const rate = async ({
 
   const newRateCount = prevRating ? rateCount : rateCount + 1;
 
-  // update (rateCount, rating)
   await updateDoc(podcastRef, { rateCount: newRateCount, rating: newRating });
 
-  // create rating for this user
   const ratingDoc: PartialBy<Rating, "createdAt"> = {
     rating,
     userId,

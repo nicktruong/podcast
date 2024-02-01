@@ -1,24 +1,20 @@
-import { getToken } from "firebase/messaging";
 import { arrayRemove, doc, updateDoc } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
 
-import { db, messaging } from "../init";
+import { db } from "../init";
 
+import { getMessagingToken } from "./getToken";
 import { removeTokenFromTopic } from "./removeTokenFromTopic";
+
+import type { PodcastUserIdPair } from "@/common/interfaces";
 
 export const userUnfollowPodcast = async ({
   userId,
   podcastId,
-}: {
-  userId: string;
-  podcastId: string;
-}) => {
+}: PodcastUserIdPair) => {
   // Update FCM
-  const token = await getToken(messaging, {
-    vapidKey: process.env.REACT_APP_FIREBASE_VAPID_KEY,
-  });
-
+  const token = await getMessagingToken();
   await removeTokenFromTopic({ token, topic: podcastId });
 
   // Update firestore

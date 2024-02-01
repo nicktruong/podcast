@@ -1,4 +1,4 @@
 export * from "./signup";
 export * from "./googleAuth";
 export * from "./facebookAuth";
-export * from "./loginWithEmailPassword";
+export * from "./loginEmailPassword";

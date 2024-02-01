@@ -10,10 +10,11 @@ import { GENDERS, ROLES } from "@/common/enums";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { RegistrationInterests } from "@/common/interfaces";
 import { createUserDocument, getUserInfo } from "@/firebase";
 
 import schema from "./schema";
+
+import type { RegistrationInterests } from "@/common/interfaces";
 
 export const usePrepare = () => {
   const navigate = useNavigate();

@@ -17,3 +17,15 @@ export interface User {
   emailVerified: boolean;
   categoriesOfInterest: string[];
 }
+
+export interface PodcastUserIdPair {
+  userId: string;
+  podcastId: string;
+}
+
+export interface UserEditProfileOptions {
+  name: string;
+  bio?: string;
+  userId: string;
+  fullPath?: string;
+}

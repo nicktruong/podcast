@@ -1,9 +1,10 @@
 import { addDoc, collection } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { Playlist, PlaylistCreationData } from "@/common/interfaces";
 
 import { db } from "../init";
+
+import type { Playlist, PlaylistCreationData } from "@/common/interfaces";
 
 export const createOwnedPlaylist = async ({
   title,
