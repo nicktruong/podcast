@@ -30,27 +30,29 @@ const Card = ({
         <img src={image} alt={imageAlt} className={classes.seriesImg} />
       </Box>
       <Box className={classes.seriesInfo}>
-        <Button
-          className={classes.categoryBtn}
-          onClick={(event) => {
-            event.stopPropagation();
-            navigate(routes.category.replace(":name", categoryData.name));
-          }}
-          sx={(theme) => ({
-            color: isDark(categoryData.color)
-              ? theme.palette.common.white
-              : theme.palette.common.black,
-            borderColor: alpha(categoryData.color, 0),
-            backgroundColor: alpha(categoryData.color, 0.6),
-
-            "&:hover": {
+        {categoryData && (
+          <Button
+            className={classes.categoryBtn}
+            onClick={(event) => {
+              event.stopPropagation();
+              navigate(routes.category.replace(":name", categoryData.name));
+            }}
+            sx={(theme) => ({
+              color: isDark(categoryData.color)
+                ? theme.palette.common.white
+                : theme.palette.common.black,
               borderColor: alpha(categoryData.color, 0),
-              backgroundColor: alpha(categoryData.color, 0.8),
-            },
-          })}
-        >
-          {categoryData?.name}
-        </Button>
+              backgroundColor: alpha(categoryData.color, 0.6),
+
+              "&:hover": {
+                borderColor: alpha(categoryData.color, 0),
+                backgroundColor: alpha(categoryData.color, 0.8),
+              },
+            })}
+          >
+            {categoryData?.name}
+          </Button>
+        )}
 
         <Typography className={classes.seriesTitle}>
           {title} - {author}

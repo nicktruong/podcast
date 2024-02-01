@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import { useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
+import { useEffect, useRef, useState } from "react";
 
 import {
   playAudio,
@@ -23,6 +24,8 @@ import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
+  const { t } = useTranslation("pages/Home");
+
   const dispatch = useAppDispatch();
 
   const containerEl = useRef<HTMLDivElement | null>(null);
@@ -106,6 +109,7 @@ export const usePrepare = () => {
     playingEpisodeId,
     standoutCategory,
     isLoadingStandoutPodcast,
+    t,
     cx,
     handlePauseAudio,
     handleDownloadAndPlayAudio,

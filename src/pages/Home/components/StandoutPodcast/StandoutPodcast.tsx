@@ -20,6 +20,7 @@ const StandoutPodcast = () => {
     playingEpisodeId,
     standoutCategory,
     isLoadingStandoutPodcast,
+    t,
     cx,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
@@ -32,7 +33,7 @@ const StandoutPodcast = () => {
   return (
     <Box ref={containerEl}>
       <Typography className={classes.standoutPodcastHeading}>
-        Standout podcast
+        {t("standoutPodcast")}
       </Typography>
       <Box
         className={cx(classes.standoutPodcastContainer, {

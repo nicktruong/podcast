@@ -67,6 +67,7 @@ export const selectHeaderDetail = createSelector(
     const episode = episodesDetail.find((episode) => episode.id === id);
 
     headerDetail.title = episode?.title;
+    headerDetail.coverUrl = episode?.pathToImgFile;
 
     return headerDetail;
   }

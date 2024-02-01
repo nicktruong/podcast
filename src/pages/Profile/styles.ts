@@ -77,12 +77,7 @@ export const useStyles = tss.create(({ theme }) => ({
     fontSize: "24px",
   },
   playlist: {
-    gap: "24px",
-    height: "233px",
-    display: "grid",
-    marginTop: "8px",
-    overflow: "hidden",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+    marginTop: "32px",
   },
   series: {
     padding: "16px",

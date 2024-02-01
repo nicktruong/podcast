@@ -41,9 +41,9 @@ const usePrepare = () => {
       title: "recentlyPlayed",
     },
     {
-      key: "trendings",
+      key: "trendingPodcasts",
       requireLogin: false,
-      title: "trendings",
+      title: "trendingPodcasts",
       podcasts: trendingPodcasts,
     },
     {
@@ -73,7 +73,7 @@ const usePrepare = () => {
 
         const fetchedPodcastIds: string[] = []; // Use to prevent duplicated podcasts
 
-        const newTrendingPodcasts = !fetched.trendings
+        const newTrendingPodcasts = !fetched.trendingPodcasts
           ? await dispatch(fetchTrendingPodcastsPaged({ pageSize: 8 })).unwrap()
           : trendingPodcasts;
 

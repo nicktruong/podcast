@@ -7,5 +7,5 @@ export interface CardProps {
   author: string;
   imageAlt: string;
   createdAt: string;
-  categoryData: Category;
+  categoryData?: Category;
 }

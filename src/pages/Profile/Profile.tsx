@@ -5,6 +5,8 @@ import { Box, Typography } from "@mui/material";
 
 import { routes } from "@/common/constants";
 
+import CardGroup from "../Home/components/CardGroup";
+
 import { usePrepare } from "./usePrepare";
 
 const Profile = () => {
@@ -53,29 +55,15 @@ const Profile = () => {
             </Typography>
 
             <Box className={classes.playlist}>
-              {playlists.map((podcast) => (
-                <Link
-                  key={podcast.id}
-                  className={classes.series}
-                  to={routes.playlist.replace(":id", podcast.id)}
-                >
-                  <Box>
-                    <img
-                      className={classes.seriesImg}
-                      src={podcast.coverUrl}
-                      alt={`${podcast.title} cover photo`}
-                    />
-                  </Box>
-                  <Box className={classes.seriesInfo}>
-                    <Typography className={classes.seriesTitle}>
-                      {podcast.title}
-                    </Typography>
-                    <Typography className={classes.seriesAuthor}>
-                      By {user?.name}
-                    </Typography>
-                  </Box>
-                </Link>
-              ))}
+              <CardGroup
+                podcasts={playlists.map((playlist) => ({
+                  id: playlist.id,
+                  title: playlist.title,
+                  coverUrl: playlist.coverUrl,
+                  createdAt: playlist.createdAt,
+                  author: { name: user?.name ?? "" },
+                }))}
+              />
             </Box>
           </Box>
         )}
@@ -85,7 +73,16 @@ const Profile = () => {
               Episodes Published
             </Typography>
             <Box className={classes.playlist}>
-              {episodes.map((episode) => (
+              <CardGroup
+                podcasts={episodes.map((episode) => ({
+                  id: episode.id,
+                  title: episode.title,
+                  createdAt: episode.createdAt,
+                  coverUrl: episode.pathToImgFile,
+                  author: { name: user?.name ?? "" },
+                }))}
+              />
+              {/* {episodes.map((episode) => (
                 <Link
                   key={episode.id}
                   className={classes.series}
@@ -107,7 +104,7 @@ const Profile = () => {
                     </Typography>
                   </Box>
                 </Link>
-              ))}
+              ))} */}
             </Box>
           </Box>
         )}

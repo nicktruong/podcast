@@ -7,9 +7,8 @@ export const usePrepare = () => {
 
   const categories = useAppSelector(selectCategories);
 
-  const getCategory = (categoryName: string) =>
-    categories.find((category) => category.name === categoryName) ??
-    categories[0];
+  const getCategory = (categoryName?: string) =>
+    categories.find((category) => category.name === categoryName);
 
   return { isSidebarExpand, getCategory };
 };

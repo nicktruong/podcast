@@ -28,8 +28,16 @@ export const usePrepare = () => {
 
   useEffect(() => {
     // resize the podcast title to fit (not overflow) the parent element
+
     const resizeToFit = () => {
       if (!seriesTitleRef.current || !seriesTitleContainerRef.current) {
+        return;
+      }
+
+      if (
+        seriesTitleRef.current.clientHeight <
+        seriesTitleContainerRef.current.clientHeight
+      ) {
         return;
       }
 
@@ -40,14 +48,7 @@ export const usePrepare = () => {
       seriesTitleRef.current.style.fontSize = reducedFontSize;
       setTitleFontSize(reducedFontSize);
 
-      if (
-        seriesTitleRef.current.clientHeight >=
-        seriesTitleContainerRef.current.clientHeight
-      ) {
-        resizeToFit();
-
-        return;
-      }
+      resizeToFit();
     };
 
     resizeToFit();
