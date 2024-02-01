@@ -15,7 +15,7 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   seriesImg: {
     width: "100%",
-    height: "268px",
+    aspectRatio: "1/1",
     objectFit: "cover",
     borderRadius: "4px",
   },

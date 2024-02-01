@@ -4,7 +4,7 @@ export const selectRecentlyPlayed = (state: RootState) =>
   state.userPodcasts.recentlyPlayed;
 
 export const selectTrendingPodcasts = (state: RootState) =>
-  state.userPodcasts.trendings;
+  state.userPodcasts.trendingPodcasts;
 
 export const selectPodcastsForYou = (state: RootState) =>
   state.userPodcasts.podcastsForYou;

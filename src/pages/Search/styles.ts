@@ -16,12 +16,12 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   categories: {
     gap: "12px",
-    display: "flex",
+    display: "grid",
     flexWrap: "wrap",
     marginTop: "16px",
+    gridTemplateColumns: "repeat(auto-fit, minmax(208px, 1fr))",
   },
   category: {
-    width: "206px",
     cursor: "pointer",
     overflow: "hidden",
     borderRadius: "8px",
@@ -37,17 +37,14 @@ export const useStyles = tss.create(({ theme }) => ({
   categoryImg: {
     right: 0,
     bottom: 0,
+    width: "100px",
+    aspectRatio: "1/1",
     position: "absolute",
     boxShadow: "0 2px 4px 0 rgba(0,0,0,.2)",
-    transform: "rotate(25deg) translate(18%,-2%)",
+    transform: "rotate(25deg) translate(18%, -2%)",
   },
   resultContainer: {
-    gap: "24px",
-    height: "233px",
-    display: "grid",
-    marginTop: "8px",
-    overflow: "hidden",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
+    marginTop: "24px",
   },
   section: {
     "&:not(:first-of-type)": {

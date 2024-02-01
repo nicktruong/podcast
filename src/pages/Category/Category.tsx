@@ -1,14 +1,12 @@
 import { Box, MenuItem, Select, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-
-import { routes } from "@/common/constants";
 
 import CardsSkeleton from "../Home/components/CardsSkeleton";
+import CardGroup from "../Home/components/CardGroup";
 
 import { usePrepare } from "./usePrepare";
 
 const Category = () => {
-  const { classes, sortBy, loading, categoriesSeries, handleSelectSortBy } =
+  const { sortBy, classes, loading, categoriesSeries, handleSelectSortBy } =
     usePrepare();
 
   return (
@@ -18,7 +16,6 @@ const Category = () => {
           <Typography>Sort by: </Typography>
           <Select
             value={sortBy}
-            // className={classes.playbackRateSelect}
             onChange={(event) =>
               handleSelectSortBy(
                 event.target.value as "playCount" | "createdAt"
@@ -36,35 +33,12 @@ const Category = () => {
 
         {!loading ? (
           <Box className={classes.resultContainer}>
-            {categoriesSeries.map((series) => (
-              <Link
-                key={series.id}
-                className={classes.result}
-                to={routes.playlist.replace(":id", series.id)}
-              >
-                <Box>
-                  <img
-                    className={classes.resultImg}
-                    src={series.coverUrl}
-                    alt={`${series.title} avatar`}
-                  />
-                </Box>
-                <Box className={classes.resultInfo}>
-                  <Typography className={classes.resultTitle}>
-                    {series.title}
-                  </Typography>
-                  <Typography className={classes.resultAdditionalInfo}>
-                    {series.author?.name}
-                  </Typography>
-                </Box>
-              </Link>
-            ))}
+            <CardGroup podcasts={categoriesSeries} />
           </Box>
         ) : (
-          <>
-            <CardsSkeleton mt={4} />
-            <CardsSkeleton mt={4} />
-          </>
+          <Box className={classes.resultContainer}>
+            <CardsSkeleton />
+          </Box>
         )}
       </Box>
     </Box>

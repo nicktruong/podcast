@@ -1,6 +1,7 @@
 export * from "./User";
 export * from "./Rating";
 export * from "./Search";
+export * from "./Section";
 export * from "./Episode";
 export * from "./Podcast";
 export * from "./Category";

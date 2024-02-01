@@ -112,10 +112,12 @@ const customComponents: Components<Omit<Theme, "components">> = {
             fontSize: "0.8125rem",
             borderRadius: "200px",
             textTransform: "capitalize",
+            color: theme.palette.primary.main,
             border: `1px solid ${alpha(theme.palette.primary.main, 0.5)}`,
 
             "&:hover": {
               borderColor: theme.palette.primary.main,
+              backgroundColor: alpha(theme.palette.primary.main, 0.2),
             },
           };
         },

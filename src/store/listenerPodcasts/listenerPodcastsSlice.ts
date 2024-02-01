@@ -12,18 +12,18 @@ import {
 import type { ListenerPodcastsState } from "./interfaces";
 
 const initialLoadingAndFetched = {
-  trendings: false,
   podcastsToTry: false,
   recentlyPlayed: false,
   podcastsForYou: false,
+  trendingPodcasts: false,
   podcastsOfCategory: false,
 };
 
 export const initialState: ListenerPodcastsState = {
-  trendings: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
   podcastsToTry: [], // random shows
   podcastsForYou: [], // based on categories of interests, users can choose initially, and the platform will personalized based on users listen history
   recentlyPlayed: [], // when implement history
+  trendingPodcasts: [], // in the beginning, where we don't have any data other than playCount, we use playCount as the primary metric to decide the trending scale of one podcast
   standoutPodcast: null,
   podcastsOfCategory: [],
   loadingStandoutPodcast: true,
@@ -60,16 +60,16 @@ export const listenerPodcasts = createSlice({
 
     builder
       .addCase(fetchTrendingPodcastsPaged.pending, (state) => {
-        state.loading.trendings = true;
+        state.loading.trendingPodcasts = true;
       })
       .addCase(fetchTrendingPodcastsPaged.fulfilled, (state, { payload }) => {
-        state.trendings = payload;
-        state.loading.trendings = false;
-        state.fetched.trendings = true;
+        state.loading.trendingPodcasts = false;
+        state.fetched.trendingPodcasts = true;
+        state.trendingPodcasts = payload;
       })
       .addCase(fetchTrendingPodcastsPaged.rejected, (state, { error }) => {
         console.error(error);
-        state.loading.trendings = false;
+        state.loading.trendingPodcasts = false;
       });
 
     builder

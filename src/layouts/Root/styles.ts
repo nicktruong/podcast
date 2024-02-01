@@ -8,6 +8,8 @@ export const useStyles = tss
     rootLayout: {
       width: "100vw",
       height: "100vh",
+      margin: "0 auto",
+      maxWidth: "2048px",
       overflow: "hidden",
     },
     rootContent: {

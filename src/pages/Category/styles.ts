@@ -16,16 +16,7 @@ export const useStyles = tss.create(({ theme }) => ({
     alignItems: "center",
   },
   resultContainer: {
-    gap: "24px",
-    height: "490px",
-    display: "grid",
-    marginTop: "8px",
-    overflow: "hidden",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-
-    "&:last-of-type": {
-      marginTop: "32px",
-    },
+    marginTop: "24px",
   },
   result: {
     height: "233px",

@@ -1,14 +1,8 @@
 import type {
+  SectionKeys,
   PopulatedPodcast,
   PopulatedPodcastWithAuthor,
 } from "@/common/interfaces";
-
-type SectionKeys =
-  | "trendings"
-  | "podcastsToTry"
-  | "podcastsForYou"
-  | "recentlyPlayed"
-  | "podcastsOfCategory";
 
 interface LoadingPodcast extends Record<SectionKeys, boolean> {}
 

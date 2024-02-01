@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { UploadTask } from "@firebase/storage";
@@ -17,13 +16,12 @@ import {
   setPodUploadDetails,
   publishEpisodeAction,
 } from "@/store/episode";
-import { selectUser, setUser } from "@/store/user";
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
-import { notifyFollower, uploadFile } from "@/firebase";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectPodcast } from "@/store/podcast";
-import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
+import { uploadFile } from "@/firebase";
+import { selectUser } from "@/store/user";
 import { resizeImage } from "@/common/utils";
+import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux";
+import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
 
@@ -35,7 +33,6 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);
   const episodeInfo = useAppSelector(selectEpisodeInfo);
-  const podcast = useAppSelector(selectPodcast);
   const podUploading = useAppSelector(selectUploading);
   const podUploadingProgress = useAppSelector(selectProgress);
   const [image, setImage] = useState("");

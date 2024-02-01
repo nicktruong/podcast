@@ -1,32 +1,27 @@
 import { tss } from "tss-react/mui";
 
-export const useStyles = tss.create(({ theme }) => ({
-  cardSkeletonContainer: {
-    gap: "24px",
-    height: "233px",
-    display: "grid",
-    overflow: "hidden",
-    gridTemplateColumns: "repeat(auto-fill, minmax(150px, 1fr))",
-  },
-  cardSkeleton: {
-    width: "100%",
-    height: "233px",
-    padding: "16px",
-    borderRadius: "8px",
-    backgroundColor: theme.palette.custom?.background.main,
-  },
+export const useStyles = tss.create({
+  cardSkeleton: {},
   imgSkeleton: {
     width: "100%",
-    height: "140px",
-    borderRadius: "8px",
+    height: "unset",
+    aspectRatio: "1/1",
   },
-  textSkeletonContainer: {
-    marginTop: "16px",
+  categoryBtnSkeleton: {
+    width: "100px",
+    height: "30px",
+    marginTop: "20px",
   },
-  podcastTitleSkeleton: {
-    height: "24px",
+  titleSkeleton: {
+    marginTop: "12px",
+
+    "&:not(:first-of-type)": {
+      marginTop: "0px",
+    },
   },
-  authorNameSkeleton: {
+  createdAtSkeleton: {
+    width: "130px",
     height: "21px",
+    marginTop: "12px",
   },
-}));
+});

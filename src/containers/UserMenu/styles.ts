@@ -1,5 +1,5 @@
-import { red } from "@mui/material/colors";
 import { tss } from "tss-react/mui";
+import { red } from "@mui/material/colors";
 
 export const useStyles = tss.create(({ theme }) => ({
   alignCenter: {
@@ -12,6 +12,9 @@ export const useStyles = tss.create(({ theme }) => ({
     padding: "12px 0",
     position: "absolute",
     backgroundColor: "transparent",
+  },
+  toolbar: {
+    flexWrap: "wrap",
   },
   iconButtonContainer: {
     marginLeft: "-10px",
@@ -52,7 +55,15 @@ export const useStyles = tss.create(({ theme }) => ({
       border: `1px solid ${theme.palette.common.white}`,
     },
   },
+  actions: {
+    gap: "4px",
+    flexShrink: 0,
+    display: "flex",
+    marginLeft: "auto",
+    alignItems: "center",
+  },
   notificationContainer: {
+    padding: "8px",
     position: "relative",
   },
   notificationCount: {

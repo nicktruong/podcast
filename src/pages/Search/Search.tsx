@@ -3,10 +3,14 @@ import { Box, Typography } from "@mui/material";
 
 import { routes } from "@/common/constants";
 
+import CardGroup from "../Home/components/CardGroup";
+import { SectionSkeleton } from "../Home/components";
+
 import { usePrepare } from "./usePrepare";
 
 const Search = () => {
-  const { classes, categories, searchText, searchResult } = usePrepare();
+  const { classes, categories, searchText, searchResult, loadingSearchResult } =
+    usePrepare();
 
   const { podcasters, podcasts: series } = searchResult;
 
@@ -39,6 +43,12 @@ const Search = () => {
                       >
                         {category.name}
                       </Typography>
+
+                      <img
+                        src={category.imageUrl}
+                        className={classes.categoryImg}
+                        alt={`${category.name} photo cover`}
+                      />
                     </Box>
                   </Link>
                 );
@@ -47,6 +57,9 @@ const Search = () => {
           </>
         ) : (
           <>
+            {loadingSearchResult && <SectionSkeleton />}
+
+            {/* TODO: Add loading state */}
             {!podcasters.length && !series.length && (
               <Typography>Your search did not match any documents.</Typography>
             )}
@@ -90,7 +103,7 @@ const Search = () => {
                   Podcast series
                 </Typography>
                 <Box className={classes.resultContainer}>
-                  {series.map((series) => (
+                  {/* {series.map((series) => (
                     <Link
                       key={series.id}
                       className={classes.result}
@@ -112,7 +125,17 @@ const Search = () => {
                         </Typography>
                       </Box>
                     </Link>
-                  ))}
+                  ))} */}
+                  <CardGroup
+                    podcasts={series.map((podcast) => ({
+                      id: podcast.id,
+                      title: podcast.title,
+                      category: podcast.category,
+                      coverUrl: podcast.coverUrl,
+                      createdAt: podcast.createdAt,
+                      author: { name: podcast.author },
+                    }))}
+                  />
                 </Box>
               </Box>
             )}

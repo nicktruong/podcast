@@ -13,9 +13,9 @@ import {
 import { routes } from "@/common/constants";
 import { useMaxWidthScreenMedia } from "@/common/utils";
 import { selectUIState, toggleExpand } from "@/store/ui";
-import { searchAction, setSearchText } from "@/store/search";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectUnreadNotificationsCount } from "@/store/notification";
+import { searchAction, setSearchText, startSearch } from "@/store/search";
 
 import { useStyles } from "./styles";
 
@@ -83,14 +83,19 @@ const usePrepare = () => {
   };
 
   const search = useDebouncedCallback(
-    useCallback((value) => {
-      dispatch(setSearchText(value));
+    useCallback((value: string) => {
       dispatch(searchAction(value));
     }, []),
     500
     // TODO: I'm poor so don't uncomment the below line
     // { maxWait: 2000 }
   );
+
+  const handleSearch = (value: string) => {
+    dispatch(setSearchText(value));
+    dispatch(startSearch());
+    search(value);
+  };
 
   return {
     open,
@@ -103,8 +108,8 @@ const usePrepare = () => {
     isSidebarExpand,
     unreadNotificationsCount,
     t,
-    search,
     navigate,
+    handleSearch,
     toggleSidebar,
     handleSignOut,
     handleCloseMenu,

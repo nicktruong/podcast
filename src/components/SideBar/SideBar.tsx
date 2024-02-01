@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { MdOutlineHome } from "react-icons/md";
 import HomeIcon from "@mui/icons-material/Home";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import { CgSearch, CgSearchLoading } from "react-icons/cg";
+import { RiSearchEyeFill, RiSearchEyeLine } from "react-icons/ri";
 
 import { routes } from "@/common/constants";
 
@@ -58,14 +58,13 @@ export default function SideBar() {
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
               {active[routes.search] ? (
-                <CgSearchLoading
-                  style={{ marginLeft: "2px", marginTop: "-2px" }}
+                <RiSearchEyeFill
                   className={cx(classes.icon, {
                     [classes.active]: active[routes.search],
                   })}
                 />
               ) : (
-                <CgSearch className={classes.icon} />
+                <RiSearchEyeLine className={classes.icon} />
               )}
             </ListItemIcon>
             {isSidebarExpand && (

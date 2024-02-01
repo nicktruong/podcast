@@ -9,6 +9,7 @@ export interface SearchPodcast {
   title: string;
   author: string;
   coverUrl: string;
+  category: string;
   createdAt: string;
 }
 

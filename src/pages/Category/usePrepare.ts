@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import {
-  fetchPodcastsByCategorySortedAndPaged,
   selectCategoriesSeries,
   selectIsLoadingListenerPodcasts,
+  fetchPodcastsByCategorySortedAndPaged,
 } from "@/store/listenerPodcasts";
+import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 
 import { useStyles } from "./styles";
@@ -17,6 +18,7 @@ export const usePrepare = () => {
     selectIsLoadingListenerPodcasts
   ).podcastsOfCategory;
 
+  const categories = useAppSelector(selectCategories);
   const categoriesSeries = useAppSelector(selectCategoriesSeries);
 
   const dispatch = useAppDispatch();
@@ -40,5 +42,12 @@ export const usePrepare = () => {
     setSortBy(value);
   };
 
-  return { classes, sortBy, loading, categoriesSeries, handleSelectSortBy };
+  return {
+    sortBy,
+    classes,
+    loading,
+    categories,
+    categoriesSeries,
+    handleSelectSortBy,
+  };
 };

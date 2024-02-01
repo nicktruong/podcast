@@ -33,8 +33,8 @@ export default function UserMenu() {
     isSidebarExpand,
     unreadNotificationsCount,
     t,
-    search,
     navigate,
+    handleSearch,
     toggleSidebar,
     handleSignOut,
     handleCloseMenu,
@@ -44,7 +44,7 @@ export default function UserMenu() {
 
   return (
     <AppBar elevation={0} component="nav" className={classes.appbarRoot}>
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         {!isSmaller && (
           <Box className={classes.iconButtonContainer}>
             <IconButton onClick={toggleSidebar}>
@@ -62,22 +62,18 @@ export default function UserMenu() {
             <Search className={classes.searchIcon} />
             <input
               className={classes.searchInput}
-              onChange={(e) => search(e.target.value)}
               placeholder={t("whatDoYouWantToListen")}
+              onChange={(e) => {
+                handleSearch(e.target.value);
+              }}
             />
           </Box>
         )}
 
-        <Box
-          sx={{
-            gap: "4px",
-            display: "flex",
-            marginLeft: "auto",
-            alignItems: "center",
-          }}
-        >
+        <Box className={classes.actions}>
           {userId && (
             <>
+              <ChangeLanguageButton />
               <Link to={routes.notification}>
                 <Box className={classes.notificationContainer}>
                   {unreadNotificationsCount > 0 && (
@@ -88,7 +84,6 @@ export default function UserMenu() {
                   <NotificationsIcon className={classes.notificationIcon} />
                 </Box>
               </Link>
-              <ChangeLanguageButton />
               <Box>
                 <IconButton
                   aria-haspopup="true"
@@ -192,10 +187,10 @@ export default function UserMenu() {
               </>
             ) : (
               <Box className={classes.alignCenter}>
+                <ChangeLanguageButton />
                 <Link to={routes.notification}>
                   <NotificationsIcon />
                 </Link>
-                <ChangeLanguageButton />
                 <Link to={routes.signup}>
                   <Button className={classes.signUpBtn}>{t("signup")}</Button>
                 </Link>
