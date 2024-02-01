@@ -4,18 +4,15 @@ import {
   selectPodcastsToTry,
   selectPodcastsForYou,
   selectRecentlyPlayed,
-  selectStandOutPodcast,
   selectTrendingPodcasts,
   fetchPodcastsToTryPaged,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
-  selectLoadingStandoutPodcast,
   selectListenerPodcastsFetched,
   selectIsLoadingListenerPodcasts,
   fetchRecentlyPlayedPodcastsPaged,
 } from "@/store/listenerPodcasts";
 import { selectUser } from "@/store/user";
-import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import { useStyles } from "./styles";
@@ -28,8 +25,6 @@ const usePrepare = () => {
 
   const user = useAppSelector(selectUser);
 
-  const categories = useAppSelector(selectCategories);
-
   const podcastsToTry = useAppSelector(selectPodcastsToTry);
   const podcastsForYou = useAppSelector(selectPodcastsForYou);
   const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
@@ -37,13 +32,6 @@ const usePrepare = () => {
 
   const fetched = useAppSelector(selectListenerPodcastsFetched);
   const loading = useAppSelector(selectIsLoadingListenerPodcasts);
-
-  const standoutPodcast = useAppSelector(selectStandOutPodcast);
-  const isLoadingStandoutPodcast = useAppSelector(selectLoadingStandoutPodcast);
-  const standoutCategory =
-    categories.find(
-      (category) => category.name === standoutPodcast?.category
-    ) ?? categories[0];
 
   const sections: SectionData[] = [
     {
@@ -130,10 +118,6 @@ const usePrepare = () => {
     classes,
     loading,
     sections,
-    categories,
-    standoutPodcast,
-    standoutCategory,
-    isLoadingStandoutPodcast,
   };
 };
 

@@ -1,7 +1,8 @@
-import { Link } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 
 import { routes } from "@/common/constants";
+
+import Card from "../Card";
 
 import { usePrepare } from "./usePrepare";
 
@@ -17,27 +18,14 @@ export default function Section({ title, podcasts }: SectionProps) {
       </Typography>
       <Box className={classes.playlist}>
         {podcasts.map((podcast) => (
-          <Link
+          <Card
             key={podcast.id}
-            className={classes.series}
-            to={routes.playlist.replace(":id", podcast.id)}
-          >
-            <Box>
-              <img
-                className={classes.seriesImg}
-                src={podcast.coverUrl}
-                alt={`${podcast.title} cover photo`}
-              />
-            </Box>
-            <Box className={classes.seriesInfo}>
-              <Typography className={classes.seriesTitle}>
-                {podcast.title}
-              </Typography>
-              <Typography className={classes.seriesAuthor}>
-                {t("by")} {podcast.author?.name}
-              </Typography>
-            </Box>
-          </Link>
+            title={podcast.title}
+            image={podcast.coverUrl}
+            author={podcast.author.name}
+            imageAlt={`${podcast.title} cover photo`}
+            link={routes.playlist.replace(":id", podcast.id)}
+          />
         ))}
       </Box>
     </Box>
