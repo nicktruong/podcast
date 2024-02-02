@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import { routes } from "@/common/constants";
 import { selectUserId } from "@/store/user";
-import { selectIsSidebarExpand } from "@/store/ui";
+import { selectIsSidebarExpand, toggleExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { fetchUserPlaylists, selectPlaylists } from "@/store/playlists";
 
@@ -36,7 +36,11 @@ const usePrepare = () => {
     }
   }, [userId]);
 
-  return { active, classes, playlists, isSidebarExpand, t, cx };
+  const toggleSidebar = () => {
+    dispatch(toggleExpand());
+  };
+
+  return { active, classes, playlists, isSidebarExpand, t, cx, toggleSidebar };
 };
 
 export default usePrepare;

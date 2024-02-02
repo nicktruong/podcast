@@ -17,6 +17,7 @@ export interface UserNotification {
 }
 
 export interface NotificationData {
+  id: string;
   action: string;
   subject: string;
   createdAt: string;
@@ -43,6 +44,7 @@ export interface TokenTopicPair {
 }
 
 export interface SendNotificationOptions {
+  id: string;
   topic: string;
   action: string;
   subject: string;

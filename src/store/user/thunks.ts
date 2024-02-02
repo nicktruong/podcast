@@ -10,6 +10,7 @@ import {
 } from "@/firebase";
 import { resizeImage } from "@/common/utils";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
+import { IMAGE_SIZE } from "@/common/constants";
 
 import type { UserUpgradeInfo } from "./interfaces";
 import type { EditProfile, PodcastUserIdPair } from "@/common/interfaces";
@@ -38,7 +39,10 @@ export const editProfile = createAppAsyncThunk(
     const srcPath: { src?: string; path?: string } = {};
 
     if (avatar) {
-      const image = await resizeImage(avatar, { width: 300, height: 300 });
+      const image = await resizeImage(avatar, {
+        width: IMAGE_SIZE,
+        height: IMAGE_SIZE,
+      });
 
       const { fullPath } = uploadFile(`avatar/${userId}`, image);
 

@@ -7,6 +7,7 @@ import {
 } from "@/firebase";
 import { resizeImage } from "@/common/utils";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
+import { IMAGE_SIZE } from "@/common/constants";
 
 import { selectPodcastCreationData } from "./selectors";
 
@@ -14,7 +15,10 @@ import { selectPodcastCreationData } from "./selectors";
 export const uploadPodcastCover = createAsyncThunk(
   "podSeries/uploadCover",
   async ({ userId, file }: { userId: string; file: File }) => {
-    const image = await resizeImage(file, { width: 300, height: 300 });
+    const image = await resizeImage(file, {
+      width: IMAGE_SIZE,
+      height: IMAGE_SIZE,
+    });
 
     const { fullPath } = uploadFile(`photos/${userId}`, image);
 

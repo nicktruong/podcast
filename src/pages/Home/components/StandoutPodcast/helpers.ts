@@ -47,10 +47,9 @@ export const usePrepare = () => {
   const categories = useAppSelector(selectCategories);
   const standoutPodcast = useAppSelector(selectStandOutPodcast);
   const isLoadingStandoutPodcast = useAppSelector(selectLoadingStandoutPodcast);
-  const standoutCategory =
-    categories.find(
-      (category) => category.name === standoutPodcast?.category
-    ) ?? categories[0];
+  const standoutCategory = categories.find(
+    (category) => category.name === standoutPodcast?.category
+  );
 
   const handleDownloadAndPlayAudio = (data: DownloadAndPlayAudioParameters) => {
     const { pathToFile, ...audioInfo } = data;

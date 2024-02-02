@@ -64,7 +64,7 @@ const usePrepare = () => {
     }
   }, [id]);
 
-  const handleFollow = () => {
+  const handleFollow = async () => {
     if (!podcastDetail?.id || !user?.id || !user?.following) return;
 
     if (user.following.includes(podcastDetail.id)) {
@@ -76,7 +76,7 @@ const usePrepare = () => {
       );
     } else {
       if (Notification.permission === "default") {
-        requestPermission();
+        await requestPermission();
       }
 
       dispatch(

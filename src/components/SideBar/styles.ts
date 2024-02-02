@@ -3,6 +3,14 @@ import { tss } from "tss-react/mui";
 export const useStyles = tss
   .withNestedSelectors()
   .create(({ classes, theme }) => ({
+    iconButtonContainer: {
+      textAlign: "right",
+    },
+    sidebarToggler: {
+      width: "32px",
+      height: "32px",
+      color: theme.palette.text.secondary,
+    },
     root: {
       height: "100%",
       display: "flex",
@@ -60,7 +68,6 @@ export const useStyles = tss
     },
     libraryHeading: {
       gap: "20px",
-      height: "40px",
       display: "flex",
       cursor: "pointer",
       padding: "4px 12px",

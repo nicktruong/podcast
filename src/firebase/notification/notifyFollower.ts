@@ -18,16 +18,6 @@ export const notifyFollower = async ({
 }: NotifyFollowerOptions) => {
   const createdAt = new Date().toISOString();
 
-  // FCM
-  await sendNotification({
-    createdAt,
-    creatorName,
-    creatorAvatar,
-    topic: podcastId,
-    subject: episodeName,
-    action: "just published",
-  });
-
   // Firestore
   const snapshot = await getDocs(
     query(
@@ -48,5 +38,19 @@ export const notifyFollower = async ({
     creatorName,
     creatorAvatar,
   };
-  await addDoc(collection(db, COLLECTIONS.NOTIFICATIONS), notification);
+  const docRef = await addDoc(
+    collection(db, COLLECTIONS.NOTIFICATIONS),
+    notification
+  );
+
+  // FCM
+  await sendNotification({
+    createdAt,
+    creatorName,
+    id: docRef.id,
+    creatorAvatar,
+    topic: podcastId,
+    subject: episodeName,
+    action: "just published",
+  });
 };

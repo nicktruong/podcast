@@ -15,10 +15,6 @@ const PreventListenerAccessGuard = lazy(
   () => import("@/guards/PodcasterAccessGuard")
 );
 
-const CategoriesSelectedGuard = lazy(
-  () => import("@/guards/CategoriesSelectedGuard")
-);
-
 // layouts
 const RootLayout = lazy(() => import("@/layouts/Root"));
 const PodLayout = lazy(() => import("@/layouts/PodcasterDashboard"));
@@ -46,63 +42,55 @@ export const router = createBrowserRouter([
   {
     element: <AuthListener />,
     children: [
+      // Listener
       {
-        path: "*",
-        element: <NotFound />,
-      },
-      {
-        element: <CategoriesSelectedGuard />,
+        path: routes.index,
+        element: <RootLayout />,
         children: [
           {
-            path: routes.index,
-            element: <RootLayout />,
+            index: true,
+            element: <Home />,
+          },
+          {
+            element: <PodcastDetailsLayout />,
             children: [
               {
-                index: true,
-                element: <Home />,
+                path: routes.playlist,
+                element: <Playlist />,
               },
               {
-                element: <PodcastDetailsLayout />,
-                children: [
-                  {
-                    path: routes.playlist,
-                    element: <Playlist />,
-                  },
-                  {
-                    path: routes.episode,
-                    element: <Episode />,
-                  },
-                  {
-                    path: routes.userPlaylist,
-                    element: <UserPlaylist />,
-                  },
-                ],
+                path: routes.episode,
+                element: <Episode />,
               },
               {
-                path: routes.search,
-                element: <Search />,
-              },
-              {
-                path: routes.category,
-                element: <Category />,
-              },
-              {
-                path: routes.profile,
-                element: <Profile />,
-              },
-              {
-                path: routes.editProfile,
-                element: <EditProfile />,
-              },
-              {
-                path: routes.notification,
-                element: <Notification />,
+                path: routes.userPlaylist,
+                element: <UserPlaylist />,
               },
             ],
           },
+          {
+            path: routes.search,
+            element: <Search />,
+          },
+          {
+            path: routes.category,
+            element: <Category />,
+          },
+          {
+            path: routes.profile,
+            element: <Profile />,
+          },
+          {
+            path: routes.editProfile,
+            element: <EditProfile />,
+          },
+          {
+            path: routes.notification,
+            element: <Notification />,
+          },
         ],
       },
-      // choosing categories
+      // Choosing categories
       {
         path: routes.categoriesSelection,
         element: <InterestCategoriesSelection />,
@@ -138,6 +126,12 @@ export const router = createBrowserRouter([
             ],
           },
         ],
+      },
+
+      // Not found
+      {
+        path: "*",
+        element: <NotFound />,
       },
     ],
   },

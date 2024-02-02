@@ -3,20 +3,18 @@ import { tss } from "tss-react/mui";
 export const useStyles = tss.create(({ theme }) => ({
   section: {
     "&:not(:first-of-type)": {
-      marginTop: "24px",
+      marginTop: "40px",
     },
   },
   sectionTitle: {
     fontWeight: 700,
     fontSize: "32px",
+    textTransform: "capitalize",
     color: theme.palette.text.primary,
   },
-  // playlist: {
-  //   gap: "24px",
-  //   display: "grid",
-  //   marginTop: "8px",
-  //   gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-  // },
+  cards: {
+    marginTop: "32px",
+  },
 }));
 
 export type Styles = ReturnType<typeof useStyles>["classes"];

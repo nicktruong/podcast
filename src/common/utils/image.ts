@@ -1,11 +1,13 @@
 import Resizer from "react-image-file-resizer";
 
+import { IMAGE_SIZE } from "../constants";
+
 /**
  * Resizes an image file to the specified dimensions.
  * @param {File} file - The image file to resize.
  * @param {Object} [sizes] - An optional object specifying the desired width and height of the resized image.
- * @param {number} [sizes.width=300] - The desired width of the resized image in pixels.
- * @param {number} [sizes.height=300] - The desired height of the resized image in pixels.
+ * @param {number} [sizes.width] - The desired width of the resized image in pixels.
+ * @param {number} [sizes.height] - The desired height of the resized image in pixels.
  * @returns {Promise<File>} A Promise that resolves with a new File object representing the resized image.
  * @example
  * import { resizeImage } from './resizeImage';
@@ -22,8 +24,8 @@ export const resizeImage = (
   return new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,
-      sizes?.width ?? 300,
-      sizes?.height ?? 300,
+      sizes?.width ?? IMAGE_SIZE,
+      sizes?.height ?? IMAGE_SIZE,
       "JPEG",
       100,
       0,

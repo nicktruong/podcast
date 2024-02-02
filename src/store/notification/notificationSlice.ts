@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { fetchNotifications, markAsReadNotifications } from "./thunks";
 
@@ -18,11 +18,8 @@ export const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    addNewNotification: (
-      state,
-      action: PayloadAction<Omit<UserNotification, "id">>
-    ) => {
-      state.notifications.unshift({ id: nanoid(), ...action.payload });
+    addNewNotification: (state, action: PayloadAction<UserNotification>) => {
+      state.notifications.unshift(action.payload);
     },
   },
   extraReducers(builder) {

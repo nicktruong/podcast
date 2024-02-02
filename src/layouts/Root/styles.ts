@@ -4,7 +4,7 @@ import type { StyleParams } from "./interfaces";
 
 export const useStyles = tss
   .withParams<StyleParams>()
-  .create(({ contentHeight, sidebarWidth, sidebarDisplay }) => ({
+  .create(({ contentHeight, sidebarWidth }) => ({
     rootLayout: {
       width: "100vw",
       height: "100vh",
@@ -21,8 +21,6 @@ export const useStyles = tss
     sidebar: {
       flexShrink: 0,
       width: sidebarWidth,
-      display: sidebarDisplay,
-      // transition: `all 0.2s ${theme.transitions.easing.easeOut}`,
     },
     mainContent: {
       flexGrow: 1,

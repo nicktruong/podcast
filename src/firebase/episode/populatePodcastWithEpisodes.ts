@@ -31,8 +31,8 @@ export const populatePodcastWithEpisodes = async (
     snapshot.docs.map(async (doc) => {
       const episode = { id: doc.id, ...doc.data() } as Episode;
 
-      if (!episode.pathToFile.startsWith("https")) {
-        episode.pathToFile = await downloadFile(episode.pathToFile);
+      if (episode.pathToImgFile && !episode.pathToImgFile.startsWith("https")) {
+        episode.pathToImgFile = await downloadFile(episode.pathToImgFile);
       }
 
       return episode;

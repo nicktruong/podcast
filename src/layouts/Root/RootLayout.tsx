@@ -12,10 +12,10 @@ export default function RootLayout() {
   return (
     <Box className={classes.rootLayout}>
       <Box className={classes.rootContent}>
-        <Box className={classes.sidebar}>
+        <Box className={classes.sidebar} component="nav">
           <SideBar />
         </Box>
-        <Box ref={elementRef} className={classes.mainContent}>
+        <Box ref={elementRef} className={classes.mainContent} component="main">
           <UserMenu />
           <Outlet />
         </Box>

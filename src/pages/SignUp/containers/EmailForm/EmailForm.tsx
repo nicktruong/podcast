@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import { Box, Button, Divider, Typography } from "@mui/material";
 
-import { GoogleIconImg } from "@/assets";
+import { FacebookIconImg, GoogleIconImg } from "@/assets";
 import { StyledInput } from "@/components";
 import { routes } from "@/common/constants";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
@@ -85,10 +85,10 @@ export default function EmailForm({
             variant="auth"
             startIcon={
               <img
-                src={process.env.PUBLIC_URL + "/assets/icons/google-icon.svg"}
                 width={24}
                 height={24}
                 alt="Google Icon"
+                src={GoogleIconImg}
                 className="absolute left-5 top-1/2 -translate-y-1/2"
               />
             }
@@ -101,7 +101,7 @@ export default function EmailForm({
             variant="auth"
             startIcon={
               <img
-                src={GoogleIconImg}
+                src={FacebookIconImg}
                 width={24}
                 height={24}
                 alt="Facebook Icon"

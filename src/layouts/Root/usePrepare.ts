@@ -9,24 +9,26 @@ import { useStyles } from "./styles";
 
 export const usePrepare = () => {
   const theme = useTheme();
-
   const { elementRef } = useScrollTop();
-
   const { isSmaller } = useMaxWidthScreenMedia(theme.breakpoints.values.md);
-
   const { isAudioPlayerOpen, isSidebarExpand } = useAppSelector(selectUIState);
 
   // TODO: add framer motion
+  let sidebarWidth = "";
+
+  if (isSidebarExpand) {
+    if (isSmaller) sidebarWidth = "100%";
+    else sidebarWidth = "358px";
+  } else {
+    if (isSmaller) sidebarWidth = "0px";
+    else sidebarWidth = "78px";
+  }
+
   const contentHeight = isAudioPlayerOpen ? "calc(100vh - 80px)" : "100vh";
-
-  const sidebarWidth = isSidebarExpand ? "358px" : "78px";
-
-  const sidebarDisplay = isSmaller ? "none" : "block";
 
   const { classes } = useStyles({
     sidebarWidth,
     contentHeight,
-    sidebarDisplay,
   });
 
   return { classes, elementRef, isAudioPlayerOpen };

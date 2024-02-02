@@ -1,6 +1,7 @@
 import {
   Box,
   Typography,
+  IconButton,
   ListItemIcon,
   ListItemText,
   ListItemButton,
@@ -9,6 +10,8 @@ import { Link } from "react-router-dom";
 import { MdOutlineHome } from "react-icons/md";
 import HomeIcon from "@mui/icons-material/Home";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { RiSearchEyeFill, RiSearchEyeLine } from "react-icons/ri";
 
 import { routes } from "@/common/constants";
@@ -18,17 +21,27 @@ import Logo from "../Logo";
 import usePrepare from "./usePrepare";
 
 export default function SideBar() {
-  const { active, classes, playlists, isSidebarExpand, t, cx } = usePrepare();
+  const { active, classes, playlists, isSidebarExpand, t, cx, toggleSidebar } =
+    usePrepare();
 
   return (
     <Box className={classes.root}>
       <Box className={classes.section}>
+        <Box className={classes.iconButtonContainer}>
+          <IconButton onClick={toggleSidebar}>
+            {isSidebarExpand ? (
+              <ChevronLeftIcon className={classes.sidebarToggler} />
+            ) : (
+              <ChevronRightIcon className={classes.sidebarToggler} />
+            )}
+          </IconButton>
+        </Box>
+
         <Link to={routes.index}>
           <Box className={classes.logo}>
             <Logo hideText={!isSidebarExpand} />
           </Box>
         </Link>
-
         <Link to={routes.index}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
@@ -53,7 +66,6 @@ export default function SideBar() {
             )}
           </ListItemButton>
         </Link>
-
         <Link to={routes.search}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
@@ -78,7 +90,6 @@ export default function SideBar() {
           </ListItemButton>
         </Link>
       </Box>
-
       <Box className={cx(classes.section, classes.library)}>
         <Box className={classes.libraryHeading}>
           <BookmarksIcon className={classes.icon} />
@@ -97,8 +108,8 @@ export default function SideBar() {
           >
             <Box className={classes.podcastImgContainer}>
               <img
-                className={classes.podcastImg}
                 src={playlist.coverUrl}
+                className={classes.podcastImg}
                 width={isSidebarExpand ? "48px" : "32px"}
                 height={isSidebarExpand ? "48px" : "32px"}
                 alt={`${playlist.title} cover photo`}

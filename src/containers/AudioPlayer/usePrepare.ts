@@ -106,8 +106,12 @@ const usePrepare = () => {
     setVolume(volume);
   };
 
-  const toggleMuteAudio = () => (event?: { isMute?: boolean }) => {
-    setMute((prevMute) => event?.isMute ?? !prevMute);
+  const muteAudio = () => {
+    setMute(true);
+  };
+
+  const unmuteAudio = () => {
+    setMute(false);
   };
 
   const handlePlayAudio = () => {
@@ -140,12 +144,13 @@ const usePrepare = () => {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    muteAudio,
     onProgress,
+    unmuteAudio,
     seekToSecond,
     skip15Second,
     onPlayerReady,
     rewind15Second,
-    toggleMuteAudio,
     handlePlayAudio,
     handlePauseAudio,
     changeAudioVolumn,

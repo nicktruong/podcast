@@ -43,9 +43,9 @@ export default function UserMenu() {
   } = usePrepare();
 
   return (
-    <AppBar elevation={0} component="nav" className={classes.appbarRoot}>
+    <AppBar elevation={0} className={classes.appbarRoot} component="nav">
       <Toolbar className={classes.toolbar}>
-        {!isSmaller && (
+        {isSmaller && (
           <Box className={classes.iconButtonContainer}>
             <IconButton onClick={toggleSidebar}>
               {isSidebarExpand ? (

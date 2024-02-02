@@ -16,9 +16,9 @@ const CardGroup = ({ podcasts }: CardGroupProps) => {
       {podcasts.map((podcast) => (
         <Grid
           item
-          md={isSidebarExpand ? 12 : 6}
-          lg={isSidebarExpand ? 6 : 3}
           key={podcast.id}
+          lg={isSidebarExpand ? 6 : 3}
+          md={isSidebarExpand ? 12 : 6}
         >
           <Card
             title={podcast.title}

@@ -1,40 +1,40 @@
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { auth, getUserInfo } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import {
-  setUser,
-  setLoading,
-  selectUserId,
-  selectIsUserLoading,
-} from "@/store/user";
+import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
 import { fetchNotifications } from "@/store/notification";
 import { getCategories, selectFetchingCategories } from "@/store/category";
+import { routes } from "@/common/constants";
 
 export const usePrepare = () => {
+  const navigate = useNavigate();
+
   const dispatch = useAppDispatch();
 
   const fetchingCategories = useAppSelector(selectFetchingCategories);
 
   const initialLoading = useAppSelector(selectIsUserLoading);
 
-  const userId = useAppSelector(selectUserId);
-
   useEffect(() => {
     const init = async () => {
-      // fetch user's interest categories
+      // Fetch user's interest categories
       await dispatch(getCategories());
     };
 
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
-        // if user not logged in => no need to load user
+        // If user not logged in => no need to load user
         dispatch(setLoading(false));
 
         return;
       }
 
       const { email, emailVerified, displayName, photoURL, uid } = user;
+
+      // Fetch notification for logged in users
+      dispatch(fetchNotifications(uid));
 
       const userInfo = await getUserInfo(uid);
 
@@ -50,18 +50,15 @@ export const usePrepare = () => {
         })
       );
 
-      // finish loading user
+      // Finish loading user
       dispatch(setLoading(false));
+
+      // User must have categoriesOfInterest before using the app
+      if (!userInfo?.categoriesOfInterest) navigate(routes.categoriesSelection);
     });
 
     init();
   }, []);
-
-  // TODO: Refactor guards, fetch notifications
-  useEffect(() => {
-    if (!userId) return;
-    dispatch(fetchNotifications(userId));
-  }, [userId]);
 
   return { initialLoading, fetchingCategories };
 };

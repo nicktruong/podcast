@@ -33,12 +33,13 @@ export default function AudioPlayer() {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    muteAudio,
     onProgress,
+    unmuteAudio,
     seekToSecond,
     skip15Second,
     onPlayerReady,
     rewind15Second,
-    toggleMuteAudio,
     handlePlayAudio,
     handlePauseAudio,
     changeAudioVolumn,
@@ -144,13 +145,10 @@ export default function AudioPlayer() {
         {volume === 0 || mute ? (
           <VolumeMuteIcon
             className={classes.volumeIcon}
-            onClick={toggleMuteAudio}
+            onClick={unmuteAudio}
           />
         ) : (
-          <VolumeUpIcon
-            className={classes.volumeIcon}
-            onClick={toggleMuteAudio}
-          />
+          <VolumeUpIcon className={classes.volumeIcon} onClick={muteAudio} />
         )}
 
         <Slider
@@ -160,8 +158,10 @@ export default function AudioPlayer() {
           value={mute ? 0 : volume}
           className={classes.volumeSlider}
           onChange={(_, volume) => {
-            toggleMuteAudio()({ isMute: false });
-            changeAudioVolumn(volume as number);
+            if (typeof volume !== "number") return;
+            if (volume > 0) unmuteAudio();
+            if (volume === 0) muteAudio();
+            changeAudioVolumn(volume);
           }}
         />
       </Box>

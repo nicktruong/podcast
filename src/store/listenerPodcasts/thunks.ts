@@ -61,6 +61,8 @@ export const fetchTrendingPodcastsPaged = createAppAsyncThunk(
       pageSize,
     });
 
+    if (trendingPodcasts.length === 0) return [];
+
     thunkApi.dispatch(populateStandoutPodcast(trendingPodcasts[0]));
 
     return trendingPodcasts.slice(1);

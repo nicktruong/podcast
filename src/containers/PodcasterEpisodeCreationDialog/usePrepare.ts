@@ -16,12 +16,13 @@ import {
   setPodUploadDetails,
   publishEpisodeAction,
 } from "@/store/episode";
-import { uploadFile } from "@/firebase";
-import { selectUser } from "@/store/user";
+import { notifyFollower, uploadFile } from "@/firebase";
+import { selectUser, setUser } from "@/store/user";
 import { resizeImage } from "@/common/utils";
 import { EPISODE_CREATION_STEPS } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { EPISODE_CREATION_DEFAULT_DATA } from "@/common/constants";
+import { EPISODE_CREATION_DEFAULT_DATA, IMAGE_SIZE } from "@/common/constants";
+import { selectPodcast } from "@/store/podcast";
 
 import schema from "./schema";
 
@@ -33,6 +34,7 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);
   const episodeInfo = useAppSelector(selectEpisodeInfo);
+  const podcast = useAppSelector(selectPodcast);
   const podUploading = useAppSelector(selectUploading);
   const podUploadingProgress = useAppSelector(selectProgress);
   const [image, setImage] = useState("");
@@ -71,8 +73,8 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
     if (!user?.id) return;
 
     const image = await resizeImage(acceptedFiles[0], {
-      width: 300,
-      height: 300,
+      width: IMAGE_SIZE,
+      height: IMAGE_SIZE,
     });
 
     setImage(URL.createObjectURL(acceptedFiles[0]));
@@ -112,22 +114,21 @@ const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
       case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
         if (!user?.id) return;
 
+        if (!podcast) return;
+
+        // Create notification to all followers
+        await notifyFollower({
+          podcastId: podcast.id,
+          podcastName: podcast.title,
+          creatorName: user.name ?? "",
+          episodeName: episodeInfo.title,
+          creatorAvatar: user.photoURL ?? "",
+        });
+        dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
         await dispatch(publishEpisodeAction(user.id));
 
         reset();
         handleClose();
-        // dispatch(setUser({ episodeCount: (user.episodeCount ?? 0) + 1 }));
-
-        // if (!podcast) return;
-
-        // Create notification to all followers
-        // await notifyFollower({
-        //   podcastId: podcast.id,
-        //   podcastName: podcast.title,
-        //   creatorName: user.name ?? "",
-        //   episodeName: episodeInfo.title,
-        //   creatorAvatar: user.photoURL ?? "",
-        // });
 
         break;
 

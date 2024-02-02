@@ -11,6 +11,7 @@ import {
 import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
 
 import { db } from "../init";
+import { downloadFile } from "../storage";
 
 import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
 
@@ -56,12 +57,18 @@ export const getTrendingPodcastsPaged = async ({
     const podcastsSnapshot = await getDocs(podcastsQuery);
 
     const populatedPodcasts = (await Promise.all(
-      podcastsSnapshot.docs.map((snapshot) =>
-        populatePodcastWithAuthor({
+      podcastsSnapshot.docs.map(async (snapshot) => {
+        const podcast = {
           id: snapshot.id,
           ...snapshot.data(),
-        } as Podcast)
-      )
+        } as Podcast;
+
+        if (podcast.coverUrl && !podcast.coverUrl.startsWith("https")) {
+          podcast.coverUrl = await downloadFile(podcast.coverUrl);
+        }
+
+        return populatePodcastWithAuthor(podcast);
+      })
     )) as PopulatedPodcastWithAuthor[];
 
     podcasts.push(...populatedPodcasts);

@@ -3,6 +3,7 @@ import { nanoid } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
+import { IMAGE_SIZE } from "@/common/constants";
 import { COLLECTIONS, GENDERS, PODCAST_STATUS, ROLES } from "@/common/enums";
 // import { generateKeywords } from "@/common/utils";
 
@@ -51,7 +52,10 @@ const createRandomPodcast = ({
     title: podcastsJSON[index].title,
     description: podcastsJSON[index].description,
     // keywords: generateKeywords(podcastsJSON[index].title),
-    coverUrl: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
+    coverUrl: faker.image.urlPicsumPhotos({
+      width: IMAGE_SIZE,
+      height: IMAGE_SIZE,
+    }),
   };
 };
 
@@ -85,7 +89,10 @@ const createRandomEpisode = ({
     status: PODCAST_STATUS.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     pathToFile: "audios/seed-audio.mp3",
     description: episodesJSON[index].description,
-    pathToImgFile: faker.image.urlPicsumPhotos({ height: 300, width: 300 }),
+    pathToImgFile: faker.image.urlPicsumPhotos({
+      height: IMAGE_SIZE,
+      width: IMAGE_SIZE,
+    }),
     // keywords: generateKeywords(podcastsJSON[index].title),
   };
 };
@@ -113,7 +120,10 @@ const createRandomPodcaster = (episodeCount: number): Omit<User, "id"> => {
     // searchKeywords: name.toLowerCase().split(" "), // TODO: gen keywords
     dob: faker.date.birthdate().toISOString(),
     gender: faker.helpers.arrayElement(Object.values(GENDERS)),
-    photoURL: faker.image.urlPicsumPhotos({ width: 300, height: 300 }),
+    photoURL: faker.image.urlPicsumPhotos({
+      width: IMAGE_SIZE,
+      height: IMAGE_SIZE,
+    }),
   };
 };
 

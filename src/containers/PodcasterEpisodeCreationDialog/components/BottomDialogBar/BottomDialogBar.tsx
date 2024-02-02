@@ -129,9 +129,9 @@ export default function BottomDialogBar({
             },
           })}
         >
-          {step === EPISODE_CREATION_STEPS.EDIT_DETAILS
-            ? t("next")
-            : t("publish")}
+          {step === EPISODE_CREATION_STEPS.REVIEW_PUBLISH
+            ? t("publish")
+            : t("next")}
         </Button>
       </Toolbar>
     </AppBar>

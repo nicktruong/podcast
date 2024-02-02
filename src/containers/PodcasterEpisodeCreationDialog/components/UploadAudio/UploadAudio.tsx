@@ -62,46 +62,63 @@ const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
         {t("guidanceAndBestPractices")}
       </Typography>
 
-      <Dropzone onDrop={onFileUpload}>
-        {({ getRootProps, getInputProps }) => (
-          <Box
-            sx={(theme) => ({
-              display: "flex",
-              cursor: "pointer",
-              marginTop: "40px",
-              minHeight: "424px",
-              padding: "56px 0px",
-              borderRadius: "4px",
-              alignItems: "center",
-              flexDirection: "column",
-              justifyContent: "center",
-              border: `1px dashed ${theme.palette.custom?.grey.main}`,
-            })}
-            {...getRootProps()}
-          >
-            <input {...getInputProps()} className="p-8 bg-blue-100" />
+      <Dropzone
+        onDrop={onFileUpload}
+        validator={(file) => {
+          if (file.type !== "audio/mpeg") {
+            return {
+              code: "wrong-extension",
+              message: "Only mp3 file is accepted",
+            };
+          }
 
-            <CloudUploadIcon
+          return null;
+        }}
+      >
+        {({ getRootProps, getInputProps, fileRejections }) => (
+          <>
+            {
+              <p className="mt-10 text-red-500 font-bold">
+                {fileRejections.at(-1) &&
+                  `(*) ${fileRejections.at(-1)?.errors[0]?.message}`}
+              </p>
+            }
+            <Box
               sx={(theme) => ({
-                fontSize: "48px",
-                color: theme.palette.text.secondary,
+                display: "flex",
+                cursor: "pointer",
+                minHeight: "424px",
+                padding: "56px 0px",
+                borderRadius: "4px",
+                alignItems: "center",
+                flexDirection: "column",
+                justifyContent: "center",
+                border: `1px dashed ${theme.palette.custom?.grey.main}`,
               })}
-            />
-
-            <Typography
-              sx={(theme) => ({
-                fontWeight: 700,
-                fontSize: "18px",
-                marginTop: "16px",
-                textAlign: "center",
-                color: theme.palette.text.secondary,
-              })}
+              {...getRootProps()}
             >
-              <Trans i18nKey="dragAndDrop" t={t}>
-                Drag and drop <br /> or click to select files
-              </Trans>
-            </Typography>
-          </Box>
+              <input {...getInputProps()} className="p-8 bg-blue-100" />
+              <CloudUploadIcon
+                sx={(theme) => ({
+                  fontSize: "48px",
+                  color: theme.palette.text.secondary,
+                })}
+              />
+              <Typography
+                sx={(theme) => ({
+                  fontWeight: 700,
+                  fontSize: "18px",
+                  marginTop: "16px",
+                  textAlign: "center",
+                  color: theme.palette.text.secondary,
+                })}
+              >
+                <Trans i18nKey="dragAndDrop" t={t}>
+                  Drag and drop <br /> or click to select files
+                </Trans>
+              </Typography>
+            </Box>
+          </>
         )}
       </Dropzone>
     </>

@@ -4,8 +4,8 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Typography, Button, alpha } from "@mui/material";
 
-import { capFirstChar, isDark } from "@/common/utils";
 import { routes } from "@/common/constants";
+import { capFirstChar, isDark } from "@/common/utils";
 
 import StandoutPodcastSkeleton from "../StandoutPodcastSkeleton";
 
@@ -21,7 +21,6 @@ const StandoutPodcast = () => {
     standoutCategory,
     isLoadingStandoutPodcast,
     t,
-    cx,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   } = usePrepare();
@@ -33,39 +32,38 @@ const StandoutPodcast = () => {
   return (
     <Box ref={containerEl}>
       <Typography className={classes.standoutPodcastHeading}>
-        {t("standoutPodcast")}
+        {standoutPodcast && t("standoutPodcast")}
       </Typography>
-      <Box
-        className={cx(classes.standoutPodcastContainer, {
-          // [classes.flexWrap]:
-          //   !!containerWidth && containerWidth < theme.breakpoints.values.md,
-        })}
-      >
+      <Box className={classes.standoutPodcastContainer}>
         <Box className={classes.standoutPodcast}>
-          <img
-            src={standoutPodcast?.coverUrl}
-            className={classes.standoutPodcastImg}
-            alt={`${standoutPodcast?.title} cover photo`}
-          />
-          <Button
-            component={Link}
-            className={classes.categoryBtn}
-            to={routes.category.replace(":name", standoutCategory.name)}
-            sx={(theme) => ({
-              color: isDark(standoutCategory.color)
-                ? theme.palette.common.white
-                : theme.palette.common.black,
-              borderColor: alpha(standoutCategory.color, 0),
-              backgroundColor: alpha(standoutCategory.color, 0.6),
-
-              "&:hover": {
+          {standoutPodcast && (
+            <img
+              src={standoutPodcast?.coverUrl}
+              className={classes.standoutPodcastImg}
+              alt={`${standoutPodcast?.title} cover photo`}
+            />
+          )}
+          {standoutCategory && (
+            <Button
+              component={Link}
+              className={classes.categoryBtn}
+              to={routes.category.replace(":name", standoutCategory.name)}
+              sx={(theme) => ({
+                color: isDark(standoutCategory.color)
+                  ? theme.palette.common.white
+                  : theme.palette.common.black,
                 borderColor: alpha(standoutCategory.color, 0),
-                backgroundColor: alpha(standoutCategory.color, 0.8),
-              },
-            })}
-          >
-            {standoutPodcast?.category}
-          </Button>
+                backgroundColor: alpha(standoutCategory.color, 0.6),
+
+                "&:hover": {
+                  borderColor: alpha(standoutCategory.color, 0),
+                  backgroundColor: alpha(standoutCategory.color, 0.8),
+                },
+              })}
+            >
+              {standoutPodcast?.category}
+            </Button>
+          )}
           <Link
             className={classes.standoutPodcastTitle}
             to={routes.playlist.replace(":id", standoutPodcast?.id ?? "")}

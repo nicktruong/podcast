@@ -29,10 +29,12 @@ export const getRecentlyPlayedPodcastsPaged = async ({
   // TODO: move this to another file
   const podcasts = await Promise.all(
     snapshots.map(async (snapshot) => {
+      if (!snapshot.exists()) return;
+
       // TODO: Consider store id to documents on firestore
       const podcast = { id: snapshot.id, ...snapshot.data() } as Podcast;
 
-      if (!podcast.coverUrl.startsWith("https")) {
+      if (podcast.coverUrl && !podcast.coverUrl.startsWith("https")) {
         podcast.coverUrl = await downloadFile(podcast.coverUrl);
       }
 

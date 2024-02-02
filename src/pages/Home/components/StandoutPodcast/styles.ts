@@ -96,14 +96,14 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
       flexShrink: 0,
       aspectRatio: "1/1",
       borderRadius: "8px",
-      width: breakpoint < md ? "clamp(104px, 20vw, 184px)" : "184px",
+      width: breakpoint < sm ? "136px" : "168px",
     },
     episodeCreatedAt: {
       fontSize: "14px",
       color: palette.text.secondary,
     },
     episodeTitle: {
-      fontSize: "18px",
+      fontSize: breakpoint < sm ? "16px" : "18px",
       marginTop: "8px",
       overflow: "hidden",
       WebkitLineClamp: 2,
@@ -125,8 +125,8 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
       display: breakpoint < sm ? "none" : "-webkit-box",
     },
     playIconBtn: {
+      marginTop: "4px",
       alignSelf: "flex-start",
-      marginTop: breakpoint < sm ? "auto" : "4px",
     },
     playIcon: {
       fontSize: "48px",

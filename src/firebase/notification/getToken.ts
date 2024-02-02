@@ -1,6 +1,9 @@
-import { getToken } from "firebase/messaging";
+import { getToken, getMessaging } from "firebase/messaging";
 
-import { messaging } from "../init";
+import { app } from "../init";
+
+// Initialize Firebase Cloud Messaging
+const messaging = getMessaging(app);
 
 export const getMessagingToken = () => {
   return getToken(messaging, {

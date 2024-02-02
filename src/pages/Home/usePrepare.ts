@@ -66,6 +66,7 @@ const usePrepare = () => {
         if (user) {
           await dispatch(
             fetchRecentlyPlayedPodcastsPaged({
+              pageSize: 4,
               userHistory: user.history ?? [],
             })
           );
@@ -74,7 +75,7 @@ const usePrepare = () => {
         const fetchedPodcastIds: string[] = []; // Use to prevent duplicated podcasts
 
         const newTrendingPodcasts = !fetched.trendingPodcasts
-          ? await dispatch(fetchTrendingPodcastsPaged({ pageSize: 8 })).unwrap()
+          ? await dispatch(fetchTrendingPodcastsPaged({ pageSize: 5 })).unwrap()
           : trendingPodcasts;
 
         fetchedPodcastIds.push(
@@ -87,7 +88,7 @@ const usePrepare = () => {
           ? await dispatch(
               fetchPodcastsForYouPaged({
                 period: 30,
-                pageSize: 7,
+                pageSize: 4,
                 podcastIdsToExclude: fetchedPodcastIds,
                 categories: user.categoriesOfInterest ?? [],
               })
@@ -101,7 +102,7 @@ const usePrepare = () => {
         !fetched.podcastsToTry &&
           (await dispatch(
             fetchPodcastsToTryPaged({
-              pageSize: 7,
+              pageSize: 4,
               podcastIdsToExclude: fetchedPodcastIds,
             })
           ));

@@ -2,7 +2,6 @@
 import { getAuth } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getMessaging } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,6 +20,3 @@ export const auth = getAuth(app);
 
 // Initialize Firebase firestore
 export const db = getFirestore(app);
-
-// Initialize Firebase Cloud Messaging
-export const messaging = getMessaging(app);
