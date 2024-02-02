@@ -9,7 +9,7 @@ import {
 } from "firebase/firestore";
 
 import { COLLECTIONS } from "@/common/enums";
-import { EPISODE_FIELDS } from "@/common/enums/EpisodeFields";
+import { EPISODE_FIELDS } from "@/common/fields";
 
 import { db } from "../init";
 

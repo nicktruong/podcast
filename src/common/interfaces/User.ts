@@ -1,4 +1,4 @@
-import { ROLES, GENDERS } from "@/common/enums";
+import type { ROLES, GENDERS } from "@/common/enums";
 
 export interface User {
   id: string;
@@ -28,4 +28,22 @@ export interface UserEditProfileOptions {
   bio?: string;
   userId: string;
   fullPath?: string;
+}
+
+export interface EditProfile {
+  bio: string;
+  name: string;
+  userId: string;
+  avatar: File | undefined;
+}
+
+export interface UserCreationData {
+  dob?: Date;
+  role: ROLES;
+  uid?: string;
+  name: string;
+  email: string;
+  gender: GENDERS;
+  photoURL: string;
+  categoriesOfInterest: string[];
 }

@@ -1,6 +1,6 @@
-import { Episode } from "./Episode";
-import { Podcast } from "./Podcast";
-import { User } from "./User";
+import type { User } from "./User";
+import type { Episode } from "./Episode";
+import type { Podcast } from "./Podcast";
 
 export interface PlaylistCreationData {
   title: string;

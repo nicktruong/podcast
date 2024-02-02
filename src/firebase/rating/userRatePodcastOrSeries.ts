@@ -13,7 +13,6 @@ import type {
   NewRate,
   RateOptions,
 } from "@/common/interfaces";
-import type { PartialBy } from "@/common/types";
 
 export const rate = async ({
   type,

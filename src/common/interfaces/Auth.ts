@@ -1,4 +1,4 @@
-import { GENDERS } from "../enums";
+import type { GENDERS } from "../enums";
 
 export interface RegistrationInterests {
   categoriesOfInterest: string[];
@@ -11,5 +11,10 @@ export interface RegisterData extends RegistrationInterests {
   email: string;
   month: string;
   gender: GENDERS;
+  password: string;
+}
+
+export interface LoginData {
+  email: string;
   password: string;
 }

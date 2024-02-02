@@ -12,11 +12,11 @@ import type {
   FetchPodcastsToTryOptions,
   FetchPodcastsForYouOptions,
   FetchRecentlyPlayedPodcastsOptions,
-  FetchPodcastsByCategorySortedAndPaged,
 } from "./interfaces";
 import type {
   PopulatedPodcast,
   PopulatedPodcastWithAuthor,
+  GetPodcastsByCategoriesOption,
 } from "@/common/interfaces";
 
 export const fetchRecentlyPlayedPodcastsPaged = createAppAsyncThunk(
@@ -144,7 +144,7 @@ export const fetchPodcastsByCategorySortedAndPaged = createAppAsyncThunk(
     sortBy,
     pageSize,
     categories,
-  }: FetchPodcastsByCategorySortedAndPaged) => {
+  }: GetPodcastsByCategoriesOption) => {
     const result = await getPodcastsByCategorySortedAndPaged({
       offset,
       sortBy,

@@ -20,7 +20,6 @@ import {
 import { openAudioPlayer } from "@/store/ui";
 import { selectCategory } from "@/store/category";
 import { addHistoryAction } from "@/store/history";
-import { requestPermission } from "@/common/utils";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { followPodcast, selectUser, unfollowPodcast } from "@/store/user";
 
@@ -76,7 +75,7 @@ const usePrepare = () => {
       );
     } else {
       if (Notification.permission === "default") {
-        await requestPermission();
+        await Notification.requestPermission();
       }
 
       dispatch(

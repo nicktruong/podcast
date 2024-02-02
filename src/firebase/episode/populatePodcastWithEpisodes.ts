@@ -7,7 +7,8 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS, EPISODE_FIELDS } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
+import { EPISODE_FIELDS } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";

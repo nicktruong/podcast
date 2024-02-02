@@ -54,3 +54,10 @@ export interface GetEpisodesFromCreatorPagedOptions {
   offset?: Date;
   pageSize?: number;
 }
+
+export interface GetPodcastsByCategoriesOption {
+  offset: any;
+  sortBy?: string;
+  pageSize?: number;
+  categories?: string[];
+}
