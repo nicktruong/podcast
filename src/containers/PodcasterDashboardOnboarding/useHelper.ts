@@ -12,13 +12,13 @@ const useHelper = () => {
   const createdFirstEp =
     useAppSelector(selectEpisodesOfCreator)[0] !== undefined;
 
-  const hasPodSeries = useAppSelector(selectPodcast);
+  const hasPodcast = useAppSelector(selectPodcast);
 
   const { classes, cx } = useStyles();
 
   return {
     classes,
-    hasPodSeries,
+    hasPodcast,
     createdFirstEp,
     t,
     cx,

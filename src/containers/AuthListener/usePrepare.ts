@@ -1,27 +1,22 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { routes } from "@/common/constants";
 import { auth, getUserInfo } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
 import { fetchNotifications } from "@/store/notification";
+import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
 import { getCategories, selectFetchingCategories } from "@/store/category";
-import { routes } from "@/common/constants";
 
 export const usePrepare = () => {
   const navigate = useNavigate();
-
   const dispatch = useAppDispatch();
-
+  const initialLoading = useAppSelector(selectIsUserLoading);
   const fetchingCategories = useAppSelector(selectFetchingCategories);
 
-  const initialLoading = useAppSelector(selectIsUserLoading);
-
   useEffect(() => {
-    const init = async () => {
-      // Fetch user's interest categories
-      await dispatch(getCategories());
-    };
+    // Fetch user's interest categories
+    dispatch(getCategories());
 
     auth.onAuthStateChanged(async (user) => {
       if (!user) {
@@ -32,9 +27,6 @@ export const usePrepare = () => {
       }
 
       const { email, emailVerified, displayName, photoURL, uid } = user;
-
-      // Fetch notification for logged in users
-      dispatch(fetchNotifications(uid));
 
       const userInfo = await getUserInfo(uid);
 
@@ -50,14 +42,15 @@ export const usePrepare = () => {
         })
       );
 
+      // Fetch notification for logged in users
+      dispatch(fetchNotifications(uid));
+
       // Finish loading user
       dispatch(setLoading(false));
 
       // User must have categoriesOfInterest before using the app
       if (!userInfo?.categoriesOfInterest) navigate(routes.categoriesSelection);
     });
-
-    init();
   }, []);
 
   return { initialLoading, fetchingCategories };

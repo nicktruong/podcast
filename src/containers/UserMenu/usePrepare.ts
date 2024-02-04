@@ -21,22 +21,15 @@ import { useStyles } from "./styles";
 
 const usePrepare = () => {
   const { t } = useTranslation("layouts/Root");
-
   const theme = useTheme();
-
   const navigate = useNavigate();
-
   const { classes } = useStyles();
-
   const dispatch = useAppDispatch();
 
   const { isSidebarExpand } = useAppSelector(selectUIState);
-
   const user = useAppSelector(selectUser);
   const userId = user?.id;
-
   const userRoles = useAppSelector(selectUserRoles);
-
   const unreadNotificationsCount = useAppSelector(
     selectUnreadNotificationsCount
   );
@@ -108,7 +101,6 @@ const usePrepare = () => {
     isSidebarExpand,
     unreadNotificationsCount,
     t,
-    navigate,
     handleSearch,
     toggleSidebar,
     handleSignOut,

@@ -6,9 +6,10 @@ import ColorStepIcon from "./components/ColorStepIcon";
 import { ColorIconStepperProps } from "./interfaces";
 import ColorIconConnector from "./components/ColorIconConnector";
 
+// TODO: Make this component customizable
 function ColorIconStepper({
   sx,
-  steps,
+  stepsCount,
   activeStep,
   ...props
 }: ColorIconStepperProps) {
@@ -24,18 +25,20 @@ function ColorIconStepper({
       }}
       {...props}
     >
-      {steps.map((label) => (
-        <Step key={label} completed={false}>
-          <StepLabel
-            sx={{
-              "& .MuiStepLabel-iconContainer": {
-                paddingRight: "unset",
-              },
-            }}
-            StepIconComponent={ColorStepIcon}
-          />
-        </Step>
-      ))}
+      {Array(stepsCount)
+        .fill(0)
+        .map((_, index) => (
+          <Step key={index} completed={false}>
+            <StepLabel
+              sx={{
+                "& .MuiStepLabel-iconContainer": {
+                  paddingRight: "unset",
+                },
+              }}
+              StepIconComponent={ColorStepIcon}
+            />
+          </Step>
+        ))}
     </Stepper>
   );
 }

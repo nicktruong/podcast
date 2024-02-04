@@ -1,109 +1,42 @@
-import { useEffect } from "react";
 import Box from "@mui/material/Box";
-import { useTranslation } from "react-i18next";
 import { Button, Typography } from "@mui/material";
 
-import { selectPodcast } from "@/store/podcast";
-import { selectUser, selectUserId } from "@/store/user";
-import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { selectPods, fetchEpisodesFromCreatorPaged } from "@/store/episode";
+import { usePrepareHook } from "./helpers";
 
 export default function PodDashboardOverview() {
-  const dispatch = useAppDispatch();
-  const pods = useAppSelector(selectPods);
-  const user = useAppSelector(selectUser);
-  const userId = useAppSelector(selectUserId);
-  const podSeries = useAppSelector(selectPodcast);
-  const { t } = useTranslation("pages/PodcasterDashboard");
-
-  useEffect(() => {
-    if (userId) {
-      dispatch(
-        fetchEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 })
-      );
-    }
-  }, [userId]);
+  const { user, classes, podcast, episodes, t } = usePrepareHook();
 
   return (
-    <Box
-      sx={(theme) => ({
-        margin: "0 auto",
-        padding: "40px 16px",
-        maxWidth: `${theme.breakpoints.values.lg + 80}px`,
-      })}
-    >
-      <Box
-        sx={(theme) => ({
-          [theme.breakpoints.up("md")]: {
-            display: "flex",
-          },
-        })}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+    <Box className={classes.root}>
+      <Box className={classes.podcastInfoContainer}>
+        <Box className={classes.podcastInfoImgContainer}>
           <img
-            src={podSeries?.coverUrl}
-            alt={`${podSeries?.title} cover photo`}
-            className="rounded md:w-[200px] md:h-[200px] w-[280px] h-[280px]"
+            width="280px"
+            height="280px"
+            src={podcast?.coverUrl}
+            className={classes.podcastInfoImg}
+            alt={`${podcast?.title} cover photo`}
           />
         </Box>
 
-        <Box
-          sx={(theme) => ({
-            [theme.breakpoints.up("md")]: {
-              marginLeft: "32px",
-            },
-          })}
-        >
-          <Box
-            sx={(theme) => ({
-              marginTop: "32px",
-              [theme.breakpoints.up("md")]: {
-                marginTop: "0px",
-              },
-            })}
-          >
-            <Typography
-              sx={{
-                fontWeight: 700,
-                fontSize: "14px",
-                textTransform: "uppercase",
-              }}
-            >
+        <Box className={classes.podcastInfo}>
+          <Box className={classes.podcast}>
+            <Typography className={classes.podcastHeading}>
               {t("podcast")}
             </Typography>
 
-            <Typography
-              component="h1"
-              sx={{
-                fontWeight: 700,
-                marginTop: "8px",
-                fontSize: "32px",
-                lineHeight: "32px",
-              }}
-            >
-              {podSeries?.title}
+            <Typography component="h1" className={classes.podcastTitle}>
+              {podcast?.title}
             </Typography>
 
-            <Typography
-              sx={(theme) => ({
-                fontWeight: 700,
-                marginTop: "8px",
-                fontSize: "14px",
-                color: theme.palette.text.secondary,
-              })}
-            >
+            <Typography className={classes.episodesCount}>
               {user?.episodeCount}{" "}
               {t("episode", { count: user?.episodeCount ?? 1 })}
             </Typography>
           </Box>
 
-          <Box sx={{ marginTop: "48px" }}>
-            <Button variant="round" sx={{ marginRight: "12px" }}>
+          <Box className="mt-12">
+            <Button variant="round" className="mr-3">
               {t("share")}
             </Button>
             {/* <Button variant="round">{t("profilePage")}</Button> */}
@@ -111,206 +44,73 @@ export default function PodDashboardOverview() {
         </Box>
       </Box>
 
-      <Box
-        sx={(theme) => ({
-          [theme.breakpoints.up("lg")]: {
-            display: "flex",
-            columnGap: "32px",
-          },
-        })}
-      >
-        <Box
-          sx={(theme) => ({
-            marginTop: "64px",
-            [theme.breakpoints.up("lg")]: {
-              flexGrow: 4,
-            },
-          })}
-        >
-          <Typography sx={{ fontSize: "18px", fontWeight: 700 }}>
+      <Box className={classes.podcastOverviewContainer}>
+        <Box className={classes.podcastOverview}>
+          <Typography className={classes.podcastOverviewHeading}>
             {t("podcastOverview")}
           </Typography>
 
-          <Box
-            sx={(theme) => ({
-              rowGap: "48px",
-              display: "flex",
-              flexWrap: "wrap",
-              marginTop: "8px",
-              borderRadius: "4px",
-              padding: "32px 24px",
-              border: `1px solid ${theme.palette.custom?.grey.light}`,
-              justifyContent: "space-between",
-              [theme.breakpoints.up("lg")]: {
-                height: "162px",
-              },
-            })}
-          >
+          <Box className={classes.podcastOverviewStats}>
             <Box sx={{ width: "150px" }}>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "13px",
-                }}
-              >
+              <Typography className={classes.statsHeading}>
                 {t("plays")}
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "32px",
-                }}
-              >
-                {podSeries?.playCount}
+              <Typography className={classes.stats}>
+                {podcast?.playCount ?? 0}
               </Typography>
-              <Typography
-                sx={(theme) => ({
-                  fontSize: "11px",
-                  color: theme.palette.text.secondary,
-                })}
-              >
+              <Typography className={classes.statsNote}>
                 {t("allTime")}
               </Typography>
             </Box>
 
-            <Box
-              sx={(theme) => ({
-                width: "150px",
-                [theme.breakpoints.up("md")]: {
-                  marginTop: "0px",
-                },
-              })}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "13px",
-                }}
-              >
+            <Box sx={{ width: "150px" }}>
+              <Typography className={classes.statsHeading}>
                 {t("audienceSize")}
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "32px",
-                }}
-              >
-                {podSeries?.audienceSize}
+              <Typography className={classes.stats}>
+                {podcast?.audienceSize ?? 0}
               </Typography>
-              <Typography
-                sx={(theme) => ({
-                  fontSize: "11px",
-                  color: theme.palette.text.secondary,
-                })}
-              >
+              <Typography className={classes.statsNote}>
                 {t("allTime")}
               </Typography>
             </Box>
 
-            <Box
-              sx={(theme) => ({
-                width: "150px",
-                [theme.breakpoints.up("md")]: { marginTop: "0px" },
-              })}
-            >
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "13px",
-                }}
-              >
+            <Box sx={{ width: "150px" }}>
+              <Typography className={classes.statsHeading}>
                 {t("followers")}
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "32px",
-                }}
-              >
+              <Typography className={classes.stats}>
                 {/* TODO: Implement followers */}0
               </Typography>
-              <Typography
-                sx={(theme) => ({
-                  fontSize: "11px",
-                  color: theme.palette.text.secondary,
-                })}
-              >
+              <Typography className={classes.statsNote}>
                 {t("growYourAudience")}
               </Typography>
             </Box>
           </Box>
         </Box>
 
-        <Box
-          sx={(theme) => ({
-            marginTop: "48px",
-            [theme.breakpoints.up("lg")]: {
-              marginTop: "64px",
-              maxWidth: "307px",
-            },
-          })}
-        >
-          <Typography
-            sx={{
-              fontWeight: 700,
-              fontSize: "18px",
-            }}
-          >
+        <Box className={classes.latestEpisodeContainer}>
+          <Typography className={classes.podcastOverviewHeading}>
             {t("latestEpisode")}
           </Typography>
 
-          <Box
-            sx={(theme) => ({
-              display: "flex",
-              marginTop: "8px",
-              minWidth: "307px",
-              borderRadius: "4px",
-              padding: "32px 24px",
-              justifyContent: "space-between",
-              border: `1px solid ${theme.palette.custom?.grey.light}`,
-            })}
-          >
+          <Box className={classes.latestEpisode}>
             <Box sx={{ maxWidth: "calc(100% - 96px)" }}>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "13px",
-                }}
-              >
+              <Typography className={classes.statsHeading}>
                 {t("plays")}
               </Typography>
-              <Typography
-                sx={{
-                  fontWeight: 700,
-                  fontSize: "32px",
-                }}
-              >
-                {pods[0]?.playCount}
+              <Typography className={classes.stats}>
+                {episodes[0]?.playCount}
               </Typography>
-              <Typography
-                sx={(theme) => ({
-                  fontSize: "11px",
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                  color: theme.palette.text.secondary,
-                })}
-              >
-                {pods[0]?.title}
+              <Typography className={classes.latestEpisodeTitle}>
+                {episodes[0]?.title}
               </Typography>
             </Box>
-
-            <Box
-              sx={{
-                flexShrink: 0,
-                width: "96px",
-                height: "96px",
-              }}
-            >
+            <Box className={classes.latestEpisodeImgContainer}>
               <img
-                alt={`${pods[0]?.title} cover photo`}
+                alt={`${episodes[0]?.title} cover photo`}
                 className="w-full h-full object-cover rounded"
-                src={podSeries?.coverUrl}
+                src={podcast?.coverUrl}
               />
             </Box>
           </Box>

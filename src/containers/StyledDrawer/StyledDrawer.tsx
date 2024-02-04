@@ -14,19 +14,13 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { usePrepare } from "./usePrepare";
 
-interface Props {
-  openDrawer: boolean;
-  toggleDrawer: (
-    open: boolean
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
-  handleClickOpenEpisodeDialog: () => void;
-}
+import type { StyledDrawerProps } from "./interfaces";
 
 export default function StyledDrawer({
   openDrawer,
   toggleDrawer,
   handleClickOpenEpisodeDialog,
-}: Props) {
+}: StyledDrawerProps) {
   const { t } = usePrepare();
 
   return (

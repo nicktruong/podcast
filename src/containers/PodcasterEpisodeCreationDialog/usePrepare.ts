@@ -29,7 +29,7 @@ import schema from "./schema";
 import type { UsePrepareHookProps } from "./interfaces";
 import type { EpisodeBasicCreationData } from "@/common/interfaces";
 
-const usePrepare = ({ handleClose }: UsePrepareHookProps) => {
+const usePrepare = ({ onClose: handleClose }: UsePrepareHookProps) => {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
   const step = useAppSelector(selectUploadStep);

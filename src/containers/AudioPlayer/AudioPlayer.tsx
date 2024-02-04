@@ -14,7 +14,6 @@ import { padZero } from "@/common/utils";
 import usePrepare from "./usePrepare";
 import { playbackRates } from "./constants";
 
-// TODO: handle download and play on multiple audios
 export default function AudioPlayer() {
   const {
     mute,
@@ -33,18 +32,18 @@ export default function AudioPlayer() {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    onReady,
     muteAudio,
     onProgress,
     unmuteAudio,
     seekToSecond,
     skip15Second,
-    onPlayerReady,
     rewind15Second,
     handlePlayAudio,
     handlePauseAudio,
     changeAudioVolumn,
-    changePlaybackRate,
     handleCloseAudioPlayer,
+    handleChangePlaybackRate,
   } = usePrepare();
 
   return (
@@ -52,8 +51,8 @@ export default function AudioPlayer() {
       <Box className={classes.infoContainer}>
         {downloaded && (
           <img
-            alt={`${title} cover photo`}
             src={coverUrl}
+            alt={`${title} cover photo`}
             className={classes.audioPlayerImage}
           />
         )}
@@ -67,7 +66,7 @@ export default function AudioPlayer() {
         <ReactPlayer
           url={audioUrl}
           playing={playing}
-          onReady={onPlayerReady}
+          onReady={onReady}
           onProgress={onProgress}
           style={{ display: "none" }}
           playbackRate={playbackRate}
@@ -81,8 +80,8 @@ export default function AudioPlayer() {
         <Box className={classes.actions}>
           <Select
             value={playbackRate}
+            onChange={handleChangePlaybackRate}
             className={classes.playbackRateSelect}
-            onChange={(event) => changePlaybackRate(+event.target.value)}
           >
             {playbackRates.map((rate) => (
               <MenuItem value={rate} key={rate}>

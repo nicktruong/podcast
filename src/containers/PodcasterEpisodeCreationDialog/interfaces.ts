@@ -1,8 +1,8 @@
 export interface PodcasterEpisodeCreationDialogProps {
   open: boolean;
-  handleClose: () => void;
+  onClose: () => void;
 }
 
 export interface UsePrepareHookProps {
-  handleClose: () => void;
+  onClose: () => void;
 }

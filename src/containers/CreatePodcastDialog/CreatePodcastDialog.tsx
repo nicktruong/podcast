@@ -1,5 +1,5 @@
-import { Box, Button, Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { Box, Button, Dialog } from "@mui/material";
 
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
@@ -7,15 +7,12 @@ import useHelper from "./useHelper";
 import { ImageForm } from "./components/ImageForm";
 import { EditSeriesDetail } from "./components/EditSeriesDetails";
 
-interface Props {
-  open: boolean;
-  handleClose: () => void;
-}
+import type { PodcasterCreateSeriesDialogProps } from "./interfaces";
 
-export default function PodcasterCreateSeriesDialog({
+export default function CreatePodcastDialog({
   open,
   handleClose,
-}: Props) {
+}: PodcasterCreateSeriesDialogProps) {
   const {
     step,
     errors,
@@ -54,7 +51,7 @@ export default function PodcasterCreateSeriesDialog({
         );
 
       default:
-        break;
+        return <>404 Step not found!</>;
     }
   };
 
@@ -70,7 +67,7 @@ export default function PodcasterCreateSeriesDialog({
         return "Continue";
 
       default:
-        break;
+        return <>404 Step not found!</>;
     }
   };
 
@@ -83,16 +80,16 @@ export default function PodcasterCreateSeriesDialog({
 
         <Box className="text-center mt-12">
           <Button
+            onClick={handleNextStep}
             variant="roundedContained"
             className={classes.nextButtonRoot}
-            onClick={handleNextStep}
           >
             {renderButtonText()}
           </Button>
-          {/* for submitting series image */}
+          {/* for submitting podcast image */}
           <input
-            type="file"
             hidden
+            type="file"
             ref={fileRef}
             onChange={handleImageSubmit}
           />

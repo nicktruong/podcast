@@ -1,7 +1,11 @@
+import { useTranslation } from "react-i18next";
+
 import { useStyles } from "./styles";
 
 export const usePrepare = () => {
-  const styles = useStyles();
+  const { t } = useTranslation("pages/SignUp");
 
-  return { ...styles };
+  const { cx, classes } = useStyles();
+
+  return { classes, t, cx };
 };

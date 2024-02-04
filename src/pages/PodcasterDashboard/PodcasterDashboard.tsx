@@ -18,43 +18,32 @@ export default function PodcasterDashboard() {
     openCreateSeriesDialog,
     openCreateEpisodeDialog,
     podcastOfCreatorIsLoading,
-    handleCloseEpisodeDialog,
-    handleClickOpenEpisodeDialog,
+    handleOpenDialog,
+    handleCloseDialog,
   } = usePrepare();
 
   if (episodesAreLoading || podcastOfCreatorIsLoading) {
     return <Loader />;
   }
 
-  let content: JSX.Element;
-
-  if (!createdFirstEpisode) {
-    content = (
-      <PodcasterDashboardOnboarding
-        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
-        handleOpenCreateSeriesDialog={handleClickOpenEpisodeDialog}
-      />
-    );
-  } else {
-    content = <PodcasterDashboardOverview />;
-  }
-
   return (
     <Box>
-      <PodcasterDashboardAppBar
-        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
-      />
+      <PodcasterDashboardAppBar onOpenDialog={handleOpenDialog} />
 
-      {content}
+      {!createdFirstEpisode ? (
+        <PodcasterDashboardOnboarding onOpenDialog={handleOpenDialog} />
+      ) : (
+        <PodcasterDashboardOverview />
+      )}
 
       <PodcasterEpisodeCreationDialog
         open={openCreateEpisodeDialog}
-        handleClose={handleCloseEpisodeDialog}
+        onClose={handleCloseDialog}
       />
 
       <PodcasterCreateSeriesDialog
         open={openCreateSeriesDialog}
-        handleClose={handleCloseEpisodeDialog}
+        handleClose={handleCloseDialog}
       />
     </Box>
   );
