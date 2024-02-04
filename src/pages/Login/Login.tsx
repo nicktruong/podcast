@@ -16,11 +16,11 @@ import { Logo, StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 import { FacebookIconImg, GoogleIconImg } from "@/assets";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 
 export default function Login() {
   const { control, errors, isSubmitting, submitErrorCode, t, onSubmit } =
-    usePrepare();
+    usePrepareHook();
 
   return (
     <Box>

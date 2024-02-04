@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 import PodcastDetailsHeaderSkeleton from "../PodcastDetailsHeaderSkeleton";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const PodcastDetailsHeader = () => {
   const {
@@ -15,7 +15,7 @@ const PodcastDetailsHeader = () => {
     seriesTitleRef,
     seriesTitleContainerRef,
     t,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (loadingDetail) {
     return <PodcastDetailsHeaderSkeleton />;

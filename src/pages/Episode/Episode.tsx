@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 interface TabPanelProps {
   index: number;
@@ -29,7 +29,7 @@ interface TabPanelProps {
 const CustomTabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
-  const { classes } = usePrepare();
+  const { classes } = usePrepareHook();
 
   return (
     <div
@@ -71,7 +71,7 @@ const Episode = () => {
     handleActionMenuClose,
     handleActionMenuBtnClick,
     handleDownloadAndPlayAudio,
-  } = usePrepare();
+  } = usePrepareHook();
 
   return (
     <Box className={classes.episodeContent}>

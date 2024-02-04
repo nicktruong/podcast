@@ -1,9 +1,9 @@
 import { Box, Button, Typography } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const NotFound = () => {
-  const { classes, goHome } = usePrepare();
+  const { classes, goHome } = usePrepareHook();
 
   return (
     <Box className={classes.notFoundRoot}>

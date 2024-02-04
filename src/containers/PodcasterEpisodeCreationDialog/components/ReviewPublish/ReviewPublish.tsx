@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { ReviewPublishProps } from "./interfaces";
 
 export default function ReviewPublish({
@@ -9,7 +9,7 @@ export default function ReviewPublish({
   user,
   image,
 }: ReviewPublishProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <Box>

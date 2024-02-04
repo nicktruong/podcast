@@ -9,28 +9,28 @@ import { capFirstChar, isDark } from "@/common/utils";
 
 import StandoutPodcastSkeleton from "../StandoutPodcastSkeleton";
 
-import { usePrepare } from "./helpers";
+import { usePrepareHook } from "./helpers";
 
 const StandoutPodcast = () => {
   const {
     classes,
-    containerEl,
     audioIsPlaying,
     standoutPodcast,
     playingEpisodeId,
     standoutCategory,
     isLoadingStandoutPodcast,
     t,
+    setContainerEl,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (isLoadingStandoutPodcast) {
     return <StandoutPodcastSkeleton />;
   }
 
   return (
-    <Box ref={containerEl}>
+    <Box ref={(el: HTMLDivElement) => setContainerEl(el)}>
       <Typography className={classes.standoutPodcastHeading}>
         {standoutPodcast && t("standoutPodcast")}
       </Typography>

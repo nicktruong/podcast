@@ -5,11 +5,11 @@ import { EPISODE_CREATION_STEPS } from "@/common/enums";
 
 import { UploadPodBreadcrumbs } from "../Breadcrumbs";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { DialogBarProps } from "./interfaces";
 
 export default function DialogBar({ step, handleClose }: DialogBarProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <AppBar

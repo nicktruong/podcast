@@ -7,7 +7,7 @@ import { StyledInput } from "@/components";
 import { routes } from "@/common/constants";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { EmailFormProps } from "./interfaces";
 
 export default function EmailForm({
@@ -15,7 +15,7 @@ export default function EmailForm({
   errors,
   nextStepHandler,
 }: EmailFormProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <Box className="max-w-80 mx-auto pb-10">

@@ -3,11 +3,11 @@ import { Trans } from "react-i18next";
 import { Box, Typography } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { UploadAudioProps } from "./interfaces";
 
 const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <>

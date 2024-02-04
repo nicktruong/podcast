@@ -7,10 +7,10 @@ import { routes } from "@/common/constants";
 
 import CardGroup from "../Home/components/CardGroup";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const Profile = () => {
-  const { classes, playlists, episodes, user, isMyProfile } = usePrepare();
+  const { classes, playlists, episodes, user, isMyProfile } = usePrepareHook();
 
   return (
     <Box className={classes.profileRoot}>
@@ -82,29 +82,6 @@ const Profile = () => {
                   author: { name: user?.name ?? "" },
                 }))}
               />
-              {/* {episodes.map((episode) => (
-                <Link
-                  key={episode.id}
-                  className={classes.series}
-                  to={routes.playlist.replace(":id", episode.id)}
-                >
-                  <Box>
-                    <img
-                      className={classes.seriesImg}
-                      src={episode.podcast.coverUrl}
-                      alt={`${episode.title} cover photo`}
-                    />
-                  </Box>
-                  <Box className={classes.seriesInfo}>
-                    <Typography className={classes.seriesTitle}>
-                      {episode.title}
-                    </Typography>
-                    <Typography className={classes.seriesAuthor}>
-                      By {user?.name}
-                    </Typography>
-                  </Box>
-                </Link>
-              ))} */}
             </Box>
           </Box>
         )}

@@ -1,10 +1,10 @@
 import { formatDistance } from "date-fns";
 import { Box, Typography } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const Notification = () => {
-  const { classes, notifications } = usePrepare();
+  const { classes, notifications } = usePrepareHook();
 
   return (
     <Box className={classes.notificationRoot}>

@@ -2,10 +2,10 @@ import { Navigate, Outlet } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const CategoriesSelectedGuard = () => {
-  const { userId, userCategoriesOfInterest } = usePrepare();
+  const { userId, userCategoriesOfInterest } = usePrepareHook();
 
   if (userId && !userCategoriesOfInterest?.length) {
     return <Navigate to={routes.categoriesSelection} replace />;

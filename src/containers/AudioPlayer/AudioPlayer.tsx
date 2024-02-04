@@ -11,7 +11,7 @@ import { Box, MenuItem, Select, Slider, Typography } from "@mui/material";
 
 import { padZero } from "@/common/utils";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 import { playbackRates } from "./constants";
 
 export default function AudioPlayer() {
@@ -44,7 +44,7 @@ export default function AudioPlayer() {
     changeAudioVolumn,
     handleCloseAudioPlayer,
     handleChangePlaybackRate,
-  } = usePrepare();
+  } = usePrepareHook();
 
   return (
     <Box className={classes.audioPlayerRoot}>

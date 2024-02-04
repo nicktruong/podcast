@@ -12,7 +12,7 @@ import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 import type { StyledDrawerProps } from "./interfaces";
 
@@ -21,7 +21,7 @@ export default function StyledDrawer({
   toggleDrawer,
   handleClickOpenEpisodeDialog,
 }: StyledDrawerProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>

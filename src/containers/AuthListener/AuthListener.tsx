@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 import Error from "@/pages/Error";
 import Loader from "@/components/Loader";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const AuthListener = () => {
-  const { initialLoading, fetchingCategories } = usePrepare();
+  const { initialLoading, fetchingCategories } = usePrepareHook();
 
   if (initialLoading || fetchingCategories) {
     return <Loader />;

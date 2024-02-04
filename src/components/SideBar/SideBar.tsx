@@ -18,11 +18,11 @@ import { routes } from "@/common/constants";
 
 import Logo from "../Logo";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 
 export default function SideBar() {
   const { active, classes, playlists, isSidebarExpand, t, cx, toggleSidebar } =
-    usePrepare();
+    usePrepareHook();
 
   return (
     <Box className={classes.root}>

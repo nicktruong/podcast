@@ -5,7 +5,7 @@ import ErrorIcon from "@mui/icons-material/Error";
 import { isDark } from "@/common/utils";
 import { LoadingButton } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { CategoriesFormProps } from "./interfaces";
 
 export default function CategoriesForm({
@@ -15,7 +15,7 @@ export default function CategoriesForm({
   chosenCategories,
   setValue,
 }: CategoriesFormProps) {
-  const { classes, t, cx } = usePrepare();
+  const { classes, t, cx } = usePrepareHook();
 
   return (
     <>

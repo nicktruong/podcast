@@ -3,7 +3,7 @@ import { Box, Button, Dialog } from "@mui/material";
 
 import { PODCAST_CREATION_STEPS } from "@/common/enums";
 
-import useHelper from "./useHelper";
+import usePrepareHook from "./helpers";
 import { ImageForm } from "./components/ImageForm";
 import { EditSeriesDetail } from "./components/EditSeriesDetails";
 
@@ -23,7 +23,7 @@ export default function CreatePodcastDialog({
     categories,
     handleNextStep,
     handleImageSubmit,
-  } = useHelper({ handleClose });
+  } = usePrepareHook({ handleClose });
 
   const renderStep = () => {
     switch (step) {

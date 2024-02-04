@@ -19,7 +19,7 @@ import { ROLES } from "@/common/enums";
 import { routes } from "@/common/constants";
 import { ChangeLanguageButton } from "@/components";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 
 export default function UserMenu() {
   const {
@@ -39,7 +39,7 @@ export default function UserMenu() {
     handleCloseMenu,
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
-  } = usePrepare();
+  } = usePrepareHook();
 
   return (
     <AppBar elevation={0} className={classes.appbarRoot} component="nav">

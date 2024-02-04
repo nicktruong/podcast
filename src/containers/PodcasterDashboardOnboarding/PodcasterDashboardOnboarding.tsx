@@ -4,13 +4,13 @@ import { Button, Typography } from "@mui/material";
 
 import { ColorIconStepper } from "@/components";
 
-import useHelper from "./useHelper";
+import usePrepareHook from "./helpers";
 import { PodcasterDashboardOnboardingProps } from "./interfaces";
 
 export default function PodcasterDashboardOnboarding({
   onOpenDialog,
 }: PodcasterDashboardOnboardingProps) {
-  const { classes, hasPodcast, createdFirstEp, t, cx } = useHelper();
+  const { classes, hasPodcast, createdFirstEp, t, cx } = usePrepareHook();
 
   return (
     <Box className={classes.onboardingRoot}>

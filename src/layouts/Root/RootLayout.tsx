@@ -4,10 +4,10 @@ import { Outlet } from "react-router-dom";
 import { SideBar } from "@/components";
 import { AudioPlayer, UserMenu } from "@/containers";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 export default function RootLayout() {
-  const { classes, elementRef, isAudioPlayerOpen } = usePrepare();
+  const { classes, elementRef, isAudioPlayerOpen } = usePrepareHook();
 
   return (
     <Box className={classes.rootLayout}>

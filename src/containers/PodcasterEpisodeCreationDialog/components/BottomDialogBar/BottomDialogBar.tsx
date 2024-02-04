@@ -9,7 +9,7 @@ import {
 
 import { EPISODE_CREATION_STEPS } from "@/common/enums";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { BottomDialogBarProps } from "./interfaces";
 
 export default function BottomDialogBar({
@@ -20,7 +20,7 @@ export default function BottomDialogBar({
   handleStepBack,
   podUploadingProgress,
 }: BottomDialogBarProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <AppBar

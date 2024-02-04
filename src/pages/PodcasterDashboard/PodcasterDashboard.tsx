@@ -9,7 +9,7 @@ import {
 } from "@/containers";
 import { Loader } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 export default function PodcasterDashboard() {
   const {
@@ -20,7 +20,7 @@ export default function PodcasterDashboard() {
     podcastOfCreatorIsLoading,
     handleOpenDialog,
     handleCloseDialog,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (episodesAreLoading || podcastOfCreatorIsLoading) {
     return <Loader />;

@@ -4,7 +4,7 @@ import { Box, Button, Typography, alpha } from "@mui/material";
 import { routes } from "@/common/constants";
 import { capFirstChar, isDark } from "@/common/utils";
 
-import { usePrepare } from "./helpers";
+import { usePrepareHook } from "./helpers";
 
 import type { CardProps } from "./interfaces";
 
@@ -17,7 +17,7 @@ const Card = ({
   createdAt,
   categoryData,
 }: CardProps) => {
-  const { classes, navigate } = usePrepare();
+  const { classes, navigate } = usePrepareHook();
 
   return (
     <Box
