@@ -33,7 +33,6 @@ export default function UserMenu() {
     isSidebarExpand,
     unreadNotificationsCount,
     t,
-    navigate,
     handleSearch,
     toggleSidebar,
     handleSignOut,
@@ -112,20 +111,16 @@ export default function UserMenu() {
                 >
                   <MenuItem
                     component={Link}
+                    onClick={handleCloseMenu}
                     to={routes.profile.replace(":id", userId)}
-                    onClick={() => {
-                      handleCloseMenu();
-                    }}
                   >
                     {t("profile")}
                   </MenuItem>
                   {userRoles?.includes(ROLES.PODCASTER) ? (
                     <MenuItem
                       component={Link}
+                      onClick={handleCloseMenu}
                       to={routes.podcasterDashboard}
-                      onClick={() => {
-                        handleCloseMenu();
-                      }}
                     >
                       {t("dashboard")}
                     </MenuItem>
@@ -143,21 +138,21 @@ export default function UserMenu() {
             (isSmaller ? (
               <>
                 <IconButton
-                  id="user-menu-button"
-                  aria-controls={open ? "user-menu" : undefined}
                   aria-haspopup="true"
-                  aria-expanded={open ? "true" : undefined}
+                  id="user-menu-button"
                   onClick={handleClickOpenMenu}
+                  aria-expanded={open ? "true" : undefined}
+                  aria-controls={open ? "user-menu" : undefined}
                 >
                   <MenuIcon />
                 </IconButton>
                 <Menu
-                  className={classes.mobileMenu}
-                  id="user-menu"
-                  aria-labelledby="user-menu-button"
-                  anchorEl={anchorEl}
                   open={open}
+                  id="user-menu"
+                  anchorEl={anchorEl}
                   onClose={handleCloseMenu}
+                  className={classes.mobileMenu}
+                  aria-labelledby="user-menu-button"
                   anchorOrigin={{
                     vertical: "bottom",
                     horizontal: "right",
@@ -168,18 +163,16 @@ export default function UserMenu() {
                   }}
                 >
                   <MenuItem
-                    onClick={() => {
-                      handleCloseMenu();
-                      navigate(routes.signup);
-                    }}
+                    component={Link}
+                    to={routes.signup}
+                    onClick={() => handleCloseMenu()}
                   >
                     {t("signup")}
                   </MenuItem>
                   <MenuItem
-                    onClick={() => {
-                      handleCloseMenu();
-                      navigate(routes.login);
-                    }}
+                    component={Link}
+                    to={routes.login}
+                    onClick={handleCloseMenu}
                   >
                     {t("login")}
                   </MenuItem>

@@ -34,7 +34,7 @@ export const usePrepare = () => {
 
   const [openCreateEpisodeDialog, setOpenCreateEpisodeDialog] = useState(false);
 
-  const handleClickOpenEpisodeDialog = () => {
+  const handleOpenDialog = () => {
     if (!podcast) {
       setOpenCreateSeriesDialog(true);
     } else {
@@ -42,7 +42,7 @@ export const usePrepare = () => {
     }
   };
 
-  const handleCloseEpisodeDialog = () => {
+  const handleCloseDialog = () => {
     setOpenCreateSeriesDialog(false);
     setOpenCreateEpisodeDialog(false);
     dispatch(resetUploadPodState());
@@ -63,7 +63,7 @@ export const usePrepare = () => {
     openCreateSeriesDialog,
     openCreateEpisodeDialog,
     podcastOfCreatorIsLoading,
-    handleCloseEpisodeDialog,
-    handleClickOpenEpisodeDialog,
+    handleOpenDialog,
+    handleCloseDialog,
   };
 };

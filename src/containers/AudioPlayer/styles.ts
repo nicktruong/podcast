@@ -1,5 +1,5 @@
-import { alpha } from "@mui/material";
 import { tss } from "tss-react/mui";
+import { alpha } from "@mui/material";
 
 export const useStyles = tss.create(({ theme }) => ({
   audioPlayerRoot: {
@@ -116,6 +116,8 @@ export const useStyles = tss.create(({ theme }) => ({
     cursor: "not-allowed",
   },
   playbackRateSelect: {
+    width: "20px",
+
     "& .MuiSelect-select": {
       padding: "0px",
       paddingRight: "0px !important",

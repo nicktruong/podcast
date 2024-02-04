@@ -48,14 +48,11 @@ export const useStyles = tss.create(({ theme }) => ({
     },
   },
   stepContent: {
-    "&:first-of-type": {
-      marginTop: "16px",
-    },
+    display: "flex",
     minHeight: "65px",
     maxWidth: "350px",
-    display: "flex",
     flexDirection: "column",
-    justifyContent: "flex-start",
     alignItems: "flex-start",
+    justifyContent: "flex-start",
   },
 }));

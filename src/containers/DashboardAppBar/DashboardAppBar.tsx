@@ -1,30 +1,17 @@
-import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, IconButton, AppBar, Toolbar } from "@mui/material";
 
 import { Logo } from "@/components";
 import StyledDrawer from "@/containers/StyledDrawer";
 
-interface Props {
-  handleClickOpenEpisodeDialog: () => void;
-}
+import { usePrepareHook } from "./helpers";
+
+import type { PodcasterDashboardAppBarProps } from "./interfaces";
 
 export default function PodcasterDashboardAppBar({
-  handleClickOpenEpisodeDialog,
-}: Props) {
-  const [openDrawer, setOpenDrawer] = useState(false);
-
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        (event as React.KeyboardEvent).key !== "Escape"
-      ) {
-        return;
-      }
-
-      setOpenDrawer(open);
-    };
+  onOpenDialog,
+}: PodcasterDashboardAppBarProps) {
+  const { openDrawer, toggleDrawer } = usePrepareHook();
 
   return (
     <>
@@ -56,7 +43,7 @@ export default function PodcasterDashboardAppBar({
       <StyledDrawer
         openDrawer={openDrawer}
         toggleDrawer={toggleDrawer}
-        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
+        handleClickOpenEpisodeDialog={onOpenDialog}
       />
     </>
   );

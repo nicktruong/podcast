@@ -29,14 +29,16 @@ interface Props {
 const useHelper = ({ handleClose }: Props) => {
   const { classes } = useStyles();
   const dispatch = useAppDispatch();
+
   const step = useAppSelector(selectStep);
   const userId = useAppSelector(selectUserId);
   const podcast = useAppSelector(selectPodcast);
   const tempImg = useAppSelector(selectTempImg);
   const coverUrl = podcast?.coverUrl ?? tempImg;
-  const fileRef = useRef<HTMLInputElement>(null);
   const categories = useAppSelector(selectCategories);
   const podcastCreationData = useAppSelector(selectPodcastCreationData);
+
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const {
     control,
@@ -68,11 +70,7 @@ const useHelper = ({ handleClose }: Props) => {
     switch (step) {
       case PODCAST_CREATION_STEPS.INPUT_DETAILS: {
         const isValidDetails = await validatePodcastSeriesInfo();
-
-        if (isValidDetails) {
-          onSubmit();
-        }
-
+        if (isValidDetails) onSubmit();
         break;
       }
 

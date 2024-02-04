@@ -15,7 +15,7 @@ import UploadPhoto from "./components/UploadPhoto/UploadPhoto";
 
 export default function PodcasterEpisodeCreationDialog({
   open,
-  handleClose,
+  onClose,
 }: PodcasterEpisodeCreationDialogProps) {
   const {
     step,
@@ -32,7 +32,7 @@ export default function PodcasterEpisodeCreationDialog({
     handleCancel,
     onPhotoUpload,
     handleStepBack,
-  } = usePrepare({ handleClose });
+  } = usePrepare({ onClose });
 
   const renderStep = () => {
     switch (step) {
@@ -57,8 +57,8 @@ export default function PodcasterEpisodeCreationDialog({
 
   return (
     <React.Fragment>
-      <Dialog fullScreen open={open} onClose={handleClose}>
-        <DialogBar handleClose={handleClose} step={step} />
+      <Dialog fullScreen open={open} onClose={onClose}>
+        <DialogBar handleClose={onClose} step={step} />
 
         {/* Change based on step */}
         <Box

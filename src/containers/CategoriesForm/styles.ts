@@ -54,4 +54,14 @@ export const useStyles = tss.withNestedSelectors().create(({ classes }) => ({
   block: {
     display: "block",
   },
+  formHelperText: {
+    marginX: 0,
+    display: "flex",
+    columnGap: "2px",
+  },
+  errorMessage: {
+    fontWeight: 600,
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+  },
 }));

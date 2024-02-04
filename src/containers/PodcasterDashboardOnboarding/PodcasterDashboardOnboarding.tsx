@@ -8,10 +8,9 @@ import useHelper from "./useHelper";
 import { PodcasterDashboardOnboardingProps } from "./interfaces";
 
 export default function PodcasterDashboardOnboarding({
-  handleClickOpenEpisodeDialog,
-  handleOpenCreateSeriesDialog,
+  onOpenDialog,
 }: PodcasterDashboardOnboardingProps) {
-  const { classes, hasPodSeries, createdFirstEp, t, cx } = useHelper();
+  const { classes, hasPodcast, createdFirstEp, t, cx } = useHelper();
 
   return (
     <Box className={classes.onboardingRoot}>
@@ -29,43 +28,12 @@ export default function PodcasterDashboardOnboarding({
       <Box className={classes.onboardingContainer}>
         <Box className={classes.onboardingSteps}>
           <Box className="px-4">
-            <ColorIconStepper
-              steps={[
-                "Make your first episode",
-                "Set up your podcast",
-                "Get listeners!",
-              ]}
-              activeStep={1}
-            />
+            <ColorIconStepper stepsCount={3} activeStep={hasPodcast ? 1 : 0} />
           </Box>
 
           <Box className="pl-4">
             <Box className={classes.stepContent}>
-              {createdFirstEp ? (
-                <Typography>{t("firstEpisodePublished")}</Typography>
-              ) : (
-                <>
-                  <Typography fontWeight={700}>
-                    {t("makeYourFirstEpisode")}
-                  </Typography>
-
-                  <Typography fontSize={14} className="mt-1">
-                    {t("makeYourFirstEpisodeTip")}
-                  </Typography>
-
-                  <Button
-                    variant="roundedContained"
-                    className={classes.letDoItBtn}
-                    onClick={handleClickOpenEpisodeDialog}
-                  >
-                    {t("letDoIt")}
-                  </Button>
-                </>
-              )}
-            </Box>
-
-            <Box className={cx(classes.stepContent, "mt-[50px]")}>
-              {hasPodSeries ? (
+              {hasPodcast ? (
                 <Typography>{t("yourPodcastIsSettedUp")}</Typography>
               ) : (
                 <>
@@ -80,10 +48,38 @@ export default function PodcasterDashboardOnboarding({
                   <Button
                     variant="roundedContained"
                     className={classes.setupBtn}
-                    onClick={handleOpenCreateSeriesDialog}
+                    onClick={onOpenDialog}
                   >
                     {t("goToSetup")}
                   </Button>
+                </>
+              )}
+            </Box>
+
+            <Box className={cx(classes.stepContent, "mt-[50px]")}>
+              {createdFirstEp ? (
+                <Typography>{t("firstEpisodePublished")}</Typography>
+              ) : (
+                <>
+                  <Typography fontWeight={700}>
+                    {t("makeYourFirstEpisode")}
+                  </Typography>
+
+                  <Typography fontSize={14} className="mt-1">
+                    {t("makeYourFirstEpisodeTip")}
+                  </Typography>
+
+                  {hasPodcast ? (
+                    <Button
+                      onClick={onOpenDialog}
+                      variant="roundedContained"
+                      className={classes.letDoItBtn}
+                    >
+                      {t("letDoIt")}
+                    </Button>
+                  ) : (
+                    <Box className="mt-2 h-[38.75px]" />
+                  )}
                 </>
               )}
             </Box>

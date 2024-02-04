@@ -42,16 +42,12 @@ export default function SideBar() {
             <Logo hideText={!isSidebarExpand} />
           </Box>
         </Link>
+
         <Link to={routes.index}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
               {active[routes.index] ? (
-                <HomeIcon
-                  style={{ marginRight: "2px" }}
-                  className={cx(classes.icon, {
-                    [classes.active]: active[routes.index],
-                  })}
-                />
+                <HomeIcon className={cx(classes.icon, classes.active)} />
               ) : (
                 <MdOutlineHome className={classes.icon} />
               )}
@@ -66,15 +62,12 @@ export default function SideBar() {
             )}
           </ListItemButton>
         </Link>
+
         <Link to={routes.search}>
           <ListItemButton className={classes.button}>
             <ListItemIcon className={classes.listItemIcon}>
               {active[routes.search] ? (
-                <RiSearchEyeFill
-                  className={cx(classes.icon, {
-                    [classes.active]: active[routes.search],
-                  })}
-                />
+                <RiSearchEyeFill className={cx(classes.icon, classes.active)} />
               ) : (
                 <RiSearchEyeLine className={classes.icon} />
               )}
@@ -90,11 +83,12 @@ export default function SideBar() {
           </ListItemButton>
         </Link>
       </Box>
+
       <Box className={cx(classes.section, classes.library)}>
         <Box className={classes.libraryHeading}>
           <BookmarksIcon className={classes.icon} />
           {isSidebarExpand && (
-            <Typography className={classes.text}>
+            <Typography className={classes.libraryTitle}>
               {t("yourPlaylists")}
             </Typography>
           )}
@@ -108,10 +102,10 @@ export default function SideBar() {
           >
             <Box className={classes.podcastImgContainer}>
               <img
+                width="48px"
+                height="48px"
                 src={playlist.coverUrl}
                 className={classes.podcastImg}
-                width={isSidebarExpand ? "48px" : "32px"}
-                height={isSidebarExpand ? "48px" : "32px"}
                 alt={`${playlist.title} cover photo`}
               />
             </Box>
