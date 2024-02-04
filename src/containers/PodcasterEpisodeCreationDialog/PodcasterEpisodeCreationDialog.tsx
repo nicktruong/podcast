@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 
 import { EPISODE_CREATION_STEPS } from "@/common/enums";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 import { DialogBar } from "./components/DialogBar";
 import { UploadAudio } from "./components/UploadAudio";
 import { EditDetails } from "./components/EditDetails";
@@ -32,7 +32,7 @@ export default function PodcasterEpisodeCreationDialog({
     handleCancel,
     onPhotoUpload,
     handleStepBack,
-  } = usePrepare({ onClose });
+  } = usePrepareHook({ onClose });
 
   const renderStep = () => {
     switch (step) {

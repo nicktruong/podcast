@@ -3,10 +3,10 @@ import { Box } from "@mui/material";
 import TitleSkeleton from "../TitleSkeleton";
 import CardsSkeleton from "../CardsSkeleton";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const SectionSkeleton = () => {
-  const { classes } = usePrepare();
+  const { classes } = usePrepareHook();
 
   return (
     <Box className={classes.skeletonSection}>

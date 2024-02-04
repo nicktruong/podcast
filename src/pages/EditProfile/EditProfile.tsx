@@ -5,7 +5,7 @@ import { Box, Button, Typography } from "@mui/material";
 
 import { StyledInput } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const EditProfile = () => {
   const {
@@ -18,7 +18,7 @@ const EditProfile = () => {
     onSubmit,
     choosePhoto,
     handleAvatarSubmit,
-  } = usePrepare();
+  } = usePrepareHook();
 
   return (
     <Box className={classes.root}>

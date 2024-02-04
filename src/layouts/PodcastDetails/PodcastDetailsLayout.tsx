@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import PodcastDetailsHeader from "./components/PodcastDetailsHeader";
 
 const PodcastDetailsLayout = () => {
-  const { classes } = usePrepare();
+  const { classes } = usePrepareHook();
 
   return (
     <Box className={classes.root}>

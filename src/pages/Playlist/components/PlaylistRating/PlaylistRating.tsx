@@ -1,12 +1,12 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Button, Modal, Rating, Typography } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { PodcastRatingProps } from "./interfaces";
 
 const PodcastRating = ({ open, handleClose }: PodcastRatingProps) => {
   const { userId, podcastDetail, classes, rating, setRating, handleRate } =
-    usePrepare();
+    usePrepareHook();
 
   return (
     <Modal open={open} onClose={handleClose} aria-labelledby="modal-title">

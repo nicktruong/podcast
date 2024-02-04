@@ -1,6 +1,6 @@
 import { useTheme } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import {
   playAudio,
@@ -23,30 +23,25 @@ import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
 
 import { useStyles } from "./styles";
 
-export const usePrepare = () => {
+export const usePrepareHook = () => {
+  const theme = useTheme();
+  const dispatch = useAppDispatch();
   const { t } = useTranslation("pages/Home");
 
-  const dispatch = useAppDispatch();
-
-  const containerEl = useRef<HTMLDivElement | null>(null);
-
-  const theme = useTheme();
-
   const [breakpoint, setBreakpoint] = useState<number>(Infinity);
+  const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
 
   const { classes, cx } = useStyles({ breakpoint });
 
   const userId = useAppSelector(selectUserId);
-
+  const categories = useAppSelector(selectCategories);
+  const standoutPodcast = useAppSelector(selectStandOutPodcast);
+  const isLoadingStandoutPodcast = useAppSelector(selectLoadingStandoutPodcast);
   const {
     playing: audioIsPlaying,
     episodeId: playingEpisodeId,
     downloaded: downloadedAudio,
   } = useAppSelector(selectAudioState);
-
-  const categories = useAppSelector(selectCategories);
-  const standoutPodcast = useAppSelector(selectStandOutPodcast);
-  const isLoadingStandoutPodcast = useAppSelector(selectLoadingStandoutPodcast);
   const standoutCategory = categories.find(
     (category) => category.name === standoutPodcast?.category
   );
@@ -61,11 +56,8 @@ export const usePrepare = () => {
     }
 
     dispatch(setPassedTimeInSeconds(0));
-
     dispatch(setAudioInfo(audioInfo));
-
     dispatch(downloadAndPlayAudio(pathToFile));
-
     dispatch(openAudioPlayer());
 
     if (!userId) return;
@@ -79,13 +71,12 @@ export const usePrepare = () => {
   useEffect(() => {
     const init = () => {
       const { sm, md } = theme.breakpoints.values;
-      const current = containerEl.current;
 
-      if (!current) return;
+      if (!containerEl) return;
 
-      if (current.offsetWidth < sm) {
+      if (containerEl.offsetWidth < sm) {
         setBreakpoint(sm - 1);
-      } else if (current.offsetWidth <= md) {
+      } else if (containerEl.offsetWidth <= md) {
         setBreakpoint(md - 1);
       } else {
         setBreakpoint(md + 1);
@@ -97,7 +88,7 @@ export const usePrepare = () => {
     init();
 
     return () => window.removeEventListener("resize", init);
-  }, []);
+  }, [containerEl]);
 
   return {
     theme,
@@ -110,6 +101,7 @@ export const usePrepare = () => {
     isLoadingStandoutPodcast,
     t,
     cx,
+    setContainerEl,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   };

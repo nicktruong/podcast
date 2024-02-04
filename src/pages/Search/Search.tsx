@@ -6,11 +6,11 @@ import { routes } from "@/common/constants";
 import CardGroup from "../Home/components/CardGroup";
 import { SectionSkeleton } from "../Home/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const Search = () => {
   const { classes, categories, searchText, searchResult, loadingSearchResult } =
-    usePrepare();
+    usePrepareHook();
 
   const { podcasters, podcasts: series } = searchResult;
 
@@ -103,29 +103,6 @@ const Search = () => {
                   Podcast series
                 </Typography>
                 <Box className={classes.resultContainer}>
-                  {/* {series.map((series) => (
-                    <Link
-                      key={series.id}
-                      className={classes.result}
-                      to={routes.playlist.replace(":id", series.id)}
-                    >
-                      <Box>
-                        <img
-                          className={classes.resultImg}
-                          src={series.coverUrl}
-                          alt={`${series.title} avatar`}
-                        />
-                      </Box>
-                      <Box className={classes.resultInfo}>
-                        <Typography className={classes.resultTitle}>
-                          {series.title}
-                        </Typography>
-                        <Typography className={classes.resultAdditionalInfo}>
-                          {series.author}
-                        </Typography>
-                      </Box>
-                    </Link>
-                  ))} */}
                   <CardGroup
                     podcasts={series.map((podcast) => ({
                       id: podcast.id,

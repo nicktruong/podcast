@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 
 import { useStyles } from "./styles";
 
-export const usePrepare = () => {
+export const usePrepareHook = () => {
   const navigate = useNavigate();
   const { classes } = useStyles();
   const { t } = useTranslation("pages/Home");

@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 
 import CategoriesForm from "@/containers/CategoriesForm";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const InterestCategoriesSelection = () => {
   const {
@@ -12,7 +12,7 @@ const InterestCategoriesSelection = () => {
     categoriesOfInterest,
     onSubmit,
     setValue,
-  } = usePrepare();
+  } = usePrepareHook();
 
   return (
     <form onSubmit={onSubmit}>

@@ -4,7 +4,7 @@ import { Box, FormHelperText, Typography } from "@mui/material";
 
 import { StyledInput } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { EditDetailsProps } from "./interfaces";
 
 export default function EditDetails({
@@ -12,7 +12,7 @@ export default function EditDetails({
   control,
   errors,
 }: EditDetailsProps) {
-  const { t } = usePrepare();
+  const { t } = usePrepareHook();
 
   return (
     <Box sx={{ maxWidth: "524px", margin: "0 auto" }}>

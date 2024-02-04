@@ -6,7 +6,7 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { routes } from "@/common/constants";
 import { isDark } from "@/common/utils";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 import PodcastRating from "./components/PlaylistRating";
 import PlaylistSkeleton from "./components/PlaylistSkeleton";
 
@@ -28,7 +28,7 @@ export default function Playlist() {
     handleCloseModal,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (loadingDetail) {
     return <PlaylistSkeleton />;

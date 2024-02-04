@@ -3,11 +3,11 @@ import { Box, MenuItem, Select, Typography } from "@mui/material";
 import CardsSkeleton from "../Home/components/CardsSkeleton";
 import CardGroup from "../Home/components/CardGroup";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const Category = () => {
   const { sortBy, classes, loading, categoriesSeries, handleSelectSortBy } =
-    usePrepare();
+    usePrepareHook();
 
   return (
     <Box className={classes.categoryRoot}>
