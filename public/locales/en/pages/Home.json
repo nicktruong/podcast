@@ -1,0 +1,9 @@
+{
+  "by": "By",
+  "podcastsToTry": "Podcasts to try",
+  "recentlyPlayed": "Recently played",
+  "podcastsForYou": "Podcasts for you",
+  "standoutPodcast": "Standout Podcast",
+  "trendingPodcasts": "Trending podcasts",
+  "updatedAt": "{{val, relativeTime(day)}}"
+}

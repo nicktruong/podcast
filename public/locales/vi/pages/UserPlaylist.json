@@ -1,0 +1,6 @@
+{
+  "title": "Tiêu đề",
+  "podcast": "Podcast",
+  "releaseDate": "{{ val, datetime }}",
+  "releaseDateHeading": "Ngày phát hành"
+}

@@ -1,27 +1,22 @@
 import { Suspense } from "react";
-import { ErrorBoundary } from "@sentry/react";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import { darkTheme } from "@/config/themes";
-import router from "@/config/router";
-import { store } from "@/store/store";
-
-import "./App.css";
+import { store } from "@/store";
+import { darkTheme } from "@/config";
+import { router } from "@/pages/router";
 
 function App() {
   return (
-    <ErrorBoundary fallback={<p>An error has occurred</p>}>
-      <ThemeProvider theme={darkTheme}>
-        <Suspense fallback={<p>Loading...</p>}>
-          <Provider store={store}>
-            <RouterProvider router={router} />
-          </Provider>
+    <ThemeProvider theme={darkTheme}>
+      <Provider store={store}>
+        <Suspense>
+          <RouterProvider router={router} />
         </Suspense>
-        <CssBaseline />
-      </ThemeProvider>
-    </ErrorBoundary>
+      </Provider>
+      <CssBaseline />
+    </ThemeProvider>
   );
 }
 

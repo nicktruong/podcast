@@ -1,0 +1,8 @@
+{
+  "follow": "Theo dõi",
+  "about": "Về tác giả",
+  "unfollow": "Huỷ theo dõi",
+  "allEpisodes": "Tất cả các tập",
+  "createdAt": "{{ val, datetime }}",
+  "noBio": "Tác giả không có tiểu sử"
+}

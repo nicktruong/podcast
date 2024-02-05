@@ -1,0 +1,9 @@
+{
+  "by": "Bởi",
+  "podcastsToTry": "Podcast để thử",
+  "recentlyPlayed": "Đã phát gần đây",
+  "standoutPodcast": "Podcast nổi bật",
+  "podcastsForYou": "Podcast dành cho bạn",
+  "trendingPodcasts": "Podcast thịnh hành",
+  "updatedAt": "{{val, relativeTime(day)}}"
+}

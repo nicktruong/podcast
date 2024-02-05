@@ -31,8 +31,17 @@ module.exports = {
   },
   plugins: ["@stylistic", "@typescript-eslint", "react"],
   rules: {
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "error", // or "error"
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_",
+      },
+    ],
     "arrow-parens": ["error", "always"],
-    curly: "error",
+    curly: "off",
     "import/order": [
       "error",
       {
@@ -72,18 +81,15 @@ module.exports = {
     quotes: ["error", "double"],
     "react/react-in-jsx-scope": "off",
     semi: ["error", "always"],
-    "sort-imports": [
-      "error",
-      {
-        ignoreDeclarationSort: true,
-      },
-    ],
   },
   settings: {
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,
         project: "./",
+      },
+      node: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
       },
     },
   },

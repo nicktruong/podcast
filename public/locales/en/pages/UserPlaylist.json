@@ -1,0 +1,6 @@
+{
+  "title": "Title",
+  "podcast": "Podcast",
+  "releaseDate": "{{ val, datetime }}",
+  "releaseDateHeading": "Release date"
+}

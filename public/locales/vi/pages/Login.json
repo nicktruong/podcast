@@ -1,0 +1,13 @@
+{
+  "or": "hoặc",
+  "login": "Đăng nhập",
+  "password": "Mật khẩu",
+  "loginTo": "Đăng nhập vào",
+  "emailAddress": "Địa chỉ email",
+  "dontHaveAnAccount": "Không có tài khoản?",
+  "signInWithGoogle": "Đăng nhập với Google",
+  "signInWithFacebook": "Đăng nhập với Facebook",
+  "signUpForGoPodcast": "Đăng ký tài khoản GO Podcast",
+  "invalidPassword": "Mật khẩu phải có ít nhất 8 chữ cái, bao gồm 1 số và 1 ký tự đăc biệt.",
+  "invalidMail": "Email không hợp lệ. Hãy đảm bảo rằng nó được viết dưới dạng example@email.com"
+}
