@@ -10,6 +10,7 @@ const LoadingButton = ({
       endIcon={
         loading && (
           <CircularProgress
+            data-testid="loadingIndicator"
             size="20px"
             sx={(theme) => ({
               color: theme.palette.primary.contrastText,
