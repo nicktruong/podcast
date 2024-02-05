@@ -7,7 +7,7 @@ import { usePrepareHook } from "./helpers";
 import { UploadAudioProps } from "./interfaces";
 
 const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
-  const { t } = usePrepareHook();
+  const { t, dropzoneValidator } = usePrepareHook();
 
   return (
     <>
@@ -62,19 +62,7 @@ const UploadAudio = ({ onFileUpload }: UploadAudioProps) => {
         {t("guidanceAndBestPractices")}
       </Typography>
 
-      <Dropzone
-        onDrop={onFileUpload}
-        validator={(file) => {
-          if (file.type !== "audio/mpeg") {
-            return {
-              code: "wrong-extension",
-              message: "Only mp3 file is accepted",
-            };
-          }
-
-          return null;
-        }}
-      >
+      <Dropzone onDrop={onFileUpload} validator={dropzoneValidator}>
         {({ getRootProps, getInputProps, fileRejections }) => (
           <>
             {
