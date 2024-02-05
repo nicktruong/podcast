@@ -1,4 +1,4 @@
-import type { Genders } from "../enums";
+import type { Genders } from "../../enums";
 
 export interface RegistrationInterests {
   categoriesOfInterest: string[];

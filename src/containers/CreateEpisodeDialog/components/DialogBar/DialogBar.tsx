@@ -1,7 +1,7 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/enums";
 
 import UploadPodBreadcrumbs from "../Breadcrumbs";
 

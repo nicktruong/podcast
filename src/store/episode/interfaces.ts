@@ -1,4 +1,4 @@
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/enums";
 
 import type {
   PopulatedEpisode,

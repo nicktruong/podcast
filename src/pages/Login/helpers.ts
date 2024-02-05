@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { joiResolver } from "@hookform/resolvers/joi";
 
 import { loginEmailPassword } from "@/firebase";
-import { routes, LOGIN_DEFAULT_DATA } from "@/common/constants";
+import { routes, LOGIN_DEFAULT_DATA } from "@/constants";
 
 import schema from "./schema";
 

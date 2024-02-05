@@ -3,7 +3,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 
-import { Roles } from "@/common/enums";
+import { Roles } from "@/enums";
 
 import { auth } from "../init";
 import { createUserDocument } from "../user";

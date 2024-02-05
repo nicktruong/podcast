@@ -14,7 +14,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { RiSearchEyeFill, RiSearchEyeLine } from "react-icons/ri";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import Logo from "../Logo";
 

@@ -7,7 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/enums";
 
 import { usePrepareHook } from "./helpers";
 import { BottomDialogBarProps } from "./interfaces";

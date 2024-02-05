@@ -1,4 +1,4 @@
-import { PodcastCreationSteps } from "@/common/enums";
+import { PodcastCreationSteps } from "@/enums";
 
 import type { Podcast, PodcastCreationData } from "@/common/interfaces";
 

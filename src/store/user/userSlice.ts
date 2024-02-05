@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { Roles } from "@/common/enums";
+import { Roles } from "@/enums";
 
 import {
   signOut,

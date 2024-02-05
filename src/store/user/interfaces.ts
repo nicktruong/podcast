@@ -1,4 +1,4 @@
-import { Roles } from "@/common/enums";
+import { Roles } from "@/enums";
 
 import type { User } from "@/common/interfaces";
 

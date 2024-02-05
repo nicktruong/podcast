@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { selectUserId } from "@/store/user";
 import { selectIsSidebarExpand, toggleExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";

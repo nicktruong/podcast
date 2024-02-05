@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 

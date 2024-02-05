@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { selectUserId } from "@/store/user";
-import { Collections } from "@/common/enums";
+import { Collections } from "@/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setNewRating, selectPodcastDetail } from "@/store/details";
 import { getUserRating, rate } from "@/firebase";

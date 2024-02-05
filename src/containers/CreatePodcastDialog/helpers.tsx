@@ -12,9 +12,9 @@ import {
 } from "@/store/podcast";
 import { selectUserId } from "@/store/user";
 import { selectCategories } from "@/store/category";
-import { PodcastCreationSteps } from "@/common/enums";
+import { PodcastCreationSteps } from "@/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { PODCAST_CREATION_DEFAULT_DATA } from "@/common/constants";
+import { PODCAST_CREATION_DEFAULT_DATA } from "@/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";

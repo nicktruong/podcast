@@ -1,6 +1,6 @@
 import { collection, getDocs, limit, query } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 

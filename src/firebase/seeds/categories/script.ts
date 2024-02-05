@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
-import { Collections } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import categories from "./categories.json";
 

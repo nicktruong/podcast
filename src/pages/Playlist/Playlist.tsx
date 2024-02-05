@@ -3,8 +3,8 @@ import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Button, Typography, alpha } from "@mui/material";
 
-import { isDark } from "@/common/utils";
-import { routes } from "@/common/constants";
+import { isDark } from "@/utils";
+import { routes } from "@/constants";
 
 import usePrepareHook from "./helpers";
 import { PodcastRating, PlaylistSkeleton } from "./components";

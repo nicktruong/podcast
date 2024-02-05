@@ -16,7 +16,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import { CustomTabPanel } from "./components";
 import { a11yProps, usePrepareHook } from "./helpers";

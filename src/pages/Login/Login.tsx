@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import { Controller } from "react-hook-form";
 import { AuthErrorCodes } from "firebase/auth";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { Logo, StyledInput } from "@/components";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 import { FacebookIconImg, GoogleIconImg } from "@/assets";

@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import CardGroup from "../Home/components/CardGroup";
 import { SectionSkeleton } from "../Home/components";

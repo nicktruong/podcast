@@ -4,7 +4,7 @@ import { Box, Button, Divider, Typography } from "@mui/material";
 
 import { FacebookIconImg, GoogleIconImg } from "@/assets";
 import { StyledInput } from "@/components";
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { loginRedirectWithGoogle, loginRedirectWithFacebook } from "@/firebase";
 
 import { usePrepareHook } from "./helpers";

@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { NotificationFields } from "@/common/fields";
+import { Collections } from "@/enums";
+import { NotificationFields } from "@/firebase/fields";
 
 import { db } from "../init";
 

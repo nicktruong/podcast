@@ -2,7 +2,7 @@ import { useTheme } from "@mui/material";
 
 import { selectUIState } from "@/store/ui/";
 import { useAppSelector, useScrollTop } from "@/hooks";
-import { useMaxWidthScreenMedia } from "@/common/utils";
+import { useMaxWidthScreenMedia } from "@/utils";
 
 import { useStyles } from "./styles";
 

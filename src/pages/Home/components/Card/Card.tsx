@@ -1,8 +1,8 @@
 import { formatDistance } from "date-fns";
 import { Box, Button, Typography, alpha } from "@mui/material";
 
-import { routes } from "@/common/constants";
-import { capFirstChar, isDark } from "@/common/utils";
+import { routes } from "@/constants";
+import { capFirstChar, isDark } from "@/utils";
 
 import { usePrepareHook } from "./helpers";
 

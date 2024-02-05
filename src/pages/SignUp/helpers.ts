@@ -7,9 +7,9 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { signup } from "@/firebase";
 import { setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
-import { Genders, SignUpSteps } from "@/common/enums";
+import { Genders, SignUpSteps } from "@/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { routes, REGISTER_DEFAULT_DATA } from "@/common/constants";
+import { routes, REGISTER_DEFAULT_DATA } from "@/constants";
 
 import schema from "./schema";
 
