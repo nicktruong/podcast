@@ -9,7 +9,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { TbRewindBackward15, TbRewindForward15 } from "react-icons/tb";
 import { Box, MenuItem, Select, Slider, Typography } from "@mui/material";
 
-import { padZero } from "@/common/utils";
+import { padZero } from "@/utils";
 
 import usePrepareHook from "./helpers";
 import { PLAYBACK_RATES } from "./constants";

@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import { usePrepareHook } from "./helpers";
 

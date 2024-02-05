@@ -1,7 +1,7 @@
 import Joi from "joi";
 
-import { Genders } from "@/common/enums";
-import { getNumberOfDaysInMonth } from "@/common/utils";
+import { Genders } from "@/enums";
+import { getNumberOfDaysInMonth } from "@/utils";
 
 import type { RegisterData } from "@/common/interfaces";
 

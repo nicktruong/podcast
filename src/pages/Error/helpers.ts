@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import { useStyles } from "./styles";
 

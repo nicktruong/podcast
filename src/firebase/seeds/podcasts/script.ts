@@ -3,8 +3,8 @@ import { nanoid } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
-import { IMAGE_SIZE } from "@/common/constants";
-import { Collections, Genders, PodcastStatus, Roles } from "@/common/enums";
+import { IMAGE_SIZE } from "@/constants";
+import { Collections, Genders, PodcastStatus, Roles } from "@/enums";
 // import { generateKeywords } from "@/common/utils";
 
 import categories from "../categories/categories.json";

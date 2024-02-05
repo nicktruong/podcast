@@ -13,9 +13,9 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import ErrorIcon from "@mui/icons-material/Error";
 
-import { Genders } from "@/common/enums";
+import { Genders } from "@/enums";
 import { StyledInput } from "@/components";
-import { MONTHS } from "@/common/constants";
+import { MONTHS } from "@/constants";
 
 import { UserInfoFormProps } from "./interfaces";
 

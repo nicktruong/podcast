@@ -8,8 +8,8 @@ import {
   startAfter,
 } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { EpisodeFields } from "@/common/fields";
+import { Collections } from "@/enums";
+import { EpisodeFields } from "@/firebase/fields";
 
 import { db } from "../init";
 

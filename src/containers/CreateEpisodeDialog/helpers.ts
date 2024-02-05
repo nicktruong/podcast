@@ -18,10 +18,10 @@ import {
 } from "@/store/episode";
 import { notifyFollower, uploadFile } from "@/firebase";
 import { selectUser, setUser } from "@/store/user";
-import { resizeImage } from "@/common/utils";
-import { EpisodeCreationSteps } from "@/common/enums";
+import { resizeImage } from "@/utils";
+import { EpisodeCreationSteps } from "@/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
-import { EPISODE_CREATION_DEFAULT_DATA, IMAGE_SIZE } from "@/common/constants";
+import { EPISODE_CREATION_DEFAULT_DATA, IMAGE_SIZE } from "@/constants";
 import { selectPodcast } from "@/store/podcast";
 
 import schema from "./schema";

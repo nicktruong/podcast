@@ -1,6 +1,6 @@
 import type { User } from "./User";
 import type { Podcast } from "./Podcast";
-import type { PodcastStatus } from "../enums";
+import type { PodcastStatus } from "../../enums";
 
 export interface Episode {
   id: string;

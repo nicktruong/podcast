@@ -4,8 +4,8 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Typography, Button, alpha } from "@mui/material";
 
-import { routes } from "@/common/constants";
-import { capFirstChar, isDark } from "@/common/utils";
+import { routes } from "@/constants";
+import { capFirstChar, isDark } from "@/utils";
 
 import StandoutPodcastSkeleton from "../StandoutPodcastSkeleton";
 

@@ -2,7 +2,7 @@ import { Box, Typography, FormHelperText } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import ErrorIcon from "@mui/icons-material/Error";
 
-import { isDark } from "@/common/utils";
+import { isDark } from "@/utils";
 import { LoadingButton } from "@/components";
 
 import { usePrepareHook } from "./helpers";

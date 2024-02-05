@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { auth, getUserInfo } from "@/firebase";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { fetchNotifications } from "@/store/notification";

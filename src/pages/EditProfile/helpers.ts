@@ -5,7 +5,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 
 import { editProfile, selectUser } from "@/store/user";
 import { useAppDispatch, useAppSelector } from "@/hooks";
-import { EDIT_PROFILE_DEFAULT_DATA, routes } from "@/common/constants";
+import { EDIT_PROFILE_DEFAULT_DATA, routes } from "@/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";

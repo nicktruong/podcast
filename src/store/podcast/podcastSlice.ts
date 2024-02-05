@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { PodcastCreationSteps } from "@/common/enums";
+import { PodcastCreationSteps } from "@/enums";
 
 import {
   uploadPodcastCover,

@@ -7,7 +7,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { Collections, Roles } from "@/common/enums";
+import { Collections, Roles } from "@/enums";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 
-import { EpisodeCreationSteps } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/enums";
 
 import usePrepareHook from "./helpers";
 import {

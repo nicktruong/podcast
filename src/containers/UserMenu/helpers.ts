@@ -10,8 +10,8 @@ import {
   selectUserRoles,
   upgradeToPodcaster,
 } from "@/store/user";
-import { routes } from "@/common/constants";
-import { useMaxWidthScreenMedia } from "@/common/utils";
+import { routes } from "@/constants";
+import { useMaxWidthScreenMedia } from "@/utils";
 import { selectUIState, toggleExpand } from "@/store/ui";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { selectUnreadNotificationsCount } from "@/store/notification";

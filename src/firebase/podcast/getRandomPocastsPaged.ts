@@ -1,8 +1,8 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { query, limit, where, getDocs, collection } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { PodcastFields } from "@/common/fields";
+import { Collections } from "@/enums";
+import { PodcastFields } from "@/firebase/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";

@@ -15,8 +15,8 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
-import { Roles } from "@/common/enums";
-import { routes } from "@/common/constants";
+import { Roles } from "@/enums";
+import { routes } from "@/constants";
 import { ChangeLanguageButton } from "@/components";
 
 import usePrepareHook from "./helpers";

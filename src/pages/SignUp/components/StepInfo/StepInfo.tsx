@@ -2,7 +2,7 @@ import { Box, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import { useTranslation } from "react-i18next";
 
-import { SignUpSteps } from "@/common/enums";
+import { SignUpSteps } from "@/enums";
 
 interface Props {
   steps: string[];

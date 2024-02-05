@@ -13,7 +13,7 @@ import {
   updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
-import { MIN_ENGAGE_TIME } from "@/common/constants";
+import { MIN_ENGAGE_TIME } from "@/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import {

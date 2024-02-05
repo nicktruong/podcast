@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
-import { UserFields } from "@/common/fields";
+import { Collections } from "@/enums";
+import { UserFields } from "@/firebase/fields";
 
 import { db } from "../init";
 

@@ -2,10 +2,10 @@ import { Box } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-import { SignUpSteps } from "@/common/enums";
+import { SignUpSteps } from "@/enums";
 import { CategoriesForm } from "@/containers";
 import { Logo, QontoStepper } from "@/components";
-import { routes, SIGN_UP_STEPS_LABEL } from "@/common/constants";
+import { routes, SIGN_UP_STEPS_LABEL } from "@/constants";
 
 import usePrepareHook from "./helpers";
 import { StepInfo } from "./components";

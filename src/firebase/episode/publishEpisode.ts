@@ -7,7 +7,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { Collections, PodcastStatus } from "@/common/enums";
+import { Collections, PodcastStatus } from "@/enums";
 
 import { db } from "../init";
 

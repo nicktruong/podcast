@@ -2,11 +2,8 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { joiResolver } from "@hookform/resolvers/joi";
 
-import {
-  routes,
-  REGISTRATION_INTERESTS_DEFAULT_DATA,
-} from "@/common/constants";
-import { Genders, Roles } from "@/common/enums";
+import { routes, REGISTRATION_INTERESTS_DEFAULT_DATA } from "@/constants";
+import { Genders, Roles } from "@/enums";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";

@@ -3,7 +3,7 @@ import { GoPerson } from "react-icons/go";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Typography } from "@mui/material";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import CardGroup from "../Home/components/CardGroup";
 

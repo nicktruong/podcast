@@ -1,6 +1,6 @@
 import { arrayUnion, doc, writeBatch } from "firebase/firestore";
 
-import { Collections } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 

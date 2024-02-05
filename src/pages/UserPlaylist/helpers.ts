@@ -23,7 +23,7 @@ import { selectUserId } from "@/store/user";
 import { addHistoryAction } from "@/store/history";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import { useStyles } from "./styles";
 

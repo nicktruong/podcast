@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import Card from "../Card/Card";
 

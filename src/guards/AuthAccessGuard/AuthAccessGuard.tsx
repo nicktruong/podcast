@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { selectUserId } from "@/store/user";
 import { useAppSelector } from "@/hooks/redux";
 

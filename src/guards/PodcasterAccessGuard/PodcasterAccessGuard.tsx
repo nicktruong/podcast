@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import { Roles } from "@/common/enums";
+import { Roles } from "@/enums";
 import { useAppSelector } from "@/hooks/redux";
 import { selectUserId, selectUserRoles } from "@/store/user";
 
