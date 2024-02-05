@@ -80,7 +80,7 @@ export default function DashboardOverview() {
                 {t("followers")}
               </Typography>
               <Typography className={classes.stats}>
-                {/* TODO: Implement followers */}0
+                {/* TODO: Implement followers */} 0
               </Typography>
               <Typography className={classes.statsNote}>
                 {t("growYourAudience")}

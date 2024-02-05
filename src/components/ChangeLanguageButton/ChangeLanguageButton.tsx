@@ -11,13 +11,13 @@ const ChangeLanguageButton = () => {
     <Select
       className={classes.select}
       onChange={handleChangeLanguage}
-      defaultValue={i18n.resolvedLanguage}
+      defaultValue={i18n.resolvedLanguage ?? "en"}
     >
       <MenuItem value="en">
         <img
-          className={classes.flag}
-          src={AmericanFlagImg}
           alt="American flag"
+          src={AmericanFlagImg}
+          className={classes.flag}
         />
       </MenuItem>
       <MenuItem value="vi">
