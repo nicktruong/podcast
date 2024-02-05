@@ -2,9 +2,9 @@ import Step from "@mui/material/Step";
 import Stepper from "@mui/material/Stepper";
 import StepLabel from "@mui/material/StepLabel";
 
-import ColorStepIcon from "./components/ColorStepIcon";
-import { ColorIconStepperProps } from "./interfaces";
-import ColorIconConnector from "./components/ColorIconConnector";
+import { ColorStepIcon, ColorIconConnector } from "./components";
+
+import type { ColorIconStepperProps } from "./interfaces";
 
 // TODO: Make this component customizable
 function ColorIconStepper({

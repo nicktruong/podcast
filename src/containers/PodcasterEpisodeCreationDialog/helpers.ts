@@ -19,7 +19,7 @@ import {
 import { notifyFollower, uploadFile } from "@/firebase";
 import { selectUser, setUser } from "@/store/user";
 import { resizeImage } from "@/common/utils";
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { EPISODE_CREATION_DEFAULT_DATA, IMAGE_SIZE } from "@/common/constants";
 import { selectPodcast } from "@/store/podcast";
@@ -107,11 +107,11 @@ const usePrepareHook = ({ onClose: handleClose }: UsePrepareHookProps) => {
 
   const handleNext = async () => {
     switch (step) {
-      case EPISODE_CREATION_STEPS.EDIT_DETAILS:
+      case EpisodeCreationSteps.EDIT_DETAILS:
         onSubmit();
         break;
 
-      case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
+      case EpisodeCreationSteps.REVIEW_PUBLISH:
         if (!user?.id) return;
 
         if (!podcast) return;

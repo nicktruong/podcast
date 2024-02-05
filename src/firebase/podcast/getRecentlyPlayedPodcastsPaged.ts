@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -22,7 +22,7 @@ export const getRecentlyPlayedPodcastsPaged = async ({
 
   const snapshots = await Promise.all(
     history.map(async (podcastId) =>
-      getDoc(doc(db, COLLECTIONS.PODCASTS, podcastId))
+      getDoc(doc(db, Collections.PODCASTS, podcastId))
     )
   );
 

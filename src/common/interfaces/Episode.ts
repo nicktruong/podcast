@@ -1,6 +1,6 @@
 import type { User } from "./User";
 import type { Podcast } from "./Podcast";
-import type { PODCAST_STATUS } from "../enums";
+import type { PodcastStatus } from "../enums";
 
 export interface Episode {
   id: string;
@@ -19,7 +19,7 @@ export interface Episode {
   pathToImgFile: string;
   rating: number | null;
   publishedDate: string;
-  status: PODCAST_STATUS;
+  status: PodcastStatus;
 }
 
 export interface EpisodeBasicCreationData {

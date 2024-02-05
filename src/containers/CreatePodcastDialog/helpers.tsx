@@ -9,16 +9,16 @@ import {
   setSeriesDetails,
   uploadPodcastCover,
   createPodcastAction,
-  selectPodcastCreationData,
 } from "@/store/podcast";
 import { selectUserId } from "@/store/user";
 import { selectCategories } from "@/store/category";
-import { PODCAST_CREATION_STEPS } from "@/common/enums";
+import { PodcastCreationSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { PODCAST_CREATION_DEFAULT_DATA } from "@/common/constants";
 
 import schema from "./schema";
 import { useStyles } from "./styles";
+import { ImageForm, EditSeriesDetail } from "./components";
 
 import type { PodcastCreationData } from "@/common/interfaces";
 
@@ -36,7 +36,6 @@ const usePrepareHook = ({ handleClose }: Props) => {
   const tempImg = useAppSelector(selectTempImg);
   const coverUrl = podcast?.coverUrl ?? tempImg;
   const categories = useAppSelector(selectCategories);
-  const podcastCreationData = useAppSelector(selectPodcastCreationData);
 
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -68,18 +67,18 @@ const usePrepareHook = ({ handleClose }: Props) => {
 
   const handleNextStep = async () => {
     switch (step) {
-      case PODCAST_CREATION_STEPS.INPUT_DETAILS: {
+      case PodcastCreationSteps.INPUT_DETAILS: {
         const isValidDetails = await validatePodcastSeriesInfo();
         if (isValidDetails) onSubmit();
         break;
       }
 
-      case PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG: {
+      case PodcastCreationSteps.UPLOAD_COVER_IMG: {
         fileRef.current?.click();
         break;
       }
 
-      case PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE: {
+      case PodcastCreationSteps.CONFIRM_DETAILS_AND_CREATE: {
         if (!userId) return;
         dispatch(createPodcastAction(userId));
         handleClose();
@@ -91,20 +90,60 @@ const usePrepareHook = ({ handleClose }: Props) => {
     }
   };
 
+  const renderStep = () => {
+    switch (step) {
+      case PodcastCreationSteps.INPUT_DETAILS:
+        return (
+          <EditSeriesDetail
+            errors={errors}
+            classes={classes}
+            control={control}
+            categories={categories}
+          />
+        );
+      case PodcastCreationSteps.UPLOAD_COVER_IMG:
+      case PodcastCreationSteps.CONFIRM_DETAILS_AND_CREATE:
+        return (
+          <ImageForm
+            title={
+              step === PodcastCreationSteps.UPLOAD_COVER_IMG
+                ? "Choose your cover art"
+                : "Review your photo"
+            }
+            image={coverUrl}
+            classes={classes}
+          />
+        );
+
+      default:
+        return <>404 Step not found!</>;
+    }
+  };
+
+  const renderButtonText = () => {
+    switch (step) {
+      case PodcastCreationSteps.INPUT_DETAILS:
+        return "Continue";
+
+      case PodcastCreationSteps.UPLOAD_COVER_IMG:
+        return "Upload an image";
+
+      case PodcastCreationSteps.CONFIRM_DETAILS_AND_CREATE:
+        return "Continue";
+
+      default:
+        return <>404 Step not found!</>;
+    }
+  };
+
   return {
     step,
-    podcast,
-    errors,
-    control,
     classes,
     fileRef,
-    coverUrl,
-    categories,
-    podcastCreationData,
-    onSubmit,
+    renderStep,
     handleNextStep,
+    renderButtonText,
     handleImageSubmit,
-    validatePodcastSeriesInfo,
   };
 };
 

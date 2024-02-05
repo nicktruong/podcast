@@ -6,7 +6,7 @@ import {
   routes,
   REGISTRATION_INTERESTS_DEFAULT_DATA,
 } from "@/common/constants";
-import { GENDERS, ROLES } from "@/common/enums";
+import { Genders, Roles } from "@/common/enums";
 import { selectUser, setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -48,9 +48,9 @@ export const usePrepareHook = () => {
     await createUserDocument({
       uid: user.id,
       email: user.email,
-      role: ROLES.LISTENER,
+      role: Roles.LISTENER,
       name: user.name ?? "",
-      gender: GENDERS.UNKNOWN,
+      gender: Genders.UNKNOWN,
       photoURL: user.photoURL ?? "",
       categoriesOfInterest: data.categoriesOfInterest,
     });

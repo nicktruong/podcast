@@ -1,19 +1,19 @@
 import { doc, updateDoc } from "@firebase/firestore";
 
-import { COLLECTIONS, ROLES } from "@/common/enums";
+import { Collections, Roles } from "@/common/enums";
 
 import { db } from "../init";
 
 export const upgradeUserToPodcaster = async (
   userId: string,
-  oldRoles: ROLES[]
+  oldRoles: Roles[]
 ) => {
-  if (oldRoles.includes(ROLES.PODCASTER)) {
+  if (oldRoles.includes(Roles.PODCASTER)) {
     return false;
   }
 
-  await updateDoc(doc(db, COLLECTIONS.USERS, userId), {
-    roles: [...oldRoles, ROLES.PODCASTER],
+  await updateDoc(doc(db, Collections.USERS, userId), {
+    roles: [...oldRoles, Roles.PODCASTER],
   });
 
   return true;

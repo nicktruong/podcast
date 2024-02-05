@@ -1,9 +1,9 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
 
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
-import { UploadPodBreadcrumbs } from "../Breadcrumbs";
+import UploadPodBreadcrumbs from "../Breadcrumbs";
 
 import { usePrepareHook } from "./helpers";
 import { DialogBarProps } from "./interfaces";
@@ -52,7 +52,7 @@ export default function DialogBar({ step, handleClose }: DialogBarProps) {
 
           <UploadPodBreadcrumbs
             activeStep={t(step)}
-            steps={Object.values(EPISODE_CREATION_STEPS).map((stepValue) =>
+            steps={Object.values(EpisodeCreationSteps).map((stepValue) =>
               t(stepValue)
             )}
           />

@@ -1,1 +1,1 @@
-export { default as UploadAudio } from "./UploadAudio";
+export { default } from "./UploadAudio";

@@ -15,7 +15,10 @@ export default function CategoriesForm({
   chosenCategories,
   setValue,
 }: CategoriesFormProps) {
-  const { classes, t, cx } = usePrepareHook();
+  const { classes, handleCategoryClick, t, cx } = usePrepareHook({
+    chosenCategories,
+    setValue,
+  });
 
   return (
     <>
@@ -30,21 +33,7 @@ export default function CategoriesForm({
                 className={cx(classes.category, {
                   [classes.chosenCategory]: isChosen,
                 })}
-                onClick={() => {
-                  if (!isChosen) {
-                    setValue("categoriesOfInterest", [
-                      ...chosenCategories,
-                      category.name,
-                    ]);
-                  } else {
-                    setValue(
-                      "categoriesOfInterest",
-                      chosenCategories.filter(
-                        (chosenCategory) => chosenCategory !== category.name
-                      )
-                    );
-                  }
-                }}
+                onClick={() => handleCategoryClick(isChosen, category.name)}
               >
                 <CheckIcon
                   className={cx(classes.checkIcon, {

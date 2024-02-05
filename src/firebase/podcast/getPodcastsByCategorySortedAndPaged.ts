@@ -10,8 +10,8 @@ import {
   QueryFieldFilterConstraint,
 } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { PODCAST_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { PodcastFields } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -45,7 +45,7 @@ export const getPodcastsByCategorySortedAndPaged = async ({
 
     if (subCategories.length) {
       dynamicConditions.push(
-        where(PODCAST_FIELDS.CATEGORY, "in", subCategories)
+        where(PodcastFields.CATEGORY, "in", subCategories)
       );
     }
 
@@ -56,7 +56,7 @@ export const getPodcastsByCategorySortedAndPaged = async ({
     // decide based on playCount in period
     // offset based on last createdAt
     const podcastsQuery = query(
-      collection(db, COLLECTIONS.PODCASTS),
+      collection(db, Collections.PODCASTS),
       orderBy(sortBy, "desc"),
       ...dynamicConditions,
       limit(pageSize)

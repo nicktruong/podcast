@@ -1,13 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import ImageIcon from "@mui/icons-material/Image";
 
-interface Props {
-  title: string;
-  image?: string;
-  classes: Record<string, string>;
-}
+import type { ImageFormProps } from "./interfaces";
 
-export default function ImageForm({ classes, title, image }: Props) {
+export default function ImageForm({ classes, title, image }: ImageFormProps) {
   return (
     <>
       <Box className={classes.headingRoot}>

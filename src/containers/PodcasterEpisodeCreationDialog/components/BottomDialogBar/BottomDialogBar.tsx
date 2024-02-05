@@ -7,7 +7,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 import { usePrepareHook } from "./helpers";
 import { BottomDialogBarProps } from "./interfaces";
@@ -98,7 +98,7 @@ export default function BottomDialogBar({
                   backgroundColor: theme.palette.custom?.purple.lighter,
                 },
               })}
-              disabled={step === EPISODE_CREATION_STEPS.EDIT_DETAILS}
+              disabled={step === EpisodeCreationSteps.EDIT_DETAILS}
               onClick={handleStepBack}
             >
               {t("back")}
@@ -110,7 +110,7 @@ export default function BottomDialogBar({
           variant="contained"
           onClick={handleNext}
           disabled={
-            step === EPISODE_CREATION_STEPS.REVIEW_PUBLISH &&
+            step === EpisodeCreationSteps.REVIEW_PUBLISH &&
             podUploadingProgress < 100
           }
           sx={(theme) => ({
@@ -129,7 +129,7 @@ export default function BottomDialogBar({
             },
           })}
         >
-          {step === EPISODE_CREATION_STEPS.REVIEW_PUBLISH
+          {step === EpisodeCreationSteps.REVIEW_PUBLISH
             ? t("publish")
             : t("next")}
         </Button>

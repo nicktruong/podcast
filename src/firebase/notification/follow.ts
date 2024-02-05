@@ -1,6 +1,6 @@
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -18,6 +18,6 @@ export const userFollowPodcast = async ({
   await subscribeTokenToTopic({ token, topic: podcastId });
 
   // Update firestore
-  const userRef = doc(db, COLLECTIONS.USERS, userId);
+  const userRef = doc(db, Collections.USERS, userId);
   await updateDoc(userRef, { following: arrayUnion(podcastId) });
 };

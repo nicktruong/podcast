@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-import { ROLES } from "@/common/enums";
+import { Roles } from "@/common/enums";
 
 import {
   signOut,
@@ -33,7 +33,7 @@ export const userSlice = createSlice({
     builder
       .addCase(upgradeToPodcaster.fulfilled, (state, { payload }) => {
         if (payload) {
-          state.user!.roles!.push(ROLES.PODCASTER);
+          state.user!.roles!.push(Roles.PODCASTER);
         }
       })
       .addCase(upgradeToPodcaster.rejected, (state, { error }) => {

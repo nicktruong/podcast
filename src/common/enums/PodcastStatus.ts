@@ -1,4 +1,4 @@
-export enum PODCAST_STATUS {
+export enum PodcastStatus {
   DRAFT = "DRAFT",
   PUBLISHED = "PUBLISHED",
   PENDING_PUBLISHED = "PENDING_PUBLISHED",

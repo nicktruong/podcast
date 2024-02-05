@@ -1,4 +1,4 @@
-export enum PODCAST_FIELDS {
+export enum PodcastFields {
   TITLE = "title",
   RANDOM = "random",
   RATING = "rating",

@@ -15,7 +15,7 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 
-import { ROLES } from "@/common/enums";
+import { Roles } from "@/common/enums";
 import { routes } from "@/common/constants";
 import { ChangeLanguageButton } from "@/components";
 
@@ -116,7 +116,7 @@ export default function UserMenu() {
                   >
                     {t("profile")}
                   </MenuItem>
-                  {userRoles?.includes(ROLES.PODCASTER) ? (
+                  {userRoles?.includes(Roles.PODCASTER) ? (
                     <MenuItem
                       component={Link}
                       onClick={handleCloseMenu}

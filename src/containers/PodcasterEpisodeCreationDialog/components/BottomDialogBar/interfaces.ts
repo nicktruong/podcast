@@ -1,8 +1,8 @@
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 export interface BottomDialogBarProps {
   podUploading: boolean;
-  step: EPISODE_CREATION_STEPS;
+  step: EpisodeCreationSteps;
   handleCancel: () => void;
   handleStepBack: () => void;
   podUploadingProgress: number;

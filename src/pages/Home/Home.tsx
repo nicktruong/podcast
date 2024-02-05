@@ -2,8 +2,7 @@ import { Fragment } from "react";
 import { Box } from "@mui/material";
 
 import usePrepareHook from "./helpers";
-import { Section, SectionSkeleton } from "./components";
-import StandoutPodcast from "./components/StandoutPodcast";
+import { Section, SectionSkeleton, StandoutPodcast } from "./components";
 
 export default function Home() {
   const { user, classes, loading, sections } = usePrepareHook();

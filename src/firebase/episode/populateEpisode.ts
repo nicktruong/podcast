@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -17,7 +17,7 @@ export const populateEpisode = async (
 ): Promise<PopulatedEpisode> => {
   // Populate podcast
   const podcastSnapshot = await getDoc(
-    doc(db, COLLECTIONS.PODCASTS, episode.podcastId)
+    doc(db, Collections.PODCASTS, episode.podcastId)
   );
 
   const podcast = {
@@ -31,7 +31,7 @@ export const populateEpisode = async (
 
   // Populate author
   const authorSnapshot = await getDoc(
-    doc(db, COLLECTIONS.USERS, episode.authorId)
+    doc(db, Collections.USERS, episode.authorId)
   );
   const author = { id: authorSnapshot.id, ...authorSnapshot.data() } as User;
 

@@ -7,3 +7,8 @@ export interface DetailsState {
   episodesDetail: Episode[];
   podcastDetail: PopulatedPodcastWithAuthor | null;
 }
+
+export interface SelectHeaderDetailOptions {
+  path: string;
+  id?: string;
+}

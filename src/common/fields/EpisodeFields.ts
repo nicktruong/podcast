@@ -1,4 +1,4 @@
-export enum EPISODE_FIELDS {
+export enum EpisodeFields {
   NO = "no",
   TITLE = "title",
   RATING = "rating",

@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -49,7 +49,7 @@ export const rate = async ({
     };
 
     await setDoc(
-      doc(db, COLLECTIONS.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
+      doc(db, Collections.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
       ratingDoc
     );
 
@@ -79,7 +79,7 @@ export const rate = async ({
   }
 
   await setDoc(
-    doc(db, COLLECTIONS.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
+    doc(db, Collections.RATINGS, `${userId}-rates-${podcastOrSeriesId}`),
     ratingDoc
   );
 

@@ -4,7 +4,7 @@ import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
 import { IMAGE_SIZE } from "@/common/constants";
-import { COLLECTIONS, GENDERS, PODCAST_STATUS, ROLES } from "@/common/enums";
+import { Collections, Genders, PodcastStatus, Roles } from "@/common/enums";
 // import { generateKeywords } from "@/common/utils";
 
 import categories from "../categories/categories.json";
@@ -86,7 +86,7 @@ const createRandomEpisode = ({
     updatedAt: seedDateString,
     publishedDate: seedDateString,
     title: episodesJSON[index].title,
-    status: PODCAST_STATUS.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
+    status: PodcastStatus.PUBLISHED, // TODO: support draft and pending publish when add new functionalities
     pathToFile: "audios/seed-audio.mp3",
     description: episodesJSON[index].description,
     pathToImgFile: faker.image.urlPicsumPhotos({
@@ -116,10 +116,10 @@ const createRandomPodcaster = (episodeCount: number): Omit<User, "id"> => {
     createdAt: seedDateString,
     updatedAt: seedDateString,
     email: faker.internet.email(),
-    roles: [ROLES.LISTENER, ROLES.PODCASTER],
+    roles: [Roles.LISTENER, Roles.PODCASTER],
     // searchKeywords: name.toLowerCase().split(" "), // TODO: gen keywords
     dob: faker.date.birthdate().toISOString(),
-    gender: faker.helpers.arrayElement(Object.values(GENDERS)),
+    gender: faker.helpers.arrayElement(Object.values(Genders)),
     photoURL: faker.image.urlPicsumPhotos({
       width: IMAGE_SIZE,
       height: IMAGE_SIZE,
@@ -147,7 +147,7 @@ export const migrate = async () => {
     // Create random podcaster
     const podcaster = createRandomPodcaster(episodeCount);
     const podcasterDoc = await addDoc(
-      collection(db, COLLECTIONS.USERS),
+      collection(db, Collections.USERS),
       podcaster
     );
     console.log("Seeded podcaster");
@@ -202,7 +202,7 @@ export const migrate = async () => {
     });
 
     const podcastDoc = await addDoc(
-      collection(db, COLLECTIONS.PODCASTS),
+      collection(db, Collections.PODCASTS),
       podcast
     );
     console.log("Seeded podcast");
@@ -214,7 +214,7 @@ export const migrate = async () => {
 
     await Promise.all(
       episodes.map((episode) =>
-        addDoc(collection(db, COLLECTIONS.EPISODES), episode)
+        addDoc(collection(db, Collections.EPISODES), episode)
       )
     );
     console.log("Seeded episodes");

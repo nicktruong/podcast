@@ -1,1 +1,1 @@
-export { default as BottomDialogBar } from "./BottomDialogBar";
+export { default } from "./BottomDialogBar";

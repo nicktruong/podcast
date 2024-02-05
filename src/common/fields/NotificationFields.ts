@@ -1,4 +1,4 @@
-export enum NOTIFICATION_FIELDS {
+export enum NotificationFields {
   TITLE = "title",
   USER_IDS = "userIds",
   READ_IDS = "readIds",

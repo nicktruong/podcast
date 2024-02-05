@@ -7,7 +7,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS, ROLES } from "@/common/enums";
+import { Collections, Roles } from "@/common/enums";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -21,12 +21,12 @@ export const search = async (searchText: string): Promise<SearchResult> => {
   }
 
   // Podcasters
-  const podcastersRef = collection(db, COLLECTIONS.USERS);
+  const podcastersRef = collection(db, Collections.USERS);
 
   const podcastersSnapshot = await getDocs(
     query(
       podcastersRef,
-      where("role", "array-contains", ROLES.PODCASTER),
+      where("role", "array-contains", Roles.PODCASTER),
       where("name", ">=", searchText),
       where("name", "<=", searchText + "\uf8ff")
     )
@@ -45,7 +45,7 @@ export const search = async (searchText: string): Promise<SearchResult> => {
   );
 
   // Podcasts
-  const podcastRef = collection(db, COLLECTIONS.PODCASTS);
+  const podcastRef = collection(db, Collections.PODCASTS);
 
   const podcastSnapshot = await getDocs(
     query(
@@ -71,7 +71,7 @@ export const search = async (searchText: string): Promise<SearchResult> => {
   const podcastsWithAuthors = await Promise.all(
     podcasts.map(async (podcast) => {
       const authorDoc = await getDoc(
-        doc(db, COLLECTIONS.USERS, podcast.authorId)
+        doc(db, Collections.USERS, podcast.authorId)
       );
 
       const author = { id: authorDoc.id, ...authorDoc.data() } as User;

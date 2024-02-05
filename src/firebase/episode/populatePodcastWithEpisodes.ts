@@ -7,8 +7,8 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { EPISODE_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { EpisodeFields } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -20,10 +20,10 @@ export const populatePodcastWithEpisodes = async (
 ) => {
   const snapshot = await getDocs(
     query(
-      collection(db, COLLECTIONS.EPISODES),
-      where(EPISODE_FIELDS.PODCAST_ID, "==", podcastToPopulate.id),
-      orderBy(EPISODE_FIELDS.NO, "desc"),
-      orderBy(EPISODE_FIELDS.CREATED_AT, "desc"),
+      collection(db, Collections.EPISODES),
+      where(EpisodeFields.PODCAST_ID, "==", podcastToPopulate.id),
+      orderBy(EpisodeFields.NO, "desc"),
+      orderBy(EpisodeFields.CREATED_AT, "desc"),
       limit(3)
     )
   );

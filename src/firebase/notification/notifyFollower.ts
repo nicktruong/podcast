@@ -1,7 +1,7 @@
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { USER_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { UserFields } from "@/common/fields";
 
 import { db } from "../init";
 
@@ -22,8 +22,8 @@ export const notifyFollower = async ({
   // Firestore
   const snapshot = await getDocs(
     query(
-      collection(db, COLLECTIONS.USERS),
-      where(USER_FIELDS.FOLLOWING, "array-contains", podcastId)
+      collection(db, Collections.USERS),
+      where(UserFields.FOLLOWING, "array-contains", podcastId)
     )
   );
 
@@ -40,7 +40,7 @@ export const notifyFollower = async ({
     creatorAvatar,
   };
   const docRef = await addDoc(
-    collection(db, COLLECTIONS.NOTIFICATIONS),
+    collection(db, Collections.NOTIFICATIONS),
     notification
   );
 
