@@ -7,7 +7,7 @@ export function isDark(color: string) {
 
   const luma = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
 
-  if (luma < 150) {
-    return true;
-  }
+  if (luma < 150) return true;
+
+  return false;
 }
