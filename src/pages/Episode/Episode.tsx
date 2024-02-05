@@ -3,54 +3,23 @@ import {
   Box,
   Tabs,
   Menu,
+  Button,
   MenuItem,
   IconButton,
   Typography,
-  Button,
 } from "@mui/material";
 import { format } from "date-fns";
+import { Link } from "react-router-dom";
 import AddIcon from "@mui/icons-material/Add";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
-import { Link } from "react-router-dom";
 
 import { routes } from "@/common/constants";
 
-import { usePrepareHook } from "./helpers";
-
-interface TabPanelProps {
-  index: number;
-  value: number;
-  children?: React.ReactNode;
-}
-
-const CustomTabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-
-  const { classes } = usePrepareHook();
-
-  return (
-    <div
-      className={classes.tabContent}
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && <Box>{children}</Box>}
-    </div>
-  );
-};
-
-const a11yProps = (index: number) => {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-};
+import { a11yProps, usePrepareHook } from "./helpers";
+import CustomTabPanel from "./components/CustomTabPanel/CustomTabPanel";
 
 const Episode = () => {
   const {
