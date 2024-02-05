@@ -17,7 +17,7 @@ import type { EditProfile, PodcastUserIdPair } from "@/common/interfaces";
 
 export const unfollowPodcast = createAppAsyncThunk(
   "user/unfollowPodcast",
-  async ({ podcastId, userId }: PodcastUserIdPair) => {
+  async ({ userId, podcastId }: PodcastUserIdPair) => {
     await userUnfollowPodcast({ podcastId, userId });
 
     return { podcastId };
@@ -26,7 +26,7 @@ export const unfollowPodcast = createAppAsyncThunk(
 
 export const followPodcast = createAppAsyncThunk(
   "user/followPodcast",
-  async ({ podcastId, userId }: PodcastUserIdPair) => {
+  async ({ userId, podcastId }: PodcastUserIdPair) => {
     await userFollowPodcast({ podcastId, userId });
 
     return { podcastId };

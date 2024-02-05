@@ -8,7 +8,6 @@ import { getUserInfo } from "./getUserInfo";
 
 import type { User, UserCreationData } from "@/common/interfaces";
 
-// TODO: Add user avatar
 export const createUserDocument = async (user: UserCreationData) => {
   const {
     uid,
@@ -29,6 +28,7 @@ export const createUserDocument = async (user: UserCreationData) => {
     gender,
     bio: "",
     photoURL,
+    played: [],
     history: [],
     roles: [role],
     following: [],

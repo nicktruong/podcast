@@ -13,11 +13,11 @@ import {
   updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
-import { MIN_ENGAGE_TIME } from "@/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
 import {
   DEFAULT_VOLUME,
+  MIN_ENGAGE_TIME,
   DEFAULT_INTERVAL,
   DEFAULT_PLAYBACK_RATE,
 } from "./constants";
@@ -51,19 +51,24 @@ const usePrepareHook = () => {
   const reactPlayerRef = useRef<ReactPlayer | null>(null);
 
   useEffect(() => {
+    let id: NodeJS.Timeout | undefined;
+
     if (playing) {
       startTrackedTime.current = Date.now();
-    } else {
-      trackedTime.current =
-        trackedTime.current + Date.now() - startTrackedTime.current;
-    }
 
-    // TODO: Check audio player logic
-    const id = setInterval(() => {
+      // TODO: Check audio player logic & Fix audio laggy
+      id = setInterval(() => {
+        trackedTime.current =
+          trackedTime.current + Date.now() - startTrackedTime.current;
+        startTrackedTime.current = Date.now();
+      }, 1000);
+    } else if (trackedTime.current !== 0) {
+      // Only
       trackedTime.current =
         trackedTime.current + Date.now() - startTrackedTime.current;
-      startTrackedTime.current = Date.now();
-    }, 1000);
+
+      clearInterval(id);
+    }
 
     return () => clearInterval(id);
   }, [playing]);
