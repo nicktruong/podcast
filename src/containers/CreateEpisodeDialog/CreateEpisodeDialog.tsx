@@ -15,7 +15,7 @@ import {
 } from "./components";
 import { PodcasterEpisodeCreationDialogProps } from "./interfaces";
 
-export default function PodcasterEpisodeCreationDialog({
+export default function CreateEpisodeDialog({
   open,
   onClose,
 }: PodcasterEpisodeCreationDialogProps) {

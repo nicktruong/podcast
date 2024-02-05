@@ -5,11 +5,11 @@ import { Button, Typography } from "@mui/material";
 import { ColorIconStepper } from "@/components";
 
 import usePrepareHook from "./helpers";
-import { PodcasterDashboardOnboardingProps } from "./interfaces";
+import { PodcasterOnboardingProps } from "./interfaces";
 
-export default function PodcasterDashboardOnboarding({
+export default function PocasterOnboarding({
   onOpenDialog,
-}: PodcasterDashboardOnboardingProps) {
+}: PodcasterOnboardingProps) {
   const { classes, hasPodcast, createdFirstEp, t, cx } = usePrepareHook();
 
   return (

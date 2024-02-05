@@ -3,7 +3,7 @@ import { Button, Typography } from "@mui/material";
 
 import { usePrepareHook } from "./helpers";
 
-export default function PodDashboardOverview() {
+export default function DashboardOverview() {
   const { user, classes, podcast, episodes, t } = usePrepareHook();
 
   return (

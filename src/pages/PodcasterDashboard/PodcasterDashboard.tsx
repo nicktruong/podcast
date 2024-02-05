@@ -1,11 +1,11 @@
 import Box from "@mui/material/Box";
 
 import {
-  PodcasterDashboardAppBar,
-  PodcasterDashboardOverview,
-  PodcasterCreateSeriesDialog,
-  PodcasterDashboardOnboarding,
-  PodcasterEpisodeCreationDialog,
+  DashboardAppBar,
+  DashboardOverview,
+  CreatePodcastDialog,
+  PodcasterOnboarding,
+  CreateEpisodeDialog,
 } from "@/containers";
 import { Loader } from "@/components";
 
@@ -28,20 +28,20 @@ export default function PodcasterDashboard() {
 
   return (
     <Box>
-      <PodcasterDashboardAppBar onOpenDialog={handleOpenDialog} />
+      <DashboardAppBar onOpenDialog={handleOpenDialog} />
 
       {!createdFirstEpisode ? (
-        <PodcasterDashboardOnboarding onOpenDialog={handleOpenDialog} />
+        <PodcasterOnboarding onOpenDialog={handleOpenDialog} />
       ) : (
-        <PodcasterDashboardOverview />
+        <DashboardOverview />
       )}
 
-      <PodcasterEpisodeCreationDialog
+      <CreateEpisodeDialog
         open={openCreateEpisodeDialog}
         onClose={handleCloseDialog}
       />
 
-      <PodcasterCreateSeriesDialog
+      <CreatePodcastDialog
         open={openCreateSeriesDialog}
         handleClose={handleCloseDialog}
       />
