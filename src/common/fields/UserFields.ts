@@ -1,0 +1,16 @@
+export enum USER_FIELDS {
+  BIO = "bio",
+  DOB = "dob",
+  NAME = "name",
+  EMAIL = "email",
+  ROLES = "roles",
+  GENDER = "gender",
+  HISTORY = "history",
+  PHOTO_URL = "photoURL",
+  FOLLOWING = "following",
+  CREATED_AT = "createdAt",
+  UPDATED_AT = "updatedAt",
+  EPISODE_COUNT = "episodeCount",
+  EMAIL_VERIFIED = "emailVerified",
+  CATEGORIES_OF_INTEREST = "categoriesOfInterest",
+}

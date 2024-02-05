@@ -156,6 +156,9 @@ export default function Playlist() {
           {podcastDetail && category && (
             <Button
               className={classes.categoryBtn}
+              onClick={() => {
+                navigate(routes.category.replace(":name", category.name));
+              }}
               sx={(theme) => ({
                 color: isDark(category.color)
                   ? theme.palette.common.white

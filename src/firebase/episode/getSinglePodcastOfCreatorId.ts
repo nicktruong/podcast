@@ -1,6 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
+import { PODCAST_FIELDS } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";

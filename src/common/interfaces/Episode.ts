@@ -1,7 +1,6 @@
-import { PODCAST_STATUS } from "../enums";
-
-import { User } from "./User";
-import { Podcast, PopulatedPodcastWithAuthor } from "./Podcast";
+import type { User } from "./User";
+import type { Podcast } from "./Podcast";
+import type { PODCAST_STATUS } from "../enums";
 
 export interface Episode {
   id: string;
@@ -38,7 +37,3 @@ export type PopulatedEpisode = Omit<Episode, "podcastId"> & {
     author: User;
   };
 };
-
-export interface EpisodeWithSeriesAndAuthor extends Episode {
-  series: PopulatedPodcastWithAuthor;
-}

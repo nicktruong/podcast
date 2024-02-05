@@ -2,6 +2,11 @@ import Resizer from "react-image-file-resizer";
 
 import { IMAGE_SIZE } from "../constants";
 
+interface SizeOption {
+  width: number;
+  height: number;
+}
+
 /**
  * Resizes an image file to the specified dimensions.
  * @param {File} file - The image file to resize.
@@ -17,10 +22,7 @@ import { IMAGE_SIZE } from "../constants";
  * // Use the resizedImage File object here
  * })
  */
-export const resizeImage = (
-  file: File,
-  sizes?: { width: number; height: number }
-): Promise<File> => {
+export const resizeImage = (file: File, sizes?: SizeOption): Promise<File> => {
   return new Promise((resolve) => {
     Resizer.imageFileResizer(
       file,

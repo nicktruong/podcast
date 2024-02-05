@@ -1,0 +1,15 @@
+export enum PODCAST_FIELDS {
+  TITLE = "title",
+  RANDOM = "random",
+  RATING = "rating",
+  CATEGORY = "category",
+  AUTHOR_ID = "authorId",
+  COVER_URL = "coverUrl",
+  PLAY_COUNT = "playCount",
+  CREATED_AT = "createdAt",
+  RATE_COUNT = "rateCount",
+  UPDATED_AT = "updatedAt",
+  DESCRIPTION = "description",
+  AUDIENCE_SIZE = "audienceSize",
+  NO_OF_EPISODES = "noOfEpisodes",
+}

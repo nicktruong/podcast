@@ -10,26 +10,26 @@ import {
   QueryFieldFilterConstraint,
 } from "firebase/firestore";
 
-import { COLLECTIONS, PODCAST_FIELDS } from "@/common/enums";
+import { COLLECTIONS } from "@/common/enums";
+import { PODCAST_FIELDS } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
 
 import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
 
-import type { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
+import type {
+  Podcast,
+  PopulatedPodcastWithAuthor,
+  GetPodcastsByCategoriesOption,
+} from "@/common/interfaces";
 
 export const getPodcastsByCategorySortedAndPaged = async ({
   offset,
   pageSize = 14,
   categories = [],
   sortBy = "createdAt",
-}: {
-  offset: any;
-  sortBy?: string;
-  pageSize?: number;
-  categories?: string[];
-}) => {
+}: GetPodcastsByCategoriesOption) => {
   const podcasts: PopulatedPodcastWithAuthor[] = [];
 
   let i = 0;

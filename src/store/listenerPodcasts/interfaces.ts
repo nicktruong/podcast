@@ -18,13 +18,6 @@ export interface ListenerPodcastsState extends PopulatedPodcastSections {
   standoutPodcast: PopulatedPodcast | null;
 }
 
-export interface FetchPodcastsByCategorySortedAndPaged {
-  offset: any;
-  sortBy?: string;
-  pageSize?: number;
-  categories?: string[];
-}
-
 export interface FetchPodcastsOptions {
   offset?: any;
   period?: number;

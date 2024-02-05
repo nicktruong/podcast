@@ -32,7 +32,7 @@ export const REGISTER_DEFAULT_DATA = {
   year: "",
   month: "",
   email: "",
-  gender: "" as GENDERS,
   password: "",
+  gender: "" as GENDERS,
   categoriesOfInterest: [],
 };

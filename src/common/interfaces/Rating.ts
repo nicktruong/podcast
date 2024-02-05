@@ -1,4 +1,4 @@
-import { COLLECTIONS } from "../enums";
+import type { COLLECTIONS } from "../enums";
 
 export interface Rating {
   rating: number;
