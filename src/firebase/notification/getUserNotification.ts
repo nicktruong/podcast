@@ -1,7 +1,7 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { NOTIFICATION_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { NotificationFields } from "@/common/fields";
 
 import { db } from "../init";
 
@@ -10,8 +10,8 @@ import type { Notification, UserNotification } from "@/common/interfaces";
 export const getUserNotifcation = async (userId: string) => {
   const snapshot = await getDocs(
     query(
-      collection(db, COLLECTIONS.NOTIFICATIONS),
-      where(NOTIFICATION_FIELDS.USER_IDS, "array-contains", userId)
+      collection(db, Collections.NOTIFICATIONS),
+      where(NotificationFields.USER_IDS, "array-contains", userId)
     )
   );
 

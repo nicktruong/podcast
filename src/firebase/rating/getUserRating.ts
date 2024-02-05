@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -11,7 +11,7 @@ export const getUserRating = async ({
   podcastOrSeriesId,
 }: GetUserRatingOptions): Promise<Rating | undefined> => {
   const docId = `${userId}-rates-${podcastOrSeriesId}`;
-  const docRef = doc(db, COLLECTIONS.RATINGS, docId);
+  const docRef = doc(db, Collections.RATINGS, docId);
   const snapshot = await getDoc(docRef);
   const rating = snapshot.data() as Rating | undefined;
 

@@ -4,6 +4,7 @@ import { selectUser } from "../user";
 import { selectPlaylists } from "../playlists";
 
 import type { RootState } from "@/store";
+import type { SelectHeaderDetailOptions } from "./interfaces";
 
 export const selectEpisodeId = (state: RootState) => state.details.episodeId;
 
@@ -38,7 +39,7 @@ export const selectHeaderDetail = createSelector(
     selectPlaylists,
     selectPodcastDetail,
     selectEpisodesDetail,
-    (state: RootState, { path, id }: { path: string; id?: string }) => ({
+    (state: RootState, { path, id }: SelectHeaderDetailOptions) => ({
       id,
       path,
     }),

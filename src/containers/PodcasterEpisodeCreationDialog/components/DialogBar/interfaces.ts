@@ -1,6 +1,6 @@
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 export interface DialogBarProps {
   handleClose: () => void;
-  step: EPISODE_CREATION_STEPS;
+  step: EpisodeCreationSteps;
 }

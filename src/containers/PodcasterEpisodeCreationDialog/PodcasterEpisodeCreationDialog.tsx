@@ -2,16 +2,18 @@ import * as React from "react";
 import { Box } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 import usePrepareHook from "./helpers";
-import { DialogBar } from "./components/DialogBar";
-import { UploadAudio } from "./components/UploadAudio";
-import { EditDetails } from "./components/EditDetails";
-import { ReviewPublish } from "./components/ReviewPublish";
-import { BottomDialogBar } from "./components/BottomDialogBar";
+import {
+  DialogBar,
+  UploadAudio,
+  UploadPhoto,
+  EditDetails,
+  ReviewPublish,
+  BottomDialogBar,
+} from "./components";
 import { PodcasterEpisodeCreationDialogProps } from "./interfaces";
-import UploadPhoto from "./components/UploadPhoto/UploadPhoto";
 
 export default function PodcasterEpisodeCreationDialog({
   open,
@@ -36,18 +38,18 @@ export default function PodcasterEpisodeCreationDialog({
 
   const renderStep = () => {
     switch (step) {
-      case EPISODE_CREATION_STEPS.UPLOAD_AUDIO:
+      case EpisodeCreationSteps.UPLOAD_AUDIO:
         return <UploadAudio onFileUpload={onFileUpload} />;
 
-      case EPISODE_CREATION_STEPS.EDIT_DETAILS:
+      case EpisodeCreationSteps.EDIT_DETAILS:
         return (
           <EditDetails control={control} errors={errors} onSubmit={onSubmit} />
         );
 
-      case EPISODE_CREATION_STEPS.UPLOAD_PHOTO:
+      case EpisodeCreationSteps.UPLOAD_PHOTO:
         return <UploadPhoto onFileUpload={onPhotoUpload} />;
 
-      case EPISODE_CREATION_STEPS.REVIEW_PUBLISH:
+      case EpisodeCreationSteps.REVIEW_PUBLISH:
         return <ReviewPublish podInfo={podInfo} user={user} image={image} />;
 
       default:
@@ -73,7 +75,7 @@ export default function PodcasterEpisodeCreationDialog({
         </Box>
 
         {/* bottom app bar */}
-        {step !== EPISODE_CREATION_STEPS.UPLOAD_AUDIO && (
+        {step !== EpisodeCreationSteps.UPLOAD_AUDIO && (
           <BottomDialogBar
             handleCancel={handleCancel}
             handleNext={handleNext}

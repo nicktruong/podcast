@@ -16,6 +16,11 @@ import { closeAudioPlayer } from "@/store/ui";
 import { MIN_ENGAGE_TIME } from "@/common/constants";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 
+import {
+  DEFAULT_VOLUME,
+  DEFAULT_INTERVAL,
+  DEFAULT_PLAYBACK_RATE,
+} from "./constants";
 import { useStyles } from "./styles";
 
 const usePrepareHook = () => {
@@ -37,9 +42,9 @@ const usePrepareHook = () => {
   } = useAppSelector(selectAudioState);
 
   const [mute, setMute] = useState(false);
-  const [volume, setVolume] = useState(100);
-  const [playbackRate, setPlaybackRate] = useState(1);
-  const [progressInterval, setProgressInterval] = useState(1000);
+  const [volume, setVolume] = useState(DEFAULT_VOLUME);
+  const [playbackRate, setPlaybackRate] = useState(DEFAULT_PLAYBACK_RATE);
+  const [progressInterval, setProgressInterval] = useState(DEFAULT_INTERVAL);
 
   const trackedTime = useRef(0);
   const startTrackedTime = useRef(0);
@@ -111,8 +116,15 @@ const usePrepareHook = () => {
     setProgressInterval(1000 / rate);
   };
 
-  const changeAudioVolumn = (volume: number) => {
-    setVolume(volume);
+  const handleChangeDuration = (event: Event, value: number | number[]) => {
+    seekToSecond(value as number);
+  };
+
+  const handleChangeVolume = (event: Event, value: number | number[]) => {
+    if (typeof value !== "number") return;
+    if (value > 0) unmuteAudio();
+    if (value === 0) muteAudio();
+    setVolume(value);
   };
 
   const muteAudio = () => {
@@ -162,7 +174,8 @@ const usePrepareHook = () => {
     rewind15Second,
     handlePlayAudio,
     handlePauseAudio,
-    changeAudioVolumn,
+    handleChangeVolume,
+    handleChangeDuration,
     handleCloseAudioPlayer,
     handleChangePlaybackRate,
   };

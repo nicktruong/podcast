@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
 
 import { usePrepareHook } from "./helpers";
-import PodcastDetailsHeader from "./components/PodcastDetailsHeader";
+import { PodcastDetailsHeader } from "./components";
 
 const PodcastDetailsLayout = () => {
   const { classes } = usePrepareHook();

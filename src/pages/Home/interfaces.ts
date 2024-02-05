@@ -4,7 +4,7 @@ import type { PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 export interface SectionData {
   title: string;
-  requireLogin?: boolean;
   podcasts: PopulatedPodcastWithAuthor[];
   key: keyof ListenerPodcastsState["loading"];
+  requireLogin?: boolean;
 }

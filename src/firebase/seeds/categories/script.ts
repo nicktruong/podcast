@@ -5,7 +5,7 @@ import { faker } from "@faker-js/faker";
 import { addDoc, collection } from "firebase/firestore";
 
 import { db } from "@/firebase";
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import categories from "./categories.json";
 
@@ -30,7 +30,7 @@ const genCategoriesJSON = async () => {
 export const migrate = async () => {
   console.log("Begin categories migration");
 
-  await addDoc(collection(db, COLLECTIONS.CATEGORIES), { categories });
+  await addDoc(collection(db, Collections.CATEGORIES), { categories });
 
   console.log("Seeded categories");
 

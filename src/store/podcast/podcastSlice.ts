@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { PODCAST_CREATION_STEPS } from "@/common/enums";
+import { PodcastCreationSteps } from "@/common/enums";
 
 import {
   uploadPodcastCover,
@@ -16,7 +16,7 @@ const initialState: PodcasterManagePodcastState = {
   podcast: null, // for storing podcast
   loading: true, // fetching process
   podcastCreationData: null,
-  step: PODCAST_CREATION_STEPS.INPUT_DETAILS,
+  step: PodcastCreationSteps.INPUT_DETAILS,
 };
 
 export const podSeriesSlice = createSlice({
@@ -29,7 +29,7 @@ export const podSeriesSlice = createSlice({
         coverUrl: "",
         ...action.payload,
       };
-      state.step = PODCAST_CREATION_STEPS.UPLOAD_COVER_IMG;
+      state.step = PodcastCreationSteps.UPLOAD_COVER_IMG;
     },
   },
   extraReducers(builder) {
@@ -41,7 +41,7 @@ export const podSeriesSlice = createSlice({
 
         state.tempImg = payload.image;
         state.podcastCreationData.coverUrl = payload.fullPath;
-        state.step = PODCAST_CREATION_STEPS.CONFIRM_DETAILS_AND_CREATE;
+        state.step = PodcastCreationSteps.CONFIRM_DETAILS_AND_CREATE;
       })
       .addCase(uploadPodcastCover.rejected, (state, { error }) => {
         console.error(error);
@@ -54,7 +54,7 @@ export const podSeriesSlice = createSlice({
         }
 
         state.podcast = { ...payload, coverUrl: state.tempImg };
-        state.step = PODCAST_CREATION_STEPS.INPUT_DETAILS;
+        state.step = PodcastCreationSteps.INPUT_DETAILS;
       })
       .addCase(createPodcastAction.rejected, (_, { error }) => {
         console.error(error);

@@ -1,4 +1,4 @@
-import { EPISODE_CREATION_STEPS } from "@/common/enums";
+import { EpisodeCreationSteps } from "@/common/enums";
 
 import type {
   PopulatedEpisode,
@@ -9,13 +9,13 @@ export interface EpisodeState {
   uploading: boolean;
   loadingEpisodes: boolean;
   episodes: PopulatedEpisode[];
-  uploadStep: EPISODE_CREATION_STEPS;
+  uploadStep: EpisodeCreationSteps;
   audioUploadProgressInPercent: number;
   episodeCreationData: EpisodeCreationData;
 }
 
 export interface FetchEpisodesFromCreatorOptions {
-  offset?: Date;
   creatorId: string;
+  offset?: Date;
   pageSize?: number;
 }

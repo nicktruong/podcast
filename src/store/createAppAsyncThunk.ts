@@ -4,9 +4,9 @@ import type { AppDispatch, RootState } from ".";
 
 // For more information, please visit: https://redux-toolkit.js.org/usage/usage-with-typescript#typing-the-thunkapi-object
 export type AsyncThunkConfig = {
-  extra?: unknown;
   state: RootState;
   dispatch: AppDispatch;
+  extra?: unknown;
   pendingMeta?: unknown;
   rejectValue?: unknown;
   rejectedMeta?: unknown;

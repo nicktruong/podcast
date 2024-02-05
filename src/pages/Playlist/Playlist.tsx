@@ -7,8 +7,7 @@ import { isDark } from "@/common/utils";
 import { routes } from "@/common/constants";
 
 import usePrepareHook from "./helpers";
-import PodcastRating from "./components/PlaylistRating";
-import PlaylistSkeleton from "./components/PlaylistSkeleton";
+import { PodcastRating, PlaylistSkeleton } from "./components";
 
 export default function Playlist() {
   const {

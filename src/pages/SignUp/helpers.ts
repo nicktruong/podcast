@@ -7,7 +7,7 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import { signup } from "@/firebase";
 import { setUser } from "@/store/user";
 import { selectCategories } from "@/store/category";
-import { GENDERS, SignUpSteps } from "@/common/enums";
+import { Genders, SignUpSteps } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { routes, REGISTER_DEFAULT_DATA } from "@/common/constants";
 
@@ -39,7 +39,7 @@ const usePrepareHook = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
-    dispatch(setUser({ ...data, gender: data.gender as GENDERS }));
+    dispatch(setUser({ ...data, gender: data.gender as Genders }));
     await signup(data);
     navigate(routes.index, { replace: true });
   });

@@ -8,8 +8,8 @@ import {
   startAfter,
 } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { EPISODE_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { EpisodeFields } from "@/common/fields";
 
 import { db } from "../init";
 
@@ -27,9 +27,9 @@ export const getEpisodesFromCreatorPaged = async ({
 }: GetEpisodesFromCreatorPagedOptions) => {
   const snapshot = await getDocs(
     query(
-      collection(db, COLLECTIONS.EPISODES),
+      collection(db, Collections.EPISODES),
       where("authorId", "==", creatorId),
-      orderBy(EPISODE_FIELDS.CREATED_AT, "desc"),
+      orderBy(EpisodeFields.CREATED_AT, "desc"),
       startAfter(offset.toISOString()),
       limit(pageSize)
     )

@@ -7,7 +7,7 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS, PODCAST_STATUS } from "@/common/enums";
+import { Collections, PodcastStatus } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -23,7 +23,7 @@ export const publishEpisode = async (
   podcastId: string
 ): Promise<Episode | undefined> => {
   const podcastSnapshot = await getDoc(
-    doc(db, COLLECTIONS.PODCASTS, podcastId)
+    doc(db, Collections.PODCASTS, podcastId)
   );
 
   const podcast = podcastSnapshot.data() as Podcast | undefined;
@@ -32,12 +32,12 @@ export const publishEpisode = async (
 
   const currentDate = new Date().toISOString();
 
-  await updateDoc(doc(db, COLLECTIONS.USERS, authorId), {
+  await updateDoc(doc(db, Collections.USERS, authorId), {
     updatedAt: currentDate,
     episodeCount: increment(1),
   });
 
-  await updateDoc(doc(db, COLLECTIONS.PODCASTS, podcastId), {
+  await updateDoc(doc(db, Collections.PODCASTS, podcastId), {
     updatedAt: currentDate,
     noOfEpisodes: increment(1),
   });
@@ -54,11 +54,11 @@ export const publishEpisode = async (
     createdAt: currentDate,
     publishedDate: currentDate,
     no: podcast.noOfEpisodes + 1,
-    status: PODCAST_STATUS.PUBLISHED,
+    status: PodcastStatus.PUBLISHED,
     ...data,
   };
 
-  const docRef = await addDoc(collection(db, COLLECTIONS.EPISODES), newEpisode);
+  const docRef = await addDoc(collection(db, Collections.EPISODES), newEpisode);
 
   return { id: docRef.id, ...newEpisode };
 };

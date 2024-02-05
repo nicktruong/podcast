@@ -18,8 +18,8 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 
 import { routes } from "@/common/constants";
 
+import { CustomTabPanel } from "./components";
 import { a11yProps, usePrepareHook } from "./helpers";
-import CustomTabPanel from "./components/CustomTabPanel/CustomTabPanel";
 
 const Episode = () => {
   const {

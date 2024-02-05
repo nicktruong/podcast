@@ -1,4 +1,4 @@
-export enum EPISODE_CREATION_STEPS {
+export enum EpisodeCreationSteps {
   UPLOAD_AUDIO = "uploadAudio",
   EDIT_DETAILS = "editDetails",
   UPLOAD_PHOTO = "uploadPhoto",

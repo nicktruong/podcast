@@ -7,8 +7,8 @@ import {
   collection,
 } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { EPISODE_FIELDS } from "@/common/fields";
+import { Collections } from "@/common/enums";
+import { EpisodeFields } from "@/common/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
@@ -25,8 +25,8 @@ import type {
 export const getEpisodesDetailFromPodcastId = async (podcastId: string) => {
   const snapshot = await getDocs(
     query(
-      collection(db, COLLECTIONS.EPISODES),
-      where(EPISODE_FIELDS.PODCAST_ID, "==", podcastId)
+      collection(db, Collections.EPISODES),
+      where(EpisodeFields.PODCAST_ID, "==", podcastId)
     )
   );
 
@@ -48,7 +48,7 @@ export const getPodcastAndEpisodesDetailFromEpisodeId = async (
   episodeId: string
 ) => {
   const episodeSnapshot = await getDoc(
-    doc(db, COLLECTIONS.EPISODES, episodeId)
+    doc(db, Collections.EPISODES, episodeId)
   );
 
   const episode = episodeSnapshot.data() as Episode;
@@ -69,7 +69,7 @@ export const getEpisodesDetailFromPlaylistEpisodes = async (
     episodes.map(async (playlistEpisode) => {
       // get episodes
       const episodeSnapshot = await getDoc(
-        doc(db, COLLECTIONS.EPISODES, playlistEpisode.episodeId)
+        doc(db, Collections.EPISODES, playlistEpisode.episodeId)
       );
 
       const episode = {
@@ -79,7 +79,7 @@ export const getEpisodesDetailFromPlaylistEpisodes = async (
 
       // get podcast
       const podcastSnapshot = await getDoc(
-        doc(db, COLLECTIONS.PODCASTS, episode.podcastId)
+        doc(db, Collections.PODCASTS, episode.podcastId)
       );
 
       const podcast = {
@@ -93,7 +93,7 @@ export const getEpisodesDetailFromPlaylistEpisodes = async (
 
       // get author
       const authorSnapshot = await getDoc(
-        doc(db, COLLECTIONS.USERS, podcast.authorId)
+        doc(db, Collections.USERS, podcast.authorId)
       );
 
       const author = {

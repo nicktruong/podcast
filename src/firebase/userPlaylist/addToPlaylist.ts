@@ -1,6 +1,6 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 
 import { db } from "../init";
 
@@ -15,7 +15,7 @@ export const addToPlaylist = async ({
   podcastId,
   playlistId,
 }: AddToPlaylistData): Promise<PlaylistEpisode> => {
-  const playlistRef = doc(db, COLLECTIONS.PLAYLISTS, playlistId);
+  const playlistRef = doc(db, Collections.PLAYLISTS, playlistId);
 
   const playlistSnapshot = await getDoc(playlistRef);
 

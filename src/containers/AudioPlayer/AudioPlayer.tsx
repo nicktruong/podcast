@@ -12,7 +12,7 @@ import { Box, MenuItem, Select, Slider, Typography } from "@mui/material";
 import { padZero } from "@/common/utils";
 
 import usePrepareHook from "./helpers";
-import { playbackRates } from "./constants";
+import { PLAYBACK_RATES } from "./constants";
 
 export default function AudioPlayer() {
   const {
@@ -36,12 +36,12 @@ export default function AudioPlayer() {
     muteAudio,
     onProgress,
     unmuteAudio,
-    seekToSecond,
     skip15Second,
     rewind15Second,
     handlePlayAudio,
     handlePauseAudio,
-    changeAudioVolumn,
+    handleChangeVolume,
+    handleChangeDuration,
     handleCloseAudioPlayer,
     handleChangePlaybackRate,
   } = usePrepareHook();
@@ -67,14 +67,12 @@ export default function AudioPlayer() {
           url={audioUrl}
           playing={playing}
           onReady={onReady}
+          ref={reactPlayerRef}
           onProgress={onProgress}
           style={{ display: "none" }}
           playbackRate={playbackRate}
           volume={mute ? 0 : volume / 100}
           progressInterval={progressInterval}
-          ref={(player) => {
-            reactPlayerRef.current = player;
-          }}
         />
 
         <Box className={classes.actions}>
@@ -83,7 +81,7 @@ export default function AudioPlayer() {
             onChange={handleChangePlaybackRate}
             className={classes.playbackRateSelect}
           >
-            {playbackRates.map((rate) => (
+            {PLAYBACK_RATES.map((rate) => (
               <MenuItem value={rate} key={rate}>
                 <span className={classes.speed}>{rate}</span>
                 <CloseIcon className={classes.speedIcon} />
@@ -130,9 +128,7 @@ export default function AudioPlayer() {
             max={durationInSeconds}
             className={classes.slider}
             value={passedTimeInSeconds}
-            onChange={(_, value) => {
-              seekToSecond(value as number);
-            }}
+            onChange={handleChangeDuration}
           />
           <Typography className={classes.audioDuration}>
             {padZero(audioDuration.minutes)} : {padZero(audioDuration.seconds)}
@@ -155,13 +151,8 @@ export default function AudioPlayer() {
           max={100}
           defaultValue={0}
           value={mute ? 0 : volume}
+          onChange={handleChangeVolume}
           className={classes.volumeSlider}
-          onChange={(_, volume) => {
-            if (typeof volume !== "number") return;
-            if (volume > 0) unmuteAudio();
-            if (volume === 0) muteAudio();
-            changeAudioVolumn(volume);
-          }}
         />
       </Box>
 

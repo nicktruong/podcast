@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { selectUserId } from "@/store/user";
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/common/enums";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { setNewRating, selectPodcastDetail } from "@/store/details";
 import { getUserRating, rate } from "@/firebase";
@@ -35,7 +35,7 @@ export const usePrepareHook = () => {
     const rateResult = await rate({
       userId,
       rating,
-      type: COLLECTIONS.PODCASTS,
+      type: Collections.PODCASTS,
       podcastOrSeriesId: podcastDetail?.id,
     });
 

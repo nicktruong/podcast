@@ -1,1 +1,1 @@
-export { default as UploadPodBreadcrumbs } from "./UploadPodBreadcrumbs";
+export { default } from "./UploadPodBreadcrumbs";

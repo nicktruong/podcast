@@ -1,4 +1,4 @@
-export enum COLLECTIONS {
+export enum Collections {
   USERS = "users",
   RATINGS = "ratings",
   EPISODES = "episodes",

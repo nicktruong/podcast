@@ -1,4 +1,4 @@
-import { GENDERS } from "../enums";
+import { Genders } from "../enums";
 
 export const PODCAST_CREATION_DEFAULT_DATA = {
   title: "",
@@ -33,6 +33,6 @@ export const REGISTER_DEFAULT_DATA = {
   month: "",
   email: "",
   password: "",
-  gender: "" as GENDERS,
+  gender: "" as Genders,
   categoriesOfInterest: [],
 };
