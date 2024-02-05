@@ -29,18 +29,18 @@ const PodcastDetailsHeader = () => {
           height="232px"
           src={coverUrl}
           alt={`${title} cover photo`}
-          className="rounded shadow-white shadow-md"
+          className="max-w-full rounded shadow-white shadow-md"
         />
       </Box>
 
       <Box className={classes.seriesInfo}>
-        <Typography fontSize="14px">{t("podcast")}</Typography>
-        <Box height="120px" ref={seriesTitleContainerRef}>
+        <Typography fontSize="14px">{t("playlist")}</Typography>
+        <Box ref={seriesTitleContainerRef} className={classes.titleContainer}>
           <Typography
-            className={classes.title}
             fontWeight={700}
             ref={seriesTitleRef}
             fontSize={titleFontSize}
+            className={classes.title}
           >
             {/* TODO: Add skeleton loader */}
             {title}

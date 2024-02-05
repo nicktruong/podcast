@@ -10,7 +10,16 @@ import CardGroup from "../Home/components/CardGroup";
 import { usePrepareHook } from "./helpers";
 
 const Profile = () => {
-  const { classes, playlists, episodes, user, isMyProfile } = usePrepareHook();
+  const {
+    user,
+    classes,
+    episodes,
+    fontSize,
+    playlists,
+    headingRef,
+    isMyProfile,
+    containerRef,
+  } = usePrepareHook();
 
   return (
     <Box className={classes.profileRoot}>
@@ -34,7 +43,15 @@ const Profile = () => {
           </Box>
           <Box className={classes.userInfo}>
             <Typography className={classes.profile}>Profile</Typography>
-            <Typography className={classes.username}>{user?.name}</Typography>
+            <Box className={classes.authorNameContainer} ref={containerRef}>
+              <Typography
+                ref={headingRef}
+                fontSize={fontSize}
+                className={classes.username}
+              >
+                {user?.name}
+              </Typography>
+            </Box>
             <Typography className={classes.bio}>{user?.bio}</Typography>
           </Box>
         </Box>

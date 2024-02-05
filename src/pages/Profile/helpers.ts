@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { useAppDispatch, useAppSelector } from "@/hooks";
@@ -31,6 +31,35 @@ export const usePrepareHook = () => {
 
   const episodes = useAppSelector(selectEpisodesOfCreator);
 
+  const [fontSize, setFontSize] = useState("96px");
+  const headingRef = useRef<HTMLSpanElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // resize the podcast title to fit (not overflow) the parent element
+
+    const resizeToFit = () => {
+      if (!headingRef.current || !containerRef.current) {
+        return;
+      }
+
+      if (headingRef.current.clientHeight < containerRef.current.clientHeight) {
+        return;
+      }
+
+      const fontSize = window.getComputedStyle(headingRef.current).fontSize;
+
+      const reducedFontSize = parseFloat(fontSize) - 1 + "px";
+      // line below is needed to calculate immediate clientHeight
+      headingRef.current.style.fontSize = reducedFontSize;
+      setFontSize(reducedFontSize);
+
+      resizeToFit();
+    };
+
+    resizeToFit();
+  }, [user?.name]);
+
   useEffect(() => {
     if (id) {
       // get user info
@@ -42,5 +71,14 @@ export const usePrepareHook = () => {
     }
   }, [id]);
 
-  return { classes, playlists, episodes, user, isMyProfile };
+  return {
+    user,
+    classes,
+    episodes,
+    fontSize,
+    playlists,
+    headingRef,
+    isMyProfile,
+    containerRef,
+  };
 };

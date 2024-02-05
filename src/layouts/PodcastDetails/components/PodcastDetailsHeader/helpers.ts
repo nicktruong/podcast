@@ -9,20 +9,16 @@ import { useStyles } from "./styles";
 
 export const usePrepareHook = () => {
   const { id } = useParams();
-
-  const { classes } = useStyles();
-
   const location = useLocation();
-
+  const { classes } = useStyles();
   const { t } = useTranslation("layouts/PodcastDetails");
+
+  const loadingDetail = useAppSelector(selectLoadingDetail);
 
   const { authorName, coverUrl, title } = useAppSelector((state) =>
     selectHeaderDetail(state, { id, path: location.pathname })
   );
-  const loadingDetail = useAppSelector(selectLoadingDetail);
-
-  const [titleFontSize, setTitleFontSize] = useState("97px");
-
+  const [titleFontSize, setTitleFontSize] = useState("96px");
   const seriesTitleRef = useRef<HTMLSpanElement>(null);
   const seriesTitleContainerRef = useRef<HTMLDivElement>(null);
 

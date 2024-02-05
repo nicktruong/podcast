@@ -10,11 +10,6 @@ export const useStyles = tss
       fontSize: "14px",
       color: theme.palette.text.secondary,
     },
-    tabContent: {
-      maxWidth: "672px",
-      margin: "16px 0 24px",
-      color: theme.palette.text.secondary,
-    },
     playIcon: {
       fontSize: "64px",
       cursor: "pointer",

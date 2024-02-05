@@ -37,7 +37,7 @@ export const useStyles = tss.create(({ theme }) => ({
   categoryImg: {
     right: 0,
     bottom: 0,
-    width: "100px",
+    width: "50%",
     aspectRatio: "1/1",
     position: "absolute",
     boxShadow: "0 2px 4px 0 rgba(0,0,0,.2)",

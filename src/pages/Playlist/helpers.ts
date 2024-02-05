@@ -12,10 +12,10 @@ import {
 import {
   playAudio,
   pauseAudio,
+  setAudioInfo,
   selectAudioState,
   downloadAndPlayAudio,
   setPassedTimeInSeconds,
-  setAudioInfo,
 } from "@/store/audio";
 import { openAudioPlayer } from "@/store/ui";
 import { selectCategory } from "@/store/category";
@@ -29,14 +29,10 @@ import type { DownloadAndPlayAudioParameters } from "@/store/audio/interfaces";
 
 const usePrepareHook = () => {
   const { id } = useParams();
-
-  const { t } = useTranslation("pages/Playlist");
-
-  const dispatch = useAppDispatch();
-
   const navigate = useNavigate();
-
   const { classes } = useStyles();
+  const dispatch = useAppDispatch();
+  const { t } = useTranslation("pages/Playlist");
 
   const [openModal, setOpenModal] = useState(false);
 

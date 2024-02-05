@@ -1,8 +1,7 @@
 import { useTheme } from "@mui/material";
 
 import { selectUIState } from "@/store/ui/";
-import { useAppSelector } from "@/hooks/redux";
-import { useScrollTop } from "@/hooks/scrollTop";
+import { useAppSelector, useScrollTop } from "@/hooks";
 import { useMaxWidthScreenMedia } from "@/common/utils";
 
 import { useStyles } from "./styles";

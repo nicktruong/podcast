@@ -87,9 +87,17 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   playlistMain: {
     gap: "4%",
     display: "flex",
+
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap-reverse",
+    },
   },
   episodes: {
     width: "calc(100% / 2 * 3)",
+
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
   episodesHeading: {
     fontWeight: 700,
@@ -99,6 +107,11 @@ export const useStyles = tss.withNestedSelectors().create(({ theme }) => ({
   about: {
     flexShrink: 0,
     width: "calc(100% / 3)",
+
+    [theme.breakpoints.down("sm")]: {
+      marginTop: "24px",
+      width: "100%",
+    },
   },
   aboutHeading: {
     fontSize: "24px",
