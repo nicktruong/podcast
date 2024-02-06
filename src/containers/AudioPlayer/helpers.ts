@@ -103,6 +103,7 @@ const usePrepareHook = () => {
 
   const seekToSecond = (second: number) => {
     // dispatch(setPassedTimeInSeconds(second));
+    setPassedTimeInSeconds(second);
     reactPlayerRef.current?.seekTo(second, "seconds");
   };
 
