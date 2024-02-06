@@ -1,6 +1,6 @@
 import { collection, addDoc, setDoc, doc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -47,8 +47,8 @@ export const createUserDocument = async (user: UserCreationData) => {
       return;
     }
 
-    await setDoc(doc(db, COLLECTIONS.USERS, uid), userObj);
+    await setDoc(doc(db, Collections.USERS, uid), userObj);
   } else {
-    await addDoc(collection(db, COLLECTIONS.USERS), userObj);
+    await addDoc(collection(db, Collections.USERS), userObj);
   }
 };

@@ -1,4 +1,4 @@
-import type { ROLES, GENDERS } from "@/common/enums";
+import type { Roles, Genders } from "@/enums";
 
 export interface User {
   id: string;
@@ -6,8 +6,8 @@ export interface User {
   dob: string;
   name: string;
   email: string;
-  roles: ROLES[];
-  gender: GENDERS;
+  roles: Roles[];
+  gender: Genders;
   photoURL: string;
   history: string[];
   createdAt: string;
@@ -25,8 +25,8 @@ export interface PodcastUserIdPair {
 
 export interface UserEditProfileOptions {
   name: string;
-  bio?: string;
   userId: string;
+  bio?: string;
   fullPath?: string;
 }
 
@@ -38,12 +38,12 @@ export interface EditProfile {
 }
 
 export interface UserCreationData {
-  dob?: Date;
-  role: ROLES;
-  uid?: string;
+  role: Roles;
   name: string;
   email: string;
-  gender: GENDERS;
+  gender: Genders;
   photoURL: string;
   categoriesOfInterest: string[];
+  dob?: Date;
+  uid?: string;
 }

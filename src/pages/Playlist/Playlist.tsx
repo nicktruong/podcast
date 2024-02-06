@@ -1,14 +1,13 @@
-import { Box, Button, Typography, alpha } from "@mui/material";
 import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
+import { Box, Button, Typography, alpha } from "@mui/material";
 
-import { routes } from "@/common/constants";
-import { isDark } from "@/common/utils";
+import { isDark } from "@/utils";
+import { routes } from "@/constants";
 
-import usePrepare from "./usePrepare";
-import PodcastRating from "./components/PlaylistRating";
-import PlaylistSkeleton from "./components/PlaylistSkeleton";
+import usePrepareHook from "./helpers";
+import { PodcastRating, PlaylistSkeleton } from "./components";
 
 export default function Playlist() {
   const {
@@ -28,7 +27,7 @@ export default function Playlist() {
     handleCloseModal,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (loadingDetail) {
     return <PlaylistSkeleton />;

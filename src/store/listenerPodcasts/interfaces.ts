@@ -34,7 +34,7 @@ export interface FetchPodcastsToTryOptions extends FetchPodcastsOptions {
 }
 
 export interface FetchRecentlyPlayedPodcastsOptions {
+  userHistory: string[];
   offset?: number;
   pageSize?: number;
-  userHistory: string[];
 }

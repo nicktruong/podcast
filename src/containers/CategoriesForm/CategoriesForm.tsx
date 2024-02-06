@@ -1,17 +1,11 @@
-import {
-  Box,
-  Typography,
-  FormHelperText,
-  CircularProgress,
-  Button,
-} from "@mui/material";
-import ErrorIcon from "@mui/icons-material/Error";
+import { Box, Typography, FormHelperText } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
-import { useTranslation } from "react-i18next";
+import ErrorIcon from "@mui/icons-material/Error";
 
-import { isDark } from "@/common/utils";
+import { isDark } from "@/utils";
+import { LoadingButton } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { CategoriesFormProps } from "./interfaces";
 
 export default function CategoriesForm({
@@ -21,9 +15,10 @@ export default function CategoriesForm({
   chosenCategories,
   setValue,
 }: CategoriesFormProps) {
-  const { cx, classes } = usePrepare();
-
-  const { t } = useTranslation("pages/SignUp");
+  const { classes, handleCategoryClick, t, cx } = usePrepareHook({
+    chosenCategories,
+    setValue,
+  });
 
   return (
     <>
@@ -34,25 +29,11 @@ export default function CategoriesForm({
 
             return (
               <Box
+                key={category.name}
                 className={cx(classes.category, {
                   [classes.chosenCategory]: isChosen,
                 })}
-                key={category.name}
-                onClick={() => {
-                  if (!isChosen) {
-                    setValue("categoriesOfInterest", [
-                      ...chosenCategories,
-                      category.name,
-                    ]);
-                  } else {
-                    setValue(
-                      "categoriesOfInterest",
-                      chosenCategories.filter(
-                        (chosenCategory) => chosenCategory !== category.name
-                      )
-                    );
-                  }
-                }}
+                onClick={() => handleCategoryClick(isChosen, category.name)}
               >
                 <CheckIcon
                   className={cx(classes.checkIcon, {
@@ -79,47 +60,27 @@ export default function CategoriesForm({
         </Box>
 
         <FormHelperText
+          className={classes.formHelperText}
           error={!!errors.categoriesOfInterest}
-          sx={{
-            marginX: 0,
-            display: "flex",
-            columnGap: "2px",
-          }}
         >
           {errors.categoriesOfInterest && (
             <>
               <ErrorIcon sx={{ width: "20px", height: "20px" }} />
-              <Typography
-                component="span"
-                sx={{
-                  fontSize: "0.875rem",
-                  lineHeight: "1.25rem",
-                  fontWeight: 600,
-                }}
-              >
+              <Typography component="span" className={classes.errorMessage}>
                 {errors.categoriesOfInterest?.message}
               </Typography>
             </>
           )}
         </FormHelperText>
 
-        <Button
+        <LoadingButton
           type="submit"
           variant="next"
+          loading={isSubmitting}
           sx={{ marginTop: "20px" }}
-          endIcon={
-            isSubmitting && (
-              <CircularProgress
-                size="20px"
-                sx={(theme) => ({
-                  color: theme.palette.primary.contrastText,
-                })}
-              />
-            )
-          }
         >
           {t("finish")}
-        </Button>
+        </LoadingButton>
       </Box>
     </>
   );

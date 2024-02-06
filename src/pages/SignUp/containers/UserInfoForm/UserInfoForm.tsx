@@ -13,9 +13,9 @@ import { Controller } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import ErrorIcon from "@mui/icons-material/Error";
 
-import { GENDERS } from "@/common/enums";
+import { Genders } from "@/enums";
 import { StyledInput } from "@/components";
-import { months } from "@/common/constants";
+import { MONTHS } from "@/constants";
 
 import { UserInfoFormProps } from "./interfaces";
 
@@ -148,7 +148,7 @@ export default function UserInfoForm({
                     <MenuItem value="" disabled>
                       {t("month")}
                     </MenuItem>
-                    {months.map(({ label, value }) => {
+                    {MONTHS.map(({ label, value }) => {
                       // TODO: Capitalize the key
                       return (
                         <MenuItem key={value} value={value}>
@@ -249,8 +249,8 @@ export default function UserInfoForm({
           render={({ field }) => {
             return (
               <RadioGroup sx={{ flexDirection: "row" }} {...field}>
-                {Object.values(GENDERS)
-                  .filter((gender) => gender !== GENDERS.UNKNOWN)
+                {Object.values(Genders)
+                  .filter((gender) => gender !== Genders.UNKNOWN)
                   .map((gender) => (
                     <FormControlLabel
                       sx={{

@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 import { addDoc, collection } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -26,7 +26,7 @@ export const createPodcast = async (data: PodcastCreationData) => {
     description: data.description,
   };
 
-  const docRef = await addDoc(collection(db, COLLECTIONS.PODCASTS), podcast);
+  const docRef = await addDoc(collection(db, Collections.PODCASTS), podcast);
 
   return { ...podcast, id: docRef.id };
 };

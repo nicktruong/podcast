@@ -2,12 +2,12 @@ import { Box } from "@mui/material";
 import { UseFormSetValue } from "react-hook-form";
 import { Link } from "react-router-dom";
 
-import { SignUpSteps } from "@/common/enums";
+import { SignUpSteps } from "@/enums";
 import { CategoriesForm } from "@/containers";
 import { Logo, QontoStepper } from "@/components";
-import { routes, signUpStepsLabel } from "@/common/constants";
+import { routes, SIGN_UP_STEPS_LABEL } from "@/constants";
 
-import usePrepare from "./usePrepare";
+import usePrepareHook from "./helpers";
 import { StepInfo } from "./components";
 import { EmailForm, PasswordForm, UserInfoForm } from "./containers";
 
@@ -27,7 +27,7 @@ export default function SignUp() {
     validateDate,
     handlePrevStep,
     nextStepHandler,
-  } = usePrepare();
+  } = usePrepareHook();
 
   const renderStep = (step: SignUpSteps) => {
     switch (step) {
@@ -89,13 +89,13 @@ export default function SignUp() {
               <Box className="max-w-[26rem] mx-auto sm:-translate-x-6">
                 <QontoStepper
                   activeStep={activeStep}
-                  steps={signUpStepsLabel.map((label) => t(label))}
+                  steps={SIGN_UP_STEPS_LABEL.map((label) => t(label))}
                 />
               </Box>
               <Box className="max-w-[26rem] mx-auto sm:-translate-x-6 pb-10">
                 <StepInfo
                   activeStep={activeStep}
-                  steps={signUpStepsLabel.map((label) => t(label))}
+                  steps={SIGN_UP_STEPS_LABEL.map((label) => t(label))}
                   handlePrevStep={handlePrevStep}
                 />
 

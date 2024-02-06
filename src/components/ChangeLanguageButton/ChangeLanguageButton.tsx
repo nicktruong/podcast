@@ -1,25 +1,17 @@
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
 import { MenuItem, Select } from "@mui/material";
 
 import { AmericanFlagImg, VietnamFlagImg } from "@/assets";
 
-import { useStyles } from "./styles";
+import { usePrepareHook } from "./helpers";
 
 const ChangeLanguageButton = () => {
-  const { classes } = useStyles();
-  const { i18n } = useTranslation();
-  const [language, setLanguage] = useState("en");
+  const { i18n, classes, handleChangeLanguage } = usePrepareHook();
 
   return (
     <Select
-      value={language}
       className={classes.select}
-      onChange={(event) => {
-        const language = event.target.value;
-        setLanguage(language);
-        i18n.changeLanguage(language);
-      }}
+      onChange={handleChangeLanguage}
+      defaultValue={i18n.resolvedLanguage}
     >
       <MenuItem value="en">
         <img

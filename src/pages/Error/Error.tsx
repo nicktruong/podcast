@@ -1,11 +1,11 @@
 import { Box, Button, Typography } from "@mui/material";
 import ErrorOutlineIcon from "@mui/icons-material/ErrorOutline";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { ErrorProps } from "./interfaces";
 
 const Error = ({ error, resetError }: ErrorProps) => {
-  const { classes, goHome } = usePrepare();
+  const { classes, goHome } = usePrepareHook();
 
   return (
     <Box className={classes.errorRoot}>

@@ -8,9 +8,9 @@ import {
   userUnfollowPodcast,
   upgradeUserToPodcaster,
 } from "@/firebase";
-import { resizeImage } from "@/common/utils";
+import { resizeImage } from "@/utils";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
-import { IMAGE_SIZE } from "@/common/constants";
+import { IMAGE_SIZE } from "@/constants";
 
 import type { UserUpgradeInfo } from "./interfaces";
 import type { EditProfile, PodcastUserIdPair } from "@/common/interfaces";

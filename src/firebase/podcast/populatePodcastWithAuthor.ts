@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -14,7 +14,7 @@ export const populatePodcastWithAuthor = async (
   podcast: Podcast
 ): Promise<PopulatedPodcastWithAuthor | undefined> => {
   const authorSnapshot = await getDoc(
-    doc(db, COLLECTIONS.USERS, podcast.authorId)
+    doc(db, Collections.USERS, podcast.authorId)
   );
 
   if (!authorSnapshot.exists()) return;

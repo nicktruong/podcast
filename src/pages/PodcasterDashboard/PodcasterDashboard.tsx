@@ -1,15 +1,15 @@
 import Box from "@mui/material/Box";
 
 import {
-  PodcasterDashboardAppBar,
-  PodcasterDashboardOverview,
-  PodcasterCreateSeriesDialog,
-  PodcasterDashboardOnboarding,
-  PodcasterEpisodeCreationDialog,
+  DashboardAppBar,
+  DashboardOverview,
+  CreatePodcastDialog,
+  PodcasterOnboarding,
+  CreateEpisodeDialog,
 } from "@/containers";
 import { Loader } from "@/components";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 export default function PodcasterDashboard() {
   const {
@@ -18,43 +18,32 @@ export default function PodcasterDashboard() {
     openCreateSeriesDialog,
     openCreateEpisodeDialog,
     podcastOfCreatorIsLoading,
-    handleCloseEpisodeDialog,
-    handleClickOpenEpisodeDialog,
-  } = usePrepare();
+    handleOpenDialog,
+    handleCloseDialog,
+  } = usePrepareHook();
 
   if (episodesAreLoading || podcastOfCreatorIsLoading) {
     return <Loader />;
   }
 
-  let content: JSX.Element;
-
-  if (!createdFirstEpisode) {
-    content = (
-      <PodcasterDashboardOnboarding
-        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
-        handleOpenCreateSeriesDialog={handleClickOpenEpisodeDialog}
-      />
-    );
-  } else {
-    content = <PodcasterDashboardOverview />;
-  }
-
   return (
     <Box>
-      <PodcasterDashboardAppBar
-        handleClickOpenEpisodeDialog={handleClickOpenEpisodeDialog}
-      />
+      <DashboardAppBar onOpenDialog={handleOpenDialog} />
 
-      {content}
+      {!createdFirstEpisode ? (
+        <PodcasterOnboarding onOpenDialog={handleOpenDialog} />
+      ) : (
+        <DashboardOverview />
+      )}
 
-      <PodcasterEpisodeCreationDialog
+      <CreateEpisodeDialog
         open={openCreateEpisodeDialog}
-        handleClose={handleCloseEpisodeDialog}
+        onClose={handleCloseDialog}
       />
 
-      <PodcasterCreateSeriesDialog
+      <CreatePodcastDialog
         open={openCreateSeriesDialog}
-        handleClose={handleCloseEpisodeDialog}
+        handleClose={handleCloseDialog}
       />
     </Box>
   );

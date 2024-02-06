@@ -12,22 +12,16 @@ import AddIcon from "@mui/icons-material/Add";
 import HomeIcon from "@mui/icons-material/Home";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
-interface Props {
-  openDrawer: boolean;
-  toggleDrawer: (
-    open: boolean
-  ) => (event: React.KeyboardEvent | React.MouseEvent) => void;
-  handleClickOpenEpisodeDialog: () => void;
-}
+import type { StyledDrawerProps } from "./interfaces";
 
 export default function StyledDrawer({
   openDrawer,
   toggleDrawer,
   handleClickOpenEpisodeDialog,
-}: Props) {
-  const { t } = usePrepare();
+}: StyledDrawerProps) {
+  const { t } = usePrepareHook();
 
   return (
     <Drawer anchor="left" open={openDrawer} onClose={toggleDrawer(false)}>

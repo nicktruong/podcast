@@ -1,6 +1,6 @@
 import { StepperProps } from "@mui/material";
 
 export interface ColorIconStepperProps extends StepperProps {
-  steps: string[];
+  stepsCount: number;
   activeStep: number;
 }

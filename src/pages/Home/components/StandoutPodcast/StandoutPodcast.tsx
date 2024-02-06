@@ -4,33 +4,33 @@ import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Typography, Button, alpha } from "@mui/material";
 
-import { routes } from "@/common/constants";
-import { capFirstChar, isDark } from "@/common/utils";
+import { routes } from "@/constants";
+import { capFirstChar, isDark } from "@/utils";
 
 import StandoutPodcastSkeleton from "../StandoutPodcastSkeleton";
 
-import { usePrepare } from "./helpers";
+import { usePrepareHook } from "./helpers";
 
 const StandoutPodcast = () => {
   const {
     classes,
-    containerEl,
     audioIsPlaying,
     standoutPodcast,
     playingEpisodeId,
     standoutCategory,
     isLoadingStandoutPodcast,
     t,
+    setContainerEl,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (isLoadingStandoutPodcast) {
     return <StandoutPodcastSkeleton />;
   }
 
   return (
-    <Box ref={containerEl}>
+    <Box ref={(el: HTMLDivElement) => setContainerEl(el)}>
       <Typography className={classes.standoutPodcastHeading}>
         {standoutPodcast && t("standoutPodcast")}
       </Typography>

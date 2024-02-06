@@ -3,8 +3,8 @@ export interface CardGroupProps {
     id: string;
     title: string;
     coverUrl: string;
-    category?: string;
     createdAt: string;
     author: { name: string };
+    category?: string;
   }[];
 }

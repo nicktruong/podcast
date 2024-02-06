@@ -1,6 +1,6 @@
 import { arrayUnion, doc, writeBatch } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -13,7 +13,7 @@ export const markAsRead = async ({
   const batch = writeBatch(db);
 
   notificationIds.forEach((id) => {
-    const notificationRef = doc(db, COLLECTIONS.NOTIFICATIONS, id);
+    const notificationRef = doc(db, Collections.NOTIFICATIONS, id);
     batch.update(notificationRef, { readIds: arrayUnion(userId) });
   });
 

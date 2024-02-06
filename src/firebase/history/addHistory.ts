@@ -1,6 +1,6 @@
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -10,7 +10,7 @@ export const addHistory = async ({
   userId,
   podcastId,
 }: PodcastUserIdPair): Promise<void> => {
-  const userRef = doc(db, COLLECTIONS.USERS, userId);
+  const userRef = doc(db, Collections.USERS, userId);
   const userSnapshot = await getDoc(userRef);
   const user = userSnapshot.data() as User | undefined;
 

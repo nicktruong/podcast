@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 import { AuthListener } from "@/containers";
 // Fix for [#22](https://trello.com/c/OyT5t3ix)
 import Profile from "@/pages/Profile";

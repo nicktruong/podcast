@@ -1,5 +1,5 @@
-import { Episode } from "./Episode";
 import { User } from "./User";
+import { Episode } from "./Episode";
 
 export interface Podcast {
   id: string;

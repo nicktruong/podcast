@@ -1,11 +1,11 @@
 import { Box, Typography } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 import { PlaylistHeaderProps } from "./interfaces";
 
 const PlaylistHeader = ({ seriesDetail }: PlaylistHeaderProps) => {
   const { classes, titleFontSize, seriesTitleRef, seriesTitleContainerRef } =
-    usePrepare();
+    usePrepareHook();
 
   return (
     <Box component="header" className={classes.headerRoot}>

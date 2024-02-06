@@ -17,9 +17,9 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const UserPlaylist = () => {
   const {
@@ -35,7 +35,7 @@ const UserPlaylist = () => {
     handleRemovePlaylist,
     handleDownloadAndPlayAudio,
     handleRemoveEpisodeFromPlaylist,
-  } = usePrepare();
+  } = usePrepareHook();
 
   if (loadingEpisodes) {
     return <>Loading...</>;

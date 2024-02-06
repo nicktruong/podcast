@@ -1,21 +1,18 @@
-import {
-  query,
-  limit,
-  where,
-  getDocs,
-  collection,
-  WhereFilterOp,
-} from "firebase/firestore";
 import { nanoid } from "@reduxjs/toolkit";
+import { query, limit, where, getDocs, collection } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
-import { PODCAST_FIELDS } from "@/common/fields";
+import { Collections } from "@/enums";
+import { PodcastFields } from "@/firebase/fields";
 
 import { db } from "../init";
 import { downloadFile } from "../storage";
 
 import { populatePodcastWithAuthor } from "./populatePodcastWithAuthor";
 
+import type {
+  GenerateQueryOptions,
+  GetRandomPodcastsOptions,
+} from "./interfaces";
 import type { Podcast, PopulatedPodcastWithAuthor } from "@/common/interfaces";
 
 const generateQuery = ({
@@ -23,20 +20,15 @@ const generateQuery = ({
   pageSize,
   condition,
   categories,
-}: {
-  random: string;
-  pageSize: number;
-  categories: string[];
-  condition: WhereFilterOp;
-}) => {
+}: GenerateQueryOptions) => {
   const categoryCondition = categories.length
-    ? [where(PODCAST_FIELDS.CATEGORY, "in", categories)]
+    ? [where(PodcastFields.CATEGORY, "in", categories)]
     : [];
 
   return query(
-    collection(db, COLLECTIONS.PODCASTS),
+    collection(db, Collections.PODCASTS),
     ...categoryCondition,
-    where(PODCAST_FIELDS.RANDOM, condition, random),
+    where(PodcastFields.RANDOM, condition, random),
     limit(pageSize)
   );
 };
@@ -44,10 +36,7 @@ const generateQuery = ({
 export const getRandomPocastsPaged = async ({
   pageSize = 4,
   categories = [],
-}: {
-  pageSize?: number;
-  categories?: string[];
-}) => {
+}: GetRandomPodcastsOptions) => {
   const podcasts: PopulatedPodcastWithAuthor[] = [];
 
   let i = 0;

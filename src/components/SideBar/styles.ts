@@ -3,14 +3,6 @@ import { tss } from "tss-react/mui";
 export const useStyles = tss
   .withNestedSelectors()
   .create(({ classes, theme }) => ({
-    iconButtonContainer: {
-      textAlign: "right",
-    },
-    sidebarToggler: {
-      width: "32px",
-      height: "32px",
-      color: theme.palette.text.secondary,
-    },
     root: {
       height: "100%",
       display: "flex",
@@ -25,11 +17,18 @@ export const useStyles = tss
         marginTop: "8px",
       },
     },
+    iconButtonContainer: {
+      textAlign: "right",
+    },
+    sidebarToggler: {
+      width: "32px",
+      height: "32px",
+      color: theme.palette.text.secondary,
+    },
     library: {
       flexGrow: 1,
     },
     logo: {
-      gap: "20px",
       padding: "12px",
     },
     button: {
@@ -41,7 +40,9 @@ export const useStyles = tss
       minWidth: "fit-content",
     },
     active: {
+      marginRight: "2px",
       color: theme.palette.common.white,
+
       "& .MuiTypography-root": {
         color: theme.palette.common.white,
       },
@@ -57,9 +58,6 @@ export const useStyles = tss
     },
     listItemText: {
       margin: "0px",
-      height: "40px",
-      display: "flex",
-      alignItems: "center",
 
       "& .MuiTypography-root": {
         fontWeight: 700,
@@ -78,13 +76,12 @@ export const useStyles = tss
         [`.${classes.icon}`]: {
           color: theme.palette.common.white,
         },
-        [`.${classes.text}`]: {
+        [`.${classes.libraryTitle}`]: {
           color: theme.palette.common.white,
         },
       },
     },
-    text: {
-      display: "flex",
+    libraryTitle: {
       fontWeight: 700,
       alignItems: "center",
       transition: "0.2s ease-out",
@@ -104,11 +101,15 @@ export const useStyles = tss
       },
     },
     podcastImgContainer: {
+      width: "100%",
       flexShrink: 0,
+      maxWidth: "48px",
       overflow: "hidden",
       borderRadius: "4px",
     },
     podcastImg: {
+      maxWidth: "100%",
+      aspectRatio: "1/1",
       objectFit: "cover",
     },
     playlistInfo: {
@@ -121,9 +122,9 @@ export const useStyles = tss
     },
     playlistAuthor: {
       fontSize: "14px",
-      color: theme.palette.text.secondary,
       overflow: "hidden",
       whiteSpace: "nowrap",
       textOverflow: "ellipsis",
+      color: theme.palette.text.secondary,
     },
   }));

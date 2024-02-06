@@ -1,6 +1,6 @@
 import { addDoc, collection } from "firebase/firestore";
 
-import { COLLECTIONS } from "@/common/enums";
+import { Collections } from "@/enums";
 
 import { db } from "../init";
 
@@ -30,7 +30,7 @@ export const createOwnedPlaylist = async ({
     ],
   };
 
-  const docRef = await addDoc(collection(db, COLLECTIONS.PLAYLISTS), playlist);
+  const docRef = await addDoc(collection(db, Collections.PLAYLISTS), playlist);
 
   return { id: docRef.id, currentDate };
 };

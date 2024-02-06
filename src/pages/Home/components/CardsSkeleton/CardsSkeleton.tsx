@@ -1,9 +1,9 @@
 import { Box, Grid, Skeleton } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const CardsSkeleton = ({ mt }: { mt?: number }) => {
-  const { classes, isSidebarExpand } = usePrepare();
+  const { classes, isSidebarExpand } = usePrepareHook();
 
   const genCardSkeletons = () => {
     const skeletons: JSX.Element[] = [];

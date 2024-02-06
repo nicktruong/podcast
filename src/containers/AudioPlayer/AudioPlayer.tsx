@@ -9,12 +9,11 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import { TbRewindBackward15, TbRewindForward15 } from "react-icons/tb";
 import { Box, MenuItem, Select, Slider, Typography } from "@mui/material";
 
-import { padZero } from "@/common/utils";
+import { padZero } from "@/utils";
 
-import usePrepare from "./usePrepare";
-import { playbackRates } from "./constants";
+import usePrepareHook from "./helpers";
+import { PLAYBACK_RATES } from "./constants";
 
-// TODO: handle download and play on multiple audios
 export default function AudioPlayer() {
   const {
     mute,
@@ -33,27 +32,27 @@ export default function AudioPlayer() {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    onReady,
     muteAudio,
     onProgress,
     unmuteAudio,
-    seekToSecond,
     skip15Second,
-    onPlayerReady,
     rewind15Second,
     handlePlayAudio,
     handlePauseAudio,
-    changeAudioVolumn,
-    changePlaybackRate,
+    handleChangeVolume,
+    handleChangeDuration,
     handleCloseAudioPlayer,
-  } = usePrepare();
+    handleChangePlaybackRate,
+  } = usePrepareHook();
 
   return (
     <Box className={classes.audioPlayerRoot}>
       <Box className={classes.infoContainer}>
         {downloaded && (
           <img
-            alt={`${title} cover photo`}
             src={coverUrl}
+            alt={`${title} cover photo`}
             className={classes.audioPlayerImage}
           />
         )}
@@ -67,24 +66,22 @@ export default function AudioPlayer() {
         <ReactPlayer
           url={audioUrl}
           playing={playing}
-          onReady={onPlayerReady}
+          onReady={onReady}
+          ref={reactPlayerRef}
           onProgress={onProgress}
           style={{ display: "none" }}
           playbackRate={playbackRate}
           volume={mute ? 0 : volume / 100}
           progressInterval={progressInterval}
-          ref={(player) => {
-            reactPlayerRef.current = player;
-          }}
         />
 
         <Box className={classes.actions}>
           <Select
             value={playbackRate}
+            onChange={handleChangePlaybackRate}
             className={classes.playbackRateSelect}
-            onChange={(event) => changePlaybackRate(+event.target.value)}
           >
-            {playbackRates.map((rate) => (
+            {PLAYBACK_RATES.map((rate) => (
               <MenuItem value={rate} key={rate}>
                 <span className={classes.speed}>{rate}</span>
                 <CloseIcon className={classes.speedIcon} />
@@ -131,9 +128,7 @@ export default function AudioPlayer() {
             max={durationInSeconds}
             className={classes.slider}
             value={passedTimeInSeconds}
-            onChange={(_, value) => {
-              seekToSecond(value as number);
-            }}
+            onChange={handleChangeDuration}
           />
           <Typography className={classes.audioDuration}>
             {padZero(audioDuration.minutes)} : {padZero(audioDuration.seconds)}
@@ -156,13 +151,8 @@ export default function AudioPlayer() {
           max={100}
           defaultValue={0}
           value={mute ? 0 : volume}
+          onChange={handleChangeVolume}
           className={classes.volumeSlider}
-          onChange={(_, volume) => {
-            if (typeof volume !== "number") return;
-            if (volume > 0) unmuteAudio();
-            if (volume === 0) muteAudio();
-            changeAudioVolumn(volume);
-          }}
         />
       </Box>
 

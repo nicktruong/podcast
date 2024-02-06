@@ -1,4 +1,4 @@
-import type { COLLECTIONS } from "../enums";
+import type { Collections } from "../../enums";
 
 export interface Rating {
   rating: number;
@@ -12,7 +12,7 @@ export interface RateOptions {
   userId: string;
   rating: number;
   podcastOrSeriesId: string;
-  type: typeof COLLECTIONS.PODCASTS | typeof COLLECTIONS.EPISODES;
+  type: typeof Collections.PODCASTS | typeof Collections.EPISODES;
 }
 
 export interface NewRate {

@@ -1,7 +1,7 @@
 import Joi from "joi";
 
-import { GENDERS } from "@/common/enums";
-import { getNumberOfDaysInMonth } from "@/common/utils";
+import { Genders } from "@/enums";
+import { getNumberOfDaysInMonth } from "@/utils";
 
 import type { RegisterData } from "@/common/interfaces";
 
@@ -26,7 +26,7 @@ const schema = Joi.object<RegisterData>({
   }),
   gender: Joi.string()
     .valid(
-      ...Object.values(GENDERS).filter((gender) => gender !== GENDERS.UNKNOWN)
+      ...Object.values(Genders).filter((gender) => gender !== Genders.UNKNOWN)
     )
     .messages({
       "any.only": "pleaseChooseGender",

@@ -1,9 +1,9 @@
 import { Skeleton } from "@mui/material";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const TitleSkeleton = () => {
-  const { classes } = usePrepare();
+  const { classes } = usePrepareHook();
 
   return <Skeleton animation="wave" className={classes.titleSkeleton} />;
 };

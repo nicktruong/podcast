@@ -1,28 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import PodcastsIcon from "@mui/icons-material/Podcasts";
 
-export default function Logo({ hideText }: { hideText?: boolean }) {
+import { useStyles } from "./styles";
+
+import type { LogoProps } from "./interfaces";
+
+export default function Logo({ hideText }: LogoProps) {
+  const { classes } = useStyles();
+
   return (
-    <Box
-      sx={{
-        display: "flex",
-        columnGap: "2px",
-        fontSize: "1.25rem",
-        alignItems: "center",
-        lineHeight: "1.75rem",
-      }}
-    >
-      <PodcastsIcon sx={{ width: "32px", height: "32px" }} />
+    <Box className={classes.logoContainer}>
+      <PodcastsIcon className={classes.logoIcon} />
       {!hideText && (
-        <Typography
-          sx={{
-            fontWeight: "bold",
-            fontSize: "1.25rem",
-            lineHeight: "1.75rem",
-            letterSpacing: "-0.05em",
-          }}
-          component="span"
-        >
+        <Typography className={classes.logoText} component="span">
           GO Podcast
         </Typography>
       )}

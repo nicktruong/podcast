@@ -3,14 +3,23 @@ import { GoPerson } from "react-icons/go";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Typography } from "@mui/material";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import CardGroup from "../Home/components/CardGroup";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 const Profile = () => {
-  const { classes, playlists, episodes, user, isMyProfile } = usePrepare();
+  const {
+    user,
+    classes,
+    episodes,
+    fontSize,
+    playlists,
+    headingRef,
+    isMyProfile,
+    containerRef,
+  } = usePrepareHook();
 
   return (
     <Box className={classes.profileRoot}>
@@ -34,7 +43,15 @@ const Profile = () => {
           </Box>
           <Box className={classes.userInfo}>
             <Typography className={classes.profile}>Profile</Typography>
-            <Typography className={classes.username}>{user?.name}</Typography>
+            <Box className={classes.authorNameContainer} ref={containerRef}>
+              <Typography
+                ref={headingRef}
+                fontSize={fontSize}
+                className={classes.username}
+              >
+                {user?.name}
+              </Typography>
+            </Box>
             <Typography className={classes.bio}>{user?.bio}</Typography>
           </Box>
         </Box>
@@ -82,29 +99,6 @@ const Profile = () => {
                   author: { name: user?.name ?? "" },
                 }))}
               />
-              {/* {episodes.map((episode) => (
-                <Link
-                  key={episode.id}
-                  className={classes.series}
-                  to={routes.playlist.replace(":id", episode.id)}
-                >
-                  <Box>
-                    <img
-                      className={classes.seriesImg}
-                      src={episode.podcast.coverUrl}
-                      alt={`${episode.title} cover photo`}
-                    />
-                  </Box>
-                  <Box className={classes.seriesInfo}>
-                    <Typography className={classes.seriesTitle}>
-                      {episode.title}
-                    </Typography>
-                    <Typography className={classes.seriesAuthor}>
-                      By {user?.name}
-                    </Typography>
-                  </Box>
-                </Link>
-              ))} */}
             </Box>
           </Box>
         )}

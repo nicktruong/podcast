@@ -5,9 +5,9 @@ import {
   createPodcast,
   getSinglePodcastOfCreatorId,
 } from "@/firebase";
-import { resizeImage } from "@/common/utils";
+import { resizeImage } from "@/utils";
 import { createAppAsyncThunk } from "@/store/createAppAsyncThunk";
-import { IMAGE_SIZE } from "@/common/constants";
+import { IMAGE_SIZE } from "@/constants";
 
 import { selectPodcastCreationData } from "./selectors";
 

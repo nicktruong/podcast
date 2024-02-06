@@ -13,8 +13,12 @@ export const useStyles = tss.create(({ theme }) => ({
     padding: "72px 24px",
   },
   headerRoot: {
-    display: "flex",
     gap: "24px",
+    display: "flex",
+
+    [theme.breakpoints.down("sm")]: {
+      flexWrap: "wrap",
+    },
   },
   seriesCoverContainer: {
     flexShrink: 0,
@@ -46,6 +50,10 @@ export const useStyles = tss.create(({ theme }) => ({
     marginBottom: "32px",
     flexDirection: "column",
     justifyContent: "flex-end",
+
+    [theme.breakpoints.down("sm")]: {
+      marginBottom: "0px",
+    },
   },
   editAction: {
     gap: "8px",
@@ -60,10 +68,16 @@ export const useStyles = tss.create(({ theme }) => ({
     fontSize: "14px",
     marginLeft: "4px",
   },
+  authorNameContainer: {
+    height: "96px",
+
+    [theme.breakpoints.down("sm")]: {
+      height: "64px",
+    },
+  },
   username: {
     fontWeight: 700,
-    fontSize: "96px",
-    lineHeight: "96px",
+    lineHeight: "100%",
   },
   bio: {
     fontSize: "14px",
@@ -107,9 +121,9 @@ export const useStyles = tss.create(({ theme }) => ({
   },
   seriesAuthor: {
     fontSize: "14px",
-    color: theme.palette.text.secondary,
     overflow: "hidden",
     whiteSpace: "nowrap",
     textOverflow: "ellipsis",
+    color: theme.palette.text.secondary,
   },
 }));

@@ -1,12 +1,11 @@
 import { Fragment } from "react";
 import { Box } from "@mui/material";
 
-import usePrepare from "./usePrepare";
-import { Section, SectionSkeleton } from "./components";
-import StandoutPodcast from "./components/StandoutPodcast";
+import usePrepareHook from "./helpers";
+import { Section, SectionSkeleton, StandoutPodcast } from "./components";
 
 export default function Home() {
-  const { user, classes, loading, sections } = usePrepare();
+  const { user, classes, loading, sections } = usePrepareHook();
 
   return (
     <Box className={classes.homeRoot}>

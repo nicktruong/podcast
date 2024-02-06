@@ -3,8 +3,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
 
 import { QontoStepperProps } from "./interfaces";
-import QontoStepIcon from "./components/QontoStepIcon";
-import QontoConnector from "./components/QontoConnector";
+import { QontoStepIcon, QontoConnector } from "./components";
 
 function QontoStepper({
   steps,

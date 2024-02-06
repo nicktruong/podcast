@@ -2,12 +2,12 @@ import { Box, Typography } from "@mui/material";
 
 import CardGroup from "../CardGroup";
 
-import { usePrepare } from "./usePrepare";
+import { usePrepareHook } from "./helpers";
 
 import type { SectionProps } from "./interfaces";
 
 export default function Section({ title, podcasts }: SectionProps) {
-  const { classes, t } = usePrepare();
+  const { classes, t } = usePrepareHook();
 
   return (
     <Box className={classes.section} component="section">

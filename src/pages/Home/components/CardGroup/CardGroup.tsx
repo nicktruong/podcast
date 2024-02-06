@@ -1,15 +1,15 @@
 import { Grid } from "@mui/material";
 
-import { routes } from "@/common/constants";
+import { routes } from "@/constants";
 
 import Card from "../Card/Card";
 
-import { usePrepare } from "./helpers";
+import { usePrepareHook } from "./helpers";
 
 import type { CardGroupProps } from "./interfaces";
 
 const CardGroup = ({ podcasts }: CardGroupProps) => {
-  const { isSidebarExpand, getCategory } = usePrepare();
+  const { isSidebarExpand, getCategory } = usePrepareHook();
 
   return (
     <Grid container spacing={3}>
