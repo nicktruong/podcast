@@ -12,6 +12,10 @@ import categories from "../categories/categories.json";
 import episodesJSON from "./episodes.json";
 import podcastsJSON from "./podcasts.json";
 
+import type {
+  CreateRandomEpisodeOptions,
+  CreateRandomPodcastOptions,
+} from "./interfaces";
 import type { Episode, Podcast, User } from "@/common/interfaces";
 
 const seedDateString = new Date().toISOString();
@@ -24,15 +28,7 @@ const createRandomPodcast = ({
   playCount,
   episodeCount,
   audienceSize,
-}: {
-  index: number;
-  rating: number;
-  authorId: string;
-  rateCount: number;
-  playCount: number;
-  episodeCount: number;
-  audienceSize: number;
-}): Omit<Podcast, "id"> => {
+}: CreateRandomPodcastOptions): Omit<Podcast, "id"> => {
   // Only fill 5 categories
   const randomCategoryId = faker.helpers.arrayElement(
     categories.slice(0, 5)
@@ -64,12 +60,7 @@ const createRandomEpisode = ({
   index,
   authorId,
   podcastId,
-}: {
-  no: number;
-  index: number;
-  authorId: string;
-  podcastId: string;
-}): Omit<Episode, "id"> => {
+}: CreateRandomEpisodeOptions): Omit<Episode, "id"> => {
   const playCount = faker.number.int({ max: 100_000 });
   const rateCount = faker.number.int({ max: playCount });
   const rating = faker.number.float({ max: 5, precision: 0.1 });
@@ -107,6 +98,7 @@ const createRandomPodcaster = (episodeCount: number): Omit<User, "id"> => {
 
   return {
     name,
+    played: [],
     history: [],
     episodeCount,
     following: [],

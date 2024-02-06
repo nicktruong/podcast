@@ -1,46 +1,25 @@
-# Getting Started with Create React App
+# GO Podcast
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+GO Podcast is your gateway to a world of audio entertainment, empowering you to discover, personalize, and control your listening experience like never before.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+1. [Setup Sentry](https://sentry.io/)
 
-### `npm start`
+2. [Setup firebase](https://firebase.google.com/docs/web/setup)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+3. Copy `.env.example` to `.env`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+4. Add values to each key in `.env` file based on step 1 and step 2
 
-### `npm test`
+5. Run `npm install` and `npm run`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Note: If you have firestore error in the console, you'll have to create firestore database index by the link it provides you in the error.
 
-### `npm run build`
+## Architecture Diagram
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+![Podcast Architecture](https://github.com/nicktruong/podcast/assets/154394020/f6f6991d-f4f6-4860-bd26-4b05361e4e50)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## DB Diagram
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+[![](https://mermaid.ink/img/pako:eNqlVttu2zAM_RVDQN_SILcaqd-KdQMCDCuwri9bhkKxmFioLBmS3C1N8u-jb7Fj2UvW5SW2SB1Sh4eUdyRUDEhAQN9zutE0XkoPf6kBbbxd8ZL9jNVcbrwVV-21Hz-9kFrYKM3BPKwX0oIGY2s3hlYv1IB_7M46kBBTLupVmcYr0B4k3GBm5oNKpe0IuVZCqF_47OBtQDLQHVsibqzSW2eDpDE4i0mkrHr6-rkDJxF0C6w2AKbsaSXAeEsiMAhIPMDeSxQLKb7pJWmRkSasScZhKYsHTS2GOOH9DHlljAVzCCyw_h64AZQVvEI55lOinyRUwtOUcZAhPPI3lzya2kjpZlKloRSKW4NQvYJ-0uLig6M0Qs0Ty5V0cpPqYf2x1I9jzKrXKSpkTDIVdxEJrQ09FJc4llsBF1b86ipPKFNNlXFFNpqalDIG7B4xuoxls1SEnxpbEkFjXd8ydFenX16R9gGwRcBh_3JuzolSKsvXHJWEpf-HTsktSt-9Ukt1n_VLxyjA46CRLdjZ0xz9i7xNK3FoFfj93fRfveHOEGqjb-oTF9BjWsSbU-vZVuoYS3nOSbpCpURNJb-r0_KRayy1aTZzmaZrmw3cCr05cN_RlPV11tkXQrn64THdwEm3OJdLDt-8XQ_q-nq_a0YLPMFfwPVSu3oUB-XV95yx_3y8004vkBx6XyIEObE9Lg3ciBpn8LeACs0VPu0Rst_nifa7NmZdfaz28As8LkORMuhs95KyKkZu2zZjHHusJ_FurwYJKxAqUxoZkBg0fpow_DjKVbAkNgIsJgkyyVH9kqnsgH7Yn-pxK0MSWJ3CgBSyKj-nSLCmwuBqQuV3peLKCV9JsCO_STCZ-cPZdOr7t5PbkT8ezQZkS4KpPxz7k9n8ZjqfjKf4cBiQt3z_aDifzCfTsT9Hb382Gt0c_gBD1xLf?type=png)](https://mermaid.live/edit#pako:eNqlVttu2zAM_RVDQN_SILcaqd-KdQMCDCuwri9bhkKxmFioLBmS3C1N8u-jb7Fj2UvW5SW2SB1Sh4eUdyRUDEhAQN9zutE0XkoPf6kBbbxd8ZL9jNVcbrwVV-21Hz-9kFrYKM3BPKwX0oIGY2s3hlYv1IB_7M46kBBTLupVmcYr0B4k3GBm5oNKpe0IuVZCqF_47OBtQDLQHVsibqzSW2eDpDE4i0mkrHr6-rkDJxF0C6w2AKbsaSXAeEsiMAhIPMDeSxQLKb7pJWmRkSasScZhKYsHTS2GOOH9DHlljAVzCCyw_h64AZQVvEI55lOinyRUwtOUcZAhPPI3lzya2kjpZlKloRSKW4NQvYJ-0uLig6M0Qs0Ty5V0cpPqYf2x1I9jzKrXKSpkTDIVdxEJrQ09FJc4llsBF1b86ipPKFNNlXFFNpqalDIG7B4xuoxls1SEnxpbEkFjXd8ydFenX16R9gGwRcBh_3JuzolSKsvXHJWEpf-HTsktSt-9Ukt1n_VLxyjA46CRLdjZ0xz9i7xNK3FoFfj93fRfveHOEGqjb-oTF9BjWsSbU-vZVuoYS3nOSbpCpURNJb-r0_KRayy1aTZzmaZrmw3cCr05cN_RlPV11tkXQrn64THdwEm3OJdLDt-8XQ_q-nq_a0YLPMFfwPVSu3oUB-XV95yx_3y8004vkBx6XyIEObE9Lg3ciBpn8LeACs0VPu0Rst_nifa7NmZdfaz28As8LkORMuhs95KyKkZu2zZjHHusJ_FurwYJKxAqUxoZkBg0fpow_DjKVbAkNgIsJgkyyVH9kqnsgH7Yn-pxK0MSWJ3CgBSyKj-nSLCmwuBqQuV3peLKCV9JsCO_STCZ-cPZdOr7t5PbkT8ezQZkS4KpPxz7k9n8ZjqfjKf4cBiQt3z_aDifzCfTsT9Hb382Gt0c_gBD1xLf)

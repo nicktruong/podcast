@@ -18,11 +18,9 @@ export const usePrepareHook = () => {
   const { t } = useTranslation("pages/PodcasterDashboard");
 
   useEffect(() => {
-    if (userId) {
-      dispatch(
-        fetchEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 })
-      );
-    }
+    if (!userId) return;
+
+    dispatch(fetchEpisodesFromCreatorPaged({ creatorId: userId, pageSize: 1 }));
   }, [userId]);
 
   return { user, classes, podcast, episodes, t };

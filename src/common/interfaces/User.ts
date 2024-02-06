@@ -8,6 +8,7 @@ export interface User {
   email: string;
   roles: Roles[];
   gender: Genders;
+  played: string[];
   photoURL: string;
   history: string[];
   createdAt: string;

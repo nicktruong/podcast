@@ -51,6 +51,11 @@
     "tailwind": "npx tailwindcss -c ./tailwind.config.js -i ./src/index.css -o .tailwind/index.css",
     "seed": "ts-node -r tsconfig-paths/register --files src/firebase/seeds"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/src/$1"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

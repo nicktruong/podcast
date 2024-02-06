@@ -4,9 +4,9 @@ import { Roles } from "@/enums";
 
 import {
   signOut,
+  editProfile,
   followPodcast,
   unfollowPodcast,
-  editProfile,
   upgradeToPodcaster,
 } from "./thunks";
 
