@@ -64,7 +64,7 @@ const Episode = () => {
                 episodeId: episodeDetail?.id ?? "",
                 pathToFile: episodeDetail?.pathToFile ?? "",
                 podcastId: podcastDetail?.id ?? "",
-                coverUrl: podcastDetail?.coverUrl ?? "",
+                coverUrl: episodeDetail?.pathToImgFile ?? "",
                 author: podcastDetail?.author.name ?? "",
               });
             }

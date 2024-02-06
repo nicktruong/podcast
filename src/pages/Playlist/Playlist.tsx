@@ -89,7 +89,7 @@ export default function Playlist() {
                             episodeId: episode.id,
                             pathToFile: episode.pathToFile,
                             podcastId: podcastDetail?.id ?? "",
-                            coverUrl: podcastDetail?.coverUrl ?? "",
+                            coverUrl: episode.pathToImgFile,
                             author: podcastDetail?.author.name ?? "",
                           });
                         }

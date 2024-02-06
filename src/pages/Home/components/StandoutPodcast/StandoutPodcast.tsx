@@ -125,7 +125,7 @@ const StandoutPodcast = () => {
                             episodeId: episode.id,
                             pathToFile: episode.pathToFile,
                             podcastId: standoutPodcast.id,
-                            coverUrl: standoutPodcast.coverUrl,
+                            coverUrl: episode.pathToImgFile,
                             author: standoutPodcast.author.name,
                           });
                         }

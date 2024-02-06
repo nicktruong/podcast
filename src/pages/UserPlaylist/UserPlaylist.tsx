@@ -87,7 +87,7 @@ const UserPlaylist = () => {
                               title: episode?.title ?? "",
                               episodeId: episode?.id ?? "",
                               podcastId: episode.podcast.id,
-                              coverUrl: playlist?.coverUrl ?? "",
+                              coverUrl: episode?.pathToImgFile ?? "",
                               author: episode.podcast.author.name,
                               pathToFile: episode?.pathToFile ?? "",
                             });
