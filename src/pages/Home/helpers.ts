@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { createSelector } from "@reduxjs/toolkit";
 
 import {
   selectPodcastsToTry,
@@ -8,7 +9,6 @@ import {
   fetchPodcastsToTryPaged,
   fetchPodcastsForYouPaged,
   fetchTrendingPodcastsPaged,
-  selectListenerPodcastsFetched,
   selectIsLoadingListenerPodcasts,
   fetchRecentlyPlayedPodcastsPaged,
 } from "@/store/listenerPodcasts";
@@ -18,20 +18,67 @@ import { useAppDispatch, useAppSelector } from "@/hooks/redux";
 import { useStyles } from "./styles";
 import { SectionData } from "./interfaces";
 
+const selectPodcasts = createSelector(
+  [
+    selectPodcastsToTry,
+    selectPodcastsForYou,
+    selectRecentlyPlayed,
+    selectTrendingPodcasts,
+  ],
+  (podcastsToTry, podcastsForYou, recentlyPlayed, trendingPodcasts) => {
+    return {
+      podcastsToTry,
+      podcastsForYou,
+      recentlyPlayed,
+      trendingPodcasts,
+    };
+  }
+);
+
+const selectPodcastsLoading = createSelector(
+  [selectIsLoadingListenerPodcasts],
+  (loading) =>
+    loading.podcastsForYou ||
+    loading.podcastsToTry ||
+    loading.recentlyPlayed ||
+    loading.trendingPodcasts
+);
+
 const usePrepareHook = () => {
   const { classes } = useStyles();
 
   const dispatch = useAppDispatch();
 
   const user = useAppSelector(selectUser);
+  // const user = null;
 
-  const podcastsToTry = useAppSelector(selectPodcastsToTry);
-  const podcastsForYou = useAppSelector(selectPodcastsForYou);
-  const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
-  const trendingPodcasts = useAppSelector(selectTrendingPodcasts);
+  // const podcastsToTry = useAppSelector(selectPodcastsToTry);
+  // const podcastsForYou = useAppSelector(selectPodcastsForYou);
+  // const recentlyPlayed = useAppSelector(selectRecentlyPlayed);
+  // const trendingPodcasts = useAppSelector(selectTrendingPodcasts);
+  const loading = useAppSelector(selectPodcastsLoading);
 
-  const fetched = useAppSelector(selectListenerPodcastsFetched);
-  const loading = useAppSelector(selectIsLoadingListenerPodcasts);
+  const podcastsObj = useAppSelector(selectPodcasts) ?? {
+    podcastsToTry: [],
+    recentlyPlayed: [],
+    podcastsForYou: [],
+    trendingPodcasts: [],
+  };
+
+  const { podcastsForYou, podcastsToTry, recentlyPlayed, trendingPodcasts } =
+    podcastsObj;
+
+  // const fetched = useAppSelector(selectListenerPodcastsFetched);
+  // const loading = useAppSelector(selectIsLoadingListenerPodcasts);
+  // const fetched = null;
+  // const loading = null;
+
+  // const [fetched, setFetched] = useState(false);
+  // const [loading, setLoading] = useState(true);
+
+  // console.log({ fetched, loading });
+
+  console.log(podcastsForYou);
 
   const sections: SectionData[] = [
     {
@@ -74,32 +121,38 @@ const usePrepareHook = () => {
 
         const fetchedPodcastIds: string[] = []; // Use to prevent duplicated podcasts
 
-        const newTrendingPodcasts = !fetched.trendingPodcasts
-          ? await dispatch(fetchTrendingPodcastsPaged({ pageSize: 5 })).unwrap()
-          : trendingPodcasts;
+        const newTrendingPodcasts =
+          trendingPodcasts.length === 0
+            ? await dispatch(
+                fetchTrendingPodcastsPaged({ pageSize: 5 })
+              ).unwrap()
+            : trendingPodcasts;
 
         fetchedPodcastIds.push(
-          ...(newTrendingPodcasts.map((podcast) => podcast.id) ?? [])
+          ...(newTrendingPodcasts.map((podcast: { id: any }) => podcast.id) ??
+            [])
         );
 
         if (!user) return;
-
-        const newPodcastsForYou = !fetched.podcastsForYou
-          ? await dispatch(
-              fetchPodcastsForYouPaged({
-                period: 30,
-                pageSize: 4,
-                podcastIdsToExclude: fetchedPodcastIds,
-                categories: user.categoriesOfInterest ?? [],
-              })
-            ).unwrap()
-          : podcastsForYou;
+        const newPodcastsForYou =
+          podcastsForYou.length === 0
+            ? await dispatch(
+                fetchPodcastsForYouPaged({
+                  period: 30,
+                  pageSize: 4,
+                  podcastIdsToExclude: fetchedPodcastIds,
+                  categories: user.categoriesOfInterest ?? [],
+                })
+              ).unwrap()
+            : podcastsForYou;
 
         fetchedPodcastIds.push(
-          ...(newPodcastsForYou.map((podcast) => podcast.id) ?? [])
+          ...(newPodcastsForYou.map((podcast: { id: any }) => podcast.id) ?? [])
         );
 
-        !fetched.podcastsToTry &&
+        console.log({ fetchedPodcastIds });
+
+        podcastsToTry.length === 0 &&
           (await dispatch(
             fetchPodcastsToTryPaged({
               pageSize: 4,

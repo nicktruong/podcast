@@ -1,12 +1,14 @@
 import { Box, Typography } from "@mui/material";
 
+import { withSuspense } from "@/HOCs";
+
 import CardGroup from "../CardGroup";
 
 import { usePrepareHook } from "./helpers";
 
 import type { SectionProps } from "./interfaces";
 
-export default function Section({ title, podcasts }: SectionProps) {
+const Section = ({ title, podcasts }: SectionProps) => {
   const { classes, t } = usePrepareHook();
 
   return (
@@ -19,4 +21,6 @@ export default function Section({ title, podcasts }: SectionProps) {
       </Box>
     </Box>
   );
-}
+};
+
+export default withSuspense<SectionProps>(Section);

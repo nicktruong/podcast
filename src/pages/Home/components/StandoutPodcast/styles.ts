@@ -1,8 +1,8 @@
 import { tss } from "tss-react/mui";
 
-export const useStyles = tss.withParams<{ breakpoint: number }>().create(
+export const useStyles = tss.withParams<{ sidebarWidth: number }>().create(
   ({
-    breakpoint,
+    sidebarWidth,
     theme: {
       palette,
       breakpoints: {
@@ -15,9 +15,13 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
     },
     standoutPodcastContainer: {
       display: "flex",
+      flexWrap: "unset",
       marginTop: "24px",
       gap: "clamp(2rem, 4%, 4rem)",
-      flexWrap: breakpoint < md ? "wrap" : "unset",
+
+      [`@media (max-width: ${md + sidebarWidth}px)`]: {
+        flexWrap: "wrap",
+      },
     },
     standoutPodcastHeading: {
       fontWeight: 700,
@@ -26,10 +30,14 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
       lineHeight: "140%",
     },
     standoutPodcast: {
-      width: breakpoint < md ? "100%" : "34%",
+      width: "34%",
       marginTop: "16px",
       overflow: "hidden",
       borderRadius: "8px",
+
+      [`@media (max-width: ${md + sidebarWidth}px)`]: {
+        width: "100%",
+      },
     },
     standoutPodcastImg: {
       width: "100%",
@@ -64,14 +72,22 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
     standoutPodcastDesc: {
       marginTop: "4px",
       overflow: "hidden",
+      WebkitLineClamp: 5,
       display: "-webkit-box",
       textOverflow: "ellipsis",
       WebkitBoxOrient: "vertical",
       color: palette.text.secondary,
-      WebkitLineClamp: breakpoint < md ? 3 : 5,
+
+      [`@media (max-width: ${md + sidebarWidth}px)`]: {
+        WebkitLineClamp: 3,
+      },
     },
     episodesContainer: {
-      width: breakpoint < md ? "100%" : "66%",
+      width: "66%",
+
+      [`@media (max-width: ${md + sidebarWidth}px)`]: {
+        width: "100%",
+      },
     },
     episodes: {
       marginTop: "16px",
@@ -94,22 +110,30 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
     },
     episodeCover: {
       flexShrink: 0,
+      width: "168px",
       aspectRatio: "1/1",
       borderRadius: "8px",
-      width: breakpoint < sm ? "136px" : "168px",
+
+      [`@media (max-width: ${sm + sidebarWidth}px)`]: {
+        width: "136px",
+      },
     },
     episodeCreatedAt: {
       fontSize: "14px",
       color: palette.text.secondary,
     },
     episodeTitle: {
-      fontSize: breakpoint < sm ? "16px" : "18px",
       marginTop: "8px",
+      fontSize: "18px",
       overflow: "hidden",
       WebkitLineClamp: 2,
       display: "-webkit-box",
       textOverflow: "ellipsis",
       WebkitBoxOrient: "vertical",
+
+      [`@media (max-width: ${sm + sidebarWidth}px)`]: {
+        fontSize: "16px",
+      },
 
       "&:hover": {
         textDecoration: "underline",
@@ -122,7 +146,11 @@ export const useStyles = tss.withParams<{ breakpoint: number }>().create(
       textOverflow: "ellipsis",
       WebkitBoxOrient: "vertical",
       color: palette.text.secondary,
-      display: breakpoint < sm ? "none" : "-webkit-box",
+      display: "-webkit-box",
+
+      [`@media (max-width: ${sm + sidebarWidth}px)`]: {
+        display: "none",
+      },
     },
     playIconBtn: {
       marginTop: "4px",

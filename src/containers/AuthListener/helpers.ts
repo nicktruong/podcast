@@ -1,21 +1,29 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { createSelector } from "@reduxjs/toolkit";
 
 import { routes } from "@/constants";
 import { auth, getUserInfo } from "@/firebase";
+import { fetchUserPlaylists } from "@/store/playlists";
 import { useAppDispatch, useAppSelector } from "@/hooks";
 import { fetchNotifications } from "@/store/notification";
 import { setUser, setLoading, selectIsUserLoading } from "@/store/user";
 import { getCategories, selectFetchingCategories } from "@/store/category";
 
+const selectInitialLoadingState = createSelector(
+  [selectIsUserLoading, selectFetchingCategories],
+  (isUserLoading, isFetchingCategories) => {
+    return isUserLoading || isFetchingCategories;
+  }
+);
+
 export const usePrepareHook = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const initialLoading = useAppSelector(selectIsUserLoading);
-  const fetchingCategories = useAppSelector(selectFetchingCategories);
+  const initialLoading = useAppSelector(selectInitialLoadingState);
 
   useEffect(() => {
-    // Fetch user's interest categories
+    // Fetch global categories
     dispatch(getCategories());
 
     auth.onAuthStateChanged(async (user) => {
@@ -45,6 +53,9 @@ export const usePrepareHook = () => {
       // Fetch notification for logged in users
       dispatch(fetchNotifications(uid));
 
+      // Fetch user playlists
+      dispatch(fetchUserPlaylists(uid));
+
       // Finish loading user
       dispatch(setLoading(false));
 
@@ -53,5 +64,5 @@ export const usePrepareHook = () => {
     });
   }, []);
 
-  return { initialLoading, fetchingCategories };
+  return { initialLoading };
 };

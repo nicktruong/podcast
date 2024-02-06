@@ -15,12 +15,13 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { RiSearchEyeFill, RiSearchEyeLine } from "react-icons/ri";
 
 import { routes } from "@/constants";
+import { withSuspense } from "@/HOCs";
 
 import Logo from "../Logo";
 
 import usePrepareHook from "./helpers";
 
-export default function SideBar() {
+const SideBar = () => {
   const { active, classes, playlists, isSidebarExpand, t, cx, toggleSidebar } =
     usePrepareHook();
 
@@ -124,4 +125,6 @@ export default function SideBar() {
       </Box>
     </Box>
   );
-}
+};
+
+export default withSuspense(SideBar);

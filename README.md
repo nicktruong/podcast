@@ -16,6 +16,12 @@ GO Podcast is your gateway to a world of audio entertainment, empowering you to 
 
 Note: If you have firestore error in the console, you'll have to create firestore database index by the link it provides you in the error.
 
+## Seed
+
+To run seed, find the comment "// Comment three imports below to run seed", comment three imports and run `npm run seed`
+
+Note: Currently, I haven't find a good way to mock or conditionally import files so this is a temporary way
+
 ## Architecture Diagram
 
 ![Podcast Architecture](https://github.com/nicktruong/podcast/assets/154394020/f6f6991d-f4f6-4860-bd26-4b05361e4e50)

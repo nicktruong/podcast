@@ -32,6 +32,7 @@ export default function AudioPlayer() {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    cx,
     onReady,
     muteAudio,
     onProgress,
@@ -61,6 +62,18 @@ export default function AudioPlayer() {
           <Typography className={classes.infoAuthor}>{author}</Typography>
         </Box>
       </Box>
+
+      {playing ? (
+        <PauseCircleIcon
+          onClick={handlePauseAudio}
+          className={cx(classes.playIcon, "md:!hidden")}
+        />
+      ) : (
+        <PlayCircleIcon
+          onClick={handlePlayAudio}
+          className={cx(classes.playIcon, "md:!hidden")}
+        />
+      )}
 
       <Box className={classes.mediaPlayer}>
         <ReactPlayer

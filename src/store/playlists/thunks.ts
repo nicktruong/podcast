@@ -29,10 +29,6 @@ export const fetchUserPlaylistEpisodes = createAppAsyncThunk(
 export const fetchUserPlaylists = createAppAsyncThunk(
   "playlists/fetchUserPlaylists",
   async (userId: string) => {
-    if (!userId) {
-      return [];
-    }
-
     return getOwnedPlaylists({ userId });
   }
 );

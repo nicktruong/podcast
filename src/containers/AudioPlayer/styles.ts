@@ -27,6 +27,11 @@ export const useStyles = tss.create(({ theme }) => ({
     flexShrink: 0,
     display: "flex",
     alignItems: "center",
+
+    [theme.breakpoints.down("md")]: {
+      flexGrow: 1,
+      flexShrink: 1,
+    },
   },
   infoGroup: {
     display: "flex",
@@ -62,6 +67,10 @@ export const useStyles = tss.create(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     flexDirection: "column",
+
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
   },
   actions: {
     gap: "24px",
@@ -84,7 +93,13 @@ export const useStyles = tss.create(({ theme }) => ({
     fontSize: "20px",
   },
   playIcon: {
+    flexShrink: 0,
     fontSize: "40px",
+    cursor: "pointer",
+
+    [theme.breakpoints.down("md")]: {
+      marginRight: "40px",
+    },
   },
   slider: {
     flex: 1,
@@ -135,6 +150,10 @@ export const useStyles = tss.create(({ theme }) => ({
     flexShrink: 0,
     display: "flex",
     alignItems: "center",
+
+    [theme.breakpoints.down("lg")]: {
+      display: "none",
+    },
   },
   volumeSlider: {
     width: "100px",

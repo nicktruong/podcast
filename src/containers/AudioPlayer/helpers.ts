@@ -1,4 +1,5 @@
 import ReactPlayer from "react-player/lazy";
+import { intervalToDuration } from "date-fns";
 import { SelectChangeEvent } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { OnProgressProps } from "react-player/base";
@@ -9,7 +10,6 @@ import {
   resetAudio,
   selectAudioState,
   setDurationInSeconds,
-  setPassedTimeInSeconds,
   updateAudioPlayedCount,
 } from "@/store/audio";
 import { closeAudioPlayer } from "@/store/ui";
@@ -24,7 +24,7 @@ import {
 import { useStyles } from "./styles";
 
 const usePrepareHook = () => {
-  const { classes } = useStyles();
+  const { cx, classes } = useStyles();
 
   const dispatch = useAppDispatch();
 
@@ -36,9 +36,9 @@ const usePrepareHook = () => {
     audioUrl,
     downloaded,
     audioDuration,
-    passedDuration,
+    // passedDuration,
     durationInSeconds,
-    passedTimeInSeconds,
+    // passedTimeInSeconds
   } = useAppSelector(selectAudioState);
 
   const [mute, setMute] = useState(false);
@@ -49,6 +49,13 @@ const usePrepareHook = () => {
   const trackedTime = useRef(0);
   const startTrackedTime = useRef(0);
   const reactPlayerRef = useRef<ReactPlayer | null>(null);
+
+  const [passedTimeInSeconds, setPassedTimeInSeconds] = useState(0);
+  const passedDuration = intervalToDuration({
+    start: 0,
+    end: passedTimeInSeconds * 1000,
+  });
+  // reactPlayerRef.current?.getCurrentTime() ?? 0;
 
   useEffect(() => {
     let id: NodeJS.Timeout | undefined;
@@ -73,12 +80,6 @@ const usePrepareHook = () => {
     return () => clearInterval(id);
   }, [playing]);
 
-  useEffect(() => {
-    if (reactPlayerRef.current?.getCurrentTime() !== passedTimeInSeconds) {
-      reactPlayerRef.current?.seekTo(passedTimeInSeconds, "seconds");
-    }
-  }, [passedTimeInSeconds]);
-
   const onReady = () => {
     if (reactPlayerRef.current) {
       dispatch(setDurationInSeconds(reactPlayerRef.current.getDuration()));
@@ -86,15 +87,19 @@ const usePrepareHook = () => {
   };
 
   const onProgress = async (onProgress: OnProgressProps) => {
-    dispatch(setPassedTimeInSeconds(onProgress.playedSeconds));
+    // dispatch(setPassedTimeInSeconds(onProgress.playedSeconds));
+    console.log(onProgress.playedSeconds);
+    setPassedTimeInSeconds(onProgress.playedSeconds);
 
     if (trackedTime.current / 1000 > MIN_ENGAGE_TIME) {
       await dispatch(updateAudioPlayedCount());
     }
   };
 
+  console.log({ passedTimeInSeconds });
+
   const seekToSecond = (second: number) => {
-    dispatch(setPassedTimeInSeconds(second));
+    // dispatch(setPassedTimeInSeconds(second));
     reactPlayerRef.current?.seekTo(second, "seconds");
   };
 
@@ -170,6 +175,7 @@ const usePrepareHook = () => {
     progressInterval,
     durationInSeconds,
     passedTimeInSeconds,
+    cx,
     onReady,
     muteAudio,
     onProgress,

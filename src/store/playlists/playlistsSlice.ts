@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createPlaylist,
   fetchUserPlaylists,
+  removeUserPlaylist,
   addToPlaylistAction,
   removePodcastFromPlaylist,
   fetchUserPlaylistEpisodes,
-  removeUserPlaylist,
 } from "./thunks";
 
 import type { PlaylistsState } from "./interfaces";
@@ -15,7 +15,7 @@ export const initialState: PlaylistsState = {
   episodes: [],
   playlists: [],
   loadingEpisodes: false,
-  loadingPlaylists: false,
+  loadingPlaylists: true,
 };
 
 export const playlistsSlice = createSlice({

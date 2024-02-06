@@ -17,11 +17,12 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 
 import { Roles } from "@/enums";
 import { routes } from "@/constants";
+import { withSuspense } from "@/HOCs";
 import { ChangeLanguageButton } from "@/components";
 
 import usePrepareHook from "./helpers";
 
-export default function UserMenu() {
+const UserMenu = () => {
   const {
     open,
     userId,
@@ -40,6 +41,8 @@ export default function UserMenu() {
     handleClickOpenMenu,
     handleUpgradeToPodcasterRole,
   } = usePrepareHook();
+
+  console.log("USERNEMENU");
 
   return (
     <AppBar elevation={0} className={classes.appbarRoot} component="nav">
@@ -198,4 +201,6 @@ export default function UserMenu() {
       </Toolbar>
     </AppBar>
   );
-}
+};
+
+export default withSuspense(UserMenu);

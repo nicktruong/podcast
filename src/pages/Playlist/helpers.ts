@@ -52,10 +52,7 @@ const usePrepareHook = () => {
   useEffect(() => {
     if (id) {
       dispatch(fetchPodcastDetail(id));
-
-      if (episodesDetail.length === 0) {
-        dispatch(fetchPlaylistEpisodesDetail(id));
-      }
+      dispatch(fetchPlaylistEpisodesDetail(id));
     }
   }, [id]);
 

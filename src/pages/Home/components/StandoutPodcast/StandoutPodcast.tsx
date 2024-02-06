@@ -5,6 +5,7 @@ import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Box, Typography, Button, alpha } from "@mui/material";
 
 import { routes } from "@/constants";
+import { withSuspense } from "@/HOCs";
 import { capFirstChar, isDark } from "@/utils";
 
 import StandoutPodcastSkeleton from "../StandoutPodcastSkeleton";
@@ -20,7 +21,7 @@ const StandoutPodcast = () => {
     standoutCategory,
     isLoadingStandoutPodcast,
     t,
-    setContainerEl,
+    // setContainerEl,
     handlePauseAudio,
     handleDownloadAndPlayAudio,
   } = usePrepareHook();
@@ -30,7 +31,7 @@ const StandoutPodcast = () => {
   }
 
   return (
-    <Box ref={(el: HTMLDivElement) => setContainerEl(el)}>
+    <Box>
       <Typography className={classes.standoutPodcastHeading}>
         {standoutPodcast && t("standoutPodcast")}
       </Typography>
@@ -147,4 +148,4 @@ const StandoutPodcast = () => {
   );
 };
 
-export default StandoutPodcast;
+export default withSuspense(StandoutPodcast);

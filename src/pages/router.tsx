@@ -4,7 +4,9 @@ import { createBrowserRouter } from "react-router-dom";
 import { routes } from "@/constants";
 import { AuthListener } from "@/containers";
 // Fix for [#22](https://trello.com/c/OyT5t3ix)
+import Home from "@/pages/Home";
 import Profile from "@/pages/Profile";
+import RootLayout from "@/layouts/Root";
 
 // Guards
 const PreventLoggedInAccessGuard = lazy(
@@ -16,7 +18,6 @@ const PreventListenerAccessGuard = lazy(
 );
 
 // layouts
-const RootLayout = lazy(() => import("@/layouts/Root"));
 const PodLayout = lazy(() => import("@/layouts/PodcasterDashboard"));
 const PodcastDetailsLayout = lazy(() => import("@/layouts/PodcastDetails"));
 
@@ -24,7 +25,6 @@ const PodcastDetailsLayout = lazy(() => import("@/layouts/PodcastDetails"));
 const InterestCategoriesSelection = lazy(
   () => import("@/pages/InterestCategoriesSelection")
 );
-const Home = lazy(() => import("@/pages/Home"));
 const Login = lazy(() => import("@/pages/Login"));
 const NotFound = lazy(() => import("@/pages/404"));
 const Search = lazy(() => import("@/pages/Search"));

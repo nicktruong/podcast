@@ -1,5 +1,6 @@
 import { Box } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import { Suspense } from "react";
 
 import { SideBar } from "@/components";
 import { AudioPlayer, UserMenu } from "@/containers";
@@ -17,7 +18,9 @@ export default function RootLayout() {
         </Box>
         <Box ref={elementRef} className={classes.mainContent} component="main">
           <UserMenu />
-          <Outlet />
+          <Suspense>
+            <Outlet />
+          </Suspense>
         </Box>
       </Box>
 

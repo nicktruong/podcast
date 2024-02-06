@@ -6,7 +6,7 @@ import type { CategoryState } from "./interfaces";
 
 export const initialState: CategoryState = {
   categories: [],
-  fetchingCategories: false,
+  fetchingCategories: true,
 };
 
 export const categorySlice = createSlice({

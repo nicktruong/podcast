@@ -7,9 +7,9 @@ import Loader from "@/components/Loader";
 import { usePrepareHook } from "./helpers";
 
 const AuthListener = () => {
-  const { initialLoading, fetchingCategories } = usePrepareHook();
+  const { initialLoading } = usePrepareHook();
 
-  if (initialLoading || fetchingCategories) {
+  if (initialLoading) {
     return <Loader />;
   }
 

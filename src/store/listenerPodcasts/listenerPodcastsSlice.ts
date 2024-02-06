@@ -15,7 +15,7 @@ const initialLoadingAndFetched = {
   podcastsToTry: false,
   recentlyPlayed: false,
   podcastsForYou: false,
-  trendingPodcasts: false,
+  trendingPodcasts: true,
   podcastsOfCategory: false,
 };
 
