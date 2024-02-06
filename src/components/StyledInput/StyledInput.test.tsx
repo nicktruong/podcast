@@ -1,9 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { screen } from "@testing-library/react";
+
+import { renderWithProviders } from "@/utils/test-utils";
 
 import StyledInput from "./StyledInput";
 
 test("renders StyledInput", () => {
-  render(
+  renderWithProviders(
     <StyledInput error={false} placeholder="test" helperText="helper text" />
   );
   const input = screen.getByPlaceholderText(/test/i);

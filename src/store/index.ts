@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 
 import uiReducer from "./ui";
 import userReducer from "./user";
@@ -13,22 +13,30 @@ import playlistsReducer from "./playlists";
 import notificationReducer from "./notification";
 import userPodcastSeriesReducer from "./listenerPodcasts";
 
-export const store = configureStore({
-  reducer: {
-    ui: uiReducer,
-    user: userReducer,
-    pod: episodeReducer,
-    audio: audioReducer,
-    search: searchReducer,
-    profile: profileReducer,
-    details: detailsReducer,
-    category: categoryReducer,
-    podSeries: podcastReducer,
-    playlists: playlistsReducer,
-    notification: notificationReducer,
-    userPodcasts: userPodcastSeriesReducer,
-  },
+const rootReducer = combineReducers({
+  ui: uiReducer,
+  user: userReducer,
+  pod: episodeReducer,
+  audio: audioReducer,
+  search: searchReducer,
+  profile: profileReducer,
+  details: detailsReducer,
+  category: categoryReducer,
+  podSeries: podcastReducer,
+  playlists: playlistsReducer,
+  notification: notificationReducer,
+  userPodcasts: userPodcastSeriesReducer,
 });
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export function setupStore(preloadedState?: Partial<RootState>) {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+}
+
+export const store = setupStore();
+
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore["dispatch"];
