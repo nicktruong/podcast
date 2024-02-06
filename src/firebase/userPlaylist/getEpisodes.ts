@@ -37,10 +37,6 @@ export const getEpisodesDetailFromPodcastId = async (podcastId: string) => {
         ...episodeSnapshot.data(),
       } as Episode;
 
-      if (episode.pathToImgFile && !episode.pathToImgFile.startsWith("https")) {
-        episode.pathToImgFile = await downloadFile(episode.pathToImgFile);
-      }
-
       return episode;
     })
   );

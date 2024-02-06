@@ -5,6 +5,7 @@ import { Box, Button, Typography, alpha } from "@mui/material";
 
 import { isDark } from "@/utils";
 import { routes } from "@/constants";
+import { downloadFile } from "@/firebase";
 
 import usePrepareHook from "./helpers";
 import { PodcastRating, PlaylistSkeleton } from "./components";
@@ -78,18 +79,24 @@ export default function Playlist() {
                   <Box className={classes.playbarMainActions}>
                     <Box
                       component="button"
-                      onClick={(event) => {
+                      onClick={async (event) => {
                         event.stopPropagation();
 
                         if (playingEpisodeId === episode.id && audioIsPlaying) {
                           handlePauseAudio();
                         } else {
+                          let img = episode.pathToImgFile;
+
+                          if (img && !img.startsWith("https")) {
+                            img = await downloadFile(img);
+                          }
+
                           handleDownloadAndPlayAudio({
                             title: episode.title,
                             episodeId: episode.id,
                             pathToFile: episode.pathToFile,
                             podcastId: podcastDetail?.id ?? "",
-                            coverUrl: episode.pathToImgFile,
+                            coverUrl: img,
                             author: podcastDetail?.author.name ?? "",
                           });
                         }
