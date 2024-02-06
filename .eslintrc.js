@@ -83,6 +83,9 @@ module.exports = {
     semi: ["error", "always"],
   },
   settings: {
+    "react": {
+      "version": "detect",
+    },
     "import/resolver": {
       typescript: {
         alwaysTryTypes: true,

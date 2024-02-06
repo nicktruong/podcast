@@ -22,10 +22,6 @@ export interface DownloadAndPlayAudioReturnType {
 }
 
 export interface DownloadAndPlayAudioParameters {
-  pathToFile: string;
-}
-
-export interface DownloadAndPlayAudioParameters {
   title: string;
   author: string;
   coverUrl: string;

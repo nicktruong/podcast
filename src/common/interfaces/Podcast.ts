@@ -56,6 +56,7 @@ export interface GetEpisodesFromCreatorPagedOptions {
 }
 
 export interface GetPodcastsByCategoriesOption {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   offset: any;
   sortBy?: string;
   pageSize?: number;

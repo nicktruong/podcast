@@ -125,7 +125,7 @@ const usePrepareHook = () => {
             : trendingPodcasts;
 
         fetchedPodcastIds.push(
-          ...(newTrendingPodcasts.map((podcast: { id: any }) => podcast.id) ??
+          ...(newTrendingPodcasts.map((podcast) => podcast.id) ??
             [])
         );
 
@@ -143,7 +143,7 @@ const usePrepareHook = () => {
             : podcastsForYou;
 
         fetchedPodcastIds.push(
-          ...(newPodcastsForYou.map((podcast: { id: any }) => podcast.id) ?? [])
+          ...(newPodcastsForYou.map((podcast) => podcast.id) ?? [])
         );
 
         podcastsToTry.length === 0 &&

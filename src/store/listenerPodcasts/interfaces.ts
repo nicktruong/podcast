@@ -19,6 +19,7 @@ export interface ListenerPodcastsState extends PopulatedPodcastSections {
 }
 
 export interface FetchPodcastsOptions {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   offset?: any;
   period?: number;
   pageSize?: number;
