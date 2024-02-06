@@ -34,6 +34,7 @@ const usePrepareHook = () => {
     playing,
     coverUrl,
     audioUrl,
+    episodeId,
     downloaded,
     audioDuration,
     // passedDuration,
@@ -80,6 +81,11 @@ const usePrepareHook = () => {
     return () => clearInterval(id);
   }, [playing]);
 
+  useEffect(() => {
+    seekToSecond(0);
+    setPassedTimeInSeconds(0);
+  }, [episodeId]);
+
   const onReady = () => {
     if (reactPlayerRef.current) {
       dispatch(setDurationInSeconds(reactPlayerRef.current.getDuration()));
@@ -88,15 +94,12 @@ const usePrepareHook = () => {
 
   const onProgress = async (onProgress: OnProgressProps) => {
     // dispatch(setPassedTimeInSeconds(onProgress.playedSeconds));
-    console.log(onProgress.playedSeconds);
     setPassedTimeInSeconds(onProgress.playedSeconds);
 
     if (trackedTime.current / 1000 > MIN_ENGAGE_TIME) {
       await dispatch(updateAudioPlayedCount());
     }
   };
-
-  console.log({ passedTimeInSeconds });
 
   const seekToSecond = (second: number) => {
     // dispatch(setPassedTimeInSeconds(second));

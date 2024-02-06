@@ -54,7 +54,22 @@
   "jest": {
     "moduleNameMapper": {
       "@/(.*)": "<rootDir>/src/$1"
-    }
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/HOCs",
+      "<rootDir>/src/hooks",
+      "<rootDir>/src/assets",
+      "<rootDir>/src/common",
+      "<rootDir>/src/config",
+      "<rootDir>/src/guards",
+      "<rootDir>/src/layouts",
+      "<rootDir>/src/firebase",
+      "<rootDir>/src/constants",
+      "<rootDir>/src/containers",
+      "<rootDir>/src/components/SideBar",
+      "<rootDir>/src/components/Steppers",
+      "<rootDir>/src/components/ChangeLanguageButton"
+    ]
   },
   "eslintConfig": {
     "extends": [

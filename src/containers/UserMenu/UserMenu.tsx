@@ -42,8 +42,6 @@ const UserMenu = () => {
     handleUpgradeToPodcasterRole,
   } = usePrepareHook();
 
-  console.log("USERNEMENU");
-
   return (
     <AppBar elevation={0} className={classes.appbarRoot} component="nav">
       <Toolbar className={classes.toolbar}>

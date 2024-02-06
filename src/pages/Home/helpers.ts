@@ -76,10 +76,6 @@ const usePrepareHook = () => {
   // const [fetched, setFetched] = useState(false);
   // const [loading, setLoading] = useState(true);
 
-  // console.log({ fetched, loading });
-
-  console.log(podcastsForYou);
-
   const sections: SectionData[] = [
     {
       requireLogin: true,
@@ -149,8 +145,6 @@ const usePrepareHook = () => {
         fetchedPodcastIds.push(
           ...(newPodcastsForYou.map((podcast: { id: any }) => podcast.id) ?? [])
         );
-
-        console.log({ fetchedPodcastIds });
 
         podcastsToTry.length === 0 &&
           (await dispatch(
