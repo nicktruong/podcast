@@ -110,7 +110,7 @@ export default function DashboardOverview() {
               <img
                 alt={`${episodes[0]?.title} cover photo`}
                 className="w-full h-full object-cover rounded"
-                src={podcast?.coverUrl}
+                src={episodes[0].pathToImgFile}
               />
             </Box>
           </Box>

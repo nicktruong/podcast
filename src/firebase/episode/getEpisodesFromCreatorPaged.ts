@@ -12,6 +12,7 @@ import { Collections } from "@/enums";
 import { EpisodeFields } from "@/firebase/fields";
 
 import { db } from "../init";
+import { downloadFile } from "../storage";
 
 import { populateEpisode } from "./populateEpisode";
 
@@ -40,6 +41,15 @@ export const getEpisodesFromCreatorPaged = async ({
       const episode = { id: doc.id, ...doc.data() } as Episode;
 
       const populatedEpisode = await populateEpisode(episode);
+
+      if (
+        populatedEpisode.pathToImgFile &&
+        !populatedEpisode.pathToImgFile.startsWith("https")
+      ) {
+        populatedEpisode.pathToImgFile = await downloadFile(
+          populatedEpisode.pathToImgFile
+        );
+      }
 
       return populatedEpisode;
     })
